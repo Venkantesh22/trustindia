@@ -6,7 +6,7 @@ import '../../../services/constants.dart';
 import '../../../services/theme.dart';
 import '../../base/common_button.dart';
 import '../../base/custom_image.dart';
-import '../../base/custom_toast.dart';
+import '../../base/custom_toast.dart' hide ToastType;
 
 class OTPVerification extends StatefulWidget {
   final String phone;
@@ -144,8 +144,8 @@ class _OTPVerificationState extends State<OTPVerification> {
               color: Colors.black,
               onTap: () {
                 if (_pinController.text.length != 6) {
-                  showCustomToast(
-                      msg: 'Invalid Otp', toastType: ToastType.warning);
+                  // showCustomToast(
+                  //     msg: 'Invalid Otp', toastType: ToastType.warning);
                   return;
                 }
                 // Get.find<AuthController>().verifyOtp(phone: widget.phone, otp: _pinController.text).then((value) {

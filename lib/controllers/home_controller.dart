@@ -6,7 +6,7 @@ class HomeController  extends  GetxController implements GetxService  {
 
   final HomeRepo homeRepo;
   HomeController({required this.homeRepo});
-  bool _isLoading = false;
+  bool isLoading = false;
 
 
 TextEditingController searchController = TextEditingController();

@@ -28,8 +28,8 @@ class Init {
       // Get Repo's...
       Get.lazyPut(
           () => AuthRepo(sharedPreferences: Get.find(), apiClient: Get.find()));
-      Get.lazyPut(() => BasicRepo(dioClient: Get.find()));
-      Get.lazyPut(() => HomeRepo(dioClient: Get.find()));
+      Get.lazyPut(() => BasicRepo(apiClient: Get.find()));
+      Get.lazyPut(() => HomeRepo(apiClient: Get.find()));
 
       // Get Controller's...
       Get.lazyPut(() => DashBoardController());

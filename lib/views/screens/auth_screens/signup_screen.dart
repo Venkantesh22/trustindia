@@ -1,13 +1,11 @@
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
+import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/route_helper.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
-import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/dashboard/home_screen/home_screen.dart';
 
 import '../../../services/theme.dart';
@@ -30,8 +28,9 @@ class _SignUPScreenState extends State<SignUPScreen> {
               child: const HomeScreen(),
             ),
           );
-        }{
-          log("SignUp failed");
+          showToast(message: value.message, typeCheck: value.isSuccess);
+        } else {
+          showToast(message: value.message, toastType: ToastType.warning);
         }
       },
     );
@@ -201,32 +200,37 @@ class _SignUPScreenState extends State<SignUPScreen> {
                       const SizedBox(
                         height: 20,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          if (_formKey.currentState?.validate() ?? false) {
-                            signUp(authController);
-                          }
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: primaryColor,
-                              borderRadius: BorderRadius.circular(12)),
-                          child: Center(
-                            child: Text(
-                              "Register",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: white,
-                                  ),
+                      GetBuilder<AuthController>(builder: (authController) {
+                        return GestureDetector(
+                          onTap: () {
+                            if (authController.isLoading) {
+                              return;
+                            }
+                            if (_formKey.currentState?.validate() ?? false) {
+                              signUp(authController);
+                            }
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: primaryColor,
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Center(
+                              child: Text(
+                                "Register",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: white,
+                                    ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      }),
                       const SizedBox(
                         height: 20,
                       ),

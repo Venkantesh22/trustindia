@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
+import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/route_helper.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
 
@@ -74,30 +75,44 @@ class LogoutDialog extends StatelessWidget {
             const SizedBox(
               height: 14,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: CustomButton(
-                color: primaryColor,
-                radius: 6,
-                type: ButtonType.primary,
-                title: 'Yes, Log Me Out',
-                height: 46,
-                onTap: () async {
-                  AuthController auth = Get.find<AuthController>();
-                  auth.logout();
-                  auth.clearSharedData();
-                  auth.update();
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    getCustomRoute(
-                      child: const LoginScreen(),
-                    ),
-                    (route) => false,
-                  );
-                  // navigate(context: context, page: const SplashScreen(), isRemoveUntil: true);
-                },
-              ),
-            ),
+            GetBuilder<AuthController>(builder: (authController) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: CustomButton(
+                  color: primaryColor,
+                  radius: 6,
+                  type: ButtonType.primary,
+                  title: 'Yes, Log Me Out',
+                  height: 46,
+                  onTap: () async {
+                    // AuthController auth = Get.find<AuthController>();
+                    authController.logout().then(
+                      (value) {
+                        if (value.isSuccess) {
+                          authController.logout();
+                          authController.clearSharedData();
+                          authController.update();
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            getCustomRoute(
+                              child: const LoginScreen(),
+                            ),
+                            (route) => false,
+                          );
+                          showToast(
+                              message: value.message,
+                              typeCheck: value.isSuccess);
+                        } else {
+                          showToast(
+                              message: value.message,
+                              typeCheck: value.isSuccess);
+                        }
+                      },
+                    );
+                  },
+                ),
+              );
+            }),
           ],
         ),
       ),

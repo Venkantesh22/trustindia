@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
+import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/route_helper.dart';
 import 'package:lekra/views/screens/auth_screens/signup_screen.dart';
@@ -137,43 +137,53 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(
                         height: 20,
                       ),
-                      GestureDetector(
-                        onTap: () async {
-                          if (_formKey.currentState?.validate() ?? false) {
-                            final authController = Get.find<AuthController>();
-                            final result = await authController.userLogin();
-                            if (result.isSuccess) {
-                              // Registration successful, go to Home
-                              Navigator.of(context).pushReplacement(
-                                getCustomRoute(child: const HomeScreen()),
-                              );
-                            } else {
-                              // Registration failed, stay on signup and show error
-                              Fluttertoast.showToast(
-                                  msg: result.message ?? "Registration failed");
+                      GetBuilder<AuthController>(builder: (authController) {
+                        return GestureDetector(
+                          onTap: () async {
+                            if (authController.isLoading) {
+                              return;
                             }
-                          }
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: primaryColor,
-                              borderRadius: BorderRadius.circular(12)),
-                          child: Center(
-                            child: Text(
-                              "Login",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: white,
-                                  ),
+                            if (_formKey.currentState?.validate() ?? false) {
+                              authController.userLogin().then(
+                                (value) {
+                                  if (value.isSuccess) {
+                                    navigate(
+                                        context: context,
+                                        page: const HomeScreen(),
+                                        isRemoveUntil: true);
+                                    showToast(
+                                        message: value.message,
+                                        typeCheck: value.isSuccess);
+                                  } else {
+                                    showToast(
+                                        message: value.message,
+                                        typeCheck: value.isSuccess);
+                                  }
+                                },
+                              );
+                            }
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: primaryColor,
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Center(
+                              child: Text(
+                                "Login",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: white,
+                                    ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      }),
                       const SizedBox(
                         height: 20,
                       ),

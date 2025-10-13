@@ -1,5 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lekra/main.dart';
+import 'package:lekra/services/route_helper.dart';
+import 'package:lekra/services/theme.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:toastification/toastification.dart';
 
 class PriceConverter {
   static convert(price) {
@@ -16,6 +21,105 @@ class PriceConverter {
   }
 }
 
+class Helper {
+  final BuildContext context;
+  Helper(this.context);
+
+  Size get size => MediaQuery.sizeOf(context);
+  TextTheme get textTheme => Theme.of(context).textTheme;
+}
+
+void navigate({
+  PageTransitionType type = PageTransitionType.fade,
+  required BuildContext context,
+  required Widget page,
+  bool isReplace = false,
+  bool isRemoveUntil = false,
+  Duration duration = const Duration(milliseconds: 300),
+}) {
+  if (isReplace) {
+    Navigator.of(context).pushReplacement(
+      getCustomRoute(
+        child: page,
+        type: type,
+        duration: duration,
+      ),
+    );
+  } else if (isRemoveUntil) {
+    Navigator.of(context).pushAndRemoveUntil(
+      getCustomRoute(
+        child: page,
+        type: type,
+        duration: duration,
+      ),
+      (route) => false,
+    );
+  } else {
+    Navigator.of(context).push(
+      getCustomRoute(
+        child: page,
+        type: type,
+        duration: duration,
+      ),
+    );
+  }
+}
+
+void pop(BuildContext context, {dynamic data}) {
+  Navigator.pop(context, data);
+}
+
+enum ToastType {
+  info(ToastificationType.info),
+  warning(ToastificationType.warning),
+  error(ToastificationType.error),
+  success(ToastificationType.success);
+
+  const ToastType(this.value);
+  final ToastificationType value;
+}
+
+void showToast(
+    {ToastType? toastType,
+    required String message,
+    String? description,
+    ToastificationStyle? toastificationStyle,
+    bool? typeCheck}) {
+  toastification.show(
+    alignment: Alignment.topLeft,
+    type: toastType?.value ??
+        ((typeCheck ?? false)
+            ? ToastificationType.success
+            : ToastificationType.error),
+    title: Text(
+      message,
+      style:
+          Helper(navigatorKey.currentContext!).textTheme.bodyMedium!.copyWith(
+                color: black,
+                fontSize: 14,
+              ),
+    ),
+    description: description != null
+        ? Text(description,
+            style: Helper(navigatorKey.currentContext!)
+                .textTheme
+                .bodySmall!
+                .copyWith(
+                  color: black,
+                ))
+        : null,
+    style: toastificationStyle ?? ToastificationStyle.minimal,
+    icon: toastType == ToastType.success
+        ? const Icon(Icons.check_circle_outline)
+        : toastType == ToastType.error
+            ? const Icon(Icons.error_outline)
+            : toastType == ToastType.warning
+                ? const Icon(Icons.warning_amber)
+                : const Icon(Icons.info_outline),
+    autoCloseDuration: const Duration(seconds: 2),
+  );
+}
+
 String getStringFromList(List<dynamic>? data) {
   String str = data.toString();
   return data.toString().substring(1, str.length - 1);
@@ -29,7 +133,7 @@ class AppConstants {
   static String baseUrl = 'http://ecom.tpipaygroup.com/';
   // static String baseUrl = 'http://192.168.1.5:9000/'; ///USE FOR LOCAL
   //TODO: Change Base Url
-  static String appName = 'App Name';
+  static String appName = 'Trust India';
 
   static const String agoraAppId = 'c87b710048c049f59570bd1895b7e561';
 
@@ -39,7 +143,8 @@ class AppConstants {
   static const String logoutUri = 'api/logout';
   static const String profileUri = 'api/v1/user/profile';
 
-  static const String extras = 'api/v1/extra';
+  // Basic
+  static const String bannerUri = 'api/category';
 
   //
   static const double horizontalPadding = 16;
