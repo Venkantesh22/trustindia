@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:lekra/controllers/basic_controller.dart';
+import 'package:lekra/controllers/home_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
@@ -17,6 +20,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<BasicController>().fetchHomeBanner();
+      Get.find<HomeController>().fetchHomeCategory();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/basic_controller.dart';
 
+import '../../../../../services/constants.dart';
 import '../../../../../services/theme.dart';
 import '../../../../base/custom_image.dart';
 import '../../../../base/shimmer.dart';
@@ -24,15 +25,15 @@ class _HomeBannerState extends State<HomeBanner> {
     return GetBuilder<BasicController>(builder: (basicController) {
       return Column(
         children: [
+         
           const SizedBox(height: 10),
           Builder(builder: (context) {
-            // if (basicController.sliders.isEmpty) {
-            //   return const SizedBox.shrink();
-            // }
+            if (basicController.sliders.isEmpty) {
+              return const SizedBox.shrink();
+            }
             return CarouselSlider(
               items: List.generate(
-                slider.length,
-                // basicController.isLoading ? 1 : basicController.sliders.length,
+                basicController.isLoading ? 1 : basicController.sliders.length,
                 (index) => CustomShimmer(
                   isLoading: basicController.isLoading,
                   child: AspectRatio(
@@ -41,8 +42,7 @@ class _HomeBannerState extends State<HomeBanner> {
                       radius: 12,
                       height: MediaQuery.sizeOf(context).height,
                       width: MediaQuery.sizeOf(context).width,
-                      // path: basicController.isLoading ? "" : basicController.sliders[index].image ?? "",
-                      path: slider[index],
+                      path: basicController.isLoading ? "" : basicController.sliders[index].image ?? "",
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -67,21 +67,21 @@ class _HomeBannerState extends State<HomeBanner> {
               ),
             );
           }),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              basicController.isLoading ? 4 : basicController.sliders.length,
-              (index) {
-                return CustomShimmer(
-                  isLoading: basicController.isLoading,
-                  child: BannerIndicatorWidget(
-                    isActive: currentIndex == index,
-                  ),
-                );
-              },
-            ),
-          ),
+          // const SizedBox(height: 10),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: List.generate(
+          //     basicController.isLoading ? 4 : basicController.sliders.length,
+          //     (index) {
+          //       return CustomShimmer(
+          //         isLoading: basicController.isLoading,
+          //         child: BannerIndicatorWidget(
+          //           isActive: currentIndex == index,
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // ),
         ],
       );
     });
@@ -110,10 +110,3 @@ class BannerIndicatorWidget extends StatelessWidget {
     );
   }
 }
-
-
-List<String> slider = [
- Assets.imagesBanner1,
- Assets.imagesBanner2,
- Assets.imagesBanner3,
-];

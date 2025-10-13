@@ -144,7 +144,11 @@ class AppConstants {
   static const String profileUri = 'api/v1/user/profile';
 
   // Basic
-  static const String bannerUri = 'api/category';
+  static const String bannerUri = 'api/banners';
+
+  //Home
+
+  static const String categoryList = "api/category";
 
   //
   static const double horizontalPadding = 16;
