@@ -25,7 +25,6 @@ class _HomeBannerState extends State<HomeBanner> {
     return GetBuilder<BasicController>(builder: (basicController) {
       return Column(
         children: [
-         
           const SizedBox(height: 10),
           Builder(builder: (context) {
             if (basicController.sliders.isEmpty) {
@@ -42,7 +41,9 @@ class _HomeBannerState extends State<HomeBanner> {
                       radius: 12,
                       height: MediaQuery.sizeOf(context).height,
                       width: MediaQuery.sizeOf(context).width,
-                      path: basicController.isLoading ? "" : basicController.sliders[index].image ?? "",
+                      path: basicController.isLoading
+                          ? ""
+                          : basicController.sliders[index].image ?? "",
                       fit: BoxFit.cover,
                     ),
                   ),

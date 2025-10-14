@@ -3,17 +3,25 @@ import 'dart:convert';
 class ProductModel {
     final int? id;
     final String? name;
-    final String? price;
-    final String? offers;
     final String? description;
+    final String? price;
+    final String? discountedPrice;
+    final List<String>? features;
+    final String? offers;
+    final String? priceCategory;
+    final String? status;
     final List<Image>? images;
 
     ProductModel({
         this.id,
         this.name,
-        this.price,
-        this.offers,
         this.description,
+        this.price,
+        this.discountedPrice,
+        this.features,
+        this.offers,
+        this.priceCategory,
+        this.status,
         this.images,
     });
 
@@ -24,18 +32,26 @@ class ProductModel {
     factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["id"],
         name: json["name"],
-        price: json["price"],
-        offers: json["offers"],
         description: json["description"],
+        price: json["price"],
+        discountedPrice: json["discounted_price"],
+        features: json["features"] == null ? [] : List<String>.from(json["features"]!.map((x) => x)),
+        offers: json["offers"],
+        priceCategory: json["price_category"],
+        status: json["status"],
         images: json["images"] == null ? [] : List<Image>.from(json["images"]!.map((x) => Image.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "price": price,
-        "offers": offers,
         "description": description,
+        "price": price,
+        "discounted_price": discountedPrice,
+        "features": features == null ? [] : List<dynamic>.from(features!.map((x) => x)),
+        "offers": offers,
+        "price_category": priceCategory,
+        "status": status,
         "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x.toJson())),
     };
 }

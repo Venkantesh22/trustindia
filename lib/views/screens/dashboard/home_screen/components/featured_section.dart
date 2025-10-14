@@ -6,6 +6,8 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/base/shimmer.dart';
+import 'package:lekra/views/screens/product_details_screen/product_details_screen.dart';
+import 'package:lekra/views/screens/widget/add_to_card_button.dart';
 
 class FeaturedSection extends StatelessWidget {
   const FeaturedSection({
@@ -50,134 +52,134 @@ class FeaturedSection extends StatelessWidget {
               String priceString = product.price ?? "0";
               return CustomShimmer(
                 isLoading: homeController.isLoading,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: grey.withValues(alpha: 0.1),
-                        blurRadius: 10,
-                        offset: const Offset(0, 5),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 120,
-                        width: 120,
-                        child: CustomImage(
+                child: GestureDetector(
+                  onTap: () {
+                    if (homeController.isLoading) {
+                      return;
+                    }
+                    navigate(
+                        context: context,
+                        page: ProductDetailsScreen(
+                          productId: product.id,
+                        ));
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: grey.withValues(alpha: 0.1),
+                          blurRadius: 10,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(
                           height: 120,
                           width: 120,
-                          path: (product.images != null &&
-                                  product.images!.isNotEmpty &&
-                                  product.images![0].url != null &&
-                                  product.images![0].url!.isNotEmpty)
-                              ? product.images![0].url!
-                              : "",
-                          fit: BoxFit.cover,
+                          child: CustomImage(
+                            height: 120,
+                            width: 120,
+                            path: (product.images != null &&
+                                    product.images!.isNotEmpty &&
+                                    product.images![0].url != null &&
+                                    product.images![0].url!.isNotEmpty)
+                                ? product.images![0].url!
+                                : "",
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            product.name ?? "",
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14,
-                                    ),
-                          ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          Text(
-                            PriceConverter.convertToNumberFormat(
-                                double.parse(priceString)),
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                      color: primaryColor,
-                                    ),
-                          ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            decoration: BoxDecoration(
-                                color: primaryColor,
-                                borderRadius: BorderRadius.circular(12)),
-                            child: Center(
-                              child: Text(
-                                "Add to Card",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14,
-                                      color: white,
-                                    ),
-                              ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              product.name ?? "",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                  ),
                             ),
-                          ),
-                        ],
-                      ),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            Text(
+                              PriceConverter.convertToNumberFormat(
+                                  double.parse(priceString)),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    color: primaryColor,
+                                  ),
+                            ),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            AddToCardButton(
+                              onTap: () {},
+                            ),
+                          ],
+                        ),
 
-                      // Column(
-                      //   crossAxisAlignment: CrossAxisAlignment.start,
-                      //   children: [
-                      //     Text(
-                      //       product.name ?? "",
-                      //       style:
-                      //           Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      //                 fontWeight: FontWeight.w600,
-                      //                 fontSize: 14,
-                      //               ),
-                      //     ),
-                      //     const SizedBox(
-                      //       height: 4,
-                      //     ),
-                      //     Text(
-                      //       PriceConverter.convertToNumberFormat(
-                      //           double.parse(priceString)),
-                      //       style:
-                      //           Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      //                 fontWeight: FontWeight.w600,
-                      //                 fontSize: 14,
-                      //               ),
-                      //     ),
-                      //     const SizedBox(
-                      //       height: 4,
-                      //     ),
-                      //   ],
-                      // ),
-                      // Container(
-                      //   padding: const EdgeInsets.symmetric(vertical: 8),
-                      //   decoration: BoxDecoration(
-                      //       color: primaryColor,
-                      //       borderRadius: BorderRadius.circular(12)),
-                      //   child: Center(
-                      //     child: Text(
-                      //       "Add to Card",
-                      //       style:
-                      //           Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      //                 fontWeight: FontWeight.w600,
-                      //                 fontSize: 14,
-                      //                 color: white,
-                      //               ),
-                      //     ),
-                      //   ),
-                      // ),
-                    ],
+                        // Column(
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   children: [
+                        //     Text(
+                        //       product.name ?? "",
+                        //       style:
+                        //           Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        //                 fontWeight: FontWeight.w600,
+                        //                 fontSize: 14,
+                        //               ),
+                        //     ),
+                        //     const SizedBox(
+                        //       height: 4,
+                        //     ),
+                        //     Text(
+                        //       PriceConverter.convertToNumberFormat(
+                        //           double.parse(priceString)),
+                        //       style:
+                        //           Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        //                 fontWeight: FontWeight.w600,
+                        //                 fontSize: 14,
+                        //               ),
+                        //     ),
+                        //     const SizedBox(
+                        //       height: 4,
+                        //     ),
+                        //   ],
+                        // ),
+                        // Container(
+                        //   padding: const EdgeInsets.symmetric(vertical: 8),
+                        //   decoration: BoxDecoration(
+                        //       color: primaryColor,
+                        //       borderRadius: BorderRadius.circular(12)),
+                        //   child: Center(
+                        //     child: Text(
+                        //       "Add to Card",
+                        //       style:
+                        //           Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        //                 fontWeight: FontWeight.w600,
+                        //                 fontSize: 14,
+                        //                 color: white,
+                        //               ),
+                        //     ),
+                        //   ),
+                        // ),
+                      ],
+                    ),
                   ),
                 ),
               );

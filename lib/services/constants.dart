@@ -29,6 +29,11 @@ class Helper {
   TextTheme get textTheme => Theme.of(context).textTheme;
 }
 
+String capitalize(String? s) {
+  if (s == null || s.isEmpty) return "";
+  return s[0].toUpperCase() + s.substring(1);
+}
+
 void navigate({
   PageTransitionType type = PageTransitionType.fade,
   required BuildContext context,
@@ -150,6 +155,10 @@ class AppConstants {
 
   static const String categoryList = "api/category";
   static const String getFeaturedProducts = "api/products";
+
+  //Category screen
+    static const String getCategoryDetails =   "api/category-details";
+    static const String getProductDetails =   "api/products-details";
 
   //
   static const double horizontalPadding = 16;

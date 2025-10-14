@@ -9,19 +9,13 @@ Color secondaryColor = const Color(0xFFf97316);
 Color backgroundDark = const Color(0xff231F20);
 Color backgroundLight = const Color(0xffffffff);
 
-
 const Color textPrimary = Color(0xff000000);
 const Color textSecondary = Color(0xff838383);
-
-
 
 const Color loginPageBg = Color(0xfff0f2f5);
 const Color white = Colors.white;
 const Color grey = Colors.grey;
 const Color black = Colors.black;
-
-
-
 
 Map<int, Color> color = const {
   50: Color.fromRGBO(255, 244, 149, .1),
@@ -97,17 +91,25 @@ class CustomTheme {
       displaySmall: GoogleFonts.openSans(),
       titleLarge: GoogleFonts.openSans(),
       titleMedium: GoogleFonts.openSans(
-        fontSize: 30,fontWeight: FontWeight.w800,
+        fontSize: 30,
+        fontWeight: FontWeight.w800,
       ),
-      titleSmall: GoogleFonts.openSans(),
-      bodyLarge: GoogleFonts.openSans(),
+      titleSmall: GoogleFonts.openSans(
+         fontWeight: FontWeight.bold,
+                                fontSize: 22,
+      ),
+      bodyLarge: GoogleFonts.openSans(
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+      ),
       bodyMedium: GoogleFonts.openSans(
         fontSize: 16,
         color: textPrimary,
-
       ),
-      bodySmall: GoogleFonts.openSans()
-      ,
+      bodySmall: GoogleFonts.openSans(
+        fontSize: 12,
+        
+      ),
     ),
   );
   static ThemeData dark = ThemeData(

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/basic_controller.dart';
 import 'package:lekra/controllers/home_controller.dart';
 import 'package:lekra/services/constants.dart';
-import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/dashboard/home_screen/components/explore_category_section.dart';
 import 'package:lekra/views/screens/dashboard/home_screen/components/featured_section.dart';
 import 'package:lekra/views/screens/dashboard/home_screen/components/home_appbar.dart';
