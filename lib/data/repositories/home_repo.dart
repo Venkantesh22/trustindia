@@ -8,4 +8,7 @@ class HomeRepo {
 
   Future<Response> getCategory() async =>
       await apiClient.getData(AppConstants.categoryList, "getCategory");
+
+  Future<Response> getFeaturedProducts() async =>
+      await apiClient.getData(AppConstants.getFeaturedProducts, "featuredProducts");
 }

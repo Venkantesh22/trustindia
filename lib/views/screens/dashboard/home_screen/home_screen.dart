@@ -26,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Get.find<BasicController>().fetchHomeBanner();
       Get.find<HomeController>().fetchHomeCategory();
+      Get.find<HomeController>().fetchFeaturedProducts();
     });
   }
 

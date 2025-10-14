@@ -149,6 +149,7 @@ class AppConstants {
   //Home
 
   static const String categoryList = "api/category";
+  static const String getFeaturedProducts = "api/products";
 
   //
   static const double horizontalPadding = 16;

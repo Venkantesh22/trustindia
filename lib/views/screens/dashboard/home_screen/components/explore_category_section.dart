@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lekra/generated/assets.dart';
+import 'package:get/state_manager.dart';
+import 'package:lekra/controllers/home_controller.dart';
+import 'package:lekra/data/models/home/category_model.dart';
+import 'package:lekra/services/constants.dart';
+import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/base/custom_image.dart';
+import 'package:lekra/views/screens/category_screen.dart/category_detaisl.dart';
 
 class ExploreCategorySection extends StatelessWidget {
   const ExploreCategorySection({super.key});
@@ -9,38 +14,42 @@ class ExploreCategorySection extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Explore Categories",
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-                fontSize: 24,
+    return GetBuilder<HomeController>(builder: (homeController) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Explore Categories",
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 24,
+                ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        SizedBox(
-          height: 110,
-          child: ListView.separated(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            itemCount: categoryList.length,
-            scrollDirection: Axis.horizontal,
-            separatorBuilder: (_, __) => const SizedBox(width: 16),
-            itemBuilder: (context, index) {
-              final category = categoryList[index];
-              return _CategoryCard(category: category);
-            },
+            ],
           ),
-        ),
-      ],
-    );
+          const SizedBox(height: 16),
+          SizedBox(
+            height: 110,
+            child: ListView.separated(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              itemCount: homeController.categoryList.length,
+              scrollDirection: Axis.horizontal,
+              separatorBuilder: (_, __) => const SizedBox(width: 16),
+              itemBuilder: (context, index) {
+                final category = homeController.isLoading
+                    ? CategoryModel()
+                    : homeController.categoryList[index];
+                return _CategoryCard(category: category);
+              },
+            ),
+          ),
+        ],
+      );
+    });
   }
 }
 
@@ -58,21 +67,33 @@ class _CategoryCard extends StatelessWidget {
         InkWell(
           borderRadius: BorderRadius.circular(50),
           onTap: () {
-            // TODO: Navigate or perform category-specific action
+            navigate(
+                context: context,
+                page: CategoryDetailsScreen(
+                  categoryModel: category,
+                ));
           },
           child: CircleAvatar(
-            radius: 32,
-            backgroundColor: Colors.blue.withValues(alpha: 0.1),
-            child: SvgPicture.asset(
-              category.icon,
-              width: 28,
-              height: 28,
-            ),
-          ),
+              radius: 32,
+              backgroundColor: white,
+              child: CustomImage(
+                path: category.icon ?? "",
+                width: 40,
+                height: 40,
+                // radius: 32,
+                fit: BoxFit.cover,
+              )
+
+              // SvgPicture.asset(
+              //   category.icon ?? "",
+              //   width: 28,
+              //   height: 28,
+              // ),
+              ),
         ),
         const SizedBox(height: 8),
         Text(
-          category.title,
+          category.name ?? "",
           style: theme.textTheme.bodyMedium?.copyWith(
             fontWeight: FontWeight.w600,
             fontSize: 12,
@@ -82,15 +103,3 @@ class _CategoryCard extends StatelessWidget {
     );
   }
 }
-
-class CategoryModel {
-  final String title;
-  final String icon;
-  const CategoryModel({required this.title, required this.icon});
-}
-
-final List<CategoryModel> categoryList = [
-  CategoryModel(title: "Medicines", icon: Assets.imagesCall),
-  CategoryModel(title: "Electronics", icon: Assets.imagesCall),
-  CategoryModel(title: "Fashion", icon: Assets.imagesCall),
-];
