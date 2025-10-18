@@ -22,8 +22,10 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<ProductController>()
-        .fetchCategory(categoryId: widget.categoryModel.id);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<ProductController>()
+          .fetchCategory(categoryId: widget.categoryModel.id);
+    });
   }
 
   @override
@@ -143,9 +145,13 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                               const SizedBox(
                                 height: 4,
                               ),
-                              AddToCardButton(
-                                onTap: () {},
-                              ),
+                              GetBuilder<ProductController>(
+                                  builder: (productController) {
+                                return AddToCardButton(
+                                  product: product,
+                                
+                                );
+                              }),
                             ],
                           ),
                         ),

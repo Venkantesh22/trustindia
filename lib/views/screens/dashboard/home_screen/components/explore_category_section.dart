@@ -80,16 +80,8 @@ class _CategoryCard extends StatelessWidget {
                 path: category.icon ?? "",
                 width: 40,
                 height: 40,
-                // radius: 32,
                 fit: BoxFit.cover,
-              )
-
-              // SvgPicture.asset(
-              //   category.icon ?? "",
-              //   width: 28,
-              //   height: 28,
-              // ),
-              ),
+              )),
         ),
         const SizedBox(height: 8),
         Text(

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:lekra/views/screens/auth_screens/profile_screen/profile_screen.dart';
+import 'package:lekra/views/screens/checkout_screen/checkout_screen.dart';
 import 'package:lekra/views/screens/dashboard/home_screen/home_screen.dart';
+import 'package:lekra/views/screens/referral_screen/referral_screen.dart';
+import 'package:lekra/views/screens/wallet_screen/wallet_screen.dart';
 
 import '../../../controllers/dashboard_controller.dart';
 import '../../../generated/assets.dart';
@@ -20,15 +24,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
       body: GetBuilder<DashBoardController>(
         builder: (DashBoardController controller) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-            child: [
-              const HomeScreen(),
-              const Center(child: Text("second screen"),)
-
-
-            ][controller.dashPage],
-          );
+          return [
+            const HomeScreen(),
+            const WalletScreen(),
+            const ReferralScreen(),
+            const ProfileScreen(),
+          ][controller.dashPage];
         },
       ),
       bottomNavigationBar: GetBuilder<DashBoardController>(
@@ -45,38 +46,38 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // BottomNavigationItemWidget(
-                  //   onTap: () {
-                  //     controller.dashPage = 0;
-                  //   },
-                  //   title: 'Home',
-                  //   icon: Assets.svgsHomeOutline,
-                  //   isActive: controller.dashPage == 0 ? true : false,
-                  // ),
-                  // BottomNavigationItemWidget(
-                  //   onTap: () {
-                  //     controller.dashPage = 1;
-                  //   },
-                  //   title: 'Projects',
-                  //   icon: Assets.svgsProjectsOutline,
-                  //   isActive: controller.dashPage == 0 ? true : false,
-                  // ),
-                  // BottomNavigationItemWidget(
-                  //   onTap: () {
-                  //     controller.dashPage = 2;
-                  //   },
-                  //   title: 'Favorites',
-                  //   icon: Assets.svgsHeartOutline,
-                  //   isActive: controller.dashPage == 0 ? true : false,
-                  // ),
-                  // BottomNavigationItemWidget(
-                  //   onTap: () {
-                  //     controller.dashPage = 3;
-                  //   },
-                  //   title: 'More',
-                  //   icon: Assets.svgsMoreOutline,
-                  //   isActive: controller.dashPage == 0 ? true : false,
-                  // ),
+                  BottomNavigationItemWidget(
+                    onTap: () {
+                      controller.dashPage = 0;
+                    },
+                    title: 'Home',
+                    icon: Assets.svgsHome,
+                    isActive: controller.dashPage == 0 ? true : false,
+                  ),
+                  BottomNavigationItemWidget(
+                    onTap: () {
+                      controller.dashPage = 1;
+                    },
+                    title: 'Wallet',
+                    icon: Assets.svgsWallet,
+                    isActive: controller.dashPage == 1 ? true : false,
+                  ),
+                  BottomNavigationItemWidget(
+                    onTap: () {
+                      controller.dashPage = 2;
+                    },
+                    title: 'Referral ',
+                    icon: Assets.svgsReferral,
+                    isActive: controller.dashPage == 2 ? true : false,
+                  ),
+                  BottomNavigationItemWidget(
+                    onTap: () {
+                      controller.dashPage = 3;
+                    },
+                    title: 'Profile',
+                    icon: Assets.svgsProfile,
+                    isActive: controller.dashPage == 3 ? true : false,
+                  ),
                 ],
               ),
             ),

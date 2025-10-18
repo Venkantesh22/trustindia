@@ -146,21 +146,40 @@ class AppConstants {
   static const String userRegisterUri = 'api/register-user';
   static const String loginUri = 'api/login-post';
   static const String logoutUri = 'api/logout';
-  static const String profileUri = 'api/v1/user/profile';
+  static const String profileUri = 'api/profile';
+
+  // Address
+  static const String getAddress = 'api/get-address';
+  static const String postAddAddress = 'api/add-address';
+  static const String postDeleteAddress = 'api/delete-address';
+
 
   // Basic
   static const String bannerUri = 'api/banners';
 
   //Home
-
   static const String categoryList = "api/category";
   static const String getFeaturedProducts = "api/products";
+  static const String getHotDealsTodayProducts = "api/today-hot-deals";
 
-  //Category screen
-    static const String getCategoryDetails =   "api/category-details";
-    static const String getProductDetails =   "api/products-details";
+  //wallet
+  static const String getWalletTransaction = "api/wallet/transactions";
 
-  //
+  // Check out
+  static const String postCheckOut = "api/checkout";
+  static const String postPayOrderWalled = "api/pay-order";
+  static const String getOrder = "api/orders";
+
+
+
+  //Product screen
+  static const String getCategoryDetails = "api/category-details";
+  static const String getProductDetails = "api/products-details";
+  static const String postAddToCard = "api/add-carts";
+  static const String postRemoveToCard =
+      "api/cart/decrease"; // Product Quection is decrease by 1
+  static const String getCard = "api/carts";
+
   static const double horizontalPadding = 16;
   static const double verticalPadding = 20;
   static const EdgeInsets screenPadding = EdgeInsets.symmetric(

@@ -38,6 +38,9 @@ class AuthRepo {
   //       },
   //     );
 
+  Future<Response> fetchUserProfile() async =>
+      await apiClient.getData(AppConstants.profileUri, "fetchUserProfile");
+
   Future<Response> postUserRegister({required FormData data}) async =>
       await apiClient.postData(
         AppConstants.userRegisterUri,
@@ -52,13 +55,12 @@ class AuthRepo {
         data,
       );
   Future<Response> postLogout() async =>
-      await apiClient.postData(AppConstants.logoutUri,"postLogout" ,"");
+      await apiClient.postData(AppConstants.logoutUri, "postLogout", "");
 
   String getUserToken() {
     return sharedPreferences.getString(AppConstants.token) ?? "";
   }
 
- 
   Future<bool> saveUserToken(String token) async {
     apiClient.token = token;
     apiClient.updateHeader(token);

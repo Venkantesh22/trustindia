@@ -89,4 +89,41 @@ class HomeController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
+
+  List<ProductModel> hotDealsTodayProductList = [];
+
+  Future<ResponseModel> fetchHotDealsTodayProducts() async {
+    log('----------- fetchHotDealsTodayProducts Called() -------------');
+    ResponseModel responseModel = ResponseModel(false, "Unknown error");
+    isLoading = true;
+    update();
+
+    try {
+      Response response = await homeRepo.fetchHotDealsTodayProducts();
+
+      if (response.statusCode == 200 &&
+          response.body['status'] == true &&
+          response.body['data']['data'] is List) {
+        hotDealsTodayProductList = (response.body['data']['data'] as List)
+            .map((item) => ProductModel.fromJson(item))
+            .toList();
+
+        log("today list : ${hotDealsTodayProductList.length}");
+        responseModel =
+            ResponseModel(true, " Success  Fetched fetchHotDealsTodayProducts");
+      } else {
+        responseModel = ResponseModel(
+          false,
+          response.body['message'] ?? "Something went wrong",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "fetchHotDealsTodayProducts");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
 }

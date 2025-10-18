@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
+import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/dashboard/home_screen/home_screen.dart';
 
 import '../../../services/constants.dart';
@@ -32,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
       // User is signed in → go to HomeScreen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
+        MaterialPageRoute(builder: (_) => const DashboardScreen()),
       );
     } else {
       // User not signed in → go to LoginScreen

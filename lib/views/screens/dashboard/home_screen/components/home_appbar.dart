@@ -1,13 +1,15 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/base/custom_image.dart';
-import 'package:lekra/views/base/dialogs/logout_dialog.dart' show LogoutDialog;
+import 'package:lekra/views/screens/drawer/drawer_screen.dart';
+import 'package:lekra/views/screens/widget/card_icon.dart';
 
 class HomeApp extends StatelessWidget implements PreferredSizeWidget {
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
   const HomeApp({
     super.key,
+    required this.scaffoldKey,
   });
 
   @override
@@ -17,10 +19,15 @@ class HomeApp extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.transparent,
-      leading: const Icon(
-        Icons.menu_rounded,
-        color: black,
-        size: 30,
+      leading: IconButton(
+        onPressed: () {
+          scaffoldKey.currentState?.openDrawer();
+        },
+        icon: const Icon(
+          Icons.menu_rounded,
+          color: black,
+          size: 30,
+        ),
       ),
       title: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
@@ -47,32 +54,12 @@ class HomeApp extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
       ),
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.shopping_cart_rounded,
-            color: black,
-          ),
-        ),
-        const SizedBox(
+      actions: const [
+        CardIcon(),
+        SizedBox(
           width: 6,
         ),
-        GestureDetector(
-          onTap: () {
-            log("Logout Dialog");
-            showDialog(
-                context: context, builder: (context) => const LogoutDialog());
-          },
-          child: const CustomImage(
-            isProfile: true,
-            radius: 20,
-            path: "",
-            width: 30,
-            height: 30,
-          ),
-        ),
-        const SizedBox(
+        SizedBox(
           width: 14,
         )
       ],

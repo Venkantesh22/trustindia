@@ -11,4 +11,6 @@ class HomeRepo {
 
   Future<Response> getFeaturedProducts() async =>
       await apiClient.getData(AppConstants.getFeaturedProducts, "featuredProducts");
+  Future<Response> fetchHotDealsTodayProducts() async =>
+      await apiClient.getData(AppConstants.getFeaturedProducts, "fetchHotDealsTodayProducts");
 }

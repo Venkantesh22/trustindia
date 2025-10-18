@@ -37,5 +37,21 @@ class Assets {
   /// Assets for imagesShimmer
   /// assets/images/shimmer.gif
   static const String imagesShimmer = "assets/images/shimmer.gif";
+
+  /// Assets for svgsHome
+  /// assets/svgs/home.svg
+  static const String svgsHome = "assets/svgs/home.svg";
+
+  /// Assets for svgsProfile
+  /// assets/svgs/profile.svg
+  static const String svgsProfile = "assets/svgs/profile.svg";
+
+  /// Assets for svgsReferral
+  /// assets/svgs/referral.svg
+  static const String svgsReferral = "assets/svgs/referral.svg";
+
+  /// Assets for svgsWallet
+  /// assets/svgs/wallet.svg
+  static const String svgsWallet = "assets/svgs/wallet.svg";
 }
 

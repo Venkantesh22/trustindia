@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 // Color primaryColor = const Color(0xFF941f37);
 // Color secondaryColor = const Color(0xFF941f37).withOpacity(.47);
-Color primaryColor = const Color(0xFF2563eb);
+Color primaryColor = const Color(0xFF0D80F2);
 Color secondaryColor = const Color(0xFFf97316);
 Color backgroundDark = const Color(0xff231F20);
 Color backgroundLight = const Color(0xffffffff);
@@ -15,7 +15,12 @@ const Color textSecondary = Color(0xff838383);
 const Color loginPageBg = Color(0xfff0f2f5);
 const Color white = Colors.white;
 const Color grey = Colors.grey;
+const Color greyBorder = Color(0xFFE5E7EB);
 const Color black = Colors.black;
+const Color red = Colors.red;
+const Color green = Colors.green;
+
+//Shipping Color 
 
 Map<int, Color> color = const {
   50: Color.fromRGBO(255, 244, 149, .1),
@@ -95,20 +100,19 @@ class CustomTheme {
         fontWeight: FontWeight.w800,
       ),
       titleSmall: GoogleFonts.openSans(
-         fontWeight: FontWeight.bold,
-                                fontSize: 22,
+        fontWeight: FontWeight.bold,
+        fontSize: 22,
       ),
-      bodyLarge: GoogleFonts.openSans(
+      bodyLarge: GoogleFonts.plusJakartaSans(
         fontSize: 18,
         fontWeight: FontWeight.w600,
       ),
-      bodyMedium: GoogleFonts.openSans(
+      bodyMedium: GoogleFonts.plusJakartaSans(
         fontSize: 16,
-        color: textPrimary,
+        color: black,
       ),
       bodySmall: GoogleFonts.openSans(
         fontSize: 12,
-        
       ),
     ),
   );

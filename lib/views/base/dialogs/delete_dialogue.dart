@@ -2,17 +2,39 @@ import 'package:flutter/material.dart';
 
 import '../common_button.dart';
 
-showDeleteDialogue ({required BuildContext context}) async {
+showDeleteDialogue({
+  required BuildContext context,
+  required String title,
+  required String subTitle,
+  required String deleteButtonTitle,
+  required Function()? onTap,
+}) async {
   return await showDialog(
     context: context,
     builder: (context) {
-      return const DeleteDialog();
+      return DeleteDialog(
+          context: context,
+          title: title,
+          subTitle: subTitle,
+          deleteButtonTitle: deleteButtonTitle,
+          onTap: onTap);
     },
   );
 }
 
 class DeleteDialog extends StatelessWidget {
-  const DeleteDialog({super.key});
+  final String title;
+  final String subTitle;
+  final String deleteButtonTitle;
+  final Function()? onTap;
+  const DeleteDialog({
+    super.key,
+    required BuildContext context,
+    required this.title,
+    required this.subTitle,
+    required this.deleteButtonTitle,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -44,21 +66,23 @@ class DeleteDialog extends StatelessWidget {
               height: 10,
             ),
             Text(
-              "Are you sure you want to delete\nyour account?",
+              // "Are you sure you want to delete\nyour account?",
+              title,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                fontSize: 16.0,
-                fontWeight: FontWeight.w500,
-              ),
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w500,
+                  ),
             ),
             const SizedBox(height: 5),
             Text(
-              "Remember, you can recover it if you log in within 48 hours.",
+              subTitle,
+              // "Remember, you can recover it if you log in within 48 hours.",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                fontSize: 12.0,
-                fontWeight: FontWeight.w400,
-              ),
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.w400,
+                  ),
             ),
             const SizedBox(
               height: 14,
@@ -86,11 +110,10 @@ class DeleteDialog extends StatelessWidget {
                 color: Colors.redAccent,
                 radius: 6,
                 type: ButtonType.primary,
-                title: 'Yes, Delete Account',
+                // title: 'Yes, Delete Account',
+                title: deleteButtonTitle,
                 height: 46,
-                onTap: () {
-                  Navigator.pop(context, true);
-                },
+                onTap: onTap,
               ),
             ),
           ],
