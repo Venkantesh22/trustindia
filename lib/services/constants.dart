@@ -152,6 +152,7 @@ class AppConstants {
   static const String getAddress = 'api/get-address';
   static const String postAddAddress = 'api/add-address';
   static const String postDeleteAddress = 'api/delete-address';
+  static const String getAddressById = 'api/order-address/2';
 
 
   // Basic
@@ -179,6 +180,15 @@ class AppConstants {
   static const String postRemoveToCard =
       "api/cart/decrease"; // Product Quection is decrease by 1
   static const String getCard = "api/carts";
+
+
+  // Referral Structure
+    static const String getReferral = "api/referrals";
+
+
+
+
+
 
   static const double horizontalPadding = 16;
   static const double verticalPadding = 20;

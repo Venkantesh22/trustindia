@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/basic_controller.dart';
-import 'package:lekra/controllers/checkout_controlller.dart';
+import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/data/models/body/address_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/input_decoration.dart';
@@ -22,7 +22,7 @@ class BillingFormSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CheckoutController>(builder: (checkoutController) {
+    return GetBuilder<OrderController>(builder: (checkoutController) {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
         decoration: BoxDecoration(

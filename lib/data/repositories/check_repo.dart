@@ -3,9 +3,9 @@ import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:lekra/data/api/api_client.dart';
 import 'package:lekra/services/constants.dart';
 
-class CheckoutRepo {
+class OrderRepo {
   final ApiClient apiClient;
-  const CheckoutRepo({required this.apiClient});
+  const OrderRepo({required this.apiClient});
 
   Future<Response> postCheckout({required FormData data}) async =>
       await apiClient.postData(

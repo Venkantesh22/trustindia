@@ -15,12 +15,29 @@ const Color textSecondary = Color(0xff838383);
 const Color loginPageBg = Color(0xfff0f2f5);
 const Color white = Colors.white;
 const Color grey = Colors.grey;
+const Color greyDark =  Color(0xFF64748B);
 const Color greyBorder = Color(0xFFE5E7EB);
 const Color black = Colors.black;
 const Color red = Colors.red;
 const Color green = Colors.green;
 
-//Shipping Color 
+//Order Status color
+
+Color getStatusColor(String? status) {
+  switch (status?.toLowerCase()) {
+    case 'processing':
+      return Colors.amber; // yellow
+    case 'delivered':
+      return Colors.green;
+    case 'shipped':
+      return Colors.blue;
+    case 'cancelled':
+      return Colors.red;
+    default:
+      return Colors.grey; // fallback color
+  }
+}
+
 
 Map<int, Color> color = const {
   50: Color.fromRGBO(255, 244, 149, .1),

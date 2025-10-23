@@ -4,9 +4,10 @@ import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
+import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/dashboard/home_screen/home_screen.dart';
 import 'package:lekra/views/screens/drawer/components/drawer_item.dart';
-import 'package:lekra/views/screens/order_screem/order_screen.dart';
+import 'package:lekra/views/screens/order_screem/screen/order_screen.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({super.key});
@@ -82,9 +83,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     return DrawerItem(
                       label: drawer.label,
                       isActive: isActive,
-                       onTap: () {
-          if (drawer.onTap != null) drawer.onTap!(context);
-        },
+                      onTap: () {
+                        if (drawer.onTap != null) drawer.onTap!(context);
+                      },
                     );
                   },
                 ),
@@ -103,7 +104,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
 class DrawerItemModel {
   final String label;
   final bool isActive;
-  final Function(BuildContext context)? onTap; 
+  final Function(BuildContext context)? onTap;
 
   DrawerItemModel({
     required this.label,
@@ -116,7 +117,7 @@ List<DrawerItemModel> drawerItemList = [
   DrawerItemModel(
     label: "Home",
     onTap: (ctx) {
-      navigate(context: ctx, page: const HomeScreen());
+      navigate(context: ctx, page: const DashboardScreen());
     },
   ),
   DrawerItemModel(

@@ -4,8 +4,8 @@ class ProductModel {
   final int? id;
   final String? name;
   final String? description;
-  final String? price;
-  final String? discountedPrice;
+  final double? price;
+  final double? discountedPrice;
   final List<String>? features;
   final String? offers;
   final String? priceCategory;
@@ -40,8 +40,12 @@ class ProductModel {
         id: json["id"],
         name: json["name"],
         description: json["description"],
-        price: json["price"],
-        discountedPrice: json["discounted_price"],
+        price: json["price"] == null
+            ? null
+            : double.parse(json["price"].replaceAll(',', '')),
+        discountedPrice: json["discounted_price"] == null
+            ? null
+            : double.parse(json["price"].replaceAll(',', '')),
         features: json["features"] == null
             ? []
             : List<String>.from(json["features"]!.map((x) => x)),
@@ -52,6 +56,7 @@ class ProductModel {
             ? []
             : List<Image>.from(json["images"]!.map((x) => Image.fromJson(x))),
         quantity: json["quantity"],
+        orderId: json["order_id"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
@@ -69,6 +74,7 @@ class ProductModel {
         "price_category": priceCategory,
         "status": status,
         "quantity": quantity,
+        "order_id": orderId,
         "images": images == null
             ? []
             : List<dynamic>.from(images!.map((x) => x.toJson())),

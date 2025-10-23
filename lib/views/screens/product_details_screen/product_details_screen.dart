@@ -43,9 +43,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               GetBuilder<ProductController>(builder: (productController) {
                 return AddToCardButton(
                   product: productController.productModel ?? ProductModel(),
-                  // isAdd: productController.cardModel?.products
-                  //         ?.any((product) => product.id == widget.productId) ??
-                  //     false,
+                
                 
                 );
               }),

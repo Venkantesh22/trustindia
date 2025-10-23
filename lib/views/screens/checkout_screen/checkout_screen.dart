@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/basic_controller.dart';
-import 'package:lekra/controllers/checkout_controlller.dart';
+import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/auth_screens/profile_screen/profile_screen.dart';
@@ -33,7 +33,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar2(title: "Checkout"),
-      body: GetBuilder<CheckoutController>(builder: (checkoutController) {
+      body: GetBuilder<OrderController>(builder: (checkoutController) {
         return Stack(
           children: [
             Column(
@@ -41,7 +41,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 Expanded(
                   child: SingleChildScrollView(
                     padding: AppConstants.screenPadding,
-                    child: GetBuilder<CheckoutController>(
+                    child: GetBuilder<OrderController>(
                         builder: (checkoutController) {
                       return Column(
                         children: [
@@ -68,15 +68,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             return;
                           }
                           if (_formKey.currentState?.validate() ?? false) {
-                            Get.find<CheckoutController>()
+                            Get.find<OrderController>()
                                 .postCheckout(
                                     addressId:
                                         basicController.selectAddress?.id)
                                 .then((value) {
                               if (value.isSuccess) {
-                                Get.find<CheckoutController>()
+                                Get.find<OrderController>()
                                     .postPayOrderWallet(
-                                        orderId: Get.find<CheckoutController>()
+                                        orderId: Get.find<OrderController>()
                                             .orderId)
                                     .then((value) {
                                   if (value.isSuccess) {

@@ -5,6 +5,7 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/route_helper.dart';
 import 'package:lekra/views/screens/auth_screens/signup_screen.dart';
+import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/dashboard/home_screen/home_screen.dart';
 
 import '../../../services/theme.dart';
@@ -149,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   if (value.isSuccess) {
                                     navigate(
                                         context: context,
-                                        page: const HomeScreen(),
+                                        page: const DashboardScreen(),
                                         isRemoveUntil: true);
                                     showToast(
                                         message: value.message,

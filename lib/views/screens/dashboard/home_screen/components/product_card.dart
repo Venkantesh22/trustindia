@@ -80,7 +80,7 @@ class ProductCard extends StatelessWidget {
                 ),
                 Text(
                   PriceConverter.convertToNumberFormat(
-                      double.parse(product.price ?? "0.0")),
+                      product.price ?? 0.00),
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,

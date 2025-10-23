@@ -22,4 +22,7 @@ class BasicRepo {
   Future<Response> deletesAddress({required int? addressId}) async =>
       await apiClient.postData(
           "${AppConstants.postDeleteAddress}/$addressId", "deletesAddress", "");
+
+  Future<Response> fetchAddressById({required int? addressId}) async =>
+      await apiClient.getData(AppConstants.getAddressById, "fetchAddressById");
 }

@@ -226,4 +226,42 @@ class BasicController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
+
+  AddressModel? orderAddress;
+  Future<ResponseModel> fetchAddressId({required int? addressId}) async {
+    log('----------- fetchAddressId Called() -------------');
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+
+    try {
+      Response response =
+          await basicRepo.fetchAddressById(addressId: addressId);
+      log("Raw Response: ${response.body}");
+
+      // ✅ Correct key is 'status'
+      if (response.statusCode == 200 &&
+          response.body['status'] == true &&
+          response.body['data'] is Map) {
+        orderAddress = AddressModel.fromJson(response.body['data']);
+
+        responseModel = ResponseModel(
+          true,
+          response.body['message'] ?? "fetchAddressId fetched",
+        );
+      } else {
+        responseModel = ResponseModel(
+          false,
+          response.body['message'] ?? "Something went wrong",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "fetchAddressId");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
 }

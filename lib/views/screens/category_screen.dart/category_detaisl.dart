@@ -132,7 +132,7 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                               ),
                               Text(
                                 PriceConverter.convertToNumberFormat(
-                                    double.parse(product.price ?? "0")),
+                                    product.price ?? 0.00),
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyLarge

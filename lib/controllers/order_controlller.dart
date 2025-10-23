@@ -7,9 +7,9 @@ import 'package:lekra/data/models/product_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/repositories/check_repo.dart';
 
-class CheckoutController extends GetxController implements GetxService {
-  final CheckoutRepo checkoutRepo;
-  CheckoutController({required this.checkoutRepo});
+class OrderController extends GetxController implements GetxService {
+  final OrderRepo orderRepo;
+  OrderController({required this.orderRepo});
   bool isLoading = false;
 
   TextEditingController billingName = TextEditingController();
@@ -34,7 +34,7 @@ class CheckoutController extends GetxController implements GetxService {
         "billing_phone": billingNumber.text.trim(),
       };
 
-      Response response = await checkoutRepo.postCheckout(data: FormData(data));
+      Response response = await orderRepo.postCheckout(data: FormData(data));
 
       if (response.statusCode == 200 && response.body['status'] == true) {
         orderId = response.body['order']['id'];
@@ -65,8 +65,7 @@ class CheckoutController extends GetxController implements GetxService {
     update();
 
     try {
-      Response response =
-          await checkoutRepo.postPayOrderWalled(orderId: orderId);
+      Response response = await orderRepo.postPayOrderWalled(orderId: orderId);
 
       if (response.statusCode == 200 && response.body['status'] == true) {
         // orderId = response.body['order']['id'];
@@ -98,7 +97,7 @@ class CheckoutController extends GetxController implements GetxService {
     update();
 
     try {
-      Response response = await checkoutRepo.fetchOrder();
+      Response response = await orderRepo.fetchOrder();
 
       if (response.statusCode == 200 && response.body['status'] == true) {
         orderList = (response.body["data"] as List)
@@ -129,12 +128,23 @@ class CheckoutController extends GetxController implements GetxService {
             false, response.body['message'] ?? "Error while fetchOrder user");
       }
     } catch (e) {
-      log('ERROR AT postPayOrderWalled(): $e');
+      log('ERROR AT fetchOrder(): $e');
       responseModel = ResponseModel(false, "Error while fetchOrder user $e");
     }
 
     isLoading = false;
     update();
     return responseModel;
+  }
+
+  OrderModel? selectOrder;
+
+  void updateSelectOrder(int? orderId) {
+    selectOrder = orderList.firstWhere(
+      (orderModel) => orderModel.id?.toString() == orderId?.toString(),
+      orElse: () => OrderModel(),
+    );
+
+    update();
   }
 }

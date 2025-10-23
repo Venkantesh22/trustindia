@@ -1,0 +1,99 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:lekra/controllers/order_controlller.dart';
+import 'package:lekra/data/models/product_model.dart';
+import 'package:lekra/services/constants.dart';
+import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/screens/drawer/drawer_screen.dart';
+import 'package:lekra/views/screens/order_screem/components/order_container.dart';
+import 'package:lekra/views/screens/order_screem/screen/order_details_screen.dart';
+import 'package:lekra/views/screens/widget/custom_appbar2.dart';
+
+class OrderScreen extends StatefulWidget {
+  const OrderScreen({super.key});
+
+  @override
+  State<OrderScreen> createState() => _OrderScreenState();
+}
+
+class _OrderScreenState extends State<OrderScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<OrderController>().fetchOrder();
+    });
+  }
+
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: scaffoldKey,
+      drawer: const DrawerScreen(),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            scaffoldKey.currentState?.openDrawer();
+          },
+          icon: const Icon(
+            Icons.menu,
+            color: black,
+          ),
+        ),
+        title: Text(
+          "Order",
+          style: Helper(context)
+              .textTheme
+              .bodyLarge
+              ?.copyWith(fontWeight: FontWeight.bold),
+        ),
+      ),
+      body: SingleChildScrollView(
+        padding: AppConstants.screenPadding,
+        child: GetBuilder<OrderController>(builder: (orderController) {
+          return Column(
+            children: [
+              ListView.separated(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  final product = orderController.isLoading
+                      ? ProductModel()
+                      : orderController.orderProductList[index];
+                  return InkWell(
+                      onTap: () {
+                        if (orderController.isLoading) {
+                          showToast(
+                              message: "Please waiting...",
+                              toastType: ToastType.info);
+                          return;
+                        }
+                        orderController.updateSelectOrder(product.orderId);
+                        navigate(
+                            context: context,
+                            page: OrderDetailsScreen(
+                              productModel: product,
+                            ));
+                      },
+                      child: OrderContainer(productModel: product));
+                },
+                separatorBuilder: (context, index) {
+                  return const SizedBox(
+                    height: 12,
+                  );
+                },
+                itemCount: orderController.isLoading
+                    ? 2
+                    : orderController.orderProductList.length,
+              )
+            ],
+          );
+        }),
+      ),
+    );
+  }
+}

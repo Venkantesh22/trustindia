@@ -35,9 +35,10 @@ class CardContainer extends StatelessWidget {
         child: Row(
           children: [
             CustomImage(
-              path: (productModel?.images != null && productModel!.images!.isNotEmpty)
+              path: (productModel?.images != null &&
+                      productModel!.images!.isNotEmpty)
                   ? (productModel!.images![0].url?.toString() ?? " ")
-                  : " ", 
+                  : " ",
               height: 56,
               width: 56,
               radius: 6,
@@ -56,7 +57,7 @@ class CardContainer extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                   ),
-                  Text(PriceConverter.convertRound(double.parse(productModel?.price ?? "")))
+                  Text(PriceConverter.convertRound(productModel?.price ?? 0.00))
                 ],
               ),
             ),
@@ -70,7 +71,7 @@ class CardContainer extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                       Get.find<ProductController>()
+                      Get.find<ProductController>()
                           .postRemoveToCard(product: productModel)
                           .then((value) {
                         if (value.isSuccess) {

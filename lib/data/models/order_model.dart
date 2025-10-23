@@ -1,10 +1,13 @@
 import 'package:lekra/data/models/product_model.dart';
 
 class OrderModel {
-  int? id;
+  final int? id;
   int? addressId;
-  String? totalAmount;
+  final double? subtotal;
+  final double? totalPrice;
+  final double? discount;
   String? status;
+  final String? paymentStatus;
   String? billingName;
   String? billingPhone;
   String? billingEmail;
@@ -15,8 +18,11 @@ class OrderModel {
   OrderModel({
     this.id,
     this.addressId,
-    this.totalAmount,
+    this.subtotal,
+    this.totalPrice,
+    this.discount,
     this.status,
+    this.paymentStatus,
     this.billingName,
     this.billingPhone,
     this.billingEmail,
@@ -28,8 +34,17 @@ class OrderModel {
   factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
         id: json["id"],
         addressId: json["address_id"],
-        totalAmount: json["total_amount"],
+        subtotal: json["subtotal"] == null
+            ? null
+            : double.parse(json["subtotal"].replaceAll(',', '')),
+        totalPrice: json["total_price"] == null
+            ? null
+            : double.parse(json["total_price"].replaceAll(',', '')),
+        discount: json["discount"] == null
+            ? null
+            : double.parse(json["discount"].replaceAll(',', '')),
         status: json["status"],
+        paymentStatus: json["payment_status"],
         billingName: json["billing_name"],
         billingPhone: json["billing_phone"],
         billingEmail: json["billing_email"],
@@ -48,8 +63,11 @@ class OrderModel {
   Map<String, dynamic> toJson() => {
         "id": id,
         "address_id": addressId,
-        "total_amount": totalAmount,
+        "subtotal": subtotal,
+        "total_price": totalPrice,
+        "discount": discount,
         "status": status,
+        "payment_status": paymentStatus,
         "billing_name": billingName,
         "billing_phone": billingPhone,
         "billing_email": billingEmail,

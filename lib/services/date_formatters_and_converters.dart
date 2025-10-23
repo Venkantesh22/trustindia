@@ -51,7 +51,11 @@ String getSlotTime({required DateTime one, required DateTime two}) {
   return "${DateFormatters().hMA.format(one)} - ${DateFormatters().hMA.format(two)}";
 }
 
-bool compareDates({required DateTime one, required DateTime two, bool year = true, bool logData = false}) {
+bool compareDates(
+    {required DateTime one,
+    required DateTime two,
+    bool year = true,
+    bool logData = false}) {
   if (logData) {
     log("${DateFormatters().dMy.format(one)}  ${DateFormatters().dMy.format(two)}");
   }
