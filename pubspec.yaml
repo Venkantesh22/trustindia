@@ -63,6 +63,7 @@ dependencies:
   sms_autofill: ^2.4.1
   flutter_html: ^3.0.0-beta.2
   fluttertoast: ^9.0.0
+  graphview: ^1.5.1
 
 dev_dependencies:
   flutter_test:

@@ -6,6 +6,8 @@ import 'package:lekra/controllers/referral_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
+import 'package:lekra/views/base/shimmer.dart';
+import 'package:lekra/views/screens/referral_screen/components/referral_tree.dart';
 import 'package:lekra/views/screens/widget/custom_appbar2.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -25,6 +27,8 @@ class _ReferralScreenState extends State<ReferralScreen> {
     });
   }
 
+  bool useLevelView = false;
+
   void copyReferralCode(BuildContext context, String code) {
     Clipboard.setData(ClipboardData(text: code));
     // ScaffoldMessenger.of(context).showSnackBar(
@@ -36,12 +40,17 @@ class _ReferralScreenState extends State<ReferralScreen> {
     // );
   }
 
-  void shareReferralCode(String code) {
-    final message =
-        "Hey! 👋 Use my referral code: $code to join and earn rewards!";
-    // SharePlus.instance.share.shsre(message, subject: "Join with my Referral Code");
-    SharePlus.instance.share(
-        ShareParams(text: message, subject: "Join with my Referral Code"));
+  void shareReferralCode(String code, String? link) {
+    String message = "Use my referral code: $code";
+
+    // If there's a referral link, append it to the message
+    if (link != null && link.isNotEmpty) {
+      message += "\n$link";
+    }
+
+    SharePlus.instance.share(ShareParams(
+      text: message,
+    ));
   }
 
   @override
@@ -55,6 +64,7 @@ class _ReferralScreenState extends State<ReferralScreen> {
         padding: AppConstants.screenPadding,
         child: Column(
           children: [
+            // Top user info card
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
@@ -117,17 +127,14 @@ class _ReferralScreenState extends State<ReferralScreen> {
                         const SizedBox(width: 12),
                         ElevatedButton.icon(
                           onPressed: () => shareReferralCode(
-                              authController.userModel?.referralCode ?? ""),
+                              authController.userModel?.referralCode ?? "",
+                              authController.userModel?.referralLink ?? ""),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8)),
                           ),
-                          icon: const Icon(
-                            Icons.share,
-                            size: 18,
-                            color: white,
-                          ),
+                          icon: const Icon(Icons.share, size: 18, color: white),
                           label: Text(
                             "Share",
                             style: Helper(context)
@@ -141,7 +148,22 @@ class _ReferralScreenState extends State<ReferralScreen> {
                   ],
                 );
               }),
-            )
+            ),
+            const SizedBox(height: 16),
+
+            GetBuilder<ReferralController>(builder: (referralController) {
+              return CustomShimmer(
+                isLoading: referralController.isLoading,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    child: ReferralGraphTree(
+                        roots: referralController.referralList),
+                  ),
+                ),
+              );
+            }),
           ],
         ),
       ),
