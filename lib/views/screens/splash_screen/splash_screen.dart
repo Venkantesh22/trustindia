@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
-import 'package:lekra/views/screens/dashboard/home_screen/home_screen.dart';
 
 import '../../../services/constants.dart';
 

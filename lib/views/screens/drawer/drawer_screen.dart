@@ -5,9 +5,9 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
-import 'package:lekra/views/screens/dashboard/home_screen/home_screen.dart';
 import 'package:lekra/views/screens/drawer/components/drawer_item.dart';
 import 'package:lekra/views/screens/order_screem/screen/order_screen.dart';
+import 'package:lekra/views/screens/rewards/rewards_screen.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({super.key});
@@ -128,7 +128,9 @@ List<DrawerItemModel> drawerItemList = [
   ),
   DrawerItemModel(
     label: "Rewards",
-    onTap: (ctx) {},
+    onTap: (ctx) {
+      navigate(context: ctx, page: const RewardsScreen());
+    },
   ),
   DrawerItemModel(
     label: "Payment",

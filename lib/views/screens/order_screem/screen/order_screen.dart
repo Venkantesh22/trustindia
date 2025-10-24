@@ -7,7 +7,6 @@ import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/drawer/drawer_screen.dart';
 import 'package:lekra/views/screens/order_screem/components/order_container.dart';
 import 'package:lekra/views/screens/order_screem/screen/order_details_screen.dart';
-import 'package:lekra/views/screens/widget/custom_appbar2.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({super.key});

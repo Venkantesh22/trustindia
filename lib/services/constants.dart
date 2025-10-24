@@ -185,6 +185,9 @@ class AppConstants {
   // Referral Structure
     static const String getReferral = "api/referrals";
 
+  // rewards Structure
+    static const String getRewards = "api/rewards";
+
 
 
 

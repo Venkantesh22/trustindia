@@ -1,11 +1,9 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:lekra/controllers/home_controller.dart';
 import 'package:lekra/controllers/product_controller.dart';
 import 'package:lekra/data/models/product_model.dart';
-import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/dashboard/home_screen/components/product_card.dart';
 

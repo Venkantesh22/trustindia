@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/screens/drawer/drawer_screen.dart';
 import 'package:lekra/views/screens/widget/card_icon.dart';
 
 class HomeApp extends StatelessWidget implements PreferredSizeWidget {

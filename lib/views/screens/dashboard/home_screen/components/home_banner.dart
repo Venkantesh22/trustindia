@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/basic_controller.dart';
 
-import '../../../../../services/constants.dart';
 import '../../../../../services/theme.dart';
 import '../../../../base/custom_image.dart';
 import '../../../../base/shimmer.dart';

@@ -6,7 +6,6 @@ import '../../../services/constants.dart';
 import '../../../services/theme.dart';
 import '../../base/common_button.dart';
 import '../../base/custom_image.dart';
-import '../../base/custom_toast.dart' hide ToastType;
 
 class OTPVerification extends StatefulWidget {
   final String phone;

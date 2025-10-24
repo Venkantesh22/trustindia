@@ -47,4 +47,41 @@ class ReferralController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
+
+  Future<ResponseModel> fetchRewards() async {
+    log('----------- fetchRewards Called() -------------');
+    ResponseModel responseModel = ResponseModel(false, "Unknown error");
+    isLoading = true;
+    update();
+
+    try {
+      Response response = await referralRepo.fetchRewards();
+
+      // ✅ Correct key is 'status'
+      if (response.statusCode == 200 &&
+          response.body['status'] == true &&
+          response.body['data']['referrals'] is List) {
+        referralList = (response.body['data']['referrals'] as List)
+            .map((item) => ReferralModel.fromJson(item))
+            .toList();
+
+        log("referralList list : ${referralList.length}");
+        responseModel = ResponseModel(true, "Success fetch fetchRewards");
+      } else {
+        log("referralList list else : ${referralList.length}");
+
+        responseModel = ResponseModel(
+          false,
+          response.body['message'] ?? "Something went wrong",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "fetchRewards");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
 }
