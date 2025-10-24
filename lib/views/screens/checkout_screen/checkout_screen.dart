@@ -8,7 +8,7 @@ import 'package:lekra/views/screens/auth_screens/profile_screen/profile_screen.d
 import 'package:lekra/views/screens/checkout_screen/components/billing_form_section.dart';
 import 'package:lekra/views/screens/checkout_screen/components/grand_total_section.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
-import 'package:lekra/views/screens/widget/custom_appbar2.dart';
+import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({

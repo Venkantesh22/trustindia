@@ -91,43 +91,7 @@ class BillingFormSection extends StatelessWidget {
                                               ),
                                         ),
                                       ),
-                                      IconButton(
-                                          onPressed: () {
-                                            showDeleteDialogue(
-                                                context: context,
-                                                title:
-                                                    "Are you sure you want to delete\nyour address?",
-                                                subTitle:
-                                                    "Remember, address will delete permanently",
-                                                deleteButtonTitle:
-                                                    'Yes, Delete Address',
-                                                onTap: () {
-                                                  Get.find<BasicController>()
-                                                      .deleteAddress(
-                                                          addressId: addr.id)
-                                                      .then((value) {
-                                                    if (value.isSuccess) {
-                                                      showToast(
-                                                          message:
-                                                              value.message,
-                                                          typeCheck:
-                                                              value.isSuccess);
-                                                      pop(context);
-                                                    } else {
-                                                      showToast(
-                                                          message:
-                                                              value.message,
-                                                          typeCheck:
-                                                              value.isSuccess);
-                                                      pop(context);
-                                                    }
-                                                  });
-                                                });
-                                          },
-                                          icon: const Icon(
-                                            Icons.delete,
-                                            color: red,
-                                          ))
+                                     
                                     ],
                                   ),
                                 ),

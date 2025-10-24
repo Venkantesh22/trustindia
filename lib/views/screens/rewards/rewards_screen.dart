@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:lekra/controllers/referral_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/screens/drawer/drawer_screen.dart';
+import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_drawer.dart';
 
 class RewardsScreen extends StatefulWidget {
   const RewardsScreen({super.key});
@@ -24,26 +26,10 @@ class _RewardsScreenState extends State<RewardsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            scaffoldKey.currentState?.openDrawer();
-          },
-          icon: const Icon(
-            Icons.menu,
-            color: black,
-          ),
-        ),
-        title: Text(
-          "Your Rewards",
-          style: Helper(context)
-              .textTheme
-              .bodyLarge
-              ?.copyWith(fontWeight: FontWeight.bold),
-        ),
-      ),
+      key: scaffoldKey,
+      drawer: const DrawerScreen(),
+      appBar:
+          CustomAppbarDrawer(scaffoldKey: scaffoldKey, title: "Your Rewards"),
       body: SingleChildScrollView(
         padding: AppConstants.screenPadding,
         child: Column(

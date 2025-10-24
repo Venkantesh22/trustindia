@@ -7,7 +7,7 @@ import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/auth_screens/profile_screen/profile_screen.dart';
 import 'package:lekra/views/screens/checkout_screen/components/textbox_title.dart';
-import 'package:lekra/views/screens/widget/custom_appbar2.dart';
+import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class AddAddressScreen extends StatefulWidget {
   const AddAddressScreen({super.key});

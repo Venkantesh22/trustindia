@@ -4,6 +4,7 @@ import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
+import 'package:lekra/views/screens/address/screen/address_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/drawer/components/drawer_item.dart';
 import 'package:lekra/views/screens/order_screem/screen/order_screen.dart';
@@ -138,7 +139,9 @@ List<DrawerItemModel> drawerItemList = [
   ),
   DrawerItemModel(
     label: "Address",
-    onTap: (ctx) {},
+    onTap: (ctx) {
+      navigate(context: ctx, page: const AddressScreen());
+    },
   ),
   DrawerItemModel(
     label: "Customer Service",

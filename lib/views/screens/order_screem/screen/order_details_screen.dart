@@ -7,7 +7,7 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/screens/order_screem/components/order_billing_infor_section.dart';
 import 'package:lekra/views/screens/order_screem/components/order_booking_price_container.dart';
 import 'package:lekra/views/screens/order_screem/components/order_product_section.dart';
-import 'package:lekra/views/screens/widget/custom_appbar2.dart';
+import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
   final ProductModel productModel;

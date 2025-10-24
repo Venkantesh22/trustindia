@@ -6,7 +6,7 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/wallet_screen/components/profile-balalnce_section.dart';
 import 'package:lekra/views/screens/wallet_screen/components/transaction_container.dart';
-import 'package:lekra/views/screens/widget/custom_appbar2.dart';
+import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class WalletScreen extends StatefulWidget {
   const WalletScreen({super.key});

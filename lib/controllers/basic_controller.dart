@@ -195,12 +195,13 @@ class BasicController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
+bool addressDeleteLoading = false;
 
   Future<ResponseModel> deleteAddress({required int? addressId}) async {
     log('----------- deleteAddress Called ----------');
 
     ResponseModel responseModel;
-    isLoading = true;
+    addressDeleteLoading = true;
     update();
 
     try {
@@ -222,7 +223,7 @@ class BasicController extends GetxController implements GetxService {
       responseModel = ResponseModel(false, "Error while deleteAddress $e");
     }
 
-    isLoading = false;
+    addressDeleteLoading = false;
     update();
     return responseModel;
   }

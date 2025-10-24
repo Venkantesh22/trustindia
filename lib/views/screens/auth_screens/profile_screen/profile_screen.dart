@@ -5,7 +5,7 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/base/dialogs/logout_dialog.dart';
-import 'package:lekra/views/screens/widget/custom_appbar2.dart';
+import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
