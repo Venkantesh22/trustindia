@@ -31,13 +31,6 @@ class _ReferralScreenState extends State<ReferralScreen> {
 
   void copyReferralCode(BuildContext context, String code) {
     Clipboard.setData(ClipboardData(text: code));
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   SnackBar(
-    //     content: Text('Referral code "$code" copied to clipboard!'),
-    //     backgroundColor: Colors.blue,
-    //     behavior: SnackBarBehavior.floating,
-    //   ),
-    // );
   }
 
   void shareReferralCode(String code, String? link) {
@@ -152,15 +145,15 @@ class _ReferralScreenState extends State<ReferralScreen> {
             const SizedBox(height: 16),
 
             GetBuilder<ReferralController>(builder: (referralController) {
+              if (referralController.isLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
               return CustomShimmer(
                 isLoading: referralController.isLoading,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.6,
-                    child: ReferralGraphTree(
-                        roots: referralController.referralList),
-                  ),
+                  child:
+                      ReferralGraphTree(roots: referralController.referralList),
                 ),
               );
             }),

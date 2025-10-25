@@ -4,7 +4,6 @@ import 'package:lekra/controllers/basic_controller.dart';
 import 'package:lekra/data/models/body/address_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/base/dialogs/delete_dialogue.dart';
 import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/address/screen/add_address_screen.dart';
 import 'package:lekra/views/screens/drawer/drawer_screen.dart';
@@ -35,7 +34,7 @@ class _AddressScreenState extends State<AddressScreen> {
       drawer: const DrawerScreen(),
       appBar: CustomAppbarDrawer(scaffoldKey: scaffoldKey, title: "Address"),
       floatingActionButton: Container(
-        padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
         decoration: BoxDecoration(
             color: secondaryColor, borderRadius: BorderRadius.circular(12)),
         child: TextButton.icon(
@@ -64,7 +63,7 @@ class _AddressScreenState extends State<AddressScreen> {
       ),
       body: GetBuilder<BasicController>(builder: (basicController) {
         if (basicController.addressList.isEmpty) {
-          return Center(child: Text("No Address "));
+          return const Center(child: Text("No Address "));
         }
         return ListView.separated(
           padding: AppConstants.screenPadding,

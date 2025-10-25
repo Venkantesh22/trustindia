@@ -7,7 +7,6 @@ import 'package:lekra/data/models/body/address_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/base/dialogs/delete_dialogue.dart';
 import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/address/screen/add_address_screen.dart';
 import 'package:lekra/views/screens/checkout_screen/components/textbox_title.dart';
