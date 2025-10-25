@@ -186,7 +186,7 @@ class AppConstants {
     static const String getReferral = "api/referrals";
 
   // rewards Structure
-    static const String getRewards = "api/rewards";
+    static const String fetchScratchCard = "api/rewards";
 
 
 

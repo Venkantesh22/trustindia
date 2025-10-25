@@ -9,6 +9,6 @@ class ReferralRepo {
   Future<Response> fetchReferral() async =>
       await apiClient.getData(AppConstants.getReferral, "fetchReferral");
 
-  Future<Response> fetchRewards() async =>
-      await apiClient.getData(AppConstants.getRewards, "fetchReferral");
+  Future<Response> fetchScratchCard() async =>
+      await apiClient.getData(AppConstants.fetchScratchCard, "fetchScratchCard");
 }

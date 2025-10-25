@@ -34,6 +34,10 @@ class Assets {
   /// assets/images/placeholder.jpg
   static const String imagesPlaceholder = "assets/images/placeholder.jpg";
 
+  /// Assets for imagesScratch
+  /// assets/images/scratch.jpg
+  static const String imagesScratch = "assets/images/scratch.jpg";
+
   /// Assets for imagesShimmer
   /// assets/images/shimmer.gif
   static const String imagesShimmer = "assets/images/shimmer.gif";
