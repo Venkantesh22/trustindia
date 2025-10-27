@@ -63,8 +63,8 @@ class ScratchCardWidget extends StatelessWidget {
                   children: [
                     Text(
                       scratchCardModel.isDiscount
-                          ? "🎉 You've won a Discount!"
-                          : "🎁 You've won!",
+                          ? "🎉 Congratulation You've won a Discount!"
+                          : "🎁 Congratulation You've won!",
                       style: Helper(context).textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.white.withValues(alpha: 0.9),

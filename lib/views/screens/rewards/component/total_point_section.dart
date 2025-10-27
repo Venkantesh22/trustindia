@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/screens/reward_history_screen/reward_history_screen.dart';
 
 class TotalPointSection extends StatelessWidget {
   const TotalPointSection({
@@ -24,57 +27,64 @@ class TotalPointSection extends StatelessWidget {
           ]),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Total Points",
-                      style: Helper(context)
-                          .textTheme
-                          .bodyLarge
-                          ?.copyWith(fontSize: 14, color: grey)),
-                  const SizedBox(height: 4),
-                  Text(
-                    "${20} points",
-                    style: Helper(context).textTheme.titleSmall?.copyWith(
-                        color: primaryColor,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              const Icon(
-                Icons.military_tech,
-                size: 50,
-                color: greyBorder,
-              )
-            ],
-          ),
+          GetBuilder<AuthController>(builder: (authController) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Total Points",
+                        style: Helper(context)
+                            .textTheme
+                            .bodyLarge
+                            ?.copyWith(fontSize: 14, color: grey)),
+                    const SizedBox(height: 4),
+                    Text(
+                      "${authController.userModel?.rewardPoint ?? ""} points",
+                      style: Helper(context).textTheme.titleSmall?.copyWith(
+                          color: primaryColor,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                const Icon(
+                  Icons.military_tech,
+                  size: 50,
+                  color: greyBorder,
+                )
+              ],
+            );
+          }),
           const SizedBox(height: 6),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: secondaryColor,
-                      width: 1.0,
+          GestureDetector(
+            onTap: () {
+              navigate(context: context, page: const RewardHistoryScreen());
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: secondaryColor,
+                        width: 1.0,
+                      ),
                     ),
                   ),
+                  child: Text(
+                    "View Rewards History",
+                    style: Helper(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: 12,
+                        color: secondaryColor,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
-                child: Text(
-                  "View Rewards History",
-                  style: Helper(context).textTheme.bodyMedium?.copyWith(
-                      fontSize: 12,
-                      color: secondaryColor,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
+              ],
+            ),
           )
         ],
       ),

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:lekra/data/models/referral_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
+import 'package:lekra/data/models/reward_transaction_model.dart';
 import 'package:lekra/data/models/scratch_model.dart';
 import 'package:lekra/data/repositories/referral_repo.dart';
 
@@ -84,6 +85,79 @@ class ReferralController extends GetxController implements GetxService {
     }
 
     isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> postScratchCardRedeem({required int? scratchId}) async {
+    log('----------- postScratchCardRedeem Called() -------------');
+    ResponseModel responseModel = ResponseModel(false, "Unknown error");
+    isLoading = true;
+    update();
+
+    try {
+      Response response =
+          await referralRepo.postScratchCardRedeem(scratchId: scratchId);
+
+      if (response.statusCode == 200 &&
+          response.body['status'] == true &&
+          response.body['data'] is Map) {
+        responseModel =
+            ResponseModel(true, "Success fetch postScratchCardRedeem");
+        fetchScratchCard();
+      } else {
+        responseModel = ResponseModel(
+          false,
+          response.body['message'] ?? "Something went wrong",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "postScratchCardRedeem");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  List<RewardsTransactionModel> rewardTransactionList = [];
+  bool isRewardHistoryLoading = false;
+
+  Future<ResponseModel> fetchRewardsWallerHistory() async {
+    log('----------- fetchRewardsWallerHistory Called() -------------');
+    ResponseModel responseModel = ResponseModel(false, "Unknown error");
+    isRewardHistoryLoading = true;
+    update();
+
+    try {
+      Response response = await referralRepo.fetchRewardsWallerHistory();
+
+      // ✅ Correct key is 'status'
+      if (response.statusCode == 200 &&
+          response.body['status'] == true &&
+          response.body['data'] is List) {
+        rewardTransactionList = (response.body['data'] as List)
+            .map((item) => RewardsTransactionModel.fromJson(item))
+            .toList();
+
+        log("rewardTransactionList list : ${rewardTransactionList.length}");
+        responseModel =
+            ResponseModel(true, "Success fetch fetchRewardsWallerHistory");
+      } else {
+        log("rewardTransactionList list else : ${rewardTransactionList.length}");
+
+        responseModel = ResponseModel(
+          false,
+          response.body['message'] ?? "Something went wrong",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "fetchScratchCard");
+    }
+
+    isRewardHistoryLoading = false;
     update();
     return responseModel;
   }

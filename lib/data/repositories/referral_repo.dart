@@ -9,6 +9,15 @@ class ReferralRepo {
   Future<Response> fetchReferral() async =>
       await apiClient.getData(AppConstants.getReferral, "fetchReferral");
 
-  Future<Response> fetchScratchCard() async =>
-      await apiClient.getData(AppConstants.fetchScratchCard, "fetchScratchCard");
+  Future<Response> fetchScratchCard() async => await apiClient.getData(
+      AppConstants.fetchScratchCard, "fetchScratchCard");
+
+  Future<Response> postScratchCardRedeem({required int? scratchId}) async =>
+      await apiClient.postData(
+          "${AppConstants.postScratchCardRedeem}$scratchId/redeem",
+          "fetchScratchCard",
+          "");
+
+  Future<Response> fetchRewardsWallerHistory() async => await apiClient.getData(
+      AppConstants.getRewardsWallerHistory, "fetchRewardsWallerHistory");
 }

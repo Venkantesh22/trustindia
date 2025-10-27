@@ -154,7 +154,6 @@ class AppConstants {
   static const String postDeleteAddress = 'api/delete-address';
   static const String getAddressById = 'api/order-address/2';
 
-
   // Basic
   static const String bannerUri = 'api/banners';
 
@@ -171,8 +170,6 @@ class AppConstants {
   static const String postPayOrderWalled = "api/pay-order";
   static const String getOrder = "api/orders";
 
-
-
   //Product screen
   static const String getCategoryDetails = "api/category-details";
   static const String getProductDetails = "api/products-details";
@@ -181,17 +178,13 @@ class AppConstants {
       "api/cart/decrease"; // Product Quection is decrease by 1
   static const String getCard = "api/carts";
 
-
   // Referral Structure
-    static const String getReferral = "api/referrals";
+  static const String getReferral = "api/referrals";
 
   // rewards Structure
-    static const String fetchScratchCard = "api/rewards";
-
-
-
-
-
+  static const String fetchScratchCard = "api/rewards";
+  static const String postScratchCardRedeem = "api/scratch-cards/";
+  static const String getRewardsWallerHistory = "api/reward-wallet-history";
 
   static const double horizontalPadding = 16;
   static const double verticalPadding = 20;

@@ -9,6 +9,7 @@ class UserModel {
   DateTime? updatedAt;
   double? currentWallet;
   final String? referralLink;
+  final String? rewardPoint;
 
   UserModel({
     this.id,
@@ -21,6 +22,7 @@ class UserModel {
     this.updatedAt,
     this.currentWallet,
     this.referralLink,
+    this.rewardPoint,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -41,6 +43,7 @@ class UserModel {
             : (json["current_wallet"] is num
                 ? (json["current_wallet"] as num).toDouble()
                 : double.tryParse(json["current_wallet"].toString())),
+        rewardPoint: json["reward_point"],
         referralLink: json["referralLink"],
       );
 
@@ -54,6 +57,7 @@ class UserModel {
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
         "current_wallet": currentWallet,
+        "reward_point": rewardPoint,
         "referralLink": referralLink,
       };
 }

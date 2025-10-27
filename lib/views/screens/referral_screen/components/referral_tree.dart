@@ -432,8 +432,7 @@ class _ReferralGraphTreeState extends State<ReferralGraphTree>
   static const double _nodeWidth = 140.0;
   static const double _rootNodeWidth = 160.0;
 
-    Matrix4 _scaleMatrix(double s) => Matrix4.diagonal3Values(s, s, s);
-
+  Matrix4 _scaleMatrix(double s) => Matrix4.diagonal3Values(s, s, s);
 
   @override
   void initState() {
@@ -506,11 +505,10 @@ class _ReferralGraphTreeState extends State<ReferralGraphTree>
     _currentScale = to; // update target so future calls work
   }
 
- void _onAnimate() {
-  final value = _scaleAnim?.value ?? _currentScale;
-  _transformationController.value = _scaleMatrix(value);
-}
-
+  void _onAnimate() {
+    final value = _scaleAnim?.value ?? _currentScale;
+    _transformationController.value = _scaleMatrix(value);
+  }
 
   void _zoomIn() => _setScale(_currentScale * 1.2);
   void _zoomOut() => _setScale(_currentScale / 1.2);
@@ -602,7 +600,7 @@ class _ReferralGraphTreeState extends State<ReferralGraphTree>
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha:  0.25),
+            color: Colors.grey.withValues(alpha: 0.25),
             blurRadius: 6,
             offset: const Offset(0, 2),
           )
@@ -747,7 +745,7 @@ class _ReferralGraphTreeState extends State<ReferralGraphTree>
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: Colors.black.withValues(alpha:  0.6),
+                color: Colors.black.withValues(alpha: 0.6),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
@@ -905,7 +903,7 @@ class _FullScreenReferralTreeState extends State<FullScreenReferralTree>
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha:  0.25),
+            color: Colors.grey.withValues(alpha: 0.25),
             blurRadius: 6,
             offset: const Offset(0, 2),
           )
@@ -953,15 +951,12 @@ class _FullScreenReferralTreeState extends State<FullScreenReferralTree>
     _animController.forward();
   }
 
-
-
   Matrix4 _scaleMatrix(double s) => Matrix4.diagonal3Values(s, s, s);
 
- void _onAnim() {
-  final value = _anim?.value ?? 1.0;
-  _controller.value = _scaleMatrix(value);
-}
-
+  void _onAnim() {
+    final value = _anim?.value ?? 1.0;
+    _controller.value = _scaleMatrix(value);
+  }
 
   @override
   Widget build(BuildContext context) {

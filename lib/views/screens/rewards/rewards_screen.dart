@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:lekra/controllers/referral_controller.dart';
 import 'package:lekra/data/models/scratch_model.dart';
 import 'package:lekra/services/constants.dart';
-import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/drawer/drawer_screen.dart';
 import 'package:lekra/views/screens/rewards/component/scratch_card_widget.dart';
@@ -28,7 +27,6 @@ class _RewardsScreenState extends State<RewardsScreen> {
   }
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  double _opacity = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +71,9 @@ class _RewardsScreenState extends State<RewardsScreen> {
                       : referralController.scratchCardList[index];
                   return GestureDetector(
                     onTap: () {
-                      scratchFun(context, scratchCardModel);
+                      if (scratchCardModel.isScratch == false) {
+                        scratchFun(context, scratchCardModel);
+                      }
                     },
                     child: ScratchCardWidget(
                       scratchCardModel: scratchCardModel,
@@ -91,33 +91,63 @@ class _RewardsScreenState extends State<RewardsScreen> {
 
   Future<dynamic> scratchFun(
       BuildContext context, ScratchCardModel scratchCardModel) {
+    final scratchKey = GlobalKey<ScratcherState>(); // 👈 Add key
+
     return showDialog(
-        context: context,
-        builder: (context) {
+      context: context,
+      builder: (context) {
+        return GetBuilder<ReferralController>(builder: (referralController) {
           return Dialog(
             clipBehavior: Clip.antiAlias,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
             child: Scratcher(
+              key: scratchKey,
               image: Image.asset(
                 Assets.imagesScratch,
-                fit: BoxFit.contain,
+                fit: BoxFit.cover,
               ),
               accuracy: ScratchAccuracy.medium,
               brushSize: 50,
-              threshold: 30,
-              onThreshold: () {},
+              threshold: 40,
+              onThreshold: () {
+                scratchKey.currentState
+                    ?.reveal(duration: const Duration(seconds: 1));
+
+                referralController
+                    .postScratchCardRedeem(scratchId: scratchCardModel.id)
+                    .then((value) {
+                  if (value.isSuccess) {
+                    pop(context);
+                    
+                  }
+                });
+                Get.snackbar(
+                  "Revealed!",
+                  scratchCardModel.isDiscount
+                      ? "You’ve unlocked ${scratchCardModel.rewardPoints} OFF 🎉"
+                      : "You’ve won ${scratchCardModel.rewardPoints} points 🎁",
+                  snackPosition: SnackPosition.BOTTOM,
+                  backgroundColor: Colors.black87,
+                  colorText: Colors.white,
+                  duration: const Duration(seconds: 2),
+                );
+              },
               child: Container(
                 height: 300,
                 width: 300,
                 alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       scratchCardModel.isDiscount
-                          ? "🎉 You've won a Discount!"
-                          : "🎁 You've won!",
+                          ? "🎉 Congratulation You've won a Discount!"
+                          : "🎁 Congratulation You've won!",
                       style: Helper(context).textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.black.withValues(alpha: 0.9),
@@ -133,9 +163,10 @@ class _RewardsScreenState extends State<RewardsScreen> {
                       style: Helper(context).textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 26,
+                        color: Colors.black,
                         shadows: const [
                           Shadow(
-                            color: white,
+                            color: Colors.white,
                             offset: Offset(1, 1),
                             blurRadius: 4,
                           ),
@@ -149,5 +180,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
             ),
           );
         });
+      },
+    );
   }
 }
