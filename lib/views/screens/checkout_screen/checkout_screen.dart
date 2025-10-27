@@ -4,7 +4,7 @@ import 'package:lekra/controllers/basic_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/screens/auth_screens/profile_screen/profile_screen.dart';
+import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
 import 'package:lekra/views/screens/checkout_screen/components/billing_form_section.dart';
 import 'package:lekra/views/screens/checkout_screen/components/grand_total_section.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';

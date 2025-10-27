@@ -5,6 +5,7 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/base/dialogs/logout_dialog.dart';
+import 'package:lekra/views/screens/dashboard/profile_edit/profile_edit_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -18,7 +19,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar2(title: "Profile", showBackButton: false,),
+      appBar: const CustomAppBar2(
+        title: "Profile",
+        showBackButton: false,
+      ),
       body: Center(
         child: GetBuilder<AuthController>(builder: (authController) {
           return Padding(
@@ -54,13 +58,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Center(
                     child: Column(
                       children: [
-                        CustomImage(
-                          path: authController.userModel?.image ?? "",
-                          width: 96,
-                          height: 96,
-                          radius: 100,
-                          fit: BoxFit.cover,
-                        ),
+                        // authController.userModel.im == null
+                        // ? CustomImage(
+                        //     isProfile: true,
+                        //     path: authController.userModel?.image != null ? authController.userModel?.image ?? "" : "",
+                        //     height: 100,
+                        //     width: 100,
+                        //     fit: BoxFit.cover,
+                        //     radius: 100,
+                        //     onTap: () async {
+                        //       final file = await getImageBottomSheet(context);
+                        //       if (file != null) {
+                        //         authController.updateImages(file);
+                        //       }
+                        //     },
+                        //   )
+                        // : InkWell(
+                        //     onTap: () async {
+                        //       final file = await getImageBottomSheet(context);
+                        //       if (file != null) {
+                        //         authController.updateImages(file);
+                        //       }
+                        //     },
+                        //     child: ClipRRect(
+                        //       borderRadius: BorderRadius.circular(50),
+                        //       child: Image.file(
+                        //         authController.profileImage!,
+                        //         height: 100,
+                        //         width: 100,
+                        //         fit: BoxFit.cover,
+                        //       ),
+                        //     ),
+                        //   ),
                         const SizedBox(height: 12),
                         Text(
                           authController.userModel?.name ?? "",
@@ -78,7 +107,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         ProfileButton(
                           title: "Edit Profile",
-                          onPressed: () {},
+                          onPressed: () {
+                            navigate(
+                                context: context, page: ProfileEditScreen());
+                          },
                           color: primaryColor,
                         ),
                         const SizedBox(
@@ -107,6 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 }
 
 class ProfileButton extends StatelessWidget {
+  final bool isLoading;
   final String title;
   final Color color;
   final Function() onPressed;
@@ -115,6 +148,7 @@ class ProfileButton extends StatelessWidget {
     required this.title,
     required this.onPressed,
     required this.color,
+    this.isLoading = false,
   });
 
   @override
@@ -128,13 +162,17 @@ class ProfileButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
       ),
-      child: Text(
-        title,
-        style: Helper(context)
-            .textTheme
-            .bodyLarge
-            ?.copyWith(fontWeight: FontWeight.bold, color: white),
-      ),
+      child: isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Text(
+              title,
+              style: Helper(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(fontWeight: FontWeight.bold, color: white),
+            ),
     );
   }
 }

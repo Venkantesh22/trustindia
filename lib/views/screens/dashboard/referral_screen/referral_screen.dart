@@ -7,7 +7,7 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/base/shimmer.dart';
-import 'package:lekra/views/screens/referral_screen/components/referral_tree.dart';
+import 'package:lekra/views/screens/dashboard/referral_screen/components/referral_tree.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 import 'package:share_plus/share_plus.dart';
 

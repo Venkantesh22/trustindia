@@ -57,6 +57,10 @@ class AuthRepo {
   Future<Response> postLogout() async =>
       await apiClient.postData(AppConstants.logoutUri, "postLogout", "");
 
+  Future<Response> postUpdateProfile({required FormData data}) async =>
+      await apiClient.postData(
+          AppConstants.updateProfile, "postUpdateProfile", data);
+
   String getUserToken() {
     return sharedPreferences.getString(AppConstants.token) ?? "";
   }

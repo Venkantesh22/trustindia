@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -124,14 +125,14 @@ class AuthController extends GetxController implements GetxService {
 
       if (response.statusCode == 200) {
         responseModel =
-            ResponseModel(true, response.body['message'] ?? "Profile updated");
+            ResponseModel(true, response.body['message'] ?? "logout ");
       } else {
         responseModel = ResponseModel(
-            false, response.body['message'] ?? "Error while updating profile");
+            false, response.body['message'] ?? "Error while logout");
       }
     } catch (e) {
-      log("****** Error in updateProfile() ******", name: "updateProfile");
-      responseModel = ResponseModel(false, "Error while updating profile $e");
+      log("****** Error in logout() ******", name: "logout");
+      responseModel = ResponseModel(false, "Error while  logout $e");
     }
 
     _isLoading = false;
@@ -141,7 +142,6 @@ class AuthController extends GetxController implements GetxService {
 
   UserModel? userModel;
   Future<ResponseModel> fetchUserProfile() async {
-    
     log('-----------  fetchUserProfile() -------------');
     ResponseModel responseModel;
     _isLoading = true;
@@ -156,6 +156,9 @@ class AuthController extends GetxController implements GetxService {
         responseModel =
             ResponseModel(true, response.body['message'] ?? "fetchUserProfile");
         userModel = UserModel.fromJson(response.body["data"]);
+        nameController.text = userModel?.name ?? "";
+        emailController.text = userModel?.email ?? "";
+        numberController.text = userModel?.mobile ?? "";
       } else {
         responseModel = ResponseModel(
             false, response.body['message'] ?? "Something Went Wrong");
@@ -166,6 +169,56 @@ class AuthController extends GetxController implements GetxService {
     }
 
     _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  TextEditingController numberController = TextEditingController();
+
+  File? profileImage;
+
+  updateImages(File? image) {
+    profileImage = image;
+    update();
+  }
+
+  bool updateProfileLoading = false;
+
+  Future<ResponseModel> updateProfile() async {
+    log('----------- updateProfile Called ----------');
+    updateProfileLoading = true;
+    update();
+    ResponseModel responseModel;
+
+    try {
+      Map<String, dynamic> data = {
+        "name": nameController.text,
+        "mobile": numberController.text,
+      };
+      if (profileImage != null) {
+        data.addAll({
+          "image":
+              MultipartFile(profileImage, filename: profileImage?.path ?? "")
+        });
+      }
+      log(data.toString());
+      Response response =
+          await authRepo.postUpdateProfile(data: FormData(data));
+
+      if (response.statusCode == 200) {
+        userModel = UserModel.fromJson(response.body['data']);
+        responseModel = ResponseModel(
+            true, response.body['message'] ?? "updateProfile updated");
+      } else {
+        responseModel = ResponseModel(
+            false, response.body['message'] ?? "Error while updating profile");
+      }
+    } catch (e) {
+      log("****** Error in updateProfile() ******", name: "updateProfile");
+      responseModel = ResponseModel(false, "Error while updating profile $e");
+    }
+
+    updateProfileLoading = false;
     update();
     return responseModel;
   }

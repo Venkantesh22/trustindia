@@ -68,6 +68,15 @@ class ReferralController extends GetxController implements GetxService {
             (response.body['data']['active_scratch_cards'] as List)
                 .map((item) => ScratchCardModel.fromJson(item))
                 .toList();
+        scratchCardList.sort((a, b) {
+          if (a.isScratch == false && b.isScratch == true) return -1;
+          if (a.isScratch == true && b.isScratch == false) return 1;
+
+          if (a.isExpiry == true && b.isExpiry == false) return 1;
+          if (a.isExpiry == false && b.isExpiry == true) return -1;
+
+          return 0;
+        });
 
         log("scratch_cards list : ${scratchCardList.length}");
         responseModel = ResponseModel(true, "Success fetch fetchScratchCard");
