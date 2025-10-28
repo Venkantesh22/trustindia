@@ -108,8 +108,14 @@ class CustomTheme {
       headlineLarge: GoogleFonts.openSans(),
       headlineMedium: GoogleFonts.openSans(),
       headlineSmall: GoogleFonts.openSans(),
-      displayLarge: GoogleFonts.openSans(),
-      displayMedium: GoogleFonts.openSans(),
+      displayLarge: GoogleFonts.poppins(
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+      ),
+      displayMedium: GoogleFonts.poppins(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+      ),
       displaySmall: GoogleFonts.openSans(),
       titleLarge: GoogleFonts.openSans(),
       titleMedium: GoogleFonts.openSans(
@@ -124,7 +130,7 @@ class CustomTheme {
         fontSize: 18,
         fontWeight: FontWeight.w600,
       ),
-      bodyMedium: GoogleFonts.plusJakartaSans(
+      bodyMedium: GoogleFonts.poppins(
         fontSize: 16,
         color: black,
       ),

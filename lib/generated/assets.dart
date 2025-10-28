@@ -42,6 +42,18 @@ class Assets {
   /// assets/images/shimmer.gif
   static const String imagesShimmer = "assets/images/shimmer.gif";
 
+  /// Assets for imagesStitchRewardsHistoryWallet
+  /// assets/images/stitch_rewards_history_wallet.zip
+  static const String imagesStitchRewardsHistoryWallet = "assets/images/stitch_rewards_history_wallet.zip";
+
+  /// Assets for imagesYourWonDiscount
+  /// assets/images/your_won_discount.png
+  static const String imagesYourWonDiscount = "assets/images/your_won_discount.png";
+
+  /// Assets for imagesYourWonPoint
+  /// assets/images/your_Won_Point.png
+  static const String imagesYourWonPoint = "assets/images/your_Won_Point.png";
+
   /// Assets for svgsHome
   /// assets/svgs/home.svg
   static const String svgsHome = "assets/svgs/home.svg";

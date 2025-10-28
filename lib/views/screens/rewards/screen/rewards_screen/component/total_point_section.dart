@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/screens/reward_history_screen/reward_history_screen.dart';
+import 'package:lekra/views/screens/rewards/screen/reward_history_screen/reward_history_screen.dart';
 
 class TotalPointSection extends StatelessWidget {
   const TotalPointSection({

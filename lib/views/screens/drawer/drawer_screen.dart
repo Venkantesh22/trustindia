@@ -8,7 +8,7 @@ import 'package:lekra/views/screens/address/screen/address_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/drawer/components/drawer_item.dart';
 import 'package:lekra/views/screens/order_screem/screen/order_screen.dart';
-import 'package:lekra/views/screens/rewards/rewards_screen.dart';
+import 'package:lekra/views/screens/rewards/screen/rewards_screen/rewards_screen.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({super.key});

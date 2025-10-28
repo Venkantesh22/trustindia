@@ -4,8 +4,8 @@ import 'package:lekra/controllers/referral_controller.dart';
 import 'package:lekra/data/models/reward_transaction_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/shimmer.dart';
-import 'package:lekra/views/screens/reward_history_screen/components/reward_history_profile_section.dart';
-import 'package:lekra/views/screens/reward_history_screen/components/reward_trans_container.dart';
+import 'package:lekra/views/screens/rewards/screen/reward_history_screen/components/reward_history_profile_section.dart';
+import 'package:lekra/views/screens/rewards/screen/reward_history_screen/components/reward_trans_container.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class RewardHistoryScreen extends StatefulWidget {

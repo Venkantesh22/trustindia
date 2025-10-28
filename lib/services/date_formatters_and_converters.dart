@@ -12,6 +12,8 @@ class DateFormatters {
   DateFormat dMy = DateFormat('dd MMM yyyy');
   // ignore: non_constant_identifier_names
   DateFormat My = DateFormat('MMMM yyyy');
+  DateFormat mdy = DateFormat('MMMM dd, yyyy');
+
   DateFormat dM2 = DateFormat('dd MMM');
   DateFormat dMyDash = DateFormat('dd-MM-yyyy');
   DateFormat dMonthYear = DateFormat('dd MMMM yyyy');

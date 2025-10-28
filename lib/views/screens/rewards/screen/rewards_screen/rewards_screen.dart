@@ -1,12 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/referral_controller.dart';
 import 'package:lekra/data/models/scratch_model.dart';
 import 'package:lekra/services/constants.dart';
+import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/drawer/drawer_screen.dart';
-import 'package:lekra/views/screens/rewards/component/scratch_card_widget.dart';
-import 'package:lekra/views/screens/rewards/component/total_point_section.dart';
+import 'package:lekra/views/screens/rewards/screen/reward_details_screen/reward_details_screen.dart';
+import 'package:lekra/views/screens/rewards/screen/rewards_screen/component/scratch_card_widget.dart';
+import 'package:lekra/views/screens/rewards/screen/rewards_screen/component/total_point_section.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_drawer.dart';
 import 'package:scratcher/scratcher.dart';
 
@@ -71,8 +75,18 @@ class _RewardsScreenState extends State<RewardsScreen> {
                       : referralController.scratchCardList[index];
                   return GestureDetector(
                     onTap: () {
-                      if (scratchCardModel.isScratch == false) {
+                      if (referralController.isLoading) {
+                        showToast(
+                            message: "Please Wait....",
+                            toastType: ToastType.info);
+                        return;
+                      } else if (scratchCardModel.isScratch == false) {
                         scratchFun(context, scratchCardModel);
+                      } else if (scratchCardModel.isScratch == true) {
+                        navigate(
+                            context: context,
+                            page: RewardDetailsScreen(
+                                scratchCardModel: scratchCardModel));
                       }
                     },
                     child: ScratchCardWidget(
@@ -119,7 +133,6 @@ class _RewardsScreenState extends State<RewardsScreen> {
                     .then((value) {
                   if (value.isSuccess) {
                     pop(context);
-                    
                   }
                 });
                 Get.snackbar(
