@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/data/models/referral_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/reward_transaction_model.dart';
@@ -114,6 +115,7 @@ class ReferralController extends GetxController implements GetxService {
         responseModel =
             ResponseModel(true, "Success fetch postScratchCardRedeem");
         fetchScratchCard();
+        Get.find<AuthController>().fetchUserProfile();
       } else {
         responseModel = ResponseModel(
           false,

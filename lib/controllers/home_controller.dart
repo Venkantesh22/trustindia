@@ -129,4 +129,43 @@ class HomeController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
+
+  List<ProductModel> searchProductList = [];
+
+  Future<ResponseModel> fetchSearchProduct({required String query}) async {
+    log('----------- fetchSearchProduct Called() -------------');
+    ResponseModel responseModel = ResponseModel(false, "Unknown error");
+    isLoading = true;
+    update();
+
+    try {
+      Response response = await homeRepo.fetchSearchProduct(query: query);
+
+      if (response.statusCode == 200 &&
+          response.body['status'] == true &&
+          response.body['products'] is List) {
+        searchProductList = (response.body['products'] as List)
+            .map((item) => ProductModel.fromJson(item))
+            .toList();
+
+        log("searchProductList list : ${searchProductList.length}");
+        responseModel = ResponseModel(
+            true, "Successfully fetched fetchSearchProduct products");
+      } else {
+        log("searchProductList list else : ${searchProductList.length}");
+
+        responseModel = ResponseModel(
+          false,
+          response.body['message'] ?? "Something went wrong",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Error: $e");
+      log("****** Error ****** $e", name: "fetchSearchProduct");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
 }

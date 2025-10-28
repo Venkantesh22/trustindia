@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/base/dialogs/logout_dialog.dart';
 import 'package:lekra/views/screens/dashboard/profile_edit/profile_edit_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';

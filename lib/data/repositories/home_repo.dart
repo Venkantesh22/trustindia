@@ -9,8 +9,13 @@ class HomeRepo {
   Future<Response> getCategory() async =>
       await apiClient.getData(AppConstants.categoryList, "getCategory");
 
-  Future<Response> getFeaturedProducts() async =>
-      await apiClient.getData(AppConstants.getFeaturedProducts, "featuredProducts");
-  Future<Response> fetchHotDealsTodayProducts() async =>
-      await apiClient.getData(AppConstants.getFeaturedProducts, "fetchHotDealsTodayProducts");
+  Future<Response> getFeaturedProducts() async => await apiClient.getData(
+      AppConstants.getFeaturedProducts, "featuredProducts");
+
+  Future<Response> fetchHotDealsTodayProducts() async => await apiClient
+      .getData(AppConstants.getFeaturedProducts, "fetchHotDealsTodayProducts");
+
+  Future<Response> fetchSearchProduct({required String query}) async =>
+      await apiClient.getData(
+          "${AppConstants.postSearchProduct}=$query", "fetchSearchProduct");
 }

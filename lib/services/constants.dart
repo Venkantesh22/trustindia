@@ -162,6 +162,7 @@ class AppConstants {
   static const String categoryList = "api/category";
   static const String getFeaturedProducts = "api/products";
   static const String getHotDealsTodayProducts = "api/today-hot-deals";
+  static const String postSearchProduct = "api/products/search?query";
 
   //wallet
   static const String getWalletTransaction = "api/wallet/transactions";
