@@ -9,6 +9,8 @@ class ProductModel {
   final List<String>? features;
   final String? offers;
   final String? priceCategory;
+  final String? categoryName;
+
   final String? status;
   final List<Image>? images;
   int? quantity;
@@ -24,6 +26,7 @@ class ProductModel {
     this.features,
     this.offers,
     this.priceCategory,
+    this.categoryName,
     this.status,
     this.images,
     this.quantity,
@@ -45,12 +48,13 @@ class ProductModel {
             : double.parse(json["price"].replaceAll(',', '')),
         discountedPrice: json["discounted_price"] == null
             ? null
-            : double.parse(json["price"].replaceAll(',', '')),
+            : double.parse(json["discounted_price"].replaceAll(',', '')),
         features: json["features"] == null
             ? []
             : List<String>.from(json["features"]!.map((x) => x)),
         offers: json["offers"],
         priceCategory: json["price_category"],
+        categoryName: json["category_name"],
         status: json["status"],
         images: json["images"] == null
             ? []

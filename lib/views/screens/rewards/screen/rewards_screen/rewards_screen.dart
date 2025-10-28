@@ -1,11 +1,9 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/referral_controller.dart';
 import 'package:lekra/data/models/scratch_model.dart';
 import 'package:lekra/services/constants.dart';
-import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/drawer/drawer_screen.dart';
 import 'package:lekra/views/screens/rewards/screen/reward_details_screen/reward_details_screen.dart';
