@@ -188,6 +188,10 @@ class AppConstants {
   static const String postScratchCardRedeem = "api/scratch-cards/";
   static const String getRewardsWallerHistory = "api/reward-wallet-history";
 
+  // Subscription Structure
+  static const String getSubscription = "api/membership-plans";
+  
+
   static const double horizontalPadding = 16;
   static const double verticalPadding = 20;
   static const EdgeInsets screenPadding = EdgeInsets.symmetric(
