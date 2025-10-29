@@ -8,4 +8,8 @@ class SubscriptionRepo {
 
   Future<Response> fetchSubscriptionPlan() async => await apiClient.getData(
       AppConstants.getSubscription, "fetchSubscriptionPlan");
+
+  Future<Response> fetchSubscriptionPlanDetails({required int? id}) async =>
+      await apiClient.getData("${AppConstants.getSubscriptionDetails}/$id",
+          "fetchSubscriptionPlan");
 }

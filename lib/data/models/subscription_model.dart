@@ -3,7 +3,7 @@ import 'package:lekra/services/constants.dart';
 class SubscriptionModel {
   final int? id;
   final String? name;
-  final double? price;
+  final String? price;
   final List<String>? features;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -21,9 +21,7 @@ class SubscriptionModel {
       SubscriptionModel(
         id: json["id"],
         name: capitalize(json["name"]),
-        price: json["price"] == null
-            ? null
-            : double.tryParse(json["price"].toString()),
+        price: json["price"],
         features: json["features"] == null
             ? []
             : List<String>.from(json["features"]!.map((x) => x)),
@@ -45,5 +43,5 @@ class SubscriptionModel {
         "updated_at": updatedAt?.toIso8601String(),
       };
   String get priceFormat =>
-      PriceConverter.convertToNumberFormat(price?.toDouble() ?? 0.0);
+      PriceConverter.convertToNumberFormat(double.parse(price ?? "0.0"));
 }

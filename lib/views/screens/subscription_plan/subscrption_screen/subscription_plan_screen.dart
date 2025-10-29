@@ -4,8 +4,10 @@ import 'package:lekra/controllers/subscription_controller.dart';
 import 'package:lekra/data/models/subscription_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/shimmer.dart';
+import 'package:lekra/views/screens/drawer/drawer_screen.dart';
+import 'package:lekra/views/screens/subscription_plan/subscription_details_screen/subscription_details_screen.dart';
 import 'package:lekra/views/screens/subscription_plan/subscrption_screen/components/subscription_container.dart';
-import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
+import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_drawer.dart';
 
 class SubscriptionPlan extends StatefulWidget {
   const SubscriptionPlan({super.key});
@@ -23,10 +25,17 @@ class _SubscriptionPlanState extends State<SubscriptionPlan> {
     });
   }
 
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar2(title: "Subscription Plans"),
+      drawer: const DrawerScreen(),
+      key: scaffoldKey,
+      appBar: CustomAppbarDrawer(
+        scaffoldKey: scaffoldKey,
+        title: "Subscription Plans",
+      ),
       body: SingleChildScrollView(
         padding: AppConstants.screenPadding,
         child: Column(
@@ -43,13 +52,18 @@ class _SubscriptionPlanState extends State<SubscriptionPlan> {
                     return CustomShimmer(
                       isLoading: subscriptionController.isLoading,
                       child: GestureDetector(
-                        onTap: (){
-                          if (subscriptionController.isLoading) {
-                            return;
-                          }
-                          // navigate(context: context, page: page)
-                        },
-                        child: SubscriptionContainer(subscription: subscription)),
+                          onTap: () {
+                            if (subscriptionController.isLoading) {
+                              return;
+                            }
+                            navigate(
+                                context: context,
+                                page: SubscriptionDetailsScreen(
+                                  subscriptionId: subscription.id,
+                                ));
+                          },
+                          child: SubscriptionContainer(
+                              subscription: subscription)),
                     );
                   },
                   separatorBuilder: (_, __) => const SizedBox(height: 12),

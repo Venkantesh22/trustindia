@@ -44,9 +44,7 @@ class SubscriptionContainer extends StatelessWidget {
                 TextSpan(
                   text: " /month",
                   style: Helper(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
-                      ),
+                      fontWeight: FontWeight.w700, fontSize: 16, color: black),
                 )
               ],
             ),

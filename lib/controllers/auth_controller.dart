@@ -160,6 +160,7 @@ class AuthController extends GetxController implements GetxService {
         emailController.text = userModel?.email ?? "";
         numberController.text = userModel?.mobile ?? "";
       } else {
+        log("raw datat");
         responseModel = ResponseModel(
             false, response.body['message'] ?? "Something Went Wrong");
       }

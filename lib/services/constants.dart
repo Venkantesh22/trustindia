@@ -190,7 +190,7 @@ class AppConstants {
 
   // Subscription Structure
   static const String getSubscription = "api/membership-plans";
-  
+  static const String getSubscriptionDetails = "api/membership-plans-details";
 
   static const double horizontalPadding = 16;
   static const double verticalPadding = 20;

@@ -68,18 +68,16 @@ class OrderController extends GetxController implements GetxService {
       Response response = await orderRepo.postPayOrderWalled(orderId: orderId);
 
       if (response.statusCode == 200 && response.body['status'] == true) {
-        // orderId = response.body['order']['id'];
-        // log("Saved Order ID: $orderId");
         responseModel = ResponseModel(
-            true, response.body['message'] ?? " postPayOrderWalled success");
+            true, response.body['message'] ?? " postPayOrderWallet success");
       } else {
         responseModel = ResponseModel(false,
-            response.body['message'] ?? "Error while postPayOrderWalled user");
+            response.body['message'] ?? "Error while postPayOrderWallet user");
       }
     } catch (e) {
-      log('ERROR AT postPayOrderWalled(): $e');
+      log('ERROR AT postPayOrderWallet(): $e');
       responseModel =
-          ResponseModel(false, "Error while postPayOrderWalled user $e");
+          ResponseModel(false, "Error while postPayOrderWallet user $e");
     }
 
     isLoading = false;
