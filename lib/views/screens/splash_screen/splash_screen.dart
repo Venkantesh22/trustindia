@@ -22,20 +22,48 @@ class _SplashScreenState extends State<SplashScreen> {
     checkAuth(); // <-- Call here
   }
 
+  // Future<void> checkAuth() async {
+  //   await Future.delayed(const Duration(seconds: 2));
+  //   final authController = Get.find<AuthController>();
+  //   log("splash screen");
+  //   String token = authController.getUserToken();
+
+  //   if (token.isNotEmpty) {
+  //     // User is signed in → go to HomeScreen
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (_) => const DashboardScreen()),
+  //     );
+  //   } else {
+  //     // User not signed in → go to LoginScreen
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (_) => const LoginScreen()),
+  //     );
+  //   }
+  // }
   Future<void> checkAuth() async {
     await Future.delayed(const Duration(seconds: 2));
     final authController = Get.find<AuthController>();
-    log("splash screen");
     String token = authController.getUserToken();
 
     if (token.isNotEmpty) {
-      // User is signed in → go to HomeScreen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const DashboardScreen()),
-      );
+
+      final response = await authController.fetchUserProfile();
+
+      if (response.isSuccess) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const DashboardScreen()),
+        );
+      } else {
+        authController.logout(); 
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const LoginScreen()),
+        );
+      }
     } else {
-      // User not signed in → go to LoginScreen
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => const LoginScreen()),
