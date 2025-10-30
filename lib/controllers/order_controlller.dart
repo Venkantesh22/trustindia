@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lekra/controllers/product_controller.dart';
 import 'package:lekra/data/models/order_model.dart';
 import 'package:lekra/data/models/product_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
@@ -70,6 +71,9 @@ class OrderController extends GetxController implements GetxService {
       if (response.statusCode == 200 && response.body['status'] == true) {
         responseModel = ResponseModel(
             true, response.body['message'] ?? " postPayOrderWallet success");
+             
+        Get.find<ProductController>().fetchCard();
+
       } else {
         responseModel = ResponseModel(false,
             response.body['message'] ?? "Error while postPayOrderWallet user");

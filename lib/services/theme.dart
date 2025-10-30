@@ -15,8 +15,9 @@ const Color textSecondary = Color(0xff838383);
 const Color loginPageBg = Color(0xfff0f2f5);
 const Color white = Colors.white;
 const Color grey = Colors.grey;
-const Color greyDark =  Color(0xFF64748B);
+const Color greyDark = Color(0xFF64748B);
 const Color greyBorder = Color(0xFFE5E7EB);
+const Color greyLight = Color(0xFF637587);
 const Color black = Colors.black;
 const Color red = Colors.red;
 const Color green = Colors.green;
@@ -37,7 +38,6 @@ Color getStatusColor(String? status) {
       return Colors.grey; // fallback color
   }
 }
-
 
 Map<int, Color> color = const {
   50: Color.fromRGBO(255, 244, 149, .1),
@@ -116,7 +116,8 @@ class CustomTheme {
         fontSize: 16,
         fontWeight: FontWeight.w500,
       ),
-      displaySmall: GoogleFonts.openSans(),
+      displaySmall:
+          GoogleFonts.manrope(fontSize: 16, fontWeight: FontWeight.w500),
       titleLarge: GoogleFonts.openSans(),
       titleMedium: GoogleFonts.openSans(
         fontSize: 30,
@@ -126,9 +127,10 @@ class CustomTheme {
         fontWeight: FontWeight.bold,
         fontSize: 22,
       ),
-      bodyLarge: GoogleFonts.plusJakartaSans(
+      bodyLarge: GoogleFonts.poppins(
         fontSize: 18,
         fontWeight: FontWeight.w600,
+        color: black,
       ),
       bodyMedium: GoogleFonts.poppins(
         fontSize: 16,

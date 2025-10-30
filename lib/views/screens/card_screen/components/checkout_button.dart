@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:lekra/controllers/product_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/screens/checkout_screen/checkout_screen.dart';
+import 'package:lekra/views/screens/checkout/checkout_screen/checkout_screen.dart';
 
 class CheckoutButtonSection extends StatelessWidget {
   const CheckoutButtonSection({

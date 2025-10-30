@@ -25,22 +25,17 @@ class OrderSummarySection extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             RowOfPrice(
-              title: "Subtotal",
-              price:
-                  double.parse(productController.cardModel?.subtotal ?? "0.0"),
-            ),
+                title: "Subtotal",
+                price: productController.cardModel?.subtotalFormat ?? ""),
             const SizedBox(height: 16),
             RowOfPrice(
               title: "discount",
-              price:
-                  double.parse(productController.cardModel?.discount ?? "0.0"),
+              price: productController.cardModel?.discountFormat ?? "0.0",
             ),
             const SizedBox(height: 16),
             RowOfPrice(
-              title: "Total Amount",
-              price: double.parse(
-                  productController.cardModel?.totalPrice ?? "0.0"),
-            ),
+                title: "Total Amount",
+                price: productController.cardModel?.totalPriceFormat ?? ""),
             const SizedBox(height: 16),
           ],
         ),
@@ -51,7 +46,7 @@ class OrderSummarySection extends StatelessWidget {
 
 class RowOfPrice extends StatelessWidget {
   final String title;
-  final double price;
+  final String price;
   const RowOfPrice({
     super.key,
     required this.title,
@@ -71,7 +66,7 @@ class RowOfPrice extends StatelessWidget {
               ?.copyWith(fontWeight: FontWeight.w400, fontSize: 14),
         ),
         Text(
-          PriceConverter.convertToNumberFormat(price),
+          price,
           style: Helper(context)
               .textTheme
               .bodyMedium

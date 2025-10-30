@@ -9,7 +9,7 @@ import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/address/screen/add_address_screen.dart';
-import 'package:lekra/views/screens/checkout_screen/components/textbox_title.dart';
+import 'package:lekra/views/screens/checkout/checkout_screen/components/textbox_title.dart';
 
 class BillingFormSection extends StatelessWidget {
   const BillingFormSection({

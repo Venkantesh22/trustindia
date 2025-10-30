@@ -6,6 +6,7 @@ import 'package:lekra/services/theme.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:toastification/toastification.dart';
 
+
 class PriceConverter {
   static convert(price) {
     return '₹ ${double.parse('$price').toStringAsFixed(2)}';
@@ -191,6 +192,7 @@ class AppConstants {
   // Subscription Structure
   static const String getSubscription = "api/membership-plans";
   static const String getSubscriptionDetails = "api/membership-plans-details";
+  static const String getSubscriptionCheckout = "api/membership/1/checkout";
 
   static const double horizontalPadding = 16;
   static const double verticalPadding = 20;

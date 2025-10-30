@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/base/dialogs/logout_dialog.dart';
 import 'package:lekra/views/screens/dashboard/profile_edit/profile_edit_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
@@ -57,38 +58,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Center(
                     child: Column(
                       children: [
-                        // authController.userModel.im == null
-                        // ? CustomImage(
-                        //     isProfile: true,
-                        //     path: authController.userModel?.image != null ? authController.userModel?.image ?? "" : "",
-                        //     height: 100,
-                        //     width: 100,
-                        //     fit: BoxFit.cover,
-                        //     radius: 100,
-                        //     onTap: () async {
-                        //       final file = await getImageBottomSheet(context);
-                        //       if (file != null) {
-                        //         authController.updateImages(file);
-                        //       }
-                        //     },
-                        //   )
-                        // : InkWell(
-                        //     onTap: () async {
-                        //       final file = await getImageBottomSheet(context);
-                        //       if (file != null) {
-                        //         authController.updateImages(file);
-                        //       }
-                        //     },
-                        //     child: ClipRRect(
-                        //       borderRadius: BorderRadius.circular(50),
-                        //       child: Image.file(
-                        //         authController.profileImage!,
-                        //         height: 100,
-                        //         width: 100,
-                        //         fit: BoxFit.cover,
-                        //       ),
-                        //     ),
-                        //   ),
+                        CustomImage(
+                          isProfile: true,
+                          path: authController.userModel?.image != null
+                              ? authController.userModel?.image ?? ""
+                              : "",
+                          height: 100,
+                          width: 100,
+                          fit: BoxFit.cover,
+                          radius: 100,
+                        ),
                         const SizedBox(height: 12),
                         Text(
                           authController.userModel?.name ?? "",

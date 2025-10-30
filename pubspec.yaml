@@ -86,7 +86,6 @@ flutter:
 
   assets:
     - assets/images/
-    # - assets/lotties/
     - assets/svgs/
 
 flutter_assets:

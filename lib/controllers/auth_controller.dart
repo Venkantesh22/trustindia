@@ -207,7 +207,8 @@ class AuthController extends GetxController implements GetxService {
           await authRepo.postUpdateProfile(data: FormData(data));
 
       if (response.statusCode == 200) {
-        userModel = UserModel.fromJson(response.body['data']);
+        fetchUserProfile();
+
         responseModel = ResponseModel(
             true, response.body['message'] ?? "updateProfile updated");
       } else {

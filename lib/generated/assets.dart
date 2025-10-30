@@ -22,6 +22,10 @@ class Assets {
   /// assets/images/call.svg
   static const String imagesCall = "assets/images/call.svg";
 
+  /// Assets for imagesGooglePay
+  /// assets/images/google-pay.png
+  static const String imagesGooglePay = "assets/images/google-pay.png";
+
   /// Assets for imagesLogo
   /// assets/images/logo.png
   static const String imagesLogo = "assets/images/logo.png";
@@ -29,6 +33,10 @@ class Assets {
   /// Assets for imagesNoProfile
   /// assets/images/no-profile.png
   static const String imagesNoProfile = "assets/images/no-profile.png";
+
+  /// Assets for imagesPhonePe
+  /// assets/images/PhonePe.png
+  static const String imagesPhonePe = "assets/images/PhonePe.png";
 
   /// Assets for imagesPlaceholder
   /// assets/images/placeholder.jpg
@@ -45,6 +53,10 @@ class Assets {
   /// Assets for imagesStitchRewardsHistoryWallet
   /// assets/images/stitch_rewards_history_wallet.zip
   static const String imagesStitchRewardsHistoryWallet = "assets/images/stitch_rewards_history_wallet.zip";
+
+  /// Assets for imagesUpi
+  /// assets/images/upi.png
+  static const String imagesUpi = "assets/images/upi.png";
 
   /// Assets for imagesYourWonDiscount
   /// assets/images/your_won_discount.png
