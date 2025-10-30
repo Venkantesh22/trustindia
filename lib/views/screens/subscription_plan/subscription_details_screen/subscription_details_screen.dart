@@ -4,6 +4,7 @@ import 'package:lekra/controllers/subscription_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/shimmer.dart';
+import 'package:lekra/views/screens/checkout/seleck_payment_screen/select_payment_screen.dart';
 import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
@@ -68,7 +69,9 @@ class _SubscriptionDetailsScreenState extends State<SubscriptionDetailsScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                Text(PriceConverter.convertToNumberFormat(3999),
+                Text(
+                    subscriptionController.selectSubscription?.priceFormat ??
+                        "",
                     style: Helper(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w500,
                           fontSize: 20,
@@ -78,7 +81,7 @@ class _SubscriptionDetailsScreenState extends State<SubscriptionDetailsScreen> {
                           decorationThickness: 2,
                         )),
                 Text(
-                  "${subscriptionController.selectSubscription?.priceFormat ?? ""}/month",
+                  "${subscriptionController.selectSubscription?.discountPriceFormat ?? ""}/month",
                   style: Helper(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w500,
                         fontSize: 20,
@@ -89,7 +92,9 @@ class _SubscriptionDetailsScreenState extends State<SubscriptionDetailsScreen> {
                 ),
                 ProfileButton(
                     title: "Activate Plan",
-                    onPressed: () {},
+                    onPressed: () {
+                      SelectPaymentScreen();
+                    },
                     color: primaryColor),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 30),
@@ -128,8 +133,7 @@ class _SubscriptionDetailsScreenState extends State<SubscriptionDetailsScreen> {
                             Expanded(
                               child: Text(
                                 featuresText ?? "",
-                                textAlign: TextAlign
-                                    .start, 
+                                textAlign: TextAlign.start,
                                 style: Helper(context)
                                     .textTheme
                                     .bodyMedium

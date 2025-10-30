@@ -31,23 +31,42 @@ class SubscriptionContainer extends StatelessWidget {
                 ),
           ),
           const SizedBox(
-            height: 6,
+            height: 12,
           ),
-          RichText(
-            text: TextSpan(
-              text: subscription?.priceFormat,
-              style: Helper(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 36,
-                  ),
-              children: <TextSpan>[
-                TextSpan(
-                  text: " /month",
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                subscription?.priceFormat ?? "",
+                style: Helper(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                      color: grey,
+                      decoration: TextDecoration.lineThrough,
+                      decorationColor: grey,
+                      decorationThickness: 2,
+                    ),
+              ),
+              RichText(
+                
+                text: TextSpan(
+                  text: subscription?.discountPriceFormat,
                   style: Helper(context).textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w700, fontSize: 16, color: black),
-                )
-              ],
-            ),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 36,
+                      ),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: " /month",
+                      style: Helper(context).textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                          color: black),
+                    )
+                  ],
+                ),
+              ),
+            ],
           ),
           const SizedBox(
             height: 16,

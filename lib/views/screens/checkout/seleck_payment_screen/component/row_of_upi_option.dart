@@ -65,11 +65,11 @@ class UpiOptionModel {
 }
 
 List<UpiOptionModel> upiOptionList = [
-  UpiOptionModel(
-      image: Assets.imagesGooglePay, title: "Google Pay", onTap: () {}),
-  UpiOptionModel(image: Assets.imagesPhonePe, title: "PhonePe", onTap: () {}),
-  UpiOptionModel(
-      image: Assets.imagesUpi, title: "Pay with Other UPI Apps", onTap: () {}),
-  UpiOptionModel(title: "Pay with Credit/Debit Card", onTap: () {}),
+  // UpiOptionModel(
+  //     image: Assets.imagesGooglePay, title: "Google Pay", onTap: () {}),
+  // UpiOptionModel(image: Assets.imagesPhonePe, title: "PhonePe", onTap: () {}),
+  // UpiOptionModel(
+  //     image: Assets.imagesUpi, title: "Pay with Other UPI Apps", onTap: () {}),
+  // UpiOptionModel(title: "Pay with Credit/Debit Card", onTap: () {}),
   UpiOptionModel(title: "Dynamic QR", onTap: () {}),
 ];

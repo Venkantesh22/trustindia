@@ -4,19 +4,52 @@ import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/controllers/basic_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/controllers/product_controller.dart';
+import 'package:lekra/controllers/subscription_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/checkout/seleck_payment_screen/component/row_of_upi_option.dart';
 import 'package:lekra/views/screens/order_screem/screen/order_screen.dart';
+import 'package:lekra/views/screens/subscription_plan/subscrption_screen/components/subscription_container.dart';
 
 class SelectPaymentScreen extends StatefulWidget {
-  const SelectPaymentScreen({super.key});
+  final bool isMemberShip;
+  const SelectPaymentScreen({super.key, this.isMemberShip = false});
 
   @override
   State<SelectPaymentScreen> createState() => _SelectPaymentScreenState();
 }
 
 class _SelectPaymentScreenState extends State<SelectPaymentScreen> {
+  void wallPay() {
+    if (widget.isMemberShip) {
+      // Get.find<SubscriptionController>().subscriptionCheckout(id: id)
+    } else {
+      Get.find<OrderController>()
+          .postCheckout(
+              addressId: Get.find<BasicController>().selectAddress?.id)
+          .then(
+        (value) {
+          if (value.isSuccess) {
+            Get.find<OrderController>()
+                .postPayOrderWallet(
+                    orderId: Get.find<OrderController>().orderId)
+                .then((value) {
+              if (value.isSuccess) {
+                showToast(message: value.message, typeCheck: value.isSuccess);
+
+                navigate(context: context, page: OrderScreen());
+              } else {
+                showToast(message: value.message, typeCheck: value.isSuccess);
+              }
+            });
+          } else {
+            showToast(message: value.message, typeCheck: value.isSuccess);
+          }
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,42 +85,7 @@ class _SelectPaymentScreenState extends State<SelectPaymentScreen> {
                           height: 12,
                         ),
                         GestureDetector(
-                          onTap: () {
-                            Get.find<OrderController>()
-                                .postCheckout(
-                                    addressId: Get.find<BasicController>()
-                                        .selectAddress
-                                        ?.id)
-                                .then(
-                              (value) {
-                                if (value.isSuccess) {
-                                  Get.find<OrderController>()
-                                      .postPayOrderWallet(
-                                          orderId: Get.find<OrderController>()
-                                              .orderId)
-                                      .then((value) {
-                                    if (value.isSuccess) {
-                                      showToast(
-                                          message: value.message,
-                                          typeCheck: value.isSuccess);
-
-                                      navigate(
-                                          context: context,
-                                          page: OrderScreen());
-                                    } else {
-                                      showToast(
-                                          message: value.message,
-                                          typeCheck: value.isSuccess);
-                                    }
-                                  });
-                                } else {
-                                  showToast(
-                                      message: value.message,
-                                      typeCheck: value.isSuccess);
-                                }
-                              },
-                            );
-                          },
+                          onTap: wallPay,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

@@ -83,4 +83,38 @@ class SubscriptionController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
+
+// SubscriptionModel? selectSubscription;
+
+  Future<ResponseModel> subscriptionCheckout({required int? id}) async {
+    log('-----------  subscriptionCheckout() -------------');
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+
+    try {
+      Response response = await subscriptionRepo.subscriptionCheckout(id: id);
+
+      if (response.statusCode == 200 &&
+          response.body['status'] == true &&
+          response.body['data'] is Map) {
+        selectSubscription = SubscriptionModel.fromJson(response.body['data']);
+
+        responseModel = ResponseModel(
+            true, response.body['message'] ?? "subscriptionCheckout");
+      } else {
+        responseModel = ResponseModel(
+            false,
+            response.body['message'] ??
+                "Something Went Wrong subscriptionCheckout");
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "subscriptionCheckout");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
 }

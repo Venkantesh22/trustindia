@@ -12,4 +12,9 @@ class SubscriptionRepo {
   Future<Response> fetchSubscriptionPlanDetails({required int? id}) async =>
       await apiClient.getData("${AppConstants.getSubscriptionDetails}/$id",
           "fetchSubscriptionPlan");
+
+  Future<Response> subscriptionCheckout({required int? id}) async =>
+      await apiClient.getData(
+          "${AppConstants.getSubscriptionCheckout}/$id/checkout",
+          "subscriptionCheckout");
 }

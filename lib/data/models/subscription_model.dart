@@ -4,6 +4,8 @@ class SubscriptionModel {
   final int? id;
   final String? name;
   final String? price;
+  final String? timePeriods;
+  final String? discountPrice;
   final List<String>? features;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -13,6 +15,8 @@ class SubscriptionModel {
     this.name,
     this.price,
     this.features,
+    this.timePeriods,
+    this.discountPrice,
     this.createdAt,
     this.updatedAt,
   });
@@ -22,6 +26,8 @@ class SubscriptionModel {
         id: json["id"],
         name: capitalize(json["name"]),
         price: json["price"],
+        timePeriods: json["time_periods"],
+        discountPrice: json["discount_price"],
         features: json["features"] == null
             ? []
             : List<String>.from(json["features"]!.map((x) => x)),
@@ -37,6 +43,8 @@ class SubscriptionModel {
         "id": id,
         "name": name,
         "price": price,
+        "time_periods": timePeriods,
+        "discount_price": discountPrice,
         "features":
             features == null ? [] : List<dynamic>.from(features!.map((x) => x)),
         "created_at": createdAt?.toIso8601String(),
@@ -44,4 +52,7 @@ class SubscriptionModel {
       };
   String get priceFormat =>
       PriceConverter.convertToNumberFormat(double.parse(price ?? "0.0"));
+
+  String get discountPriceFormat => PriceConverter.convertToNumberFormat(
+      double.parse(discountPrice ?? "0.0"));
 }
