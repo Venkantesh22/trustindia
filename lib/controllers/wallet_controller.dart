@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/transaction_model.dart.dart';
@@ -46,6 +47,77 @@ class WalletController extends GetxController implements GetxService {
     } catch (e) {
       responseModel = ResponseModel(false, "Catch");
       log("****** Error ****** $e", name: "fetchWalletTransaction");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> fetchWallet() async {
+    log('----------- fetchWallet Called() -------------');
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+
+    try {
+      Response response = await wallerRepo.fetchWallet();
+
+      if (response.statusCode == 200 &&
+          response.body['status'] == true &&
+          response.body['wallet'] is String) {
+        responseModel = ResponseModel(
+          true,
+          response.body['message'] ?? "fetchWalletTransaction fetched",
+        );
+      } else {
+        responseModel = ResponseModel(
+          false,
+          response.body['message'] ?? "Something went wrong",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "fetchWalletTransaction");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  TextEditingController walletPin = TextEditingController();
+  TextEditingController walletPinConfirm = TextEditingController();
+
+  Future<ResponseModel> createWalletPin() async {
+    log('----------- createWalletPin Called() -------------');
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+    final data = {
+      "wallet_pin" : walletPin.text.trim,
+      "wallet_pin" : walletPin.text.trim,
+    };
+
+    try {
+      Response response = await wallerRepo.fetchWallet();
+
+      if (response.statusCode == 200 &&
+          response.body['status'] == true &&
+          response.body['wallet'] is String) {
+        responseModel = ResponseModel(
+          true,
+          response.body['message'] ?? "createWalletPin fetched",
+        );
+      } else {
+        responseModel = ResponseModel(
+          false,
+          response.body['message'] ?? " Something went wrong createWalletPin",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "createWalletPin");
     }
 
     isLoading = false;

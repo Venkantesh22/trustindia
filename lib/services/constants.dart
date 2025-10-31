@@ -6,7 +6,6 @@ import 'package:lekra/services/theme.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:toastification/toastification.dart';
 
-
 class PriceConverter {
   static convert(price) {
     return '₹ ${double.parse('$price').toStringAsFixed(2)}';
@@ -167,6 +166,8 @@ class AppConstants {
 
   //wallet
   static const String getWalletTransaction = "api/wallet/transactions";
+  static const String postWalletPin = "api/create/consumer/wallet";
+  static const String getWallet = "api/api/consumer/wallet";
 
   // Check out
   static const String postCheckOut = "api/checkout";
