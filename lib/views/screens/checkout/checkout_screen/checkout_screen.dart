@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/basic_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
+import 'package:lekra/controllers/product_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/screens/checkout/seleck_payment_screen/select_payment_screen.dart';
-import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
+import 'package:lekra/views/screens/checkout/checkout_screen/components/apply_coupon_container.dart';
 import 'package:lekra/views/screens/checkout/checkout_screen/components/billing_form_section.dart';
-import 'package:lekra/views/screens/checkout/checkout_screen/components/grand_total_section.dart';
+import 'package:lekra/views/screens/checkout/checkout_screen/components/row_billing_text.dart';
+import 'package:lekra/views/screens/checkout/seleck_payment_screen/select_payment_screen.dart';
+
+import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
+import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class CheckoutScreen extends StatefulWidget {
@@ -33,63 +37,120 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar2(title: "Checkout"),
-      body: GetBuilder<OrderController>(builder: (checkoutController) {
-        return Stack(
+      body: GetBuilder<OrderController>(builder: (orderController) {
+        return Column(
           children: [
-            Column(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: AppConstants.screenPadding,
-                    child: GetBuilder<OrderController>(
-                        builder: (checkoutController) {
-                      return Column(
-                        children: [
-                          const GrandTotalSection(),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          BillingFormSection(formKey: _formKey),
-                        ],
-                      );
-                    }),
-                  ),
-                ),
-                GetBuilder<BasicController>(builder: (basicController) {
-                  return Padding(
-                    padding: AppConstants.screenPadding,
-                    child: ProfileButton(
-                        title: "Proceed to pay",
-                        onPressed: () {
-                          if (basicController.selectAddress == null) {
-                            showToast(
-                                message: "Select a address",
-                                toastType: ToastType.info);
-                            return;
-                          }
-                          if (_formKey.currentState?.validate() ?? false) {
-                            navigate(
-                                context: context,
-                                page: const SelectPaymentScreen());
-                          }
-                        },
-                        color: secondaryColor),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: AppConstants.screenPadding,
+                child: GetBuilder<OrderController>(builder: (orderController) {
+                  return Column(
+                    children: [
+                      BillingFormSection(formKey: _formKey),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const ApplyCouponContainer(),
+                      GetBuilder<ProductController>(
+                          builder: (productController) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 28),
+                              child: Text(
+                                "Billing Summary",
+                                style: Helper(context)
+                                    .textTheme
+                                    .titleSmall
+                                    ?.copyWith(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                            RowBillingText(
+                              label: "Subtotal",
+                              price:
+                                  productController.cardModel?.subtotalFormat ??
+                                      "",
+                            ),
+                            RowBillingText(
+                              label: "Discount",
+                              price:
+                                  productController.cardModel?.discountFormat ??
+                                      "",
+                            ),
+                            RowBillingText(
+                              label: "Coupon Discount",
+                              price:
+                                  productController.cardModel?.subtotalFormat ??
+                                      "",
+                            ),
+                            const Divider(
+                              color: grey,
+                            ),
+                            const SizedBox(
+                              height: 14,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Grand Total",
+                                  style: Helper(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                ),
+                                Text(
+                                  productController
+                                          .cardModel?.totalPriceFormat ??
+                                      "",
+                                  style: Helper(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      })
+                    ],
                   );
                 }),
-                const SizedBox(
-                  height: 20,
-                )
-              ],
-            ),
-            if (checkoutController.isLoading)
-              Positioned.fill(
-                child: Container(
-                  color: black.withValues(alpha: 0.4),
-                  child: const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
               ),
+            ),
+            GetBuilder<BasicController>(builder: (basicController) {
+              return Padding(
+                padding: AppConstants.screenPadding,
+                child: ProfileButton(
+                    title: "Proceed to pay",
+                    onPressed: () {
+                      if (basicController.selectAddress == null) {
+                        showToast(
+                            message: "Select a address",
+                            toastType: ToastType.info);
+                        return;
+                      }
+                      if (_formKey.currentState?.validate() ?? false) {
+                        navigate(
+                            context: context,
+                            page: const SelectPaymentScreen());
+                      }
+                    },
+                    color: secondaryColor),
+              );
+            }),
+            const SizedBox(
+              height: 20,
+            )
           ],
         );
       }),

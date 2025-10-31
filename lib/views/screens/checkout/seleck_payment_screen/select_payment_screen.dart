@@ -4,12 +4,10 @@ import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/controllers/basic_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/controllers/product_controller.dart';
-import 'package:lekra/controllers/subscription_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/checkout/seleck_payment_screen/component/row_of_upi_option.dart';
 import 'package:lekra/views/screens/order_screem/screen/order_screen.dart';
-import 'package:lekra/views/screens/subscription_plan/subscrption_screen/components/subscription_container.dart';
 
 class SelectPaymentScreen extends StatefulWidget {
   final bool isMemberShip;
