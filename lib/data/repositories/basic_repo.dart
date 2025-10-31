@@ -10,9 +10,7 @@ class BasicRepo {
   Future<Response> getBanner() async =>
       await apiClient.getData(AppConstants.bannerUri, "getBanner");
 
-  Future<Response> fetchWalletTransaction() async => await apiClient.getData(
-      AppConstants.getWalletTransaction, "fetchWalletTransaction");
-
+ 
   Future<Response> fetchAddress() async =>
       await apiClient.getData(AppConstants.getAddress, "fetchAddress");
 

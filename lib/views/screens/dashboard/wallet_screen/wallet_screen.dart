@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lekra/controllers/basic_controller.dart';
+import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/data/models/transaction_model.dart.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/shimmer.dart';
@@ -20,7 +20,7 @@ class _WalletScreenState extends State<WalletScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((value) {
-      Get.find<BasicController>().fetchWalletTransaction();
+      Get.find<WalletController>().fetchWalletTransaction();
     });
   }
 
@@ -48,16 +48,16 @@ class _WalletScreenState extends State<WalletScreen> {
                   style: Helper(context).textTheme.titleSmall?.copyWith(),
                 ),
                 const SizedBox(height: 12),
-                GetBuilder<BasicController>(builder: (basicController) {
+                GetBuilder<WalletController>(builder: (walletController) {
                   return ListView.separated(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
-                        final transactionModel = basicController.isLoading
+                        final transactionModel = walletController.isLoading
                             ? TransactionModel()
-                            : basicController.transactionList[index];
+                            : walletController.transactionList[index];
                         return CustomShimmer(
-                            isLoading: basicController.isLoading,
+                            isLoading: walletController.isLoading,
                             child: TransactionsContainer(
                               transactionModel: transactionModel,
                             ));
@@ -67,9 +67,9 @@ class _WalletScreenState extends State<WalletScreen> {
                           height: 12,
                         );
                       },
-                      itemCount: basicController.isLoading
+                      itemCount: walletController.isLoading
                           ? 1
-                          : basicController.transactionList.length);
+                          : walletController.transactionList.length);
                 }),
               ],
             )

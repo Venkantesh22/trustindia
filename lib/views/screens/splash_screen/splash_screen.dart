@@ -47,7 +47,6 @@ class _SplashScreenState extends State<SplashScreen> {
     String token = authController.getUserToken();
 
     if (token.isNotEmpty) {
-
       final response = await authController.fetchUserProfile();
 
       if (response.isSuccess) {
@@ -56,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
           MaterialPageRoute(builder: (_) => const DashboardScreen()),
         );
       } else {
-        authController.logout(); 
+        authController.logout();
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => const LoginScreen()),

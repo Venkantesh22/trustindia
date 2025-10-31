@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:lekra/data/models/body/address_model.dart';
 import 'package:lekra/data/models/home/banner_model';
 import 'package:lekra/data/models/response/response_model.dart';
-import 'package:lekra/data/models/transaction_model.dart.dart';
 import 'package:lekra/data/repositories/basic_repo.dart';
 
 class BasicController extends GetxController implements GetxService {
@@ -48,49 +47,6 @@ class BasicController extends GetxController implements GetxService {
     } catch (e) {
       responseModel = ResponseModel(false, "Catch");
       log("****** Error ****** $e", name: "fetchHomeBanner");
-    }
-
-    isLoading = false;
-    update();
-    return responseModel;
-  }
-
-  List<TransactionModel> transactionList = [];
-  Future<ResponseModel> fetchWalletTransaction() async {
-    log('----------- fetchWalletTransaction Called() -------------');
-    ResponseModel responseModel;
-    isLoading = true;
-    update();
-
-    try {
-      Response response = await basicRepo.fetchWalletTransaction();
-      // log("Raw Response: ${response.body}");
-
-      if (response.statusCode == 200 &&
-          response.body['status'] == true &&
-          response.body['data']['transactions'] is Map) {
-        transactionList =
-            (response.body['data']['transactions']['data'] as List)
-                .map((item) => TransactionModel.fromJson(item))
-                .toList();
-
-        // log("transactionList length: ${transactionList.length}");
-
-        responseModel = ResponseModel(
-          true,
-          response.body['message'] ?? "fetchWalletTransaction fetched",
-        );
-      } else {
-        // log("transactionList length else: ${transactionList.length}");
-
-        responseModel = ResponseModel(
-          false,
-          response.body['message'] ?? "Something went wrong",
-        );
-      }
-    } catch (e) {
-      responseModel = ResponseModel(false, "Catch");
-      log("****** Error ****** $e", name: "fetchWalletTransaction");
     }
 
     isLoading = false;
@@ -195,7 +151,8 @@ class BasicController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
-bool addressDeleteLoading = false;
+
+  bool addressDeleteLoading = false;
 
   Future<ResponseModel> deleteAddress({required int? addressId}) async {
     log('----------- deleteAddress Called ----------');
