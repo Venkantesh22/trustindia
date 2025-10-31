@@ -397,6 +397,8 @@
 //   }
 // }
 
+// ignore_for_file: unused_element
+
 import 'package:flutter/material.dart';
 import 'package:graphview/GraphView.dart';
 import 'package:lekra/data/models/referral_model.dart';
@@ -525,16 +527,6 @@ class _ReferralGraphTreeState extends State<ReferralGraphTree>
       maxChild = (_maxDepth(c) > maxChild) ? _maxDepth(c) : maxChild;
     }
     return 1 + maxChild;
-  }
-
-  int _treeDepth() {
-    if (widget.roots.isEmpty) return 1;
-    int maxd = 0;
-    for (var root in widget.roots) {
-      maxd = (_maxDepth(root) > maxd) ? _maxDepth(root) : maxd;
-    }
-    // +1 for mainRoot
-    return maxd + 1;
   }
 
   int _maxNodesPerLevel() {

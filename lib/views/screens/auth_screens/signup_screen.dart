@@ -6,7 +6,6 @@ import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/route_helper.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
-import 'package:lekra/views/screens/dashboard/home_screen/home_screen.dart';
 
 import '../../../services/theme.dart';
 

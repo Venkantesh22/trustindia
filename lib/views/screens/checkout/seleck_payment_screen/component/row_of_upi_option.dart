@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lekra/generated/assets.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/custom_image.dart';
 

@@ -10,7 +10,6 @@ import 'package:lekra/views/screens/checkout/checkout_screen/components/billing_
 import 'package:lekra/views/screens/checkout/checkout_screen/components/row_billing_text.dart';
 import 'package:lekra/views/screens/checkout/seleck_payment_screen/select_payment_screen.dart';
 
-import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
