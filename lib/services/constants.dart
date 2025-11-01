@@ -167,7 +167,7 @@ class AppConstants {
   //wallet
   static const String getWalletTransaction = "api/wallet/transactions";
   static const String postWalletPin = "api/create/consumer/wallet";
-  static const String getWallet = "api/api/consumer/wallet";
+  static const String getWallet = "api/consumer/wallet";
 
   // Check out
   static const String postCheckOut = "api/checkout";

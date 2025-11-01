@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_back_button.dart';
 
 class WalletCreatePinComfirmScreen extends StatefulWidget {
@@ -49,13 +50,14 @@ class _WalletCreatePinComfirmScreenState
 
   void onKeyPress(String value, WalletController walletController) {
     if (value == 'back') {
-      if (walletController.walletPinConfirm.isNotEmpty) {
-        walletController.walletPinConfirm = walletController.walletPinConfirm
-            .substring(0, walletController.walletPinConfirm.length - 1);
+      if (walletController.createWalletPinConfirm.isNotEmpty) {
+        walletController.createWalletPinConfirm = walletController
+            .createWalletPinConfirm
+            .substring(0, walletController.createWalletPinConfirm.length - 1);
         walletController.update();
       }
-    } else if (walletController.walletPinConfirm.length < 6) {
-      walletController.walletPinConfirm += value;
+    } else if (walletController.createWalletPinConfirm.length < 6) {
+      walletController.createWalletPinConfirm += value;
       walletController.update();
     }
   }
@@ -73,7 +75,7 @@ class _WalletCreatePinComfirmScreenState
   Widget build(BuildContext context) {
     return GetBuilder<WalletController>(
       builder: (walletController) {
-        final isComplete = walletController.walletPinConfirm.length == 6;
+        final isComplete = walletController.createWalletPinConfirm.length == 6;
 
         return Scaffold(
           backgroundColor: Colors.white,
@@ -119,10 +121,12 @@ class _WalletCreatePinComfirmScreenState
                               height: 14,
                               decoration: BoxDecoration(
                                 color: index <
-                                        walletController.walletPinConfirm.length
+                                        walletController
+                                            .createWalletPinConfirm.length
                                     ? isPinMatch &&
                                             walletController
-                                                    .walletPinConfirm.length ==
+                                                    .createWalletPinConfirm
+                                                    .length ==
                                                 6
                                         ? red
                                         : primaryColor
@@ -213,11 +217,26 @@ class _WalletCreatePinComfirmScreenState
                     child: ElevatedButton(
                       onPressed: isComplete
                           ? () {
-                              log("walletController.walletPin ${walletController.walletPin}");
-                              log("walletController.walletPin ${walletController.walletPinConfirm}");
-                              if (walletController.walletPin ==
-                                  walletController.walletPinConfirm) {
-                                walletController.createWalletPin();
+                              log("walletController.walletPin ${walletController.createWalletPin}");
+                              log("walletController.walletPin ${walletController.createWalletPinConfirm}");
+                              if (walletController.createWalletPin ==
+                                  walletController.createWalletPinConfirm) {
+                                walletController
+                                    .postCreateWalletPin()
+                                    .then((value) {
+                                  if (value.isSuccess) {
+                                    navigate(
+                                        context: context,
+                                        page: ProfileScreen());
+                                    showToast(
+                                        message: value.message,
+                                        typeCheck: value.isSuccess);
+                                  } else {
+                                    showToast(
+                                        message: value.message,
+                                        typeCheck: value.isSuccess);
+                                  }
+                                });
                               } else {
                                 triggerShake();
                               }

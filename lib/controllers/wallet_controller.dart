@@ -1,9 +1,11 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/transaction_model.dart.dart';
 import 'package:lekra/data/repositories/wallet_repo.dart';
+import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 
 class WalletController extends GetxController implements GetxService {
   final WallerRepo wallerRepo;
@@ -85,30 +87,17 @@ class WalletController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  String walletPin = "";
-  String walletPinConfirm = "";
+  String createWalletPin = "";
+  String createWalletPinConfirm = "";
 
-  void updateWalletPin(String value) {
-    walletPin += value;
-    log("walletPin = $walletPin");
-    update();
-  }
-
-  void updateWalletPinConfirm(String value) {
-    walletPinConfirm += value;
-    log("walletPinConfirm = $walletPinConfirm");
-
-    update();
-  }
-
-  Future<ResponseModel> createWalletPin() async {
+  Future<ResponseModel> postCreateWalletPin() async {
     log('----------- createWalletPin Called() -------------');
     ResponseModel responseModel;
     isLoading = true;
     update();
     final data = {
-      "wallet_pin": walletPin,
-      "wallet_pin_confirmation": walletPinConfirm,
+      "wallet_pin": createWalletPin,
+      "wallet_pin_confirmation": createWalletPinConfirm,
     };
 
     try {
@@ -134,5 +123,11 @@ class WalletController extends GetxController implements GetxService {
     isLoading = false;
     update();
     return responseModel;
+  }
+
+  Widget pageFormMove = const DashboardScreen();
+
+  void updatePage(Widget value) {
+    pageFormMove = value;
   }
 }

@@ -56,6 +56,8 @@ class OrderController extends GetxController implements GetxService {
     return responseModel;
   }
 
+  String walletPin = "";
+
   Future<ResponseModel> postPayOrderWallet({
     required int? orderId,
   }) async {
@@ -65,15 +67,19 @@ class OrderController extends GetxController implements GetxService {
     isLoading = true;
     update();
 
+    Map<String, dynamic> data = {
+      "wallet_pin": walletPin,
+    };
+
     try {
-      Response response = await orderRepo.postPayOrderWalled(orderId: orderId);
+      Response response = await orderRepo.postPayOrderWalled(
+          orderId: orderId, data: FormData(data));
 
       if (response.statusCode == 200 && response.body['status'] == true) {
         responseModel = ResponseModel(
             true, response.body['message'] ?? " postPayOrderWallet success");
-             
-        Get.find<ProductController>().fetchCard();
 
+        Get.find<ProductController>().fetchCard();
       } else {
         responseModel = ResponseModel(false,
             response.body['message'] ?? "Error while postPayOrderWallet user");

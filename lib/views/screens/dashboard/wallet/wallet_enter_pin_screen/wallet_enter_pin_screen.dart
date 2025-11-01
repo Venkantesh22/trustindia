@@ -1,33 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lekra/controllers/wallet_controller.dart';
+import 'package:lekra/controllers/basic_controller.dart';
+import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
-import 'package:lekra/views/screens/dashboard/wallet/create_wallet_pin_screen/wallet_create_pin_confirm_screen.dart';
+import 'package:lekra/views/screens/order_screem/screen/order_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_back_button.dart';
 
-class WalletCreatePinScreen extends StatelessWidget {
-  const WalletCreatePinScreen({super.key});
+class WalletEnterPiniScreen extends StatefulWidget {
+  const WalletEnterPiniScreen({super.key});
 
-  void onKeyPress(String value, WalletController walletController) {
+  @override
+  State<WalletEnterPiniScreen> createState() => _WalletEnterPiniScreenState();
+}
+
+class _WalletEnterPiniScreenState extends State<WalletEnterPiniScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<OrderController>().walletPin = "";
+      Get.find<OrderController>().update();
+    });
+  }
+
+  void onKeyPress(String value, OrderController orderController) {
     if (value == 'back') {
-      if (walletController.createWalletPin.isNotEmpty) {
-        walletController.createWalletPin = walletController.createWalletPin
-            .substring(0, walletController.createWalletPin.length - 1);
-        walletController.update();
+      if (orderController.walletPin.isNotEmpty) {
+        orderController.walletPin = orderController.walletPin
+            .substring(0, orderController.walletPin.length - 1);
+        orderController.update();
       }
-    } else if (walletController.createWalletPin.length < 6) {
-      walletController.createWalletPin += value;
-      walletController.update();
+    } else if (orderController.walletPin.length < 6) {
+      orderController.walletPin += value;
+      orderController.update();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<WalletController>(
-      builder: (walletController) {
-        final isComplete = walletController.createWalletPin.length == 6;
+    return GetBuilder<OrderController>(
+      builder: (orderController) {
+        final isComplete = orderController.walletPin.length == 6;
 
         return Scaffold(
           backgroundColor: Colors.white,
@@ -46,7 +61,7 @@ class WalletCreatePinScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    "Create Your PIN",
+                    "Enter 6-Digit PIN",
                     style: Helper(context)
                         .textTheme
                         .titleMedium
@@ -63,7 +78,6 @@ class WalletCreatePinScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
 
-                  // PIN Circles
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(
@@ -73,7 +87,7 @@ class WalletCreatePinScreen extends StatelessWidget {
                         width: 14,
                         height: 14,
                         decoration: BoxDecoration(
-                          color: index < walletController.createWalletPin.length
+                          color: index < orderController.walletPin.length
                               ? primaryColor
                               : Colors.grey[300],
                           shape: BoxShape.circle,
@@ -83,7 +97,6 @@ class WalletCreatePinScreen extends StatelessWidget {
                   ),
                   const Spacer(),
 
-                  // Number Pad
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -109,7 +122,7 @@ class WalletCreatePinScreen extends StatelessWidget {
                                       const EdgeInsets.symmetric(horizontal: 8),
                                   child: IconButton(
                                     onPressed: () =>
-                                        onKeyPress(val, walletController),
+                                        onKeyPress(val, orderController),
                                     icon: const Icon(
                                       Icons.backspace_outlined,
                                       size: 28,
@@ -124,7 +137,7 @@ class WalletCreatePinScreen extends StatelessWidget {
                                   child: InkWell(
                                     borderRadius: BorderRadius.circular(12),
                                     onTap: () =>
-                                        onKeyPress(val, walletController),
+                                        onKeyPress(val, orderController),
                                     child: Container(
                                       width: 102,
                                       height: 50,
@@ -156,29 +169,63 @@ class WalletCreatePinScreen extends StatelessWidget {
                   // Continue Button
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: isComplete
-                          ? () {
-                              navigate(
-                                context: context,
-                                page:  WalletCreatePinComfirmScreen(),
-                              );
-                            }
-                          : null,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        disabledBackgroundColor:
-                            Colors.blue.withValues(alpha: 0.4),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                    child:
+                        GetBuilder<OrderController>(builder: (orderController) {
+                      return ElevatedButton(
+                        onPressed: isComplete
+                            ? () {
+                                Get.find<OrderController>()
+                                    .postCheckout(
+                                        addressId: Get.find<BasicController>()
+                                            .selectAddress
+                                            ?.id)
+                                    .then(
+                                  (value) {
+                                    if (value.isSuccess) {
+                                      Get.find<OrderController>()
+                                          .postPayOrderWallet(
+                                              orderId:
+                                                  Get.find<OrderController>()
+                                                      .orderId)
+                                          .then((value) {
+                                        if (value.isSuccess) {
+                                          showToast(
+                                              message: value.message,
+                                              typeCheck: value.isSuccess);
+
+                                          navigate(
+                                              context: context,
+                                              page: OrderScreen());
+                                        } else {
+                                          showToast(
+                                              message: value.message,
+                                              typeCheck: value.isSuccess);
+                                        }
+                                      });
+                                    } else {
+                                      showToast(
+                                          message: value.message,
+                                          typeCheck: value.isSuccess);
+                                    }
+                                  },
+                                );
+                              }
+                            : null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          disabledBackgroundColor:
+                              Colors.blue.withValues(alpha: 0.4),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
-                      ),
-                      child: const Text(
-                        "Continue",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    ),
+                        child: const Text(
+                          "Continue",
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                      );
+                    }),
                   ),
                 ],
               ),
