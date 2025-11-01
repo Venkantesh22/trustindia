@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/transaction_model.dart.dart';
@@ -86,8 +85,21 @@ class WalletController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  TextEditingController walletPin = TextEditingController();
-  TextEditingController walletPinConfirm = TextEditingController();
+  String walletPin = "";
+  String walletPinConfirm = "";
+
+  void updateWalletPin(String value) {
+    walletPin += value;
+    log("walletPin = $walletPin");
+    update();
+  }
+
+  void updateWalletPinConfirm(String value) {
+    walletPinConfirm += value;
+    log("walletPinConfirm = $walletPinConfirm");
+
+    update();
+  }
 
   Future<ResponseModel> createWalletPin() async {
     log('----------- createWalletPin Called() -------------');
@@ -95,8 +107,8 @@ class WalletController extends GetxController implements GetxService {
     isLoading = true;
     update();
     final data = {
-      "wallet_pin": walletPin.text.trim,
-      "wallet_pin_confirmation": walletPin.text.trim,
+      "wallet_pin": walletPin,
+      "wallet_pin_confirmation": walletPinConfirm,
     };
 
     try {

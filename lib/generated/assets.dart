@@ -26,6 +26,10 @@ class Assets {
   /// assets/images/google-pay.png
   static const String imagesGooglePay = "assets/images/google-pay.png";
 
+  /// Assets for imagesLocalBgGrey
+  /// assets/images/local-bg-grey.png
+  static const String imagesLocalBgGrey = "assets/images/local-bg-grey.png";
+
   /// Assets for imagesLogo
   /// assets/images/logo.png
   static const String imagesLogo = "assets/images/logo.png";
