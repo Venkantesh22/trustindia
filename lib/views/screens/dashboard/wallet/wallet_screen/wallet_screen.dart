@@ -4,8 +4,8 @@ import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/data/models/transaction_model.dart.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/shimmer.dart';
-import 'package:lekra/views/screens/dashboard/wallet_screen/components/profile-balalnce_section.dart';
-import 'package:lekra/views/screens/dashboard/wallet_screen/components/transaction_container.dart';
+import 'package:lekra/views/screens/dashboard/wallet/wallet_screen/components/profile-balalnce_section.dart';
+import 'package:lekra/views/screens/dashboard/wallet/wallet_screen/components/transaction_container.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class WalletScreen extends StatefulWidget {

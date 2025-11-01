@@ -4,7 +4,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
 import 'package:lekra/views/screens/dashboard/home_screen/home_screen.dart';
 import 'package:lekra/views/screens/dashboard/referral_screen/referral_screen.dart';
-import 'package:lekra/views/screens/dashboard/wallet_screen/wallet_screen.dart';
+import 'package:lekra/views/screens/dashboard/wallet/wallet_screen/wallet_screen.dart';
 
 import '../../../controllers/dashboard_controller.dart';
 import '../../../generated/assets.dart';

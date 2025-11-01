@@ -95,16 +95,15 @@ class WalletController extends GetxController implements GetxService {
     isLoading = true;
     update();
     final data = {
-      "wallet_pin" : walletPin.text.trim,
-      "wallet_pin" : walletPin.text.trim,
+      "wallet_pin": walletPin.text.trim,
+      "wallet_pin_confirmation": walletPin.text.trim,
     };
 
     try {
-      Response response = await wallerRepo.fetchWallet();
+      Response response =
+          await wallerRepo.createWalletPin(data: FormData(data));
 
-      if (response.statusCode == 200 &&
-          response.body['status'] == true &&
-          response.body['wallet'] is String) {
+      if (response.statusCode == 200 && response.body['status'] == true) {
         responseModel = ResponseModel(
           true,
           response.body['message'] ?? "createWalletPin fetched",
