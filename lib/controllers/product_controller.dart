@@ -148,14 +148,14 @@ class ProductController extends GetxController implements GetxService {
 
   CardModel? cardModel;
 
-  Future<ResponseModel> fetchCard() async {
+  Future<ResponseModel> fetchCard({String? couponCode}) async {
     log('-----------  fetchCard() -------------');
     ResponseModel responseModel;
     isLoading = true;
     update();
 
     try {
-      Response response = await productRepo.fetchCard();
+      Response response = await productRepo.fetchCard(couponCode: couponCode);
 
       if (response.statusCode == 200 &&
           response.body['status'] == true &&

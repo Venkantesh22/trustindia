@@ -191,9 +191,12 @@ class AppConstants {
   static const String getRewardsWallerHistory = "api/reward-wallet-history";
 
   // Subscription Structure
-  static const String getSubscription = "api/membership-plans";
+  static const String getSubscription = "api/membership-plans-category";
   static const String getSubscriptionDetails = "api/membership-plans-details";
   static const String getSubscriptionCheckout = "api/membership/1/checkout";
+
+  // Coupon
+  static const String postCheckCouponCode = "api/check-coupon-code";
 
   static const double horizontalPadding = 16;
   static const double verticalPadding = 20;

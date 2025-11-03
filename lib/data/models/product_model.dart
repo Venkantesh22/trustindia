@@ -10,7 +10,6 @@ class ProductModel {
   final String? offers;
   final String? priceCategory;
   final String? categoryName;
-
   final String? status;
   final List<Image>? images;
   int? quantity;

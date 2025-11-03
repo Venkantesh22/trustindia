@@ -29,7 +29,7 @@ class OrderSummarySection extends StatelessWidget {
                 price: productController.cardModel?.subtotalFormat ?? ""),
             const SizedBox(height: 16),
             RowOfPrice(
-              title: "discount",
+              title: "Discount",
               price: productController.cardModel?.discountFormat ?? "0.0",
             ),
             const SizedBox(height: 16),

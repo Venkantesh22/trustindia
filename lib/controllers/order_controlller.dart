@@ -20,12 +20,14 @@ class OrderController extends GetxController implements GetxService {
   int? orderId;
   Future<ResponseModel> postCheckout({
     required int? addressId,
+    required String? code,
   }) async {
     log('----------- postCheckout Called ----------');
 
     ResponseModel responseModel;
     isLoading = true;
     update();
+    // log("code : ${Get.find<CouponController>().couponCode}");
 
     try {
       Map<String, dynamic> data = {
@@ -33,6 +35,7 @@ class OrderController extends GetxController implements GetxService {
         "billing_name": billingName.text.trim(),
         "billing_email": billingEmail.text.trim(),
         "billing_phone": billingNumber.text.trim(),
+        "code": code,
       };
 
       Response response = await orderRepo.postCheckout(data: FormData(data));

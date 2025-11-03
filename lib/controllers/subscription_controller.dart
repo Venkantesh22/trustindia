@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:lekra/data/models/response/response_model.dart';
+import 'package:lekra/data/models/subscription_cate_model.dart';
 import 'package:lekra/data/models/subscription_model.dart';
 import 'package:lekra/data/repositories/subscription_repo.dart';
 
@@ -11,6 +12,44 @@ class SubscriptionController extends GetxController implements GetxService {
   SubscriptionController({required this.subscriptionRepo});
 
   bool isLoading = false;
+
+  List<SubscriptionCategoryModel> subscriptionCateList = [];
+  Future<ResponseModel> fetchSubscriptionCatePlan() async {
+    log('-----------  fetchSubscriptionCatePlan() -------------');
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+
+    try {
+      Response response = await subscriptionRepo.fetchSubscriptionPlan();
+
+      if (response.statusCode == 200 &&
+          response.body['status'] == true &&
+          response.body['wallet_id'] is List) {
+        subscriptionCateList = (response.body['wallet_id'] as List)
+            .map((e) => SubscriptionCategoryModel.fromJson(e))
+            .toList();
+
+        log("subscriptionCateList length ${subscriptionCateList.length}");
+
+        responseModel = ResponseModel(
+            true, response.body['message'] ?? "fetchSubscriptionPlan");
+      } else {
+        log("subscriptionCateList length else ${subscriptionCateList.length}");
+        responseModel = ResponseModel(
+            false,
+            response.body['message'] ??
+                "Something Went Wrong fetchSubscriptionPlan");
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "fetchSubscriptionPlan");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
 
   List<SubscriptionModel> subscriptionList = [];
   Future<ResponseModel> fetchSubscriptionPlan() async {

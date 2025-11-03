@@ -29,6 +29,6 @@ class ProductRepo {
         {"product_id": productId ?? ""},
       );
 
-  Future<Response> fetchCard() async =>
-      await apiClient.getData(AppConstants.getCard, "fetchCard");
+  Future<Response> fetchCard({String? couponCode}) async => await apiClient
+      .getData("${AppConstants.getCard}?code=$couponCode", "fetchCard");
 }

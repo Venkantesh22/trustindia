@@ -8,14 +8,18 @@ import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/checkout/checkout_screen/components/apply_coupon_container.dart';
 import 'package:lekra/views/screens/checkout/checkout_screen/components/billing_form_section.dart';
 import 'package:lekra/views/screens/checkout/checkout_screen/components/row_billing_text.dart';
+import 'package:lekra/views/screens/checkout/pop_coupon/pop_coupon_container.dart';
 import 'package:lekra/views/screens/checkout/seleck_payment_screen/select_payment_screen.dart';
 
 import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class CheckoutScreen extends StatefulWidget {
+  final bool showDialogOfDiscount;
+
   const CheckoutScreen({
     super.key,
+    this.showDialogOfDiscount = false,
   });
 
   @override
@@ -29,6 +33,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Get.find<BasicController>().fetchAddress();
+      if (widget.showDialogOfDiscount) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return Dialog(
+                child: PopCouponContainer(),
+              );
+            });
+      }
     });
   }
 
@@ -79,12 +92,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   productController.cardModel?.discountFormat ??
                                       "",
                             ),
-                            RowBillingText(
-                              label: "Coupon Discount",
-                              price:
-                                  productController.cardModel?.subtotalFormat ??
-                                      "",
-                            ),
+                            productController.cardModel?.couponDiscountFormat !=
+                                    0.0
+                                ? RowBillingText(
+                                    label:
+                                        "Coupon Discount  ${productController.cardModel?.couponValue}",
+                                    price: productController
+                                            .cardModel?.couponDiscountFormat ??
+                                        "",
+                                  )
+                                : SizedBox(),
                             const Divider(
                               color: grey,
                             ),

@@ -25,7 +25,9 @@ class _WalletScreenState extends State<WalletScreen> {
       Get.find<WalletController>().fetchWallet().then((value) {
         if (value.isSuccess) {
           Get.find<WalletController>().fetchWalletTransaction();
-          isWallPinCreate = true;
+          setState(() {
+            isWallPinCreate = false;
+          });
         } else {
           Get.find<WalletController>().updatePage(WalletScreen());
           navigate(context: context, page: WalletCreatePinScreen());
