@@ -130,4 +130,7 @@ class WalletController extends GetxController implements GetxService {
   void updatePage(Widget value) {
     pageFormMove = value;
   }
+
+    String walletPin = "";
+
 }

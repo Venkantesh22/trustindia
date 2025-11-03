@@ -97,8 +97,12 @@ class _SubscriptionDetailsScreenState extends State<SubscriptionDetailsScreen> {
                       onPressed: () {
                         navigate(
                             context: context,
-                            page: const SelectPaymentScreen(
+                            page: SelectPaymentScreen(
                               isMemberShipPayment: true,
+                              totalAmount: subscriptionController
+                                      .selectSubscription
+                                      ?.discountPriceFormat ??
+                                  "",
                             ));
                       },
                       color: primaryColor),

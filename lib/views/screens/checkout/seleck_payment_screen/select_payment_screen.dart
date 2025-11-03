@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
-import 'package:lekra/controllers/product_controller.dart';
+import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/checkout/seleck_payment_screen/component/row_of_upi_option.dart';
@@ -10,15 +10,15 @@ import 'package:lekra/views/screens/dashboard/wallet/wallet_enter_pin_screen/wal
 
 class SelectPaymentScreen extends StatefulWidget {
   final bool isMemberShipPayment;
-  const SelectPaymentScreen({super.key, this.isMemberShipPayment = false});
+  final String totalAmount;
+  const SelectPaymentScreen(
+      {super.key, this.isMemberShipPayment = false, required this.totalAmount});
 
   @override
   State<SelectPaymentScreen> createState() => _SelectPaymentScreenState();
 }
 
 class _SelectPaymentScreenState extends State<SelectPaymentScreen> {
- 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,9 +54,17 @@ class _SelectPaymentScreenState extends State<SelectPaymentScreen> {
                           height: 12,
                         ),
                         GestureDetector(
-                          onTap: () => navigate(
-                              context: context,
-                              page: const WalletEnterPinScreen(isMemberShipPayment: true,)),
+                          onTap: () {
+                            if (Get.find<WalletController>().isLoading) {
+                              return;
+                            }
+                            navigate(
+                                context: context,
+                                page: WalletEnterPinScreen(
+                                  isMemberShipPayment:
+                                      widget.isMemberShipPayment,
+                                ));
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -120,17 +128,11 @@ class _SelectPaymentScreenState extends State<SelectPaymentScreen> {
                           style: Helper(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 20, fontWeight: FontWeight.w600),
                         ),
-                        GetBuilder<ProductController>(
-                            builder: (productController) {
-                          return Text(
-                            productController.cardModel?.totalPriceFormat ?? "",
-                            style: Helper(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(
-                                    fontSize: 20, fontWeight: FontWeight.w600),
-                          );
-                        })
+                        Text(
+                          widget.totalAmount,
+                          style: Helper(context).textTheme.bodyLarge?.copyWith(
+                              fontSize: 20, fontWeight: FontWeight.w600),
+                        ),
                       ],
                     ),
                   )

@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:lekra/data/api/api_client.dart';
 import 'package:lekra/services/constants.dart';
@@ -17,8 +18,8 @@ class SubscriptionRepo {
       await apiClient.getData("${AppConstants.getSubscriptionDetails}/$id",
           "fetchSubscriptionPlan");
 
-  Future<Response> subscriptionCheckout({required int? id}) async =>
-      await apiClient.getData(
+  Future<Response> subscriptionCheckout({required int? id, required FormData data}) async =>
+      await apiClient.postData(
           "${AppConstants.getSubscriptionCheckout}/$id/checkout",
-          "subscriptionCheckout");
+          "subscriptionCheckout", data);
 }

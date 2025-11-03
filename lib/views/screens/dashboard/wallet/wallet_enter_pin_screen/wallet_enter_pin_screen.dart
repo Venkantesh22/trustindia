@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/basic_controller.dart';
 import 'package:lekra/controllers/coupon_controller.dart';
+import 'package:lekra/controllers/dashboard_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
+import 'package:lekra/controllers/subscription_controller.dart';
+import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
+import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/order_screem/screen/order_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_back_button.dart';
 
@@ -23,26 +27,38 @@ class _WalletEnterPinScreenState extends State<WalletEnterPinScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.find<OrderController>().walletPin = "";
-      Get.find<OrderController>().update();
+      Get.find<WalletController>().walletPin = "";
+      Get.find<WalletController>().update();
     });
   }
 
-  void onKeyPress(String value, OrderController orderController) {
+  void onKeyPress(String value, WalletController walletController) {
     if (value == 'back') {
-      if (orderController.walletPin.isNotEmpty) {
-        orderController.walletPin = orderController.walletPin
-            .substring(0, orderController.walletPin.length - 1);
-        orderController.update();
+      if (walletController.walletPin.isNotEmpty) {
+        walletController.walletPin = walletController.walletPin
+            .substring(0, walletController.walletPin.length - 1);
+        walletController.update();
       }
-    } else if (orderController.walletPin.length < 6) {
-      orderController.walletPin += value;
-      orderController.update();
+    } else if (walletController.walletPin.length < 6) {
+      walletController.walletPin += value;
+      walletController.update();
     }
   }
 
   void onTap() {
     if (widget.isMemberShipPayment) {
+      Get.find<SubscriptionController>()
+          .subscriptionCheckout(
+              id: Get.find<SubscriptionController>().selectSubscription?.id)
+          .then((value) {
+        if (value.isSuccess) {
+          showToast(message: value.message, typeCheck: value.isSuccess);
+          Get.find<DashBoardController>().dashPage = 3;
+          navigate(context: context, page: const DashboardScreen());
+        } else {
+          showToast(message: value.message, typeCheck: value.isSuccess);
+        }
+      });
     } else {
       Get.find<OrderController>()
           .postCheckout(
@@ -73,9 +89,9 @@ class _WalletEnterPinScreenState extends State<WalletEnterPinScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<OrderController>(
-      builder: (orderController) {
-        final isComplete = orderController.walletPin.length == 6;
+    return GetBuilder<WalletController>(
+      builder: (walletController) {
+        final isComplete = walletController.walletPin.length == 6;
 
         return Scaffold(
           backgroundColor: Colors.white,
@@ -120,7 +136,7 @@ class _WalletEnterPinScreenState extends State<WalletEnterPinScreen> {
                         width: 14,
                         height: 14,
                         decoration: BoxDecoration(
-                          color: index < orderController.walletPin.length
+                          color: index < walletController.walletPin.length
                               ? primaryColor
                               : Colors.grey[300],
                           shape: BoxShape.circle,
@@ -155,7 +171,7 @@ class _WalletEnterPinScreenState extends State<WalletEnterPinScreen> {
                                       const EdgeInsets.symmetric(horizontal: 8),
                                   child: IconButton(
                                     onPressed: () =>
-                                        onKeyPress(val, orderController),
+                                        onKeyPress(val, walletController),
                                     icon: const Icon(
                                       Icons.backspace_outlined,
                                       size: 28,
@@ -170,7 +186,7 @@ class _WalletEnterPinScreenState extends State<WalletEnterPinScreen> {
                                   child: InkWell(
                                     borderRadius: BorderRadius.circular(12),
                                     onTap: () =>
-                                        onKeyPress(val, orderController),
+                                        onKeyPress(val, walletController),
                                     child: Container(
                                       width: 102,
                                       height: 50,

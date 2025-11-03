@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/product_controller.dart';
+import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/data/models/order_model.dart';
 import 'package:lekra/data/models/product_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
@@ -59,7 +60,6 @@ class OrderController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  String walletPin = "";
 
   Future<ResponseModel> postPayOrderWallet({
     required int? orderId,
@@ -71,7 +71,7 @@ class OrderController extends GetxController implements GetxService {
     update();
 
     Map<String, dynamic> data = {
-      "wallet_pin": walletPin,
+      "wallet_pin": Get.find<WalletController>().walletPin,
     };
 
     try {

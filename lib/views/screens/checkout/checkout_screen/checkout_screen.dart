@@ -158,7 +158,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       if (_formKey.currentState?.validate() ?? false) {
                         navigate(
                             context: context,
-                            page: const SelectPaymentScreen());
+                            page:  SelectPaymentScreen(totalAmount: Get.find<ProductController>().cardModel?.totalPriceFormat ?? "",));
                       }
                     },
                     color: secondaryColor),

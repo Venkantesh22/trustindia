@@ -8,7 +8,6 @@ import 'package:lekra/views/screens/drawer/drawer_screen.dart';
 import 'package:lekra/views/screens/subscription_plan/subscription_details_screen/subscription_details_screen.dart';
 import 'package:lekra/views/screens/subscription_plan/subscrption_screen/components/subscription_container.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
-import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_drawer.dart';
 
 class SubscriptionPlanScreen extends StatefulWidget {
   final String? subscriptionPlanName;

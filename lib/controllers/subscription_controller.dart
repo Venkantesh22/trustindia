@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/subscription_cate_model.dart';
 import 'package:lekra/data/models/subscription_model.dart';
@@ -131,16 +132,19 @@ class SubscriptionController extends GetxController implements GetxService {
     return responseModel;
   }
 
-// SubscriptionModel? selectSubscription;
-
   Future<ResponseModel> subscriptionCheckout({required int? id}) async {
     log('-----------  subscriptionCheckout() -------------');
     ResponseModel responseModel;
     isLoading = true;
     update();
 
+    Map<String, dynamic> data = {
+      "wallet_pin": Get.find<WalletController>().walletPin,
+    };
+
     try {
-      Response response = await subscriptionRepo.subscriptionCheckout(id: id);
+      Response response = await subscriptionRepo.subscriptionCheckout(
+          id: id, data: FormData(data));
 
       if (response.statusCode == 200 &&
           response.body['status'] == true &&
