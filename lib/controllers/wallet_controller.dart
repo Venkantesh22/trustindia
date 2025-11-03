@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/transaction_model.dart.dart';
+import 'package:lekra/data/models/wallet_model.dart';
 import 'package:lekra/data/repositories/wallet_repo.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 
@@ -55,6 +56,7 @@ class WalletController extends GetxController implements GetxService {
     return responseModel;
   }
 
+  WalletModel? walletModel;
   Future<ResponseModel> fetchWallet() async {
     log('----------- fetchWallet Called() -------------');
     ResponseModel responseModel;
@@ -64,12 +66,11 @@ class WalletController extends GetxController implements GetxService {
     try {
       Response response = await wallerRepo.fetchWallet();
 
-      if (response.statusCode == 200 &&
-          response.body['status'] == true &&
-          response.body['wallet'] is String) {
+      if (response.statusCode == 200 && response.body['status'] == true) {
+        walletModel = WalletModel(wallet: response.body['wallet'].toString());
         responseModel = ResponseModel(
           true,
-          response.body['message'] ?? "fetchWalletTransaction fetched",
+          response.body['message'] ?? "fetchWallet fetched",
         );
       } else {
         responseModel = ResponseModel(
@@ -79,7 +80,7 @@ class WalletController extends GetxController implements GetxService {
       }
     } catch (e) {
       responseModel = ResponseModel(false, "Catch");
-      log("****** Error ****** $e", name: "fetchWalletTransaction");
+      log("****** Error ****** $e", name: "fetchWallet");
     }
 
     isLoading = false;
@@ -131,6 +132,5 @@ class WalletController extends GetxController implements GetxService {
     pageFormMove = value;
   }
 
-    String walletPin = "";
-
+  String walletPin = "";
 }

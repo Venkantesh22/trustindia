@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/checkout/seleck_payment_screen/component/row_of_upi_option.dart';
 import 'package:lekra/views/screens/dashboard/wallet/wallet_enter_pin_screen/wallet_enter_pin_screen.dart';
 
@@ -53,53 +53,57 @@ class _SelectPaymentScreenState extends State<SelectPaymentScreen> {
                         const SizedBox(
                           height: 12,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            if (Get.find<WalletController>().isLoading) {
-                              return;
-                            }
-                            navigate(
-                                context: context,
-                                page: WalletEnterPinScreen(
-                                  isMemberShipPayment:
-                                      widget.isMemberShipPayment,
-                                ));
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Pay with Wallet",
-                                    style: Helper(context)
-                                        .textTheme
-                                        .displaySmall
-                                        ?.copyWith(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500),
+                        GetBuilder<WalletController>(
+                            builder: (walletController) {
+                          return GestureDetector(
+                            onTap: () {
+                              if (walletController.isLoading) {
+                                return;
+                              }
+                              navigate(
+                                  context: context,
+                                  page: WalletEnterPinScreen(
+                                    isMemberShipPayment:
+                                        widget.isMemberShipPayment,
+                                  ));
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CustomShimmer(
+                                  isLoading: walletController.isLoading,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Pay with Wallet",
+                                        style: Helper(context)
+                                            .textTheme
+                                            .displaySmall
+                                            ?.copyWith(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        "Available balance: ${walletController.walletModel?.walletBalance}",
+                                        style: Helper(context)
+                                            .textTheme
+                                            .displaySmall
+                                            ?.copyWith(
+                                                fontSize: 16,
+                                                color: greyLight,
+                                                fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(height: 4),
-                                  GetBuilder<AuthController>(
-                                      builder: (authController) {
-                                    return Text(
-                                      "Available balance: ${PriceConverter.convertToNumberFormat(authController.userModel?.currentWallet ?? 0.0)}",
-                                      style: Helper(context)
-                                          .textTheme
-                                          .displaySmall
-                                          ?.copyWith(
-                                              fontSize: 16,
-                                              color: greyLight,
-                                              fontWeight: FontWeight.w500),
-                                    );
-                                  }),
-                                ],
-                              ),
-                              const Icon(Icons.arrow_forward_ios_rounded)
-                            ],
-                          ),
-                        ),
+                                ),
+                                const Icon(Icons.arrow_forward_ios_rounded)
+                              ],
+                            ),
+                          );
+                        }),
                         const SizedBox(
                           height: 12,
                         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:lekra/controllers/auth_controller.dart';
+import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
@@ -24,7 +25,7 @@ class ProfileBalanceSection extends StatelessWidget {
               radius: 100,
               fit: BoxFit.cover,
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             Text(
@@ -32,14 +33,15 @@ class ProfileBalanceSection extends StatelessWidget {
               style:
                   Helper(context).textTheme.titleSmall?.copyWith(fontSize: 20),
             ),
-            Text(
-              PriceConverter.convertToNumberFormat(
-                  authController.userModel?.currentWallet ?? 0.00),
-              style: Helper(context)
-                  .textTheme
-                  .titleSmall
-                  ?.copyWith(color: primaryColor, fontSize: 26),
-            ),
+            GetBuilder<WalletController>(builder: (walletController) {
+              return Text(
+                walletController.walletModel?.walletBalance ?? "",
+                style: Helper(context)
+                    .textTheme
+                    .titleSmall
+                    ?.copyWith(color: primaryColor, fontSize: 26),
+              );
+            }),
             Text(
               "Current Balance",
               style: Helper(context)
