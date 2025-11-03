@@ -9,7 +9,7 @@ import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/drawer/components/drawer_item.dart';
 import 'package:lekra/views/screens/order_screem/screen/order_screen.dart';
 import 'package:lekra/views/screens/rewards/screen/rewards_screen/rewards_screen.dart';
-import 'package:lekra/views/screens/subscription_plan/subscrption_screen/subscription_plan_screen.dart';
+import 'package:lekra/views/screens/subscription_plan/subscription_category/subscription_category-screen.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({super.key});
@@ -147,8 +147,7 @@ List<DrawerItemModel> drawerItemList = [
   DrawerItemModel(
     label: "Subscription Plans",
     onTap: (ctx) {
-            navigate(context: ctx, page: const SubscriptionPlan());
-
+      navigate(context: ctx, page: const SubscriptionCategoryPlan());
     },
   ),
   DrawerItemModel(

@@ -1,0 +1,64 @@
+import 'package:lekra/services/constants.dart';
+
+class SubscriptionModel {
+  final int? id;
+  final int? membershipCategoryId;
+
+  final String? name;
+  final String? price;
+  final String? timePeriods;
+  final String? discountPrice;
+
+  final List<String>? features;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  SubscriptionModel({
+    this.id,
+    this.membershipCategoryId,
+    this.name,
+    this.price,
+    this.features,
+    this.timePeriods,
+    this.discountPrice,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory SubscriptionModel.fromJson(Map<String, dynamic> json) =>
+      SubscriptionModel(
+        id: json["id"],
+        membershipCategoryId: json["membership_category_id"],
+        name: capitalize(json["name"]),
+        price: json["price"],
+        timePeriods: json["time_periods"],
+        discountPrice: json["discount_price"],
+        features: json["features"] == null
+            ? []
+            : List<String>.from(json["features"]!.map((x) => x)),
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "membership_category_id": membershipCategoryId,
+        "name": name,
+        "price": price,
+        "time_periods": timePeriods,
+        "discount_price": discountPrice,
+        "features":
+            features == null ? [] : List<dynamic>.from(features!.map((x) => x)),
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+      };
+  String get priceFormat =>
+      PriceConverter.convertToNumberFormat(double.parse(price ?? "0.0"));
+
+  String get discountPriceFormat => PriceConverter.convertToNumberFormat(
+      double.parse(discountPrice ?? "0.0"));
+}

@@ -8,9 +8,11 @@ class SubscriptionContainer extends StatelessWidget {
   const SubscriptionContainer({
     super.key,
     required this.subscription,
+    required this.onPressed,
   });
 
   final SubscriptionModel? subscription;
+  final Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,6 @@ class SubscriptionContainer extends StatelessWidget {
                     ),
               ),
               RichText(
-                
                 text: TextSpan(
                   text: subscription?.discountPriceFormat,
                   style: Helper(context).textTheme.titleSmall?.copyWith(
@@ -71,7 +72,8 @@ class SubscriptionContainer extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          ProfileButton(title: "Choose Plan", onPressed: () {}, color: black)
+          ProfileButton(
+              title: "View Details", onPressed: onPressed, color: primaryColor)
         ],
       ),
     );

@@ -6,8 +6,12 @@ class SubscriptionRepo {
   final ApiClient apiClient;
   SubscriptionRepo({required this.apiClient});
 
-  Future<Response> fetchSubscriptionPlan() async => await apiClient.getData(
-      AppConstants.getSubscription, "fetchSubscriptionPlan");
+  Future<Response> fetchSubscriptionCategoryPlan() async => await apiClient
+      .getData(AppConstants.getSubscription, "fetchSubscriptionCategoryPlan");
+
+  Future<Response> fetchSubscriptionPlanById({required int? id}) async =>
+      await apiClient.getData("${AppConstants.getSubscriptionById}/$id",
+          "fetchSubscriptionPlanById");
 
   Future<Response> fetchSubscriptionPlanDetails({required int? id}) async =>
       await apiClient.getData("${AppConstants.getSubscriptionDetails}/$id",

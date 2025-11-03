@@ -9,14 +9,16 @@ import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/order_screem/screen/order_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_back_button.dart';
 
-class WalletEnterPiniScreen extends StatefulWidget {
-  const WalletEnterPiniScreen({super.key});
+class WalletEnterPinScreen extends StatefulWidget {
+  final bool isMemberShipPayment;
+
+  const WalletEnterPinScreen({super.key, this.isMemberShipPayment = false});
 
   @override
-  State<WalletEnterPiniScreen> createState() => _WalletEnterPiniScreenState();
+  State<WalletEnterPinScreen> createState() => _WalletEnterPinScreenState();
 }
 
-class _WalletEnterPiniScreenState extends State<WalletEnterPiniScreen> {
+class _WalletEnterPinScreenState extends State<WalletEnterPinScreen> {
   @override
   void initState() {
     super.initState();
@@ -36,6 +38,36 @@ class _WalletEnterPiniScreenState extends State<WalletEnterPiniScreen> {
     } else if (orderController.walletPin.length < 6) {
       orderController.walletPin += value;
       orderController.update();
+    }
+  }
+
+  void onTap() {
+    if (widget.isMemberShipPayment) {
+    } else {
+      Get.find<OrderController>()
+          .postCheckout(
+              addressId: Get.find<BasicController>().selectAddress?.id,
+              code: Get.find<CouponController>().couponCode)
+          .then(
+        (value) {
+          if (value.isSuccess) {
+            Get.find<OrderController>()
+                .postPayOrderWallet(
+                    orderId: Get.find<OrderController>().orderId)
+                .then((value) {
+              if (value.isSuccess) {
+                showToast(message: value.message, typeCheck: value.isSuccess);
+
+                navigate(context: context, page: OrderScreen());
+              } else {
+                showToast(message: value.message, typeCheck: value.isSuccess);
+              }
+            });
+          } else {
+            showToast(message: value.message, typeCheck: value.isSuccess);
+          }
+        },
+      );
     }
   }
 
@@ -173,47 +205,7 @@ class _WalletEnterPiniScreenState extends State<WalletEnterPiniScreen> {
                     child:
                         GetBuilder<OrderController>(builder: (orderController) {
                       return ElevatedButton(
-                        onPressed: isComplete
-                            ? () {
-                                Get.find<OrderController>()
-                                    .postCheckout(
-                                        addressId: Get.find<BasicController>()
-                                            .selectAddress
-                                            ?.id,
-                                        code: Get.find<CouponController>()
-                                            .couponCode)
-                                    .then(
-                                  (value) {
-                                    if (value.isSuccess) {
-                                      Get.find<OrderController>()
-                                          .postPayOrderWallet(
-                                              orderId:
-                                                  Get.find<OrderController>()
-                                                      .orderId)
-                                          .then((value) {
-                                        if (value.isSuccess) {
-                                          showToast(
-                                              message: value.message,
-                                              typeCheck: value.isSuccess);
-
-                                          navigate(
-                                              context: context,
-                                              page: OrderScreen());
-                                        } else {
-                                          showToast(
-                                              message: value.message,
-                                              typeCheck: value.isSuccess);
-                                        }
-                                      });
-                                    } else {
-                                      showToast(
-                                          message: value.message,
-                                          typeCheck: value.isSuccess);
-                                    }
-                                  },
-                                );
-                              }
-                            : null,
+                        onPressed: isComplete ? onTap : null,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
                           disabledBackgroundColor:

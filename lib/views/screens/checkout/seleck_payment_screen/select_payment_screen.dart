@@ -9,19 +9,15 @@ import 'package:lekra/views/screens/checkout/seleck_payment_screen/component/row
 import 'package:lekra/views/screens/dashboard/wallet/wallet_enter_pin_screen/wallet_enter_pin_screen.dart';
 
 class SelectPaymentScreen extends StatefulWidget {
-  final bool isMemberShip;
-  const SelectPaymentScreen({super.key, this.isMemberShip = false});
+  final bool isMemberShipPayment;
+  const SelectPaymentScreen({super.key, this.isMemberShipPayment = false});
 
   @override
   State<SelectPaymentScreen> createState() => _SelectPaymentScreenState();
 }
 
 class _SelectPaymentScreenState extends State<SelectPaymentScreen> {
-  void wallPay() {
-    if (widget.isMemberShip) {
-      // Get.find<SubscriptionController>().subscriptionCheckout(id: id)
-    } else {}
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +55,8 @@ class _SelectPaymentScreenState extends State<SelectPaymentScreen> {
                         ),
                         GestureDetector(
                           onTap: () => navigate(
-                              context: context, page: WalletEnterPiniScreen()),
+                              context: context,
+                              page: const WalletEnterPinScreen(isMemberShipPayment: true,)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

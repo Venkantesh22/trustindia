@@ -21,12 +21,13 @@ class SubscriptionController extends GetxController implements GetxService {
     update();
 
     try {
-      Response response = await subscriptionRepo.fetchSubscriptionPlan();
+      Response response =
+          await subscriptionRepo.fetchSubscriptionCategoryPlan();
 
       if (response.statusCode == 200 &&
           response.body['status'] == true &&
-          response.body['wallet_id'] is List) {
-        subscriptionCateList = (response.body['wallet_id'] as List)
+          response.body['data'] is List) {
+        subscriptionCateList = (response.body['data'] as List)
             .map((e) => SubscriptionCategoryModel.fromJson(e))
             .toList();
 
@@ -51,15 +52,22 @@ class SubscriptionController extends GetxController implements GetxService {
     return responseModel;
   }
 
+  SubscriptionCategoryModel? selectSubscriptionCategoryModel;
+
+  void updateSelectSubscriptionCategoryModel(SubscriptionCategoryModel value) {
+    selectSubscriptionCategoryModel = value;
+  }
+
   List<SubscriptionModel> subscriptionList = [];
-  Future<ResponseModel> fetchSubscriptionPlan() async {
-    log('-----------  fetchSubscriptionPlan() -------------');
+  Future<ResponseModel> fetchSubscriptionPlanById() async {
+    log('-----------  fetchSubscriptionPlanById() -------------');
     ResponseModel responseModel;
     isLoading = true;
     update();
 
     try {
-      Response response = await subscriptionRepo.fetchSubscriptionPlan();
+      Response response = await subscriptionRepo.fetchSubscriptionPlanById(
+          id: selectSubscriptionCategoryModel?.id);
 
       if (response.statusCode == 200 &&
           response.body['status'] == true &&
