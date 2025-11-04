@@ -140,48 +140,6 @@ class HomeController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  // Future<ResponseModel> fetchFeaturedProducts() async {
-  //   log('----------- fetchFeaturedProducts Called() -------------');
-  //   ResponseModel responseModel = ResponseModel(false, "Unknown error");
-  //   isLoading = true;
-  //   update();
-
-  //   try {
-  //     Response response = await homeRepo.getFeaturedProducts();
-
-  //     if (response.statusCode == 200 && response.body['status'] == true) {
-  //       final productsJson = response.body['data']?['data'] ?? [];
-
-  //       if (productsJson is List) {
-  //         featuredProductList = (response.body['data']?['data'] as List)
-  //             .map((item) => ProductModel.fromJson(item))
-  //             .toList();
-
-  //         log("product list : ${featuredProductList.length}");
-  //         responseModel =
-  //             ResponseModel(true, "Successfully fetched featured products");
-  //       } else {
-  //         log("product list else : ${featuredProductList.length}");
-
-  //         featuredProductList = [];
-  //         responseModel = ResponseModel(false, "No products found");
-  //       }
-  //     } else {
-  //       responseModel = ResponseModel(
-  //         false,
-  //         response.body['message'] ?? "Something went wrong",
-  //       );
-  //     }
-  //   } catch (e) {
-  //     responseModel = ResponseModel(false, "Error: $e");
-  //     log("****** Error ****** $e", name: "fetchFeaturedProducts");
-  //   }
-
-  //   isLoading = false;
-  //   update();
-  //   return responseModel;
-  // }
-
   List<ProductModel> hotDealsTodayProductList = [];
 
   Future<ResponseModel> fetchHotDealsTodayProducts() async {
@@ -228,6 +186,7 @@ class HomeController extends GetxController implements GetxService {
       if (response.statusCode == 200 &&
           response.body['status'] == true &&
           response.body['products'] is List) {
+        searchProductList.clear();
         searchProductList = (response.body['products'] as List)
             .map((item) => ProductModel.fromJson(item))
             .toList();

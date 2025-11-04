@@ -113,12 +113,15 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                             children: [
                               Text(
                                 capitalize(product.name ?? ""),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 style: Helper(context)
                                     .textTheme
-                                    .bodyLarge
+                                    .bodyMedium
                                     ?.copyWith(
                                         color: black,
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
                               ),
                               Text(
                                 product.description ?? "Loading...",
@@ -149,7 +152,6 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                                   builder: (productController) {
                                 return AddToCardButton(
                                   product: product,
-                                
                                 );
                               }),
                             ],

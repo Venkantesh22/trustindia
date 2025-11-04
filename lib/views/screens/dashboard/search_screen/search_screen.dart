@@ -39,6 +39,8 @@ class _SearchScreenState extends State<SearchScreen> {
           child: Column(
             children: [
               CustomSearchTextfeild(
+                hintText: "Search Products",
+                controller: searchController,
                 onChanged: (value) {
                   // Cancel the previous timer only if it exists
                   if (timer?.isActive ?? false) {
@@ -52,8 +54,6 @@ class _SearchScreenState extends State<SearchScreen> {
                     }
                   });
                 },
-                hintText: "Search Products",
-                controller: searchController,
               ),
               const SizedBox(
                 height: 20,
