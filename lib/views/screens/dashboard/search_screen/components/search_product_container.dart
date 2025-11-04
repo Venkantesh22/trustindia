@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:lekra/data/models/product_model.dart';
 import 'package:lekra/services/constants.dart';
@@ -11,7 +10,7 @@ class SearchProductContainer extends StatelessWidget {
     required this.product,
   });
 
-  final ProductModel product;
+  final ProductModel? product;
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +31,8 @@ class SearchProductContainer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomImage(
-            path: (product.images != null && product.images!.isNotEmpty)
-                ? product.images?.first.url ?? ""
+            path: (product?.images != null)
+                ? product?.images?.first.url ?? ""
                 : "",
             height: 110,
             width: 100,
@@ -46,7 +45,7 @@ class SearchProductContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  capitalize(product.name ?? "Unnamed product"),
+                  capitalize(product?.name ?? "Unnamed product"),
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge
@@ -61,7 +60,7 @@ class SearchProductContainer extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                     child: Text(
-                      capitalize(product.categoryName ?? "Unnamed product"),
+                      capitalize(product?.categoryName ?? "Unnamed product"),
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall
@@ -72,29 +71,38 @@ class SearchProductContainer extends StatelessWidget {
                 const SizedBox(
                   height: 6,
                 ),
-                Row(
-                  children: [
-                    Text(
-                      PriceConverter.convertToNumberFormat(
-                          product.price ?? 0.00),
-                      style: Helper(context).textTheme.bodyMedium?.copyWith(
-                            decoration: TextDecoration.lineThrough,
-                            color: Colors.grey,
-                            fontSize: 14,
+                product?.discountedPrice != null
+                    ? Row(
+                        children: [
+                          Text(
+                            product?.priceFormat ?? "",
+                            style:
+                                Helper(context).textTheme.bodyMedium?.copyWith(
+                                      decoration: TextDecoration.lineThrough,
+                                      color: Colors.grey,
+                                      fontSize: 14,
+                                    ),
                           ),
-                    ),
-                    const SizedBox(width: 12),
-                    Text(
-                      PriceConverter.convertToNumberFormat(
-                          product.discountedPrice ?? 0.00),
-                      style: Helper(context).textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: primaryColor,
-                            fontSize: 16,
+                          const SizedBox(width: 12),
+                          Text(
+                            product?.discountedPriceFormat ?? "",
+                            style:
+                                Helper(context).textTheme.bodyMedium?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: primaryColor,
+                                      fontSize: 16,
+                                    ),
                           ),
-                    ),
-                  ],
-                ),
+                        ],
+                      )
+                    : Text(
+                        product?.priceFormat ?? "",
+                        style: Helper(context).textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: primaryColor,
+                              fontSize: 16,
+                            ),
+                      ),
               ],
             ),
           ),

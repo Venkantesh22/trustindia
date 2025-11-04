@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/controllers/basic_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/data/models/body/address_model.dart';
@@ -11,13 +12,31 @@ import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/address/screen/add_address_screen.dart';
 import 'package:lekra/views/screens/checkout/checkout_screen/components/textbox_title.dart';
 
-class BillingFormSection extends StatelessWidget {
+class BillingFormSection extends StatefulWidget {
   const BillingFormSection({
     super.key,
     required GlobalKey<FormState> formKey,
   }) : _formKey = formKey;
 
   final GlobalKey<FormState> _formKey;
+
+  @override
+  State<BillingFormSection> createState() => _BillingFormSectionState();
+}
+
+class _BillingFormSectionState extends State<BillingFormSection> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final orderController = Get.find<OrderController>();
+      final authController = Get.find<AuthController>();
+      orderController.billingName.text = authController.userModel?.name ?? "";
+      orderController.billingEmail.text = authController.userModel?.email ?? "";
+      orderController.billingNumber.text =
+          authController.userModel?.mobile ?? "";
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +109,6 @@ class BillingFormSection extends StatelessWidget {
                                               ),
                                         ),
                                       ),
-                                     
                                     ],
                                   ),
                                 ),
@@ -110,7 +128,7 @@ class BillingFormSection extends StatelessWidget {
                 ),
               ),
               Form(
-                key: _formKey,
+                key: widget._formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

@@ -37,7 +37,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         showDialog(
             context: context,
             builder: (context) {
-              return Dialog(
+              return const  Dialog(
                 child: PopCouponContainer(),
               );
             });
@@ -101,7 +101,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                             .cardModel?.couponDiscountFormat ??
                                         "",
                                   )
-                                : SizedBox(),
+                                : const SizedBox(),
                             const Divider(
                               color: grey,
                             ),
