@@ -20,9 +20,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-    final ScrollController _scrollController = ScrollController();
-      final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -35,11 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
       Get.find<ProductController>().fetchCard();
       Get.find<AuthController>().fetchUserProfile();
     });
-        _scrollController.addListener(_onScroll);
-
+    _scrollController.addListener(_onScroll);
   }
 
-   void _onScroll() {
+  void _onScroll() {
     final homeController = Get.find<HomeController>();
     // threshold: 300 px before bottom
     if (_scrollController.position.pixels >=
@@ -53,14 +51,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       key: scaffoldKey,
       drawer: const DrawerScreen(),
-      appBar:  HomeApp(scaffoldKey: scaffoldKey,),
-      body:  SingleChildScrollView(
-          controller: _scrollController,
+      appBar: HomeApp(
+        scaffoldKey: scaffoldKey,
+      ),
+      body: SingleChildScrollView(
+        controller: _scrollController,
         padding: AppConstants.screenPadding,
-        child: Column(
+        child: const Column(
           children: [
             HomeBanner(),
             ExploreCategorySection(),

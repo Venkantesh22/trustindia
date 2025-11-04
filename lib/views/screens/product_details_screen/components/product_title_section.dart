@@ -16,6 +16,7 @@ class ProdTitleSection extends StatelessWidget {
       return CustomShimmer(
         isLoading: productController.isLoading,
         child: Container(
+          width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
               color: white,

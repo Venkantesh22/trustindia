@@ -126,6 +126,10 @@ class AuthController extends GetxController implements GetxService {
       if (response.statusCode == 200) {
         responseModel =
             ResponseModel(true, response.body['message'] ?? "logout ");
+        nameController.clear();
+        emailController.clear();
+        passwordController.clear();
+        referralCodeController.clear();
       } else {
         responseModel = ResponseModel(
             false, response.body['message'] ?? "Error while logout");
