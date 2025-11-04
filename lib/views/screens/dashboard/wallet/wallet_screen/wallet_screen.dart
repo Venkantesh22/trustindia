@@ -67,6 +67,7 @@ class _WalletScreenState extends State<WalletScreen> {
       onRefresh: () async {
         final res = await Get.find<WalletController>()
             .fetchWalletTransaction(refresh: true);
+        Get.find<WalletController>().fetchWallet();
         // Optionally show a snackbar on failure
         if (!res.isSuccess) {
           if (!mounted) return;
