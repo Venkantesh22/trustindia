@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:lekra/services/constants.dart';
+
 class ProductModel {
   final int? id;
   final String? name;
@@ -8,6 +10,8 @@ class ProductModel {
   final double? discountedPrice;
   final List<String>? features;
   final String? offers;
+  final String? offerType;
+
   final String? priceCategory;
   final String? categoryName;
   final String? status;
@@ -24,6 +28,7 @@ class ProductModel {
     this.discountedPrice,
     this.features,
     this.offers,
+    this.offerType,
     this.priceCategory,
     this.categoryName,
     this.status,
@@ -52,8 +57,9 @@ class ProductModel {
             ? []
             : List<String>.from(json["features"]!.map((x) => x)),
         offers: json["offers"],
+        offerType: json["offer_type"],
         priceCategory: json["price_category"],
-        categoryName: json["category_name"],
+        categoryName: capitalize(json["category_name"]),
         status: json["status"],
         images: json["images"] == null
             ? []
@@ -74,6 +80,7 @@ class ProductModel {
         "features":
             features == null ? [] : List<dynamic>.from(features!.map((x) => x)),
         "offers": offers,
+        "offer_type": offerType,
         "price_category": priceCategory,
         "status": status,
         "quantity": quantity,
@@ -83,6 +90,19 @@ class ProductModel {
             : List<dynamic>.from(images!.map((x) => x.toJson())),
         "created_at": createdAt?.toIso8601String(),
       };
+
+  // ✅ Formatters for display
+  String get priceFormat => PriceConverter.convertToNumberFormat(price ?? 0.0);
+  String get discountedPriceFormat =>
+      PriceConverter.convertToNumberFormat(discountedPrice ?? 0.0);
+  String get offersFormat {
+    if (offers == null || offers!.isEmpty) return "";
+    if (offerType == "percentage") {
+      return "$offers OFF";
+    } else {
+      return offers ?? "";
+    }
+  }
 }
 
 class Image {

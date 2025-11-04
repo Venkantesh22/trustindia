@@ -92,8 +92,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   productController.cardModel?.discountFormat ??
                                       "",
                             ),
-                            productController.cardModel?.couponDiscountFormat !=
-                                    0.0
+                            productController.cardModel?.couponDiscount !=
+                                    "0.00"
                                 ? RowBillingText(
                                     label:
                                         "Coupon Discount  ${productController.cardModel?.couponValue}",
@@ -158,7 +158,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       if (_formKey.currentState?.validate() ?? false) {
                         navigate(
                             context: context,
-                            page:  SelectPaymentScreen(totalAmount: Get.find<ProductController>().cardModel?.totalPriceFormat ?? "",));
+                            page: SelectPaymentScreen(
+                              totalAmount: Get.find<ProductController>()
+                                      .cardModel
+                                      ?.totalPriceFormat ??
+                                  "",
+                            ));
                       }
                     },
                     color: secondaryColor),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/product_controller.dart';
 import 'package:lekra/data/models/product_model.dart';
@@ -32,73 +31,94 @@ class ProductCard extends StatelessWidget {
               productId: product.id,
             ));
       },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        decoration: BoxDecoration(
-          color: white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: grey.withValues(alpha: 0.1),
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 120,
-              width: 120,
-              child: CustomImage(
-                height: 120,
-                width: 120,
-                path: (product.images != null &&
-                        product.images!.isNotEmpty &&
-                        product.images![0].url != null &&
-                        product.images![0].url!.isNotEmpty)
-                    ? product.images![0].url!
-                    : "",
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  product.name ?? "",
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                      ),
+      child: Stack(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            decoration: BoxDecoration(
+              color: white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: grey.withValues(alpha: 0.1),
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
                 ),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  PriceConverter.convertToNumberFormat(
-                      product.price ?? 0.00),
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        color: primaryColor,
-                      ),
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                GetBuilder<ProductController>(builder: (productController) {
-                  return AddToCardButton(
-                    product: product,
-                  );
-                }),
               ],
             ),
-          ],
-        ),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 120,
+                  width: 120,
+                  child: CustomImage(
+                    height: 120,
+                    width: 120,
+                    path: (product.images != null &&
+                            product.images!.isNotEmpty &&
+                            product.images![0].url != null &&
+                            product.images![0].url!.isNotEmpty)
+                        ? product.images![0].url!
+                        : "",
+                    fit: BoxFit.cover,
+                    radius: 12,
+                  ),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      product.name ?? "",
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
+                    ),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    Text(
+                      // PriceConverter.convertToNumberFormat(
+                      //     product.price ?? 0.00),
+                      product.discountedPriceFormat,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            color: primaryColor,
+                          ),
+                    ),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    GetBuilder<ProductController>(builder: (productController) {
+                      return AddToCardButton(
+                        product: product,
+                      );
+                    }),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+              top: 10,
+              right: 10,
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                decoration: BoxDecoration(
+                    color: red, borderRadius: BorderRadius.circular(20)),
+                child: Text(
+                  product.offersFormat,
+                  style: Helper(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(color: white, fontWeight: FontWeight.w500),
+                ),
+              ))
+        ],
       ),
     );
   }
