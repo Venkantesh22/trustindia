@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:lekra/controllers/home_controller.dart';
@@ -53,29 +52,6 @@ class FeaturedSection extends StatelessWidget {
                   return CustomShimmer(
                     isLoading: homeController.isLoading,
                     child: ProductCard(
-                      
-                      // onTap: () {
-                      //   log("product id : ${product.id}");
-                      //   if (productController.isLoading) {
-                      //     showToast(
-                      //         message: "Please wait product adding to card",
-                      //         toastType: ToastType.info);
-                      //     return;
-                      //   }
-                      //   productController
-                      //       .postAddToCard(product: product)
-                      //       .then((value) {
-                      //     if (value.isSuccess) {
-                      //       showToast(
-                      //           message: value.message,
-                      //           typeCheck: value.isSuccess);
-                      //     } else {
-                      //       showToast(
-                      //           message: value.message,
-                      //           typeCheck: value.isSuccess);
-                      //     }
-                      //   });
-                      // },
                       product: product,
                       isLoading: homeController.isLoading,
                     ),

@@ -11,6 +11,13 @@ class HomeController extends GetxController implements GetxService {
   final HomeRepo homeRepo;
   HomeController({required this.homeRepo});
   bool isLoading = false;
+  
+  // Pagination state
+  int featuredPage = 1;
+  int featuredLastPage = 1;
+  final int pageSize = 10; // adjust to taste (10-20 is common)
+  bool isFeaturedInitialLoading = false;
+  bool isFeaturedMoreLoading = false;
 
   TextEditingController searchController = TextEditingController();
 

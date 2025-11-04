@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/order_controlller.dart';
@@ -44,7 +43,7 @@ class OrderBookingPriceDetailsContainer extends StatelessWidget {
                   children: [
                     Text(
                       DateFormatters().dateTime.format(
-                          orderController.selectOrder?.createdAt ??
+                          orderController.selectOrder?.createdAt?.toLocal() ??
                               DateTime.now()),
                       style: Helper(context).textTheme.bodySmall?.copyWith(
                             fontWeight: FontWeight.bold,

@@ -94,7 +94,7 @@ class ProductModel {
   // ✅ Formatters for display
   String get priceFormat => PriceConverter.convertToNumberFormat(price ?? 0.0);
   String get discountedPriceFormat =>
-      PriceConverter.convertToNumberFormat(discountedPrice ?? 0.0);
+      PriceConverter.convertToNumberFormat(discountedPrice ?? price ?? 0.0);
   String get offersFormat {
     if (offers == null || offers!.isEmpty) return "";
     if (offerType == "percentage") {

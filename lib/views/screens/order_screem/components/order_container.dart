@@ -33,7 +33,6 @@ class OrderContainer extends StatelessWidget {
         children: [
           CustomImage(
             path: productModel.images?[0].url ?? "",
-            // path: Assets.imagesBanner1,
             height: 100,
             width: 100,
             fit: BoxFit.cover,
@@ -79,9 +78,8 @@ class OrderContainer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      DateFormatters()
-                          .dateTime
-                          .format(productModel.createdAt ?? DateTime.now()),
+                      DateFormatters().dateTime.format(
+                          productModel.createdAt?.toLocal() ?? DateTime.now()),
                       style: Helper(context).textTheme.bodySmall?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: secondaryColor,

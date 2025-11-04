@@ -20,6 +20,14 @@ class SelectPaymentScreen extends StatefulWidget {
 
 class _SelectPaymentScreenState extends State<SelectPaymentScreen> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<WalletController>().fetchWallet();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
