@@ -81,8 +81,6 @@ class ProductCard extends StatelessWidget {
                       height: 4,
                     ),
                     Text(
-                      // PriceConverter.convertToNumberFormat(
-                      //     product.price ?? 0.00),
                       product.discountedPriceFormat,
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.bold,
@@ -106,18 +104,20 @@ class ProductCard extends StatelessWidget {
           Positioned(
               top: 10,
               right: 10,
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                decoration: BoxDecoration(
-                    color: red, borderRadius: BorderRadius.circular(20)),
-                child: Text(
-                  product.offersFormat,
-                  style: Helper(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(color: white, fontWeight: FontWeight.w500),
-                ),
-              ))
+              child: product.offers != null &&
+                      (product.offers?.isNotEmpty ?? false)
+                  ? Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 8),
+                      decoration: BoxDecoration(
+                          color: red, borderRadius: BorderRadius.circular(20)),
+                      child: Text(
+                        product.offersFormat,
+                        style: Helper(context).textTheme.bodySmall?.copyWith(
+                            color: white, fontWeight: FontWeight.w500),
+                      ),
+                    )
+                  : const SizedBox())
         ],
       ),
     );

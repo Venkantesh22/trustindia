@@ -1,17 +1,4 @@
-/// Generic pagination model that maps typical Laravel / REST-style pagination
-/// JSON into a Dart structure.
-/// Example backend response:
-/// {
-///   "status": true,
-///   "message": "Products fetched successfully",
-///   "data": {
-///     "current_page": 1,
-///     "last_page": 5,
-///     "per_page": 10,
-///     "total": 50,
-///     "data": [ {...}, {...} ]
-///   }
-/// }
+
 class PaginationModel<T> {
   final bool status;
   final String? message;

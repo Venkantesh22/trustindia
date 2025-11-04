@@ -20,6 +20,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+    final ScrollController _scrollController = ScrollController();
+      final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+
   @override
   void initState() {
     super.initState();
@@ -31,9 +35,21 @@ class _HomeScreenState extends State<HomeScreen> {
       Get.find<ProductController>().fetchCard();
       Get.find<AuthController>().fetchUserProfile();
     });
+        _scrollController.addListener(_onScroll);
+
   }
 
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+   void _onScroll() {
+    final homeController = Get.find<HomeController>();
+    // threshold: 300 px before bottom
+    if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent - 300 &&
+        !homeController.featuredState.isMoreLoading &&
+        homeController.featuredState.canLoadMore) {
+      // trigger load more
+      homeController.fetchFeaturedProducts(loadMore: true);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
       key: scaffoldKey,
       drawer: const DrawerScreen(),
       appBar:  HomeApp(scaffoldKey: scaffoldKey,),
-      body: const SingleChildScrollView(
+      body:  SingleChildScrollView(
+          controller: _scrollController,
         padding: AppConstants.screenPadding,
         child: Column(
           children: [
