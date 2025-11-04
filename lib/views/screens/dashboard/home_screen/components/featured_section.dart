@@ -66,7 +66,8 @@ class FeaturedSection extends StatelessWidget {
                 );
               }
 
-              final product = items[index];
+              final product =
+                  homeController.isLoading ? ProductModel() : items[index];
               return GetBuilder<ProductController>(
                   builder: (productController) {
                 return CustomShimmer(

@@ -7,8 +7,9 @@ class WallerRepo {
   final ApiClient apiClient;
   WallerRepo({required this.apiClient});
 
-  Future<Response> fetchWalletTransaction() async => await apiClient.getData(
-      AppConstants.getWalletTransaction, "fetchWalletTransaction");
+  Future<Response> fetchWalletTransaction({int page = 1}) async =>
+      await apiClient.getData("${AppConstants.getWalletTransaction}?page=$page",
+          "fetchWalletTransaction");
 
   Future<Response> fetchWallet() async =>
       await apiClient.getData(AppConstants.getWallet, "fetchWallet");

@@ -7,6 +7,7 @@ import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/dashboard/wallet/create_wallet_pin_screen/wallet_create_pin_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/wallet_screen/components/profile-balalnce_section.dart';
 import 'package:lekra/views/screens/dashboard/wallet/wallet_screen/components/transaction_container.dart';
+import 'package:lekra/views/screens/drawer/drawer_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class WalletScreen extends StatefulWidget {
@@ -18,6 +19,9 @@ class WalletScreen extends StatefulWidget {
 
 class _WalletScreenState extends State<WalletScreen> {
   bool isWallPinCreate = true;
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -34,11 +38,25 @@ class _WalletScreenState extends State<WalletScreen> {
         }
       });
     });
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    final walletController = Get.find<WalletController>();
+    if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent - 300 &&
+        !walletController.fetchWalletTransactionState.isMoreLoading &&
+        walletController.fetchWalletTransactionState.canLoadMore) {
+      // trigger load more
+      walletController.fetchWalletTransaction(loadMore: true);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
+      drawer: const DrawerScreen(),
       appBar: const CustomAppBar2(
         title: "Wallet",
         showBackButton: false,
@@ -48,6 +66,7 @@ class _WalletScreenState extends State<WalletScreen> {
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
+              controller: _scrollController,
               padding: AppConstants.screenPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,10 +84,40 @@ class _WalletScreenState extends State<WalletScreen> {
                       ),
                       const SizedBox(height: 12),
                       GetBuilder<WalletController>(builder: (walletController) {
+                        final isInitialLoading = walletController
+                            .fetchWalletTransactionState.isInitialLoading;
+                        final isMoreLoading = walletController
+                            .fetchWalletTransactionState.isMoreLoading;
+                        final items = walletController.transactionList;
+
+                        final showLoaderTile = isMoreLoading;
+
+                        final itemCount = isInitialLoading
+                            ? 4 // skeleton placeholders
+                            : items.length + (showLoaderTile ? 1 : 0);
+
                         return ListView.separated(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
+                              if (isInitialLoading) {
+                                final transactionModel = TransactionModel();
+                                return CustomShimmer(
+                                  isLoading: true,
+                                  child: TransactionsContainer(
+                                      transactionModel: transactionModel),
+                                );
+                              }
+                              // if this is the loader tile (last tile)
+                              if (showLoaderTile && index == items.length) {
+                                final transactionModel = TransactionModel();
+                                return CustomShimmer(
+                                  isLoading: true,
+                                  child: TransactionsContainer(
+                                      transactionModel: transactionModel),
+                                );
+                              }
+
                               final transactionModel =
                                   walletController.isLoading
                                       ? TransactionModel()
@@ -84,9 +133,8 @@ class _WalletScreenState extends State<WalletScreen> {
                                 height: 12,
                               );
                             },
-                            itemCount: walletController.isLoading
-                                ? 1
-                                : walletController.transactionList.length);
+                            itemCount:
+                                walletController.isLoading ? 1 : itemCount);
                       }),
                     ],
                   )
