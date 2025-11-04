@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/data/models/transaction_model.dart.dart';
 import 'package:lekra/services/constants.dart';
+import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/dashboard/wallet/create_wallet_pin_screen/wallet_create_pin_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/wallet_screen/components/profile-balalnce_section.dart';
@@ -33,8 +34,8 @@ class _WalletScreenState extends State<WalletScreen> {
             isWallPinCreate = false;
           });
         } else {
-          Get.find<WalletController>().updatePage(WalletScreen());
-          navigate(context: context, page: WalletCreatePinScreen());
+          Get.find<WalletController>().updatePage(const WalletScreen());
+          navigate(context: context, page: const WalletCreatePinScreen());
         }
       });
     });
@@ -53,94 +54,117 @@ class _WalletScreenState extends State<WalletScreen> {
   }
 
   @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      drawer: const DrawerScreen(),
-      appBar: const CustomAppBar2(
-        title: "Wallet",
-        showBackButton: false,
-      ),
-      body: isWallPinCreate
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : SingleChildScrollView(
-              controller: _scrollController,
-              padding: AppConstants.screenPadding,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const ProfileBalanceSection(),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Recent Transactions",
-                        style: Helper(context).textTheme.titleSmall?.copyWith(),
-                      ),
-                      const SizedBox(height: 12),
-                      GetBuilder<WalletController>(builder: (walletController) {
-                        final isInitialLoading = walletController
-                            .fetchWalletTransactionState.isInitialLoading;
-                        final isMoreLoading = walletController
-                            .fetchWalletTransactionState.isMoreLoading;
-                        final items = walletController.transactionList;
+    return RefreshIndicator(
+      backgroundColor: white,
+      onRefresh: () async {
+        final res = await Get.find<WalletController>()
+            .fetchWalletTransaction(refresh: true);
+        // Optionally show a snackbar on failure
+        if (!res.isSuccess) {
+          if (!mounted) return;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(res.message)),
+          );
+        }
+      },
+      child: Scaffold(
+        key: scaffoldKey,
+        drawer: const DrawerScreen(),
+        appBar: const CustomAppBar2(
+          title: "Wallet",
+          showBackButton: false,
+        ),
+        body: isWallPinCreate
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : SingleChildScrollView(
+                controller: _scrollController,
+                padding: AppConstants.screenPadding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const ProfileBalanceSection(),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Recent Transactions",
+                          style:
+                              Helper(context).textTheme.titleSmall?.copyWith(),
+                        ),
+                        const SizedBox(height: 12),
+                        GetBuilder<WalletController>(
+                            builder: (walletController) {
+                          final isInitialLoading = walletController
+                              .fetchWalletTransactionState.isInitialLoading;
+                          final isMoreLoading = walletController
+                              .fetchWalletTransactionState.isMoreLoading;
+                          final items = walletController.transactionList;
 
-                        final showLoaderTile = isMoreLoading;
+                          final showLoaderTile = isMoreLoading;
 
-                        final itemCount = isInitialLoading
-                            ? 4 // skeleton placeholders
-                            : items.length + (showLoaderTile ? 1 : 0);
+                          final itemCount = isInitialLoading
+                              ? 4 // skeleton placeholders
+                              : items.length + (showLoaderTile ? 1 : 0);
 
-                        return ListView.separated(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              if (isInitialLoading) {
-                                final transactionModel = TransactionModel();
+                          return ListView.separated(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                if (isInitialLoading) {
+                                  final transactionModel = TransactionModel();
+                                  return CustomShimmer(
+                                    isLoading: true,
+                                    child: TransactionsContainer(
+                                        transactionModel: transactionModel),
+                                  );
+                                }
+                                // if this is the loader tile (last tile)
+                                if (showLoaderTile && index == items.length) {
+                                  final transactionModel = TransactionModel();
+                                  return CustomShimmer(
+                                    isLoading: true,
+                                    child: TransactionsContainer(
+                                        transactionModel: transactionModel),
+                                  );
+                                }
+
+                                final transactionModel = walletController
+                                        .isLoading
+                                    ? TransactionModel()
+                                    : walletController.transactionList[index];
                                 return CustomShimmer(
-                                  isLoading: true,
-                                  child: TransactionsContainer(
-                                      transactionModel: transactionModel),
+                                    isLoading: walletController.isLoading,
+                                    child: TransactionsContainer(
+                                      transactionModel: transactionModel,
+                                    ));
+                              },
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(
+                                  height: 12,
                                 );
-                              }
-                              // if this is the loader tile (last tile)
-                              if (showLoaderTile && index == items.length) {
-                                final transactionModel = TransactionModel();
-                                return CustomShimmer(
-                                  isLoading: true,
-                                  child: TransactionsContainer(
-                                      transactionModel: transactionModel),
-                                );
-                              }
-
-                              final transactionModel =
-                                  walletController.isLoading
-                                      ? TransactionModel()
-                                      : walletController.transactionList[index];
-                              return CustomShimmer(
-                                  isLoading: walletController.isLoading,
-                                  child: TransactionsContainer(
-                                    transactionModel: transactionModel,
-                                  ));
-                            },
-                            separatorBuilder: (context, index) {
-                              return const SizedBox(
-                                height: 12,
-                              );
-                            },
-                            itemCount:
-                                walletController.isLoading ? 1 : itemCount);
-                      }),
-                    ],
-                  )
-                ],
+                              },
+                              itemCount:
+                                  walletController.isLoading ? 1 : itemCount);
+                        }),
+                      ],
+                    )
+                  ],
+                ),
               ),
-            ),
+      ),
     );
   }
 }
