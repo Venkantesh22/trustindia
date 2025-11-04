@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/referral_controller.dart';
@@ -103,7 +102,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
 
   Future<dynamic> scratchFun(
       BuildContext context, ScratchCardModel scratchCardModel) {
-    final scratchKey = GlobalKey<ScratcherState>(); // 👈 Add key
+    final scratchKey = GlobalKey<ScratcherState>();
 
     return showDialog(
       context: context,

@@ -1,5 +1,3 @@
-import 'package:lekra/services/date_formatters_and_converters.dart';
-
 class ScratchCardModel {
   final int? id;
   final String? code;
@@ -40,5 +38,10 @@ class ScratchCardModel {
 
   bool get isScratch => (isRedeemed ?? 0) == 1;
   bool get isDiscount => type == "discount";
-  bool get isExpiry =>    DateFormatters().dateTime.format(expiryDate ?? getDateTime()) == DateFormatters().dateTime.format( getDateTime());
+
+  /// Returns true if the scratch card is expired
+  bool get isExpiry {
+    if (expiryDate == null) return false;
+    return DateTime.now().isAfter(expiryDate!);
+  }
 }
