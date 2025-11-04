@@ -18,6 +18,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool showPassword = false;
+
   final _formKey = GlobalKey<FormState>();
   login(AuthController authController) {
     authController.userLogin().then((value) {
@@ -118,7 +120,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       TextFormField(
                         controller: authController.passwordController,
+                        obscureText: !showPassword,
                         decoration: CustomDecoration.inputDecoration(
+                          suffix: IconButton(
+                            icon: Icon(
+                              showPassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: grey,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                showPassword = !showPassword;
+                              });
+                            },
+                          ),
                           hint: "Enter your Password",
                           hintStyle:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -209,7 +225,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                             ),
                             Text(
-                              "Sign Up",
+                              "Register",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium

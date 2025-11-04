@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/services/constants.dart';
@@ -17,6 +18,8 @@ class SignUPScreen extends StatefulWidget {
 }
 
 class _SignUPScreenState extends State<SignUPScreen> {
+  bool showPassword = false;
+
   final _formKey = GlobalKey<FormState>();
   signUp(AuthController authController) {
     authController.registerUser().then(
@@ -157,6 +160,49 @@ class _SignUPScreenState extends State<SignUPScreen> {
                             height: 20,
                           ),
                           Text(
+                            "Mobile",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                          ),
+                          const SizedBox(
+                            height: 6,
+                          ),
+                          TextFormField(
+                            controller: authController.numberController,
+                            decoration: CustomDecoration.inputDecoration(
+                              hint: "Enter your Mobile number",
+                              hintStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: grey,
+                                  ),
+                            ),
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(10),
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please enter your Mobile number";
+                              }
+                              if (value.length != 10) {
+                                return "Please number should be 10 digit";
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
                             "Password",
                             style: Theme.of(context)
                                 .textTheme
@@ -171,7 +217,21 @@ class _SignUPScreenState extends State<SignUPScreen> {
                           ),
                           TextFormField(
                             controller: authController.passwordController,
+                            obscureText: !showPassword,
                             decoration: CustomDecoration.inputDecoration(
+                              suffix: IconButton(
+                                icon: Icon(
+                                  showPassword
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: grey,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    showPassword = !showPassword;
+                                  });
+                                },
+                              ),
                               hint: "Enter your Password",
                               hintStyle: Theme.of(context)
                                   .textTheme
@@ -280,7 +340,7 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                       ),
                                 ),
                                 Text(
-                                  "Register",
+                                  "Sign Up",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium

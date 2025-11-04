@@ -20,6 +20,7 @@ class AuthController extends GetxController implements GetxService {
   bool get acceptTerms => _acceptTerms;
 
   TextEditingController nameController = TextEditingController();
+  TextEditingController numberController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController referralCodeController = TextEditingController();
@@ -37,6 +38,7 @@ class AuthController extends GetxController implements GetxService {
         "email": emailController.text.trim(),
         "password": passwordController.text.trim(),
         "referral_code": referralCodeController.text.trim(),
+        "mobile": numberController.text.trim(),
       };
 
       Response response = await authRepo.postUserRegister(
@@ -177,8 +179,6 @@ class AuthController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
-
-  TextEditingController numberController = TextEditingController();
 
   File? profileImage;
 
