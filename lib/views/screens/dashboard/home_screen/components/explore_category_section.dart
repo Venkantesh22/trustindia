@@ -5,7 +5,7 @@ import 'package:lekra/data/models/home/category_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
-import 'package:lekra/views/screens/category_screen/category_detaisl.dart';
+import 'package:lekra/views/screens/category_screen/category_details_screen.dart';
 
 class ExploreCategorySection extends StatelessWidget {
   const ExploreCategorySection({super.key});

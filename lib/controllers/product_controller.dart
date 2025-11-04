@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:lekra/data/models/card_model.dart';
+import 'package:lekra/data/models/pagination/pagination_model.dart';
+import 'package:lekra/data/models/pagination/pagination_state.dart';
 import 'package:lekra/data/models/product_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/repositories/product_repo.dart';
@@ -11,42 +13,129 @@ class ProductController extends GetxController implements GetxService {
   ProductController({required this.productRepo});
   bool isLoading = false;
 
-  List<ProductModel> cateProductList = [];
-  Future<ResponseModel> fetchCategory({required int? categoryId}) async {
-    log('-----------  fetchCategory() -------------');
+// FEATURED: Pagination state
+  final PaginationState<ProductModel> cateProductListState =
+      PaginationState<ProductModel>();
+
+  // convenient getter for UI
+  List<ProductModel> get cateProductList => cateProductListState.items;
+
+  // List<ProductModel> cateProductList = [];
+  Future<ResponseModel> fetchCategory(
+      {int? categoryId, bool loadMore = false, bool refresh = false}) async {
+    log('fetchCategory called (loadMore: $loadMore, refresh: $refresh)');
     ResponseModel responseModel;
+    if (refresh) {
+      cateProductListState.reset();
+      cateProductListState.page = 1;
+    }
+    if (loadMore) {
+      if (!cateProductListState.canLoadMore) {
+        return ResponseModel(false, "No more pages");
+      }
+      // prepare for next page
+      cateProductListState.page += 1;
+      cateProductListState.isMoreLoading = true;
+    } else {
+      // initial load (or refresh)
+      cateProductListState.isInitialLoading = true;
+      cateProductListState.page = 1;
+    }
+
     isLoading = true;
     update();
 
     try {
-      Response response =
-          await productRepo.fetchCategoryDetails(categoryId: categoryId);
+      Response response = await productRepo.fetchCategoryDetails(
+          categoryId: categoryId, page: cateProductListState.page);
 
       if (response.statusCode == 200 &&
           response.body['success'] == true &&
-          response.body['data']['products'] is List) {
-        cateProductList = (response.body['data']['products'] as List)
-            .map((product) => ProductModel.fromJson(product))
-            .toList();
+          response.body['products']['data'] is List) {
+        final pagination = PaginationModel<ProductModel>.fromJson(
+          response.body['products'],
+          (json) => ProductModel.fromJson(json),
+        );
 
-        log("Product length ${cateProductList.length}");
+        cateProductListState.lastPage = pagination.lastPage;
+        cateProductListState.page = pagination.currentPage;
+        if (loadMore) {
+          // dedupe by id (if your ProductModel has `id`)
+          for (final p in pagination.data) {
+            if (!cateProductListState.dedupeIds.contains(p.id)) {
+              cateProductListState.dedupeIds.add(p.id);
+              cateProductListState.items.add(p);
+            }
+          }
+        } else {
+          cateProductListState.items
+            ..clear()
+            ..addAll(pagination.data);
+          cateProductListState.dedupeIds.clear();
+          cateProductListState.dedupeIds
+              .addAll(pagination.data.map((e) => e.id));
+        }
 
         responseModel =
             ResponseModel(true, response.body['message'] ?? "fetchCategory");
       } else {
         log("Product length else ${cateProductList.length}");
+
         responseModel = ResponseModel(
             false, response.body['message'] ?? "Something Went Wrong");
       }
     } catch (e) {
       responseModel = ResponseModel(false, "Catch");
       log("****** Error ****** $e", name: "fetchCategory");
+      if (loadMore && cateProductListState.page > 1) {
+        cateProductListState.page -= 1;
+      }
+    } finally {
+      cateProductListState.isInitialLoading = false;
+      cateProductListState.isMoreLoading = false;
+      isLoading = false;
+      update();
     }
 
-    isLoading = false;
-    update();
     return responseModel;
   }
+  // List<ProductModel> cateProductList = [];
+  // Future<ResponseModel> fetchCategory({required int? categoryId}) async {
+  //   log('-----------  fetchCategory() -------------');
+  //   ResponseModel responseModel;
+
+  //   isLoading = true;
+  //   update();
+
+  //   try {
+  //     Response response =
+  //         await productRepo.fetchCategoryDetails(categoryId: categoryId);
+
+  //     if (response.statusCode == 200 &&
+  //         response.body['success'] == true &&
+  //         response.body['data']['products'] is List) {
+  //       cateProductList = (response.body['data']['products'] as List)
+  //           .map((product) => ProductModel.fromJson(product))
+  //           .toList();
+
+  //       log("Product length ${cateProductList.length}");
+
+  //       responseModel =
+  //           ResponseModel(true, response.body['message'] ?? "fetchCategory");
+  //     } else {
+  //       log("Product length else ${cateProductList.length}");
+  //       responseModel = ResponseModel(
+  //           false, response.body['message'] ?? "Something Went Wrong");
+  //     }
+  //   } catch (e) {
+  //     responseModel = ResponseModel(false, "Catch");
+  //     log("****** Error ****** $e", name: "fetchCategory");
+  //   }
+
+  //   isLoading = false;
+  //   update();
+  //   return responseModel;
+  // }
 
   ProductModel? productModel;
   Future<ResponseModel> fetchProduct({required int? productId}) async {

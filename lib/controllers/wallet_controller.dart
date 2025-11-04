@@ -26,7 +26,7 @@ class WalletController extends GetxController implements GetxService {
     bool loadMore = false,
     bool refresh = false,
   }) async {
-    log('fetchWalletTransaction called (loadMore: $loadMore, refresh: $refresh)');
+    log('------------fetchWalletTransaction called (loadMore: $loadMore, refresh: $refresh)----------------');
     ResponseModel responseModel;
     if (refresh) {
       fetchWalletTransactionState.reset();
