@@ -10,6 +10,7 @@ import 'package:lekra/views/screens/drawer/drawer_screen.dart';
 import 'package:lekra/views/screens/subscription_plan/subscription_category/component/subscription_category_container.dart';
 import 'package:lekra/views/screens/subscription_plan/subscrption_screen/subscription_plan_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_drawer.dart';
+import 'package:page_transition/page_transition.dart';
 
 class SubscriptionCategoryPlan extends StatefulWidget {
   const SubscriptionCategoryPlan({super.key});
@@ -65,6 +66,7 @@ class _SubscriptionCategoryPlanState extends State<SubscriptionCategoryPlan> {
                                 .updateSelectSubscriptionCategoryModel(
                                     subscriptionCategoryModel);
                             navigate(
+                                type: PageTransitionType.rightToLeft,
                                 context: context,
                                 page: SubscriptionPlanScreen(
                                   subscriptionPlanName:
