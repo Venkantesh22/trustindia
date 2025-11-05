@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/custom_image.dart';
+import 'package:lekra/views/screens/seleck_payment/dynamc_qr_screen/dynamic_qr_screen.dart';
 
 class RowOfUPIOption extends StatelessWidget {
   final String? image;
   final String title;
-  final Function()? onTap;
+  final Function(BuildContext)? onTap;
 
   const RowOfUPIOption({
     super.key,
@@ -17,7 +18,7 @@ class RowOfUPIOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () => onTap?.call(context),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Row(
@@ -58,7 +59,7 @@ class RowOfUPIOption extends StatelessWidget {
 class UpiOptionModel {
   final String? image;
   final String title;
-  final Function()? onTap;
+  final Function(BuildContext)? onTap;
 
   UpiOptionModel({this.image, required this.title, required this.onTap});
 }
@@ -70,5 +71,10 @@ List<UpiOptionModel> upiOptionList = [
   // UpiOptionModel(
   //     image: Assets.imagesUpi, title: "Pay with Other UPI Apps", onTap: () {}),
   // UpiOptionModel(title: "Pay with Credit/Debit Card", onTap: () {}),
-  UpiOptionModel(title: "Dynamic QR", onTap: () {}),
+  UpiOptionModel(
+    title: "Dynamic QR",
+    onTap: (context) {
+      navigate(context: context, page: const QRPaymentScreen());
+    },
+  ),
 ];

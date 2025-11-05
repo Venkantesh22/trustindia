@@ -7,7 +7,7 @@ import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/data/models/order_model.dart';
 import 'package:lekra/data/models/product_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
-import 'package:lekra/data/repositories/check_repo.dart';
+import 'package:lekra/data/repositories/order_repo.dart';
 
 class OrderController extends GetxController implements GetxService {
   final OrderRepo orderRepo;

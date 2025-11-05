@@ -174,6 +174,10 @@ class AppConstants {
   static const String postPayOrderWalled = "api/pay-order";
   static const String getOrder = "api/orders";
 
+  //Dynamic QR
+  static const String postDynamicQR = "api/tpipay/paymentOrder";
+  static const String postCallBack = "api/tpipay/callback";
+
   //Product screen
   static const String getCategoryDetails = "api/category-details";
   static const String getProductDetails = "api/products-details";

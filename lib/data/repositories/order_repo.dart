@@ -13,15 +13,18 @@ class OrderRepo {
         "postCheckout",
         data,
       );
-  Future<Response> postPayOrderWalled({required int? orderId, required FormData data}) async =>
+  Future<Response> postPayOrderWalled(
+          {required int? orderId, required FormData data}) async =>
       await apiClient.postData(
         "${AppConstants.postPayOrderWalled}/$orderId",
         "postPayOrderWalled",
-       data,
+        data,
       );
 
   Future<Response> fetchOrder() async => await apiClient.getData(
         AppConstants.getOrder,
         "fetchOrder",
       );
+
+ 
 }
