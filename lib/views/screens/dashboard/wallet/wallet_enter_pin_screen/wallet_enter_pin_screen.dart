@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lekra/controllers/basic_controller.dart';
-import 'package:lekra/controllers/coupon_controller.dart';
+
 import 'package:lekra/controllers/dashboard_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/controllers/subscription_controller.dart';
@@ -61,29 +60,19 @@ class _WalletEnterPinScreenState extends State<WalletEnterPinScreen> {
       });
     } else {
       Get.find<OrderController>()
-          .postCheckout(
-              addressId: Get.find<BasicController>().selectAddress?.id,
-              code: Get.find<CouponController>().couponCode)
-          .then(
-        (value) {
-          if (value.isSuccess) {
-            Get.find<OrderController>()
-                .postPayOrderWallet(
-                    orderId: Get.find<OrderController>().orderId)
-                .then((value) {
-              if (value.isSuccess) {
-                showToast(message: value.message, typeCheck: value.isSuccess);
+          .postPayOrderWallet(orderId: Get.find<OrderController>().orderId)
+          .then((value) {
+        if (value.isSuccess) {
+          showToast(
+              message:
+                  "Congratulations! Your order has been placed successfully",
+              typeCheck: value.isSuccess);
 
-                navigate(context: context, page: OrderScreen());
-              } else {
-                showToast(message: value.message, typeCheck: value.isSuccess);
-              }
-            });
-          } else {
-            showToast(message: value.message, typeCheck: value.isSuccess);
-          }
-        },
-      );
+          navigate(context: context, page: OrderScreen());
+        } else {
+          showToast(message: value.message, typeCheck: value.isSuccess);
+        }
+      });
     }
   }
 

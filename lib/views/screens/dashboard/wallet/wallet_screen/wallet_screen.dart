@@ -157,8 +157,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                   height: 12,
                                 );
                               },
-                              itemCount:
-                                  walletController.isLoading ? 2 : itemCount);
+                              itemCount: itemCount);
                         }),
                       ],
                     )

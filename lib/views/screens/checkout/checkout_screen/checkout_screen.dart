@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/basic_controller.dart';
+import 'package:lekra/controllers/coupon_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/controllers/product_controller.dart';
 import 'package:lekra/services/constants.dart';
@@ -37,7 +38,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         showDialog(
             context: context,
             builder: (context) {
-              return const  Dialog(
+              return const Dialog(
                 child: PopCouponContainer(),
               );
             });
@@ -156,14 +157,30 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         return;
                       }
                       if (_formKey.currentState?.validate() ?? false) {
-                        navigate(
-                            context: context,
-                            page: SelectPaymentScreen(
-                              totalAmount: Get.find<ProductController>()
-                                      .cardModel
-                                      ?.totalPriceFormat ??
-                                  "",
-                            ));
+                        Get.find<OrderController>()
+                            .postCheckout(
+                                addressId: Get.find<BasicController>()
+                                    .selectAddress
+                                    ?.id,
+                                code: Get.find<CouponController>().couponCode)
+                            .then(
+                          (value) {
+                            if (value.isSuccess) {
+                              navigate(
+                                  context: context,
+                                  page: SelectPaymentScreen(
+                                    totalAmount: Get.find<ProductController>()
+                                            .cardModel
+                                            ?.totalPriceFormat ??
+                                        "",
+                                  ));
+                            } else {
+                              showToast(
+                                  message: value.message,
+                                  typeCheck: value.isSuccess);
+                            }
+                          },
+                        );
                       }
                     },
                     color: secondaryColor),
