@@ -224,8 +224,8 @@ class WalletController extends GetxController implements GetxService {
     isLoading = true;
     update();
     final data = {
-      "wallet_pin": createWalletPin,
-      "wallet_pin_confirmation": createWalletPinConfirm,
+      "new_pin": createWalletPin,
+      "confirm_pin": createWalletPinConfirm,
     };
 
     try {

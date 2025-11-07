@@ -12,9 +12,8 @@ import 'package:lekra/views/screens/dashboard/wallet/widget/key_cell.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_back_button.dart';
 
 class WalletCreatePinComfirmScreen extends StatefulWidget {
-  final bool isReSetWalletPin;
-  const WalletCreatePinComfirmScreen(
-      {super.key, this.isReSetWalletPin = false});
+  final bool isForResetPin;
+  const WalletCreatePinComfirmScreen({super.key, this.isForResetPin = false});
 
   @override
   State<WalletCreatePinComfirmScreen> createState() =>
@@ -189,10 +188,10 @@ class _WalletCreatePinComfirmScreenState
                       onPressed: isComplete
                           ? () {
                               log("walletController.walletPin ${walletController.createWalletPin}");
-                              log("walletController.walletPin ${walletController.createWalletPinConfirm}");
+                              log("walletController.walletPin confirm ${walletController.createWalletPinConfirm}");
                               if (walletController.createWalletPin ==
                                   walletController.createWalletPinConfirm) {
-                                if (widget.isReSetWalletPin) {
+                                if (widget.isForResetPin) {
                                   walletController
                                       .postWalletReSetPin()
                                       .then((value) {

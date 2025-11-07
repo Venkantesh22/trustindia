@@ -11,8 +11,8 @@ import 'package:lekra/views/screens/dashboard/wallet/widget/key_cell.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_back_button.dart';
 
 class WalletCreatePinScreen extends StatelessWidget {
-  final bool isResetPin;
-  const WalletCreatePinScreen({super.key, this.isResetPin = false});
+  final bool isForResetPin;
+  const WalletCreatePinScreen({super.key, this.isForResetPin = false});
 
   void onKeyPress(String value, WalletController walletController) {
     if (value == 'back') {
@@ -50,7 +50,7 @@ class WalletCreatePinScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    isResetPin ? "Reset Your PIN" : "Create Your PIN",
+                    isForResetPin ? "Reset Your PIN" : "Create Your PIN",
                     style: Helper(context)
                         .textTheme
                         .titleMedium
@@ -58,7 +58,7 @@ class WalletCreatePinScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    isResetPin
+                    isForResetPin
                         ? "Enter your New PIN to reset."
                         : "This PIN secures your wallet and transactions.",
                     style: Helper(context).textTheme.bodyMedium?.copyWith(
@@ -130,7 +130,7 @@ class WalletCreatePinScreen extends StatelessWidget {
                     onPressed: () => isComplete
                         ? navigate(
                             context: context,
-                            page: WalletCreatePinComfirmScreen(),
+                            page: WalletCreatePinComfirmScreen(isForResetPin: isForResetPin,),
                           )
                         : null,
                     color: primaryColor,

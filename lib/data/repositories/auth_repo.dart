@@ -14,6 +14,13 @@ class AuthRepo {
 
   // Future<Response> generateOtp({required String phone}) async => await apiClient.postData(AppConstants.generateOtp, {"mobile": phone});
 
+  Future<Response> generateOtp({required FormData data}) async =>
+      await apiClient.postData(AppConstants.generateOtp, "generateOtp", data);
+
+  Future<Response> postVerifyOTP({required FormData data}) async =>
+      await apiClient.postData(
+          AppConstants.postVerifyOTP, "postVerifyOTP", data);
+
   // Future<Response> verifyOtp({required String phone, required String otp}) async => await apiClient.postData(
   // AppConstants.loginUri, {
   // "mobile": phone,

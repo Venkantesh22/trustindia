@@ -25,6 +25,77 @@ class AuthController extends GetxController implements GetxService {
   TextEditingController passwordController = TextEditingController();
   TextEditingController referralCodeController = TextEditingController();
 
+  Future<ResponseModel> generateOtp({required String mobile}) async {
+    log('----------- generateOtp Called ----------');
+
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+
+    try {
+      Map<String, dynamic> data = {
+        "mobile": mobile,
+      };
+
+      Response response = await authRepo.generateOtp(
+        data: FormData(data),
+      );
+
+      log("Raw Response: ${response.body}");
+
+      if (response.body['status'] == true) {
+        responseModel = ResponseModel(
+            true, response.body['message'] ?? "generateOtp updated");
+      } else {
+        responseModel = ResponseModel(
+            false, response.body['message'] ?? "Error while generateOtp user");
+      }
+    } catch (e) {
+      log('ERROR AT generateOtp(): $e');
+      responseModel = ResponseModel(false, "Error while generateOtp user $e");
+    }
+
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> postVerifyOTP({required String mobile, required String otp}) async {
+    log('----------- postVerifyOTP Called ----------');
+
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+
+    try {
+      Map<String, dynamic> data = {
+        "mobile": mobile,
+        "otp": otp,
+      };
+
+      Response response = await authRepo.postVerifyOTP(
+        data: FormData(data),
+      );
+
+      log("Raw Response: ${response.body}");
+
+      if (response.body['status'] == true) {
+        responseModel = ResponseModel(
+            true, response.body['message'] ?? "postVerifyOTP updated");
+      } else {
+        responseModel = ResponseModel(false,
+            response.body['message'] ?? "Error while postVerifyOTP user");
+      }
+    } catch (e) {
+      log('ERROR AT postVerifyOTP(): $e');
+      responseModel = ResponseModel(false, "Error while postVerifyOTP user $e");
+    }
+
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
   Future<ResponseModel> registerUser() async {
     log('----------- registerUser Called ----------');
 

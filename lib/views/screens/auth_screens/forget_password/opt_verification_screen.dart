@@ -1,16 +1,21 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lekra/views/base/custom_toast.dart';
+import 'package:get/get.dart';
+import 'package:lekra/controllers/auth_controller.dart';
+import 'package:lekra/views/screens/dashboard/wallet/create_wallet_pin_screen/wallet_create_pin_screen.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../../services/constants.dart';
 import '../../../../services/theme.dart';
 import '../../../base/common_button.dart';
-import '../../../base/custom_image.dart';
 
 class OTPVerification extends StatefulWidget {
   final String phone;
-  const OTPVerification({super.key, required this.phone});
+  final bool isForResetPin;
+  const OTPVerification(
+      {super.key, required this.phone, this.isForResetPin = false});
 
   @override
   State<OTPVerification> createState() => _OTPVerificationState();
@@ -21,10 +26,72 @@ class _OTPVerificationState extends State<OTPVerification> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // Get.find<AuthController>().generatedOtp(phone: widget.phone);
-    });
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<AuthController>().generateOtp(mobile: widget.phone);
+      _startTimer();
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _pinController.dispose();
+    super.dispose();
+  }
+
+  static const _otpWindow = Duration(minutes: 1);
+  Timer? _timer;
+  int _secondsLeft = _otpWindow.inSeconds;
+  bool reSendCode = false; // true => user can tap to resend
+  bool _resending = false; // optional: to prevent double taps
+
+  void _startTimer() {
+    _timer?.cancel();
+    setState(() {
+      _secondsLeft = _otpWindow.inSeconds;
+      reSendCode = false; // countdown running
+    });
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (t) {
+      if (_secondsLeft <= 1) {
+        t.cancel();
+        setState(() {
+          _secondsLeft = 0;
+          reSendCode = true; // now user can resend
+        });
+      } else {
+        setState(() {
+          _secondsLeft--;
+        });
+      }
+    });
+  }
+
+  String _formatMMSS(int totalSeconds) {
+    final m = (totalSeconds ~/ 60).toString().padLeft(2, '0');
+    final s = (totalSeconds % 60).toString().padLeft(2, '0');
+    return '$m:$s';
+  }
+
+  Future<void> _resendCode() async {
+    if (!reSendCode || _resending) return; // only when allowed and not busy
+
+    setState(() => _resending = true);
+
+    try {
+      // Call your resend endpoint
+      await Get.find<AuthController>().generateOtp(mobile: widget.phone);
+
+      // Restart cooldown
+      _startTimer();
+    } catch (e) {
+      // Optionally show error toast
+      showToast(message: 'Failed to resend OTP', toastType: ToastType.error);
+      // Keep reSendCode = true so user can try again
+    } finally {
+      if (mounted) setState(() => _resending = false);
+    }
   }
 
   @override
@@ -34,103 +101,141 @@ class _OTPVerificationState extends State<OTPVerification> {
         leading: const BackButton(color: Colors.black),
         backgroundColor: Colors.white,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 30),
-            child: Center(child: CustomImage(path: 'Assets.imagesMessage')),
-          ),
-          Text(
-            "Verify Your Code",
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  color: Colors.black,
-                ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            "We have sent the verification to +91 9876543210",
-            style: Theme.of(context).textTheme.titleSmall!.copyWith(),
-          ),
-          Text(
-            "Change Phone Number?",
-            style: Theme.of(context)
-                .textTheme
-                .titleSmall!
-                .copyWith(color: primaryColor),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Pinput(
-            inputFormatters: [
-              LengthLimitingTextInputFormatter(6),
-              FilteringTextInputFormatter.digitsOnly
-            ],
-            keyboardType: TextInputType.number,
-            textInputAction: TextInputAction.done,
-            controller: _pinController,
-            length: 6,
-            defaultPinTheme: PinTheme(
-              width: 45,
-              height: 55,
-              textStyle: TextStyle(
-                fontSize: 20,
-                color: Colors.black.withOpacity(0.3),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                border: Border.all(
-                  color: Colors.black.withOpacity(0.3),
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
+      body: Padding(
+        padding: AppConstants.screenPadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Enter Your OTP",
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                    color: Colors.black,
+                  ),
             ),
-            focusedPinTheme: PinTheme(
-              width: 45,
-              height: 55,
-              textStyle: const TextStyle(
-                fontSize: 20,
-                color: Colors.black,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                border: Border.all(
-                  color: Colors.black,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
+            const SizedBox(
+              height: 20,
             ),
-            submittedPinTheme: PinTheme(
-              width: 45,
-              height: 55,
-              textStyle: const TextStyle(
-                fontSize: 20,
-                color: Colors.black,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                border: Border.all(
-                  color: Colors.black,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
+            Text(
+              "We have sent the verification to +91 ${widget.phone}",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(fontSize: 18),
             ),
-            onChanged: (value) {},
-          ),
-          const SizedBox(height: 60),
-          const Text("Didn’t you received any code?"),
-          const Text("Resend a new code.",
-              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold))
-        ],
+            !widget.isForResetPin
+                ? Text(
+                    "Change Phone Number?",
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(color: primaryColor),
+                  )
+                : SizedBox(),
+            const SizedBox(
+              height: 20,
+            ),
+            Spacer(),
+            Column(
+              children: [
+                Pinput(
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(6),
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.done,
+                  controller: _pinController,
+                  length: 6,
+                  defaultPinTheme: PinTheme(
+                    width: 45,
+                    height: 55,
+                    textStyle: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black.withOpacity(0.3),
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      border: Border.all(
+                        color: Colors.black.withOpacity(0.3),
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  focusedPinTheme: PinTheme(
+                    width: 45,
+                    height: 55,
+                    textStyle: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  submittedPinTheme: PinTheme(
+                    width: 45,
+                    height: 55,
+                    textStyle: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onChanged: (value) {},
+                ),
+                const SizedBox(height: 60),
+                const Text("Didn’t receive any code?"),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: reSendCode && !_resending ? _resendCode : null,
+                      child: Text(
+                        reSendCode
+                            ? (_resending
+                                ? "Resending..."
+                                : "Tap to resend code")
+                            : "Resend a new code   ",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                          decoration: reSendCode && !_resending
+                              ? TextDecoration.underline
+                              : TextDecoration.none,
+                        ),
+                      ),
+                    ),
+                    if (!reSendCode)
+                      Text(
+                        _formatMMSS(_secondsLeft),
+                        style: const TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                  ],
+                )
+              ],
+            ),
+            Spacer(),
+          ],
+        ),
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
@@ -141,23 +246,29 @@ class _OTPVerificationState extends State<OTPVerification> {
             child: CustomButton(
               radius: 6,
               elevation: 0,
-              color: Colors.black,
+              color: primaryColor,
               onTap: () {
                 if (_pinController.text.length != 6) {
-                  // showCustomToast(
-                  //     msg: 'Invalid Otp', toastType: );
-                  // return;
+                  showToast(message: 'Invalid Otp', toastType: ToastType.error);
+                  return;
                 }
-                // Get.find<AuthController>().verifyOtp(phone: widget.phone, otp: _pinController.text).then((value) {
-                //   if (value.isSuccess) {
-                //     if (value.data['new']) {
-                //       Navigator.pushAndRemoveUntil(context, getCustomRoute(child: const SignUpScreen()), (route) => false);
-                //     } else {
-                //       // Todo: Get Profile...
-                //       Navigator.pushAndRemoveUntil(context, getCustomRoute(child: const DashboardScreen()), (route) => false);
-                //     }
-                //   }
-                // });
+                Get.find<AuthController>()
+                    .postVerifyOTP(
+                        mobile: widget.phone, otp: _pinController.text)
+                    .then((value) {
+                  if (value.isSuccess) {
+                    showToast(
+                        message: value.message, typeCheck: value.isSuccess);
+                    navigate(
+                        context: context,
+                        page: const WalletCreatePinScreen(
+                          isForResetPin: true,
+                        ));
+                  } else {
+                    showToast(
+                        message: value.message, typeCheck: value.isSuccess);
+                  }
+                });
               },
               child: Text(
                 'Next',

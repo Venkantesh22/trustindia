@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:lekra/controllers/auth_controller.dart';
 
 import 'package:lekra/controllers/dashboard_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
@@ -9,6 +10,7 @@ import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
+import 'package:lekra/views/screens/auth_screens/forget_password/opt_verification_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/create_wallet_pin_screen/wallet_create_pin_screen.dart';
@@ -37,7 +39,6 @@ class _WalletEnterPinScreenState extends State<WalletEnterPinScreen>
   late AnimationController _shakeController;
   late Animation<double> _shakeAnim; // translates X
   bool _isShaking = false;
-
   bool _wasComplete = false;
 
   @override
@@ -117,8 +118,8 @@ class _WalletEnterPinScreenState extends State<WalletEnterPinScreen>
           navigate(
               context: context,
               type: PageTransitionType.rightToLeft,
-              page: const WalletCreatePinScreen(
-                isResetPin: true,
+              page:  WalletCreatePinScreen(
+                isForResetPin: widget.isForResetPin,
               ));
           showToast(message: value.message, typeCheck: value.isSuccess);
         } else {
@@ -199,21 +200,33 @@ class _WalletEnterPinScreenState extends State<WalletEnterPinScreen>
                                     ),
                                 textAlign: TextAlign.center,
                               ),
-                              TextButton(
-                                onPressed: () {},
-                                child: Text(
-                                  "forgot pin?",
-                                  style: Helper(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                        color: primaryColor,
-                                      ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
+                              GetBuilder<AuthController>(
+                                  builder: (authController) {
+                                return TextButton(
+                                  onPressed: () {
+                                    navigate(
+                                        context: context,
+                                        page: OTPVerification(
+                                          isForResetPin: widget.isForResetPin,
+                                          phone: authController
+                                                  .userModel?.mobile ??
+                                              "",
+                                        ));
+                                  },
+                                  child: Text(
+                                    "forgot pin?",
+                                    style: Helper(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          color: primaryColor,
+                                        ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                );
+                              }),
                             ],
                           ),
                         )

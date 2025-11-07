@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lekra/controllers/basic_controller.dart';
-import 'package:lekra/controllers/coupon_controller.dart';
+
 import 'package:lekra/controllers/dynamic_qr_controller.dart';
-import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';

@@ -142,6 +142,12 @@ class AppConstants {
 
   static const String agoraAppId = 'c87b710048c049f59570bd1895b7e561';
 
+
+  //OTP
+    static const String generateOtp = 'api/send-otp';
+    static const String postVerifyOTP = 'api/verify-otp';
+
+
   // Auth
   static const String userRegisterUri = 'api/register-user';
   static const String loginUri = 'api/login-post';

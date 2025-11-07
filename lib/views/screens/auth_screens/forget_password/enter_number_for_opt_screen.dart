@@ -34,7 +34,6 @@ class _EnterNumberForOPTScreenState extends State<EnterNumberForOPTScreen> {
                 if (_formKey.currentState?.validate() != true) return;
 
                 final raw = authController.numberController.text.trim();
-                final phone = '+91$raw';
 
                 // ScaffoldMessenger.of(context).showSnackBar(
                 //   SnackBar(content: Text('OTP sent to $phone')),
