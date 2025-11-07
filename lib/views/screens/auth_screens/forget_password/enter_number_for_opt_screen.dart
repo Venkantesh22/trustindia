@@ -5,6 +5,7 @@ import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/screens/auth_screens/forget_password/opt_verification_screen.dart';
 import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_back_button.dart';
 
@@ -32,12 +33,23 @@ class _EnterNumberForOPTScreenState extends State<EnterNumberForOPTScreen> {
               color: primaryColor,
               onPressed: () async {
                 if (_formKey.currentState?.validate() != true) return;
-
-                final raw = authController.numberController.text.trim();
-
-                // ScaffoldMessenger.of(context).showSnackBar(
-                //   SnackBar(content: Text('OTP sent to $phone')),
-                // );
+                authController
+                    .generateOtp(
+                        mobile: authController.numberController.text.trim())
+                    .then((value) {
+                  if (value.isSuccess) {
+                    navigate(
+                        context: context,
+                        page: OTPVerification(
+                            phone:
+                                authController.numberController.text.trim()));
+                    showToast(
+                        message: value.message, typeCheck: value.isSuccess);
+                  } else {
+                    showToast(
+                        message: value.message, typeCheck: value.isSuccess);
+                  }
+                });
               },
             ),
           );
@@ -124,8 +136,6 @@ class _EnterNumberForOPTScreenState extends State<EnterNumberForOPTScreen> {
                   SizedBox(
                     height: 301,
                   ),
-
-                  // Submit button
                 ],
               ),
             );

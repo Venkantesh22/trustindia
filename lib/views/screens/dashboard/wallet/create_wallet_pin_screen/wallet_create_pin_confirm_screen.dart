@@ -2,11 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lekra/controllers/dashboard_controller.dart';
 import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
-import 'package:lekra/views/screens/dashboard/wallet/wallet_screen/wallet_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/widget/back_key_cell.dart';
 import 'package:lekra/views/screens/dashboard/wallet/widget/key_cell.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_back_button.dart';
@@ -196,10 +197,12 @@ class _WalletCreatePinComfirmScreenState
                                       .postWalletReSetPin()
                                       .then((value) {
                                     if (value.isSuccess) {
+                                      Get.find<DashBoardController>().dashPage =
+                                          1;
                                       navigate(
                                           isRemoveUntil: true,
                                           context: context,
-                                          page: const WalletScreen());
+                                          page: const DashboardScreen());
                                       showToast(
                                           message: value.message,
                                           typeCheck: value.isSuccess);
@@ -214,10 +217,12 @@ class _WalletCreatePinComfirmScreenState
                                       .postCreateWalletPin()
                                       .then((value) {
                                     if (value.isSuccess) {
+                                      Get.find<DashBoardController>().dashPage =
+                                          1;
                                       navigate(
                                           isRemoveUntil: true,
                                           context: context,
-                                          page: const WalletScreen());
+                                          page: const DashboardScreen());
                                       showToast(
                                           message: value.message,
                                           typeCheck: value.isSuccess);

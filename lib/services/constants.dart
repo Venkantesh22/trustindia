@@ -154,6 +154,7 @@ class AppConstants {
   static const String logoutUri = 'api/logout';
   static const String profileUri = 'api/profile';
   static const String updateProfile = 'api/edit-profile';
+  static const String postUpdatePassword = 'api/update-password';
 
   // Address
   static const String getAddress = 'api/get-address';

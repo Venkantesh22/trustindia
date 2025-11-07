@@ -23,6 +23,7 @@ class AuthController extends GetxController implements GetxService {
   TextEditingController numberController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController referralCodeController = TextEditingController();
 
   Future<ResponseModel> generateOtp({required String mobile}) async {
@@ -60,7 +61,8 @@ class AuthController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  Future<ResponseModel> postVerifyOTP({required String mobile, required String otp}) async {
+  Future<ResponseModel> postVerifyOTP(
+      {required String mobile, required String otp}) async {
     log('----------- postVerifyOTP Called ----------');
 
     ResponseModel responseModel;
@@ -296,6 +298,46 @@ class AuthController extends GetxController implements GetxService {
     }
 
     updateProfileLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> updatePassword() async {
+    log('----------- updatePassword Called ----------');
+
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+
+    try {
+      Map<String, dynamic> data = {
+        "password": passwordController.text.trim(),
+        "password_confirmation": confirmPasswordController.text.trim(),
+        "mobile": numberController.text.trim(),
+      };
+
+      Response response = await authRepo.postUpdatePassword(
+        data: FormData(data),
+      );
+
+      log("Raw Response: ${response.body}");
+
+      if (response.statusCode == 200 && response.body['status'] == true) {
+        responseModel = ResponseModel(
+            true, response.body['message'] ?? "updatePassword updated");
+        numberController.clear();
+        emailController.clear();
+        passwordController.clear();
+      } else {
+        responseModel = ResponseModel(
+            false, response.body['message'] ?? "Error while updatePassword ");
+      }
+    } catch (e) {
+      log('ERROR AT updatePassword(): $e');
+      responseModel = ResponseModel(false, "Error while updatePassword  $e");
+    }
+
+    _isLoading = false;
     update();
     return responseModel;
   }

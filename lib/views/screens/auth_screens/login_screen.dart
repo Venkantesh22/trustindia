@@ -4,6 +4,7 @@ import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/route_helper.dart';
+import 'package:lekra/views/screens/auth_screens/forget_password/enter_number_for_opt_screen.dart';
 import 'package:lekra/views/screens/auth_screens/signup_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/dashboard/home_screen/home_screen.dart';
@@ -208,9 +209,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                navigate(
+                                    context: context,
+                                    page: const EnterNumberForOPTScreen());
+                              },
                               child: Text(
-                                "Forget passward",
+                                "Forget password",
                                 style: Helper(context).textTheme.bodyMedium,
                               )),
                         ],

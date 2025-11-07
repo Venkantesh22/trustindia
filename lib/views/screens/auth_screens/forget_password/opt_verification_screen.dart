@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
+import 'package:lekra/views/screens/auth_screens/password_update_screen.dart/password_update_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/create_wallet_pin_screen/wallet_create_pin_screen.dart';
 import 'package:pinput/pinput.dart';
 
@@ -125,19 +126,10 @@ class _OTPVerificationState extends State<OTPVerification> {
                   .bodyMedium!
                   .copyWith(fontSize: 18),
             ),
-            !widget.isForResetPin
-                ? Text(
-                    "Change Phone Number?",
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(color: primaryColor),
-                  )
-                : SizedBox(),
             const SizedBox(
               height: 20,
             ),
-            Spacer(),
+            const Spacer(),
             Column(
               children: [
                 Pinput(
@@ -259,11 +251,17 @@ class _OTPVerificationState extends State<OTPVerification> {
                   if (value.isSuccess) {
                     showToast(
                         message: value.message, typeCheck: value.isSuccess);
+
+                        widget.isForResetPin ? 
                     navigate(
                         context: context,
                         page: const WalletCreatePinScreen(
                           isForResetPin: true,
-                        ));
+                        )) : navigate(
+                        context: context,
+                        page: const PasswordUpdateScreen(
+
+                        )) ;
                   } else {
                     showToast(
                         message: value.message, typeCheck: value.isSuccess);

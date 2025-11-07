@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/screens/auth_screens/login_screen.dart';
+import 'package:lekra/views/screens/auth_screens/password_update_screen.dart/password_update_screen.dart';
 import 'package:lekra/views/screens/splash_screen/splash_screen.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:toastification/toastification.dart';
@@ -77,7 +79,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         themeMode: ThemeMode.light,
         theme: CustomTheme.light,
         debugShowCheckedModeBanner: false,
-        home: const SplashScreen(),
+        home: const LoginScreen(),
       ),
     );
   }
