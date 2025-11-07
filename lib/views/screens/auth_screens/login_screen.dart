@@ -204,6 +204,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(
                         height: 20,
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                "Forget passward",
+                                style: Helper(context).textTheme.bodyMedium,
+                              )),
+                        ],
+                      ),
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(

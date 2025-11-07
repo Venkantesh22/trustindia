@@ -5,7 +5,6 @@ import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/data/models/dynamic_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/repositories/dynamic_qr_repo.dart';
-import 'package:lekra/services/constants.dart';
 
 class DynamicQRController extends GetxController implements GetxService {
   final DynamicQrRepo dynamicQrRepo;
@@ -22,7 +21,7 @@ class DynamicQRController extends GetxController implements GetxService {
 
     try {
       Map<String, dynamic> data = {
-        "callback_url": "http://ecom.tpipaygroup.com/api/tpipay/callback",
+        "callback_url": "https://ecom.tpipaygroup.com/api/tpipay/callback",
       };
 
       Response response = await dynamicQrRepo.postGenerateDynamicQR(

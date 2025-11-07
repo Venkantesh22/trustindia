@@ -11,7 +11,7 @@ class DynamicQrRepo {
           {required int? orderId, required FormData data}) async =>
       await apiClient.postData(
         "${AppConstants.postDynamicQR}/$orderId",
-        "postPayOrderWalled",
+        "postGenerateDynamicQR",
         data,
       );
 }

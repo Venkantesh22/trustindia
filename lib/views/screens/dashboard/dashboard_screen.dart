@@ -26,8 +26,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         builder: (DashBoardController controller) {
           return [
             const HomeScreen(),
-            const SpinWheelPage(),
-            // const WalletScreen(),
+            // const SpinWheelPage(),
+            const WalletScreen(),
             const ReferralScreen(),
             const ProfileScreen(),
           ][controller.dashPage];

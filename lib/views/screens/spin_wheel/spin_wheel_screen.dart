@@ -119,7 +119,7 @@ class _SpinWheelPageState extends State<SpinWheelPage> {
                           return FortuneItem(
                             child: Text(
                               items[i],
-                              style: const TextStyle(
+                              style: const   TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),

@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lekra/controllers/basic_controller.dart';
+import 'package:lekra/controllers/coupon_controller.dart';
 import 'package:lekra/controllers/dynamic_qr_controller.dart';
+import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
@@ -25,15 +28,36 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _controller.dynamicQR().then((value) {
-        if (value.isSuccess) {
-          _startCountdown();
-        } else {
-          showToast(message: value.message, typeCheck: value.isSuccess);
-        }
-      });
-    });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        // Get.find<OrderController>()
+        //     .postCheckout(
+        //         addressId: Get.find<BasicController>().selectAddress?.id,
+        //         code: Get.find<CouponController>().couponCode)
+        //     .then(
+        //   (value) {
+        //     if (value.isSuccess) {
+        //       _controller.dynamicQR().then((value) {
+        //         if (value.isSuccess) {
+        //           _startCountdown();
+        //         } else {
+        //           showToast(message: value.message, typeCheck: value.isSuccess);
+        //         }
+        //       });
+        //     } else {
+        //       showToast(message: value.message, typeCheck: value.isSuccess);
+        //     }
+        //   },
+        // );
+        _controller.dynamicQR().then((value) {
+          if (value.isSuccess) {
+            _startCountdown();
+          } else {
+            showToast(message: value.message, typeCheck: value.isSuccess);
+          }
+        });
+      },
+    );
   }
 
   void _startCountdown() {

@@ -3,6 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/screens/auth_screens/forget_password/enter_number_for_opt_screen.dart';
+import 'package:lekra/views/screens/auth_screens/forget_password/opt_verification_screen.dart';
+import 'package:lekra/views/screens/dashboard/wallet/reset_wallet_pin_screen/reset_wallet_pin_screen.dart';
 import 'package:lekra/views/screens/splash_screen/splash_screen.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:toastification/toastification.dart';
@@ -10,7 +13,7 @@ import 'package:toastification/toastification.dart';
 import 'services/init.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); 
+  WidgetsFlutterBinding.ensureInitialized();
   await Init().initialize();
   runApp(const MyApp());
 }
@@ -20,7 +23,7 @@ final GlobalKey<ScaffoldMessengerState> snackBarKey =
     GlobalKey<ScaffoldMessengerState>();
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key); 
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -77,7 +80,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         themeMode: ThemeMode.light,
         theme: CustomTheme.light,
         debugShowCheckedModeBanner: false,
-        home: const SplashScreen(),
+        home: const EnterNumberForOPTScreen(),
       ),
     );
   }
