@@ -16,4 +16,12 @@ class WallerRepo {
 
   Future<Response> createWalletPin({required FormData data}) async =>
       await apiClient.postData(AppConstants.postWalletPin, "fetchWallet", data);
+
+  Future<Response> verifyWalletPin({required FormData data}) async =>
+      await apiClient.postData(
+          AppConstants.postVerifyPin, "verifyWalletPin", data);
+
+  Future<Response> postWalletReSetPin({required FormData data}) async =>
+      await apiClient.postData(
+          AppConstants.postWalletPinRest, "postWalletReSetPin", data);
 }

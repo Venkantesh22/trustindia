@@ -4,11 +4,15 @@ import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
+import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/create_wallet_pin_screen/wallet_create_pin_confirm_screen.dart';
+import 'package:lekra/views/screens/dashboard/wallet/widget/back_key_cell.dart';
+import 'package:lekra/views/screens/dashboard/wallet/widget/key_cell.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_back_button.dart';
 
 class WalletCreatePinScreen extends StatelessWidget {
-  const WalletCreatePinScreen({super.key});
+  final bool isResetPin;
+  const WalletCreatePinScreen({super.key, this.isResetPin = false});
 
   void onKeyPress(String value, WalletController walletController) {
     if (value == 'back') {
@@ -46,7 +50,7 @@ class WalletCreatePinScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    "Create Your PIN",
+                    isResetPin ? "Reset Your PIN" : "Create Your PIN",
                     style: Helper(context)
                         .textTheme
                         .titleMedium
@@ -54,7 +58,9 @@ class WalletCreatePinScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "This PIN secures your wallet and transactions.",
+                    isResetPin
+                        ? "Enter your New PIN to reset."
+                        : "This PIN secures your wallet and transactions.",
                     style: Helper(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
@@ -63,7 +69,6 @@ class WalletCreatePinScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
 
-                  // PIN Circles
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(
@@ -102,47 +107,14 @@ class WalletCreatePinScreen extends StatelessWidget {
                               if (val.isEmpty) {
                                 return const SizedBox(width: 102, height: 50);
                               } else if (val == 'back') {
-                                return Container(
-                                  width: 102,
-                                  height: 50,
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 8),
-                                  child: IconButton(
+                                return BackKeyCell(
                                     onPressed: () =>
-                                        onKeyPress(val, walletController),
-                                    icon: const Icon(
-                                      Icons.backspace_outlined,
-                                      size: 28,
-                                      color: greyBillText,
-                                    ),
-                                  ),
-                                );
+                                        onKeyPress(val, walletController));
                               } else {
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 8),
-                                  child: InkWell(
-                                    borderRadius: BorderRadius.circular(12),
-                                    onTap: () =>
-                                        onKeyPress(val, walletController),
-                                    child: Container(
-                                      width: 102,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        color: greyNumberBg,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        val,
-                                        style: const TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w500,
-                                          color: white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                return KeyCell(
+                                  label: val,
+                                  onTap: () =>
+                                      onKeyPress(val, walletController),
                                 );
                               }
                             }).toList(),
@@ -153,33 +125,16 @@ class WalletCreatePinScreen extends StatelessWidget {
 
                   const Spacer(),
 
-                  // Continue Button
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: isComplete
-                          ? () {
-                              navigate(
-                                context: context,
-                                page:  WalletCreatePinComfirmScreen(),
-                              );
-                            }
-                          : null,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        disabledBackgroundColor:
-                            Colors.blue.withValues(alpha: 0.4),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: const Text(
-                        "Continue",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    ),
-                  ),
+                  ProfileButton(
+                    title: "Continue",
+                    onPressed: () => isComplete
+                        ? navigate(
+                            context: context,
+                            page: WalletCreatePinComfirmScreen(),
+                          )
+                        : null,
+                    color: primaryColor,
+                  )
                 ],
               ),
             ),

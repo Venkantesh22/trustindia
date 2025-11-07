@@ -3,9 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/screens/auth_screens/forget_password/enter_number_for_opt_screen.dart';
-import 'package:lekra/views/screens/auth_screens/forget_password/opt_verification_screen.dart';
-import 'package:lekra/views/screens/dashboard/wallet/reset_wallet_pin_screen/reset_wallet_pin_screen.dart';
 import 'package:lekra/views/screens/splash_screen/splash_screen.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:toastification/toastification.dart';
@@ -80,7 +77,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         themeMode: ThemeMode.light,
         theme: CustomTheme.light,
         debugShowCheckedModeBanner: false,
-        home: const EnterNumberForOPTScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

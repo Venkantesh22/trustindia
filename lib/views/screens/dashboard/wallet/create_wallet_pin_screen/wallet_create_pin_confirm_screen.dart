@@ -6,10 +6,15 @@ import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
+import 'package:lekra/views/screens/dashboard/wallet/wallet_screen/wallet_screen.dart';
+import 'package:lekra/views/screens/dashboard/wallet/widget/back_key_cell.dart';
+import 'package:lekra/views/screens/dashboard/wallet/widget/key_cell.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_back_button.dart';
 
 class WalletCreatePinComfirmScreen extends StatefulWidget {
-  const WalletCreatePinComfirmScreen({super.key});
+  final bool isReSetWalletPin;
+  const WalletCreatePinComfirmScreen(
+      {super.key, this.isReSetWalletPin = false});
 
   @override
   State<WalletCreatePinComfirmScreen> createState() =>
@@ -76,7 +81,6 @@ class _WalletCreatePinComfirmScreenState
     return GetBuilder<WalletController>(
       builder: (walletController) {
         final isComplete = walletController.createWalletPinConfirm.length == 6;
-
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: const CustomAppbarBackButton(),
@@ -104,7 +108,6 @@ class _WalletCreatePinComfirmScreenState
                   ),
                   const SizedBox(height: 32),
 
-                  // 🔴 Animated PIN Circles
                   AnimatedBuilder(
                     animation: _shakeAnimation,
                     builder: (context, child) {
@@ -161,47 +164,14 @@ class _WalletCreatePinComfirmScreenState
                               if (val.isEmpty) {
                                 return const SizedBox(width: 102, height: 50);
                               } else if (val == 'back') {
-                                return Container(
-                                  width: 102,
-                                  height: 50,
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 8),
-                                  child: IconButton(
+                                return BackKeyCell(
                                     onPressed: () =>
-                                        onKeyPress(val, walletController),
-                                    icon: const Icon(
-                                      Icons.backspace_outlined,
-                                      size: 28,
-                                      color: greyBillText,
-                                    ),
-                                  ),
-                                );
+                                        onKeyPress(val, walletController));
                               } else {
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 8),
-                                  child: InkWell(
-                                    borderRadius: BorderRadius.circular(12),
-                                    onTap: () =>
-                                        onKeyPress(val, walletController),
-                                    child: Container(
-                                      width: 102,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        color: greyNumberBg,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        val,
-                                        style: const TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w500,
-                                          color: white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                return KeyCell(
+                                  label: val,
+                                  onTap: () =>
+                                      onKeyPress(val, walletController),
                                 );
                               }
                             }).toList(),
@@ -214,47 +184,57 @@ class _WalletCreatePinComfirmScreenState
 
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(
+                    child: ProfileButton(
+                      color: primaryColor,
                       onPressed: isComplete
                           ? () {
                               log("walletController.walletPin ${walletController.createWalletPin}");
                               log("walletController.walletPin ${walletController.createWalletPinConfirm}");
                               if (walletController.createWalletPin ==
                                   walletController.createWalletPinConfirm) {
-                                walletController
-                                    .postCreateWalletPin()
-                                    .then((value) {
-                                  if (value.isSuccess) {
-                                    navigate(
-                                        context: context,
-                                        page: ProfileScreen());
-                                    showToast(
-                                        message: value.message,
-                                        typeCheck: value.isSuccess);
-                                  } else {
-                                    showToast(
-                                        message: value.message,
-                                        typeCheck: value.isSuccess);
-                                  }
-                                });
+                                if (widget.isReSetWalletPin) {
+                                  walletController
+                                      .postWalletReSetPin()
+                                      .then((value) {
+                                    if (value.isSuccess) {
+                                      navigate(
+                                          isRemoveUntil: true,
+                                          context: context,
+                                          page: const WalletScreen());
+                                      showToast(
+                                          message: value.message,
+                                          typeCheck: value.isSuccess);
+                                    } else {
+                                      showToast(
+                                          message: value.message,
+                                          typeCheck: value.isSuccess);
+                                    }
+                                  });
+                                } else {
+                                  walletController
+                                      .postCreateWalletPin()
+                                      .then((value) {
+                                    if (value.isSuccess) {
+                                      navigate(
+                                          isRemoveUntil: true,
+                                          context: context,
+                                          page: const WalletScreen());
+                                      showToast(
+                                          message: value.message,
+                                          typeCheck: value.isSuccess);
+                                    } else {
+                                      showToast(
+                                          message: value.message,
+                                          typeCheck: value.isSuccess);
+                                    }
+                                  });
+                                }
                               } else {
                                 triggerShake();
                               }
                             }
                           : null,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        disabledBackgroundColor:
-                            Colors.blue.withValues(alpha: 0.4),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: const Text(
-                        "Continue",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
+                      title: "Continue",
                     ),
                   ),
                 ],

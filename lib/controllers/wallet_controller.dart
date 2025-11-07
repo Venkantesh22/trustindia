@@ -164,6 +164,8 @@ class WalletController extends GetxController implements GetxService {
           true,
           response.body['message'] ?? "createWalletPin fetched",
         );
+        createWalletPin = "";
+        createWalletPinConfirm = "";
       } else {
         responseModel = ResponseModel(
           false,
@@ -173,6 +175,80 @@ class WalletController extends GetxController implements GetxService {
     } catch (e) {
       responseModel = ResponseModel(false, "Catch");
       log("****** Error ****** $e", name: "createWalletPin");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> verifyWalletPin() async {
+    log('----------- verifyWalletPin Called() -------------');
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+    final data = {
+      "old_pin": walletPin,
+    };
+
+    try {
+      Response response =
+          await wallerRepo.verifyWalletPin(data: FormData(data));
+
+      if (response.statusCode == 200 && response.body['status'] == true) {
+        responseModel = ResponseModel(
+          true,
+          response.body['message'] ?? "verifyWalletPin fetched",
+        );
+        walletPin = "";
+        log("walletPin = $walletPin");
+      } else {
+        responseModel = ResponseModel(
+          false,
+          response.body['message'] ?? " Something went wrong verifyWalletPin",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "verifyWalletPin");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> postWalletReSetPin() async {
+    log('----------- postWalletReSetPin Called() -------------');
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+    final data = {
+      "wallet_pin": createWalletPin,
+      "wallet_pin_confirmation": createWalletPinConfirm,
+    };
+
+    try {
+      Response response =
+          await wallerRepo.postWalletReSetPin(data: FormData(data));
+
+      if (response.statusCode == 200 && response.body['status'] == true) {
+        responseModel = ResponseModel(
+          true,
+          response.body['message'] ?? "postWalletReSetPin fetched",
+        );
+        createWalletPin = "";
+        createWalletPinConfirm = "";
+      } else {
+        responseModel = ResponseModel(
+          false,
+          response.body['message'] ??
+              " Something went wrong postWalletReSetPin",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "postWalletReSetPin");
     }
 
     isLoading = false;

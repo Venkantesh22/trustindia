@@ -120,7 +120,7 @@ class ProfileButton extends StatelessWidget {
   final bool isLoading;
   final String title;
   final Color color;
-  final Function() onPressed;
+  final VoidCallback? onPressed; // nullable!
   const ProfileButton({
     super.key,
     required this.title,
@@ -131,26 +131,28 @@ class ProfileButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: color,
-        minimumSize: const Size(double.infinity, 50),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          disabledBackgroundColor: color.withValues(alpha: 0.4),
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
         ),
+        child: isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Text(
+                title,
+                style: Helper(context).textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.w400, fontSize: 16, color: white),
+              ),
       ),
-      child: isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : Text(
-              title,
-              style: Helper(context)
-                  .textTheme
-                  .bodyLarge
-                  ?.copyWith(fontWeight: FontWeight.bold, color: white),
-            ),
     );
   }
 }
