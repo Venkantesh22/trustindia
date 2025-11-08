@@ -33,14 +33,12 @@ class FundRequestCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          // Header: ID + Date/Time
           Row(
             children: [
               Expanded(
                 child: Text(
                   '#${fundRequestModel.id}',
                   style: TextStyle(
-                    color: primaryColor,
                     fontWeight: FontWeight.w700,
                     fontSize: 16,
                   ),
@@ -119,7 +117,6 @@ Widget _detailRow(
         child: Text(
           label,
           style: TextStyle(
-            color: secondaryColor,
             fontWeight: FontWeight.w600,
             fontSize: 12,
           ),
@@ -131,7 +128,6 @@ Widget _detailRow(
           value,
           style: valueStyle ??
               TextStyle(
-                color: primaryColor,
                 fontWeight: FontWeight.w600,
                 fontSize: 13,
               ),

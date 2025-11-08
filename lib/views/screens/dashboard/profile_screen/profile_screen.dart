@@ -145,7 +145,7 @@ class ProfileButton extends StatelessWidget {
         ),
         child: isLoading
             ? const Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(color: white,),
               )
             : Text(
                 title,

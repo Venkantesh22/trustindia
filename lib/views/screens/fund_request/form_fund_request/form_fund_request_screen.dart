@@ -8,6 +8,7 @@ import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/checkout/checkout_screen/components/textbox_title.dart';
 import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
+import 'package:lekra/views/screens/fund_request/fund_request_list_screen/fund_request_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class FormFundRequestScreen extends StatefulWidget {
@@ -106,8 +107,20 @@ class _FormFundRequestScreenState extends State<FormFundRequestScreen> {
                         ),
 
                         const SizedBox(height: 16),
+
+                        CustomTextboxWithTitle(
+                            controller: fundRequestController.utrNoController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please enter your UTR number";
+                              }
+                              return null;
+                            },
+                            title: "UTR Number"),
+
+                        const SizedBox(height: 16),
                         Text(
-                          "UTR Number",
+                          "Enter amount",
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium
@@ -117,9 +130,9 @@ class _FormFundRequestScreenState extends State<FormFundRequestScreen> {
                         const SizedBox(height: 6),
 
                         TextFormField(
-                          controller: fundRequestController.utrNoController,
+                          controller: fundRequestController.amountController,
                           decoration: CustomDecoration.inputDecoration(
-                            hint: "Enter your UTR Number",
+                            hint: "Please enter your amount",
                             hintStyle: Theme.of(context)
                                 .textTheme
                                 .bodyMedium
@@ -130,29 +143,16 @@ class _FormFundRequestScreenState extends State<FormFundRequestScreen> {
                                 ),
                           ),
                           inputFormatters: [
-                            LengthLimitingTextInputFormatter(10),
                             FilteringTextInputFormatter.digitsOnly,
                           ],
                           keyboardType: TextInputType.number,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return "Please enter your UTR number";
-                            }
-                            return null;
-                          },
-                        ),
-
-                        const SizedBox(height: 16),
-
-                        CustomTextboxWithTitle(
-                          controller: fundRequestController.amountController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
                               return "Please enter your amount";
                             }
+
                             return null;
                           },
-                          title: "Amount",
                         ),
 
                         const SizedBox(height: 16),
@@ -167,7 +167,8 @@ class _FormFundRequestScreenState extends State<FormFundRequestScreen> {
                         ),
                         const SizedBox(height: 6),
                         DropdownButtonFormField<String>(
-                          initialValue: fundRequestController.selectedBank,
+                          initialValue:
+                              fundRequestController.selectedBank?.accountName,
                           isExpanded: true,
                           items: fundRequestController.bankList
                               .map((bank) => bank.accountName)
@@ -216,8 +217,28 @@ class _FormFundRequestScreenState extends State<FormFundRequestScreen> {
                     ),
                   ),
                   ProfileButton(
+                      isLoading: fundRequestController.isLoading,
                       title: "Submit Request",
-                      onPressed: () {},
+                      onPressed: () {
+                        if (fundRequestController.isLoading) {
+                          return;
+                        }
+                        if (_formKey.currentState!.validate()) {
+                          fundRequestController.postFundRequest().then((value) {
+                            if (value.isSuccess) {
+                              showToast(
+                                  message: value.message,
+                                  typeCheck: value.isSuccess);
+                              navigate(
+                                  context: context, page: FundRequestScreen());
+                            } else {
+                              showToast(
+                                  message: value.message,
+                                  typeCheck: value.isSuccess);
+                            }
+                          });
+                        }
+                      },
                       color: primaryColor)
                 ],
               ),

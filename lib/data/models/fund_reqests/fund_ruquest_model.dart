@@ -18,7 +18,7 @@ class FundRequestModel {
   });
 }
 
-enum FundStatus { pending, view, successful, cancelled }
+enum FundStatus { pending, successful, cancelled }
 
 List<FundRequestModel> fundRequestList = [
   FundRequestModel(
@@ -27,5 +27,5 @@ List<FundRequestModel> fundRequestList = [
       utr: "1232323232323",
       bank: "SBI",
       amount: 1001,
-      status: FundStatus.cancelled),
+      status: FundStatus.pending),
 ];

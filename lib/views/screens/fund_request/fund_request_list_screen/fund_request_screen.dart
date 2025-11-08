@@ -4,11 +4,11 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:lekra/controllers/fund_request_controller.dart';
 import 'package:lekra/data/models/fund_reqests/fund_ruquest_model.dart';
 import 'package:lekra/services/constants.dart';
-import 'package:lekra/services/date_formatters_and_converters.dart';
 import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/screens/drawer/drawer_screen.dart';
 import 'package:lekra/views/screens/fund_request/form_fund_request/form_fund_request_screen.dart';
 import 'package:lekra/views/screens/fund_request/fund_request_list_screen/component/fund_request_widget.dart';
-import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
+import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_drawer.dart';
 import 'package:page_transition/page_transition.dart';
 
 class FundRequestScreen extends StatefulWidget {
@@ -19,10 +19,16 @@ class FundRequestScreen extends StatefulWidget {
 }
 
 class _FundRequestScreenState extends State<FundRequestScreen> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar2(title: "Fund Requests"),
+      drawer: const DrawerScreen(),
+      key: scaffoldKey,
+      appBar: CustomAppbarDrawer(
+        title: "Fund Requests",
+        scaffoldKey: scaffoldKey,
+      ),
       floatingActionButton: Container(
         child: GestureDetector(
           onTap: () => navigate(
@@ -70,7 +76,7 @@ class _FundRequestScreenState extends State<FundRequestScreen> {
                     fundRequestModel: fundRequest, onTapView: () {});
               },
               separatorBuilder: (_, __) {
-                return SizedBox(
+                return const SizedBox(
                   height: 12,
                 );
               },

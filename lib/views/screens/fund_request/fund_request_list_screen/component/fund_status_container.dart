@@ -35,13 +35,7 @@ class StatusChip extends StatelessWidget {
     );
 
     // Make "View" actionable
-    if (status == FundStatus.view) {
-      return InkWell(
-        onTap: onTapView,
-        borderRadius: BorderRadius.circular(20),
-        child: chip,
-      );
-    }
+
     return chip;
   }
 
@@ -68,13 +62,6 @@ class StatusChip extends StatelessWidget {
           fg: const Color(0xFFD32F2F),
           icon: Icons.cancel_rounded,
         );
-      case FundStatus.view:
-        return _ChipConfig(
-          label: 'View',
-          bg: const Color(0xFFE3F2FD), // light blue
-          fg: const Color(0xFF1976D2),
-          icon: Icons.remove_red_eye_rounded,
-        );
     }
   }
 }
@@ -84,5 +71,9 @@ class _ChipConfig {
   final Color bg;
   final Color fg;
   final IconData icon;
-  _ChipConfig({required this.label, required this.bg, required this.fg, required this.icon});
+  _ChipConfig(
+      {required this.label,
+      required this.bg,
+      required this.fg,
+      required this.icon});
 }

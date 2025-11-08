@@ -9,4 +9,8 @@ class FundRequestRepo {
 
   Future<Response> getAssignBank() async =>
       await apiClient.getData(AppConstants.getAssignBank, "getAssignBank");
+
+  Future<Response> postFundRequest({required FormData data}) async =>
+      await apiClient.postData(
+          AppConstants.postFundRequests, "getAssignBank", data);
 }

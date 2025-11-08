@@ -16,10 +16,10 @@ class FundRequestController extends GetxController implements GetxService {
   final TextEditingController amountController = TextEditingController();
   final TextEditingController dateController = TextEditingController();
 
-  String? selectedBank;
+  BankModel? selectedBank;
 
   void setBank(String? value) {
-    selectedBank = value;
+    selectedBank = bankList.firstWhere((bank) => bank.accountName == value);
     update();
   }
 
@@ -47,7 +47,7 @@ class FundRequestController extends GetxController implements GetxService {
         bankList = (response.body['data'] as List)
             .map((bank) => BankModel.fromJson(bank))
             .toList();
-        selectedBank = bankList.first.accountName;
+        selectedBank = bankList.first;
         responseModel =
             ResponseModel(true, response.body['message'] ?? "getAssignBank");
       } else {
@@ -57,6 +57,45 @@ class FundRequestController extends GetxController implements GetxService {
     } catch (e) {
       responseModel = ResponseModel(false, "Catch");
       log("****** Error ****** $e", name: "getAssignBank");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> postFundRequest() async {
+    log('-----------  postFundRequest() -------------');
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+
+    Map<String, dynamic> data = {
+      "bank_id": selectedBank?.id ?? "",
+      "amount": amountController.text.trim(),
+      "trans_date": dateController.text.trim(),
+      "utr": utrNoController.text.trim(),
+    };
+
+    try {
+      Response response =
+          await fundRequestRepo.postFundRequest(data: FormData(data));
+
+      if (response.statusCode == 200 && response.body['status'] == true) {
+        responseModel =
+            ResponseModel(true, response.body['message'] ?? "postFundRequest");
+
+        selectedBank = null;
+        amountController.clear();
+        dateController.clear();
+        utrNoController.clear();
+      } else {
+        responseModel = ResponseModel(false,
+            response.body['message'] ?? "postFundRequest Something Went Wrong");
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "postFundRequest");
     }
 
     isLoading = false;
