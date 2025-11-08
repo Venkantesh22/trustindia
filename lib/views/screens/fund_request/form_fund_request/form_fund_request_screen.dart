@@ -18,7 +18,14 @@ class FormFundRequestScreen extends StatefulWidget {
 }
 
 class _FormFundRequestScreenState extends State<FormFundRequestScreen> {
-  final _formKey = GlobalKey<FormState>(); // ✅ fixed type
+  final _formKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<FundRequestController>().getAssignBank();
+    });
+  }
 
   Future<void> pickDate(FundRequestController controller) async {
     final now = DateTime.now();
@@ -162,10 +169,12 @@ class _FormFundRequestScreenState extends State<FormFundRequestScreen> {
                         DropdownButtonFormField<String>(
                           initialValue: fundRequestController.selectedBank,
                           isExpanded: true,
-                          items: fundRequestController.banks
+                          items: fundRequestController.bankList
+                              .map((bank) => bank.accountName)
+                              .toList()
                               .map((b) => DropdownMenuItem<String>(
                                     value: b,
-                                    child: Text(b),
+                                    child: Text(b ?? ""),
                                   ))
                               .toList(),
                           onChanged: (v) => fundRequestController.setBank(v),
@@ -184,6 +193,7 @@ class _FormFundRequestScreenState extends State<FormFundRequestScreen> {
                                   color: grey,
                                 ),
                           ),
+                          dropdownColor: greyBorder,
                           decoration: CustomDecoration.dropdown(
                             context,
                             label: "Choose your bank",

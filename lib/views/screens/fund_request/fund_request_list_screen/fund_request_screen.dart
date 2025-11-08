@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:lekra/controllers/fund_request_controller.dart';
+import 'package:lekra/data/models/fund_reqests/fund_ruquest_model.dart';
 import 'package:lekra/services/constants.dart';
+import 'package:lekra/services/date_formatters_and_converters.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/fund_request/form_fund_request/form_fund_request_screen.dart';
+import 'package:lekra/views/screens/fund_request/fund_request_list_screen/component/fund_request_widget.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -51,7 +57,26 @@ class _FundRequestScreenState extends State<FundRequestScreen> {
           ),
         ),
       ),
-      body: Container(),
+      body: SingleChildScrollView(
+        padding: AppConstants.screenPadding,
+        child:
+            GetBuilder<FundRequestController>(builder: (fundRequestController) {
+          return ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final fundRequest = fundRequestList[index];
+                return FundRequestCard(
+                    fundRequestModel: fundRequest, onTapView: () {});
+              },
+              separatorBuilder: (_, __) {
+                return SizedBox(
+                  height: 12,
+                );
+              },
+              itemCount: fundRequestList.length);
+        }),
+      ),
     );
   }
 }

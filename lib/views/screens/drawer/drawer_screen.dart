@@ -8,7 +8,7 @@ import 'package:lekra/views/screens/address/screen/address_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/wallet_enter_pin_screen/wallet_enter_pin_screen.dart';
 import 'package:lekra/views/screens/drawer/components/drawer_item.dart';
-import 'package:lekra/views/screens/fund_request/fund_request_screen.dart';
+import 'package:lekra/views/screens/fund_request/fund_request_list_screen/fund_request_screen.dart';
 import 'package:lekra/views/screens/order_screem/screen/order_screen.dart';
 import 'package:lekra/views/screens/rewards/screen/rewards_screen/rewards_screen.dart';
 import 'package:lekra/views/screens/subscription_plan/subscription_category/subscription_category-screen.dart';

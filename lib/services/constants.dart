@@ -142,11 +142,9 @@ class AppConstants {
 
   static const String agoraAppId = 'c87b710048c049f59570bd1895b7e561';
 
-
   //OTP
-    static const String generateOtp = 'api/send-otp';
-    static const String postVerifyOTP = 'api/verify-otp';
-
+  static const String generateOtp = 'api/send-otp';
+  static const String postVerifyOTP = 'api/verify-otp';
 
   // Auth
   static const String userRegisterUri = 'api/register-user';
@@ -211,6 +209,9 @@ class AppConstants {
 
   // Coupon
   static const String postCheckCouponCode = "api/check-coupon-code";
+
+  // Fund Requests
+  static const String getAssignBank = "api/assign/account";
 
   static const double horizontalPadding = 16;
   static const double verticalPadding = 20;
