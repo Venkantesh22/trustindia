@@ -3,6 +3,7 @@ import 'package:get/instance_manager.dart';
 import 'package:lekra/controllers/basic_controller.dart';
 import 'package:lekra/controllers/coupon_controller.dart';
 import 'package:lekra/controllers/dynamic_qr_controller.dart';
+import 'package:lekra/controllers/fund_request_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/controllers/product_controller.dart';
 import 'package:lekra/controllers/dashboard_controller.dart';
@@ -11,6 +12,7 @@ import 'package:lekra/controllers/referral_controller.dart';
 import 'package:lekra/controllers/subscription_controller.dart';
 import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/data/repositories/dynamic_qr_repo.dart';
+import 'package:lekra/data/repositories/fund_request_repo.dart';
 import 'package:lekra/data/repositories/order_repo.dart';
 import 'package:lekra/data/repositories/coupon_repo.dart';
 import 'package:lekra/data/repositories/product_repo.dart';
@@ -51,6 +53,7 @@ class Init {
       Get.lazyPut(() => WallerRepo(apiClient: Get.find()));
       Get.lazyPut(() => CouponRepo(apiClient: Get.find()));
       Get.lazyPut(() => DynamicQrRepo(apiClient: Get.find()));
+      Get.lazyPut(() => FundRequestRepo(apiClient: Get.find()));
 
       // Get Controller's...
       Get.lazyPut(() => DashBoardController());
@@ -64,6 +67,7 @@ class Init {
       Get.lazyPut(() => WalletController(wallerRepo: Get.find()));
       Get.lazyPut(() => CouponController(couponRepo: Get.find()));
       Get.lazyPut(() => DynamicQRController(dynamicQrRepo: Get.find()));
+      Get.lazyPut(() => FundRequestController(fundRequestRepo: Get.find()));
     } catch (e) {
       log('---- ${e.toString()} ----', name: "ERROR AT initialize()");
     }

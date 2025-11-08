@@ -45,7 +45,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextboxWithTitle(
+                      CustomTextboxWithTitle(
                         title: "Street Address",
                         controller: basicController.streetController,
                         validator: (value) {
@@ -57,7 +57,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         },
                       ),
                       const SizedBox(height: 16),
-                      TextboxWithTitle(
+                      CustomTextboxWithTitle(
                         title: "City",
                         controller: basicController.cityController,
                         validator: (value) {
@@ -69,7 +69,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         },
                       ),
                       const SizedBox(height: 16),
-                      TextboxWithTitle(
+                      CustomTextboxWithTitle(
                         title: "States",
                         controller: basicController.stateController,
                         validator: (value) {

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/theme.dart';
 
-class TextboxWithTitle extends StatelessWidget {
+class CustomTextboxWithTitle extends StatelessWidget {
   final String title;
   final TextEditingController controller;
   final FormFieldValidator<String>? validator;
-  const TextboxWithTitle({
+  const CustomTextboxWithTitle({
     super.key,
     required this.controller,
     required this.validator,

@@ -17,9 +17,11 @@ class CustomDecoration {
     Color bgColor = Colors.transparent,
     double borderRadius = 12.0,
     double borderWidth = .5,
-    EdgeInsetsGeometry contentPadding = const EdgeInsets.fromLTRB(20, 10, 20, 13),
+    EdgeInsetsGeometry contentPadding =
+        const EdgeInsets.fromLTRB(20, 10, 20, 13),
   }) {
-    assert(prefixText == null || icon == null, "Strings are equal So this message is been displayed!!");
+    assert(prefixText == null || icon == null,
+        "Strings are equal So this message is been displayed!!");
 
     return InputDecoration(
       fillColor: bgColor,
@@ -93,13 +95,9 @@ class CustomDecoration {
             )
           : null,
       hintText: hint,
-      hintStyle: hintStyle ??
-          GoogleFonts.montserrat(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            color: textSecondary,
-          ),
-      floatingLabelBehavior: floating ? FloatingLabelBehavior.always : FloatingLabelBehavior.auto,
+      hintStyle: hintStyle,
+      floatingLabelBehavior:
+          floating ? FloatingLabelBehavior.always : FloatingLabelBehavior.auto,
       contentPadding: contentPadding,
     );
   }
@@ -153,7 +151,7 @@ class CustomDecoration {
               label,
               // textAlign: TextAlign.center,
               style: GoogleFonts.montserrat(
-                fontSize: 16,
+                fontSize: 12,
                 fontWeight: FontWeight.w400,
                 color: textPrimary,
               ),
@@ -162,11 +160,12 @@ class CustomDecoration {
       hintText: label,
       hintStyle: hintStyle ??
           GoogleFonts.montserrat(
-            fontSize: 16,
+            fontSize: 14,
             fontWeight: FontWeight.w400,
             color: textSecondary,
           ),
-      floatingLabelBehavior: floating ? FloatingLabelBehavior.always : FloatingLabelBehavior.never,
+      floatingLabelBehavior:
+          floating ? FloatingLabelBehavior.always : FloatingLabelBehavior.never,
       // contentPadding: const EdgeInsets.fromLTRB(12, 25, 12, 20),
     );
   }

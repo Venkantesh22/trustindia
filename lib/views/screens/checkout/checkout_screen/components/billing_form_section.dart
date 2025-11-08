@@ -149,7 +149,7 @@ class _BillingFormSectionState extends State<BillingFormSection> {
                       label: const Text('Add New Address'),
                     ),
                     const SizedBox(height: 10),
-                    TextboxWithTitle(
+                    CustomTextboxWithTitle(
                       title: "Billing Name",
                       controller: checkoutController.billingName,
                       validator: (value) {
@@ -161,7 +161,7 @@ class _BillingFormSectionState extends State<BillingFormSection> {
                       },
                     ),
                     const SizedBox(height: 16),
-                    TextboxWithTitle(
+                    CustomTextboxWithTitle(
                       title: "Billing Email",
                       controller: checkoutController.billingEmail,
                       validator: (value) {
