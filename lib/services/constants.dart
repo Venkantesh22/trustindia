@@ -213,6 +213,8 @@ class AppConstants {
   // Fund Requests
   static const String getAssignBank = "api/assign/account";
   static const String postFundRequests = "api/fund/request";
+  static const String getFundStatus = "api/fund/request/status";
+
 
   static const double horizontalPadding = 16;
   static const double verticalPadding = 20;

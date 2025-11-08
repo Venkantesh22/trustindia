@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/services/constants.dart';
@@ -8,6 +9,7 @@ import 'package:lekra/views/screens/auth_screens/forget_password/enter_number_fo
 import 'package:lekra/views/screens/auth_screens/signup_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/dashboard/home_screen/home_screen.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../../services/theme.dart';
 
@@ -25,11 +27,10 @@ class _LoginScreenState extends State<LoginScreen> {
   login(AuthController authController) {
     authController.userLogin().then((value) {
       if (value.isSuccess) {
-        Navigator.of(context).push(
-          getCustomRoute(
-            child: const HomeScreen(),
-          ),
-        );
+        navigate(
+            context: context,
+            type: PageTransitionType.rightToLeft,
+            page: const HomeScreen());
       }
     });
   }
@@ -96,6 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: grey,
                                   ),
                         ),
+                        keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Please enter your email";
@@ -188,16 +190,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: primaryColor,
                                 borderRadius: BorderRadius.circular(12)),
                             child: Center(
-                              child: Text(
-                                "Login",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.bold,
+                              child: authController.isLoading
+                                  ? const CircularProgressIndicator(
                                       color: white,
+                                    )
+                                  : Text(
+                                      "Login",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: white,
+                                          ),
                                     ),
-                              ),
                             ),
                           ),
                         );

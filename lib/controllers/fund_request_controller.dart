@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/data/models/fund_reqests/bank_model.dart';
+import 'package:lekra/data/models/fund_reqests/fund_ruquest_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/repositories/fund_request_repo.dart';
 
@@ -96,6 +97,39 @@ class FundRequestController extends GetxController implements GetxService {
     } catch (e) {
       responseModel = ResponseModel(false, "Catch");
       log("****** Error ****** $e", name: "postFundRequest");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  List<FundRequestsModel> fundRequestsList = [];
+  Future<ResponseModel> fetchFundStatus() async {
+    log('-----------  fetchFundStatus() -------------');
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+
+    try {
+      Response response = await fundRequestRepo.fetchFundStatus();
+
+      if (response.statusCode == 200 &&
+          response.body['status'] == true &&
+          response.body['data'] is List) {
+        fundRequestsList = (response.body['data'] as List)
+            .map((fund) => FundRequestsModel.fromJson(fund))
+            .toList();
+      
+        responseModel =
+            ResponseModel(true, response.body['message'] ?? "fetchFundStatus");
+      } else {
+        responseModel = ResponseModel(false,
+            response.body['message'] ?? "fetchFundStatus Something Went Wrong");
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "fetchFundStatus");
     }
 
     isLoading = false;

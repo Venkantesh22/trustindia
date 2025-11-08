@@ -12,7 +12,7 @@ class FundRequestCard extends StatelessWidget {
     required this.onTapView,
   });
 
-  final FundRequestModel fundRequestModel;
+  final FundRequestsModel fundRequestModel;
   final VoidCallback onTapView;
 
   @override
@@ -45,7 +45,9 @@ class FundRequestCard extends StatelessWidget {
                 ),
               ),
               Text(
-                DateFormatters().dMonthYear.format(fundRequestModel.dateTime),
+                DateFormatters()
+                    .dMonthYear
+                    .format(fundRequestModel.transDate ?? DateTime.now()),
                 style: TextStyle(
                   color: secondaryColor,
                   fontSize: 12,
@@ -59,13 +61,13 @@ class FundRequestCard extends StatelessWidget {
           const SizedBox(height: 12),
 
           // Details grid (2 columns on wide, 1 on narrow)
-          _detailRow('UTR No.', fundRequestModel.utr),
+          _detailRow('UTR No.', fundRequestModel.utr ?? ""),
           const SizedBox(height: 8),
-          _detailRow('Bank Name', fundRequestModel.bank),
+          _detailRow('Bank Name', fundRequestModel.accountName ?? ""),
           const SizedBox(height: 8),
           _detailRow(
             'Amount',
-            '₹ ${fundRequestModel.amount.toStringAsFixed(2)}',
+            fundRequestModel.amountFormat,
             valueStyle: TextStyle(
               color: secondaryColor,
               fontWeight: FontWeight.w700,
@@ -77,7 +79,8 @@ class FundRequestCard extends StatelessWidget {
           // Status + optional actions
           Row(
             children: [
-              StatusChip(status: fundRequestModel.status, onTapView: onTapView),
+              StatusChip(
+                  status: fundRequestModel.statusFormat, onTapView: onTapView),
               const Spacer(),
             ],
           ),

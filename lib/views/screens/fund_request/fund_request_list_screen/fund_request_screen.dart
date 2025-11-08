@@ -21,6 +21,14 @@ class FundRequestScreen extends StatefulWidget {
 class _FundRequestScreenState extends State<FundRequestScreen> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<FundRequestController>().fetchFundStatus();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const DrawerScreen(),
@@ -71,7 +79,9 @@ class _FundRequestScreenState extends State<FundRequestScreen> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                final fundRequest = fundRequestList[index];
+                final fundRequest = fundRequestController.isLoading
+                    ? FundRequestsModel()
+                    : fundRequestController.fundRequestsList[index];
                 return FundRequestCard(
                     fundRequestModel: fundRequest, onTapView: () {});
               },
@@ -80,7 +90,9 @@ class _FundRequestScreenState extends State<FundRequestScreen> {
                   height: 12,
                 );
               },
-              itemCount: fundRequestList.length);
+              itemCount: fundRequestController.isLoading
+                  ? 4
+                  : fundRequestController.fundRequestsList.length);
         }),
       ),
     );
