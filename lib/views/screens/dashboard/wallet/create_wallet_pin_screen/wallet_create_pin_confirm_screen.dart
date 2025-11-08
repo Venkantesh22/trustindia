@@ -19,7 +19,7 @@ class WalletCreatePinComfirmScreen extends StatefulWidget {
   @override
   State<WalletCreatePinComfirmScreen> createState() =>
       _WalletCreatePinComfirmScreenState();
-}
+}   
 
 class _WalletCreatePinComfirmScreenState
     extends State<WalletCreatePinComfirmScreen>
