@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/fund_request_controller.dart';
 import 'package:lekra/services/constants.dart';
+import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/fund_request/fund_details_screen/components/fund_bank_details_container.dart';
 import 'package:lekra/views/screens/fund_request/fund_details_screen/components/fund_details_container.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
@@ -32,14 +33,22 @@ class _FundDetailsScreenState extends State<FundDetailsScreen> {
             GetBuilder<FundRequestController>(builder: (fundRequestController) {
           return Column(
             children: [
-              FundDetailsContainer(
-                fundRequestsModel: fundRequestController.selectFundRequestModel,
+              CustomShimmer(
+                isLoading: fundRequestController.isLoading,
+                child: FundDetailsContainer(
+                  fundRequestsModel:
+                      fundRequestController.selectFundRequestModel,
+                ),
               ),
               SizedBox(
                 height: 12,
               ),
-              FundBankDetailsContainer(
-                fundRequestsModel: fundRequestController.selectFundRequestModel,
+              CustomShimmer(
+                isLoading: fundRequestController.isLoading,
+                child: FundBankDetailsContainer(
+                  fundRequestsModel:
+                      fundRequestController.selectFundRequestModel,
+                ),
               )
             ],
           );
