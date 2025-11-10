@@ -6,11 +6,11 @@ import 'package:lekra/data/models/referral_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/reward_transaction_model.dart';
 import 'package:lekra/data/models/scratch_model.dart';
-import 'package:lekra/data/repositories/referral_repo.dart';
+import 'package:lekra/data/repositories/reward_repo.dart';
 
-class ReferralController extends GetxController implements GetxService {
-  final ReferralRepo referralRepo;
-  ReferralController({required this.referralRepo});
+class RewardsController extends GetxController implements GetxService {
+  final RewardRepo rewardRepo;
+  RewardsController({required this.rewardRepo});
   bool isLoading = false;
 
   List<ReferralModel> referralList = [];
@@ -21,7 +21,7 @@ class ReferralController extends GetxController implements GetxService {
     update();
 
     try {
-      Response response = await referralRepo.fetchReferral();
+      Response response = await rewardRepo.fetchReferral();
 
       // ✅ Correct key is 'status'
       if (response.statusCode == 200 &&
@@ -59,7 +59,7 @@ class ReferralController extends GetxController implements GetxService {
     update();
 
     try {
-      Response response = await referralRepo.fetchScratchCard();
+      Response response = await rewardRepo.fetchScratchCard();
 
       // ✅ Correct key is 'status'
       if (response.statusCode == 200 &&
@@ -107,7 +107,7 @@ class ReferralController extends GetxController implements GetxService {
 
     try {
       Response response =
-          await referralRepo.postScratchCardRedeem(scratchId: scratchId);
+          await rewardRepo.postScratchCardRedeem(scratchId: scratchId);
 
       if (response.statusCode == 200 &&
           response.body['status'] == true &&
@@ -142,7 +142,7 @@ class ReferralController extends GetxController implements GetxService {
     update();
 
     try {
-      Response response = await referralRepo.fetchRewardsWallerHistory();
+      Response response = await rewardRepo.fetchRewardsWallerHistory();
 
       // ✅ Correct key is 'status'
       if (response.statusCode == 200 &&

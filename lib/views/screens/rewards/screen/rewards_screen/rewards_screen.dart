@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lekra/controllers/referral_controller.dart';
+import 'package:lekra/controllers/reward_controller.dart';
 import 'package:lekra/data/models/scratch_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/custom_image.dart';
@@ -23,7 +23,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.find<ReferralController>().fetchScratchCard();
+      Get.find<RewardsController>().fetchScratchCard();
     });
   }
 
@@ -49,30 +49,30 @@ class _RewardsScreenState extends State<RewardsScreen> {
                 style: Helper(context).textTheme.titleSmall,
               ),
             ),
-            GetBuilder<ReferralController>(builder: (referralController) {
-              if (referralController.isLoading) {
+            GetBuilder<RewardsController>(builder: (rewardController) {
+              if (rewardController.isLoading) {
                 return const Center(child: CircularProgressIndicator());
               }
-              if (referralController.scratchCardList.isEmpty) {
+              if (rewardController.scratchCardList.isEmpty) {
                 return const Center(child: Text("No scratch cards available."));
               }
               return GridView.builder(
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: referralController.scratchCardList.length,
+                itemCount: rewardController.scratchCardList.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 0.9,
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12),
                 itemBuilder: (context, index) {
-                  final scratchCardModel = referralController.isLoading
+                  final scratchCardModel = rewardController.isLoading
                       ? const ScratchCardModel()
-                      : referralController.scratchCardList[index];
+                      : rewardController.scratchCardList[index];
                   return GestureDetector(
                     onTap: () {
-                      if (referralController.isLoading) {
+                      if (rewardController.isLoading) {
                         showToast(
                             message: "Please Wait....",
                             toastType: ToastType.info);
@@ -107,7 +107,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
     return showDialog(
       context: context,
       builder: (context) {
-        return GetBuilder<ReferralController>(builder: (referralController) {
+        return GetBuilder<RewardsController>(builder: (referralController) {
           return Dialog(
             clipBehavior: Clip.antiAlias,
             shape:

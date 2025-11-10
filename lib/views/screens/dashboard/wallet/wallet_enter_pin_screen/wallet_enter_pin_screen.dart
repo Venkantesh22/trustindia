@@ -16,7 +16,7 @@ import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart
 import 'package:lekra/views/screens/dashboard/wallet/create_wallet_pin_screen/wallet_create_pin_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/widget/back_key_cell.dart';
 import 'package:lekra/views/screens/dashboard/wallet/widget/key_cell.dart';
-import 'package:lekra/views/screens/order_screem/screen/order_screen.dart';
+import 'package:lekra/views/screens/spin_wheel/spin_wheel_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_back_button.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -138,7 +138,7 @@ class _WalletEnterPinScreenState extends State<WalletEnterPinScreen>
                   "Congratulations! Your order has been placed successfully",
               typeCheck: value.isSuccess);
 
-          navigate(context: context, page: const OrderScreen());
+          navigate(context: context, page: const SpinWheelPage());
         } else {
           _triggerShake();
           showToast(message: value.message, typeCheck: value.isSuccess);

@@ -216,7 +216,10 @@ class AppConstants {
   static const String getFundStatus = "api/fund/request/status";
   static const String getFundDetails = "api/fund/request/status";
 
+  // Spin Wheel
+  static const String getSpinWheel = "api/spin/wheels";
 
+// Padding
   static const double horizontalPadding = 16;
   static const double verticalPadding = 20;
   static const EdgeInsets screenPadding = EdgeInsets.symmetric(

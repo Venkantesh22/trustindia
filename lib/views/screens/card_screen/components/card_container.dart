@@ -57,7 +57,7 @@ class CardContainer extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                   ),
-                  Text(PriceConverter.convertRound(productModel?.price ?? 0.00))
+                  Text(productModel?.discountedPriceFormat ?? "")
                 ],
               ),
             ),

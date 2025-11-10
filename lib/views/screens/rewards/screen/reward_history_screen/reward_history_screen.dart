@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lekra/controllers/referral_controller.dart';
+import 'package:lekra/controllers/reward_controller.dart';
 import 'package:lekra/data/models/reward_transaction_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/shimmer.dart';
@@ -20,7 +20,7 @@ class _RewardHistoryScreenState extends State<RewardHistoryScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.find<ReferralController>().fetchRewardsWallerHistory();
+      Get.find<RewardsController>().fetchRewardsWallerHistory();
     });
   }
 
@@ -28,7 +28,7 @@ class _RewardHistoryScreenState extends State<RewardHistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar2(title: "Rewards History"),
-      body: GetBuilder<ReferralController>(builder: (referralController) {
+      body: GetBuilder<RewardsController>(builder: (rewardsController) {
         return SingleChildScrollView(
           padding: AppConstants.screenPadding,
           child: Column(
@@ -45,7 +45,7 @@ class _RewardHistoryScreenState extends State<RewardHistoryScreen> {
                     style: Helper(context).textTheme.titleSmall?.copyWith(),
                   ),
                   const SizedBox(height: 12),
-                  GetBuilder<ReferralController>(builder: (referralController) {
+                  GetBuilder<RewardsController>(builder: (referralController) {
                     return ListView.separated(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,

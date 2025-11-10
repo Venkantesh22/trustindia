@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
-import 'package:lekra/controllers/referral_controller.dart';
+import 'package:lekra/controllers/reward_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
@@ -23,7 +23,7 @@ class _ReferralScreenState extends State<ReferralScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.find<ReferralController>().fetchReferral();
+      Get.find<RewardsController>().fetchReferral();
     });
   }
 
@@ -144,7 +144,7 @@ class _ReferralScreenState extends State<ReferralScreen> {
             ),
             const SizedBox(height: 16),
 
-            GetBuilder<ReferralController>(builder: (referralController) {
+            GetBuilder<RewardsController>(builder: (referralController) {
               if (referralController.isLoading) {
                 return const Center(child: CircularProgressIndicator());
               }
