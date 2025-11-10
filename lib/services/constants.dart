@@ -218,6 +218,7 @@ class AppConstants {
 
   // Spin Wheel
   static const String getSpinWheel = "api/spin/wheels";
+  static const String postCreateScratchCard = "api/scratchcard/create";
 
 // Padding
   static const double horizontalPadding = 16;

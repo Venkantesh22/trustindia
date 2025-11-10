@@ -5,6 +5,7 @@ import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/reward_transaction_model.dart';
 import 'package:lekra/data/models/scratch_model.dart';
+import 'package:lekra/data/models/spin_wheel_model.dart';
 import 'package:lekra/data/repositories/reward_repo.dart';
 
 class RewardsController extends GetxController implements GetxService {
@@ -41,7 +42,8 @@ class RewardsController extends GetxController implements GetxService {
         });
 
         log("scratch_cards list : ${scratchCardList.length}");
-        responseModel = ResponseModel(true, "Success fetch fetchScratchCard");
+        responseModel = ResponseModel(
+            true, response.body['message'] ?? "Success fetch fetchScratchCard");
       } else {
         log("scratch_cards list else : ${scratchCardList.length}");
 
@@ -73,8 +75,8 @@ class RewardsController extends GetxController implements GetxService {
       if (response.statusCode == 200 &&
           response.body['status'] == true &&
           response.body['data'] is Map) {
-        responseModel =
-            ResponseModel(true, "Success fetch postScratchCardRedeem");
+        responseModel = ResponseModel(true,
+            response.body['message'] ?? "Success fetch postScratchCardRedeem");
         fetchScratchCard();
         Get.find<AuthController>().fetchUserProfile();
       } else {
@@ -114,8 +116,10 @@ class RewardsController extends GetxController implements GetxService {
             .toList();
 
         log("rewardTransactionList list : ${rewardTransactionList.length}");
-        responseModel =
-            ResponseModel(true, "Success fetch fetchRewardsWallerHistory");
+        responseModel = ResponseModel(
+            true,
+            response.body['message'] ??
+                "Success fetch fetchRewardsWallerHistory");
       } else {
         log("rewardTransactionList list else : ${rewardTransactionList.length}");
 
@@ -130,6 +134,93 @@ class RewardsController extends GetxController implements GetxService {
     }
 
     isRewardHistoryLoading = false;
+    update();
+    return responseModel;
+  }
+
+  List<SpinWheelModel> spinWheelList = [];
+  Future<ResponseModel> fetchSpinWheel() async {
+    log('----------- fetchSpinWheel Called() -------------');
+    ResponseModel responseModel = ResponseModel(false, "Unknown error");
+    isLoading = true;
+    update();
+
+    try {
+      Response response = await rewardRepo.fetchSpinWheel();
+
+      if (response.statusCode == 200 &&
+          response.body['status'] == true &&
+          response.body['data'] is List) {
+        spinWheelList = (response.body['data'] as List)
+            .map((e) => SpinWheelModel.fromJson(e))
+            .toList();
+        winSpinWheelModel = null;
+        responseModel = ResponseModel(
+            true, response.body['message'] ?? "Success fetch fetchSpinWheel");
+        log("spinWheelList  : ${spinWheelList.length}");
+
+        Get.find<AuthController>().fetchUserProfile();
+      } else {
+        log("spinWheelList  else : ${spinWheelList.length}");
+
+        responseModel = ResponseModel(
+          false,
+          response.body['message'] ?? "Something went wrong fetchSpinWheel()",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "fetchSpinWheel");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  SpinWheelModel? winSpinWheelModel;
+  void setWinSpinWheelModel(SpinWheelModel? value) {
+    winSpinWheelModel = value;
+    update();
+  }
+
+  Future<ResponseModel> postCreateScratchCard() async {
+    log('----------- postCreateScratchCard Called() -------------');
+    ResponseModel responseModel = ResponseModel(false, "Unknown error");
+    isLoading = true;
+    update();
+
+    try {
+      Map<String, dynamic> data = {
+        "value": winSpinWheelModel?.offerValue ?? "",
+        "type": winSpinWheelModel?.type ?? "",
+      };
+      Response response =
+          await rewardRepo.postCreateScratchCard(data: FormData(data));
+
+      if (response.statusCode == 200 && response.body['status'] == true) {
+        // spinWheelList = (response.body['data'] as List)
+        //     .map((e) => SpinWheelModel.fromJson(e))
+        //     .toList();
+        // winSpinWheelModel = null;
+        responseModel = ResponseModel(
+            true, response.body['message'] ?? "Success postCreateScratchCard");
+        // log("spinWheelList  : ${spinWheelList.length}");
+      } else {
+        // log("spinWheelList  else : ${spinWheelList.length}");
+
+        responseModel = ResponseModel(
+          false,
+          response.body['message'] ??
+              "Something went wrong postCreateScratchCard()",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "postCreateScratchCard");
+    }
+
+    isLoading = false;
     update();
     return responseModel;
   }
