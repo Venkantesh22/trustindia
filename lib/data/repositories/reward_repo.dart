@@ -6,8 +6,7 @@ class RewardRepo {
   final ApiClient apiClient;
   const RewardRepo({required this.apiClient});
 
-  Future<Response> fetchReferral() async =>
-      await apiClient.getData(AppConstants.getReferral, "fetchReferral");
+ 
 
   Future<Response> fetchScratchCard() async => await apiClient.getData(
       AppConstants.fetchScratchCard, "fetchScratchCard");
