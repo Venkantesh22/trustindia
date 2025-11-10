@@ -9,11 +9,9 @@ class FundRequestCard extends StatelessWidget {
   const FundRequestCard({
     super.key,
     required this.fundRequestModel,
-    required this.onTapView,
   });
 
   final FundRequestsModel fundRequestModel;
-  final VoidCallback onTapView;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +45,7 @@ class FundRequestCard extends StatelessWidget {
               Text(
                 DateFormatters()
                     .dMonthYear
-                    .format(fundRequestModel.transDate ?? DateTime.now()),
+                    .format(fundRequestModel.createdAt ?? DateTime.now()),
                 style: TextStyle(
                   color: secondaryColor,
                   fontSize: 12,
@@ -80,7 +78,8 @@ class FundRequestCard extends StatelessWidget {
           Row(
             children: [
               StatusChip(
-                  status: fundRequestModel.statusFormat, onTapView: onTapView),
+                status: fundRequestModel.statusFormat,
+              ),
               const Spacer(),
             ],
           ),

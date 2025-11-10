@@ -90,11 +90,9 @@ class StatusChip extends StatelessWidget {
   const StatusChip({
     super.key,
     required this.status,
-    this.onTapView, // optional; only used for FundStatus.view
   });
 
   final FundStatus status;
-  final VoidCallback? onTapView;
 
   @override
   Widget build(BuildContext context) {

@@ -18,4 +18,10 @@ class FundRequestRepo {
         AppConstants.getFundStatus,
         "fetchFundStatus",
       );
+
+  Future<Response> fetchFundDetails({required int? id}) async =>
+      await apiClient.getData(
+        "${AppConstants.getFundDetails}/$id/deatils",
+        "fetchFundDetails",
+      );
 }

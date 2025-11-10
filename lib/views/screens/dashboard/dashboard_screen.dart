@@ -5,6 +5,7 @@ import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart
 import 'package:lekra/views/screens/dashboard/home_screen/home_screen.dart';
 import 'package:lekra/views/screens/dashboard/referral_screen/referral_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/wallet_screen/wallet_screen.dart';
+import 'package:lekra/views/screens/spin_wheel/spin_wheel_screen.dart';
 
 import '../../../controllers/dashboard_controller.dart';
 import '../../../generated/assets.dart';
@@ -25,8 +26,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         builder: (DashBoardController controller) {
           return [
             const HomeScreen(),
-            // const SpinWheelPage(),
-            const WalletScreen(),
+            const SpinWheelPage(),
+            // const WalletScreen(),
             const ReferralScreen(),
             const ProfileScreen(),
           ][controller.dashPage];

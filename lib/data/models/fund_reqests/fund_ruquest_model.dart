@@ -3,45 +3,43 @@ import 'package:lekra/services/constants.dart';
 
 class FundRequestsModel {
   final int? id;
-  final int? userId;
   final String? utr;
   final String? cancelReason;
   final DateTime? transDate;
   final String? amount;
-  final int? bankId;
+
   final String? status;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final BankModel? bankaccount;
+  final BankModel? bankAccount;
       final String? accountName;
 
 
   FundRequestsModel({
     this.id,
-    this.userId,
     this.utr,
     this.cancelReason,
     this.transDate,
     this.amount,
-    this.bankId,
+
     this.status,
     this.createdAt,
     this.updatedAt,
-    this.bankaccount,
+    this.bankAccount,
     this.accountName,
   });
 
   factory FundRequestsModel.fromJson(Map<String, dynamic> json) =>
       FundRequestsModel(
         id: json["id"],
-        userId: json["user_id"],
+      
         utr: json["utr"],
         cancelReason: json["cancelReason"],
         transDate: json["trans_date"] == null
             ? null
             : DateTime.parse(json["trans_date"]),
         amount: json["amount"],
-        bankId: json["bank_id"],
+      
         status: json["status"],
         createdAt: json["created_at"] == null
             ? null
@@ -49,7 +47,7 @@ class FundRequestsModel {
         updatedAt: json["updated_at"] == null
             ? null
             : DateTime.parse(json["updated_at"]),
-        bankaccount: json["bankaccount"] == null
+        bankAccount: json["bankaccount"] == null
             ? null
             : BankModel.fromJson(json["bankaccount"]),
              accountName: json["account_name"],
@@ -57,17 +55,17 @@ class FundRequestsModel {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "user_id": userId,
+      
         "utr": utr,
         "cancelReason": cancelReason,
         "trans_date":
             "${transDate!.year.toString().padLeft(4, '0')}-${transDate!.month.toString().padLeft(2, '0')}-${transDate!.day.toString().padLeft(2, '0')}",
         "amount": amount,
-        "bank_id": bankId,
+       
         "status": status,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
-        "bankaccount": bankaccount?.toJson(),
+        "bankaccount": bankAccount?.toJson(),
          "account_name": accountName,
       };
 

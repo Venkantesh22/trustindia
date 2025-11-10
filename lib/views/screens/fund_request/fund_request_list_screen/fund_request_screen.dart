@@ -7,6 +7,7 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/drawer/drawer_screen.dart';
 import 'package:lekra/views/screens/fund_request/form_fund_request/form_fund_request_screen.dart';
+import 'package:lekra/views/screens/fund_request/fund_details_screen/fund_details_screen.dart';
 import 'package:lekra/views/screens/fund_request/fund_request_list_screen/component/fund_request_widget.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_drawer.dart';
 import 'package:page_transition/page_transition.dart';
@@ -82,8 +83,22 @@ class _FundRequestScreenState extends State<FundRequestScreen> {
                 final fundRequest = fundRequestController.isLoading
                     ? FundRequestsModel()
                     : fundRequestController.fundRequestsList[index];
-                return FundRequestCard(
-                    fundRequestModel: fundRequest, onTapView: () {});
+                return GestureDetector(
+                  onTap: () {
+                    if (fundRequestController.isLoading) {
+                      return;
+                    }
+                    fundRequestController
+                        .setSelectFundRequestsModel(fundRequest);
+                    navigate(
+                        context: context,
+                        type: PageTransitionType.rightToLeft,
+                        page: const FundDetailsScreen());
+                  },
+                  child: FundRequestCard(
+                    fundRequestModel: fundRequest,
+                  ),
+                );
               },
               separatorBuilder: (_, __) {
                 return const SizedBox(

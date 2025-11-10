@@ -120,7 +120,7 @@ class FundRequestController extends GetxController implements GetxService {
         fundRequestsList = (response.body['data'] as List)
             .map((fund) => FundRequestsModel.fromJson(fund))
             .toList();
-      
+
         responseModel =
             ResponseModel(true, response.body['message'] ?? "fetchFundStatus");
       } else {
@@ -130,6 +130,49 @@ class FundRequestController extends GetxController implements GetxService {
     } catch (e) {
       responseModel = ResponseModel(false, "Catch");
       log("****** Error ****** $e", name: "fetchFundStatus");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  FundRequestsModel? selectFundRequestModel;
+  void setSelectFundRequestsModel(FundRequestsModel? value) {
+    selectFundRequestModel = value;
+    update();
+  }
+
+  Future<ResponseModel> fetchFundDetails() async {
+    log('-----------  fetchFundDetails() -------------');
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+
+    try {
+      Response response = await fundRequestRepo.fetchFundDetails(
+          id: selectFundRequestModel?.id);
+
+      if (response.statusCode == 200 &&
+          response.body['status'] == true &&
+          response.body['data'] is Map) {
+        // fundRequestsList = (response.body['data'] as List)
+        //     .map((fund) => FundRequestsModel.fromJson(fund))
+        //     .toList();
+        selectFundRequestModel =
+            FundRequestsModel.fromJson(response.body['data']);
+
+        responseModel =
+            ResponseModel(true, response.body['message'] ?? "fetchFundDetails");
+      } else {
+        responseModel = ResponseModel(
+            false,
+            response.body['message'] ??
+                "fetchFundDetails Something Went Wrong");
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "fetchFundDetails");
     }
 
     isLoading = false;
