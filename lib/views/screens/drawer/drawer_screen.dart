@@ -137,7 +137,7 @@ List<DrawerItemModel> drawerItemList = [
     },
   ),
   DrawerItemModel(
-    label: "Payment",
+    label: "Funds",
     onTap: (ctx) {
       navigate(context: ctx, page: const FundRequestScreen());
     },
@@ -154,14 +154,14 @@ List<DrawerItemModel> drawerItemList = [
       navigate(context: ctx, page: const SubscriptionCategoryPlan());
     },
   ),
-  DrawerItemModel(
-    label: "Customer Service",
-    onTap: (ctx) {},
-  ),
-  DrawerItemModel(
-    label: "Gift Ideas",
-    onTap: (ctx) {},
-  ),
+  // DrawerItemModel(
+  //   label: "Customer Service",
+  //   onTap: (ctx) {},
+  // ),
+  // DrawerItemModel(
+  //   label: "Gift Ideas",
+  //   onTap: (ctx) {},
+  // ),
   DrawerItemModel(
     label: "Wallet Pin Change",
     onTap: (ctx) {
