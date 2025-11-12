@@ -8,11 +8,11 @@ class DynamicQrRepo {
   const DynamicQrRepo({required this.apiClient});
 
    Future<Response> postGenerateDynamicQR(
-          {required int? orderId, required FormData data}) async =>
+          {required int? orderId}) async =>
       await apiClient.postData(
         "${AppConstants.postDynamicQR}/$orderId",
         "postGenerateDynamicQR",
-        data,
+        "",
       );
 }
 

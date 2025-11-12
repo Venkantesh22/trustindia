@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/product_controller.dart';
 import 'package:lekra/data/models/product_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/screens/card_screen/card_screen.dart';
 
 class AddToCardButton extends StatelessWidget {
   final ProductModel product;
@@ -30,9 +30,10 @@ class AddToCardButton extends StatelessWidget {
           }
 
           if (isAdd) {
-            showToast(
-                message: "Product also read add to card",
-                toastType: ToastType.info);
+            navigate(context: context, page: const CardScreen());
+            // showToast(
+            //     message: "Product also read add to card",
+            //     toastType: ToastType.info);
           } else {
             productController.postAddToCard(product: product).then((value) {
               if (value.isSuccess) {

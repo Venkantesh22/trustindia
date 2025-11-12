@@ -15,7 +15,7 @@ class DynamicModel {
         vpa: json["vpa"],
         qrString: json["qrString"],
         orderId: json["order_id"],
-        amount: json["amount"]?.toDouble(),
+        amount: double.tryParse(json["amount"]),
       );
 
   Map<String, dynamic> toJson() => {

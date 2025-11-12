@@ -20,12 +20,12 @@ class DynamicQRController extends GetxController implements GetxService {
     update();
 
     try {
-      Map<String, dynamic> data = {
-        "callback_url": "https://ecom.tpipaygroup.com/api/tpipay/callback",
-      };
+      // Map<String, dynamic> data = {
+      //   "callback_url": "https://ecom.tpipaygroup.com/api/tpipay/callback",
+      // };
 
       Response response = await dynamicQrRepo.postGenerateDynamicQR(
-          orderId: Get.find<OrderController>().orderId, data: FormData(data));
+          orderId: Get.find<OrderController>().orderId);
 
       if (response.statusCode == 200 && response.body['status'] == true) {
         dynamicModel = DynamicModel.fromJson(response.body['data']);
