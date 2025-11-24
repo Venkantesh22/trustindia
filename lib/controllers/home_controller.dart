@@ -64,8 +64,10 @@ class HomeController extends GetxController implements GetxService {
   /// Fetch featured products.
   /// - loadMore: true => fetch next page
   /// - refresh: true => reset and fetch page 1
-  Future<ResponseModel> fetchFeaturedProducts(
-      {bool loadMore = false, bool refresh = false}) async {
+  Future<ResponseModel> fetchFeaturedProducts({
+    bool loadMore = false,
+    bool refresh = false,
+  }) async {
     log('fetchFeaturedProducts called (loadMore: $loadMore, refresh: $refresh)');
     ResponseModel responseModel = ResponseModel(false, "Unknown error");
 

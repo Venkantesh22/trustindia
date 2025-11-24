@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/product_controller.dart';
 import 'package:lekra/data/models/home/category_model.dart';
-import 'package:lekra/data/models/product_model.dart';
+import 'package:lekra/data/models/product_model.dart'; 
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/shimmer.dart';
