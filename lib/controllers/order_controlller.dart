@@ -60,7 +60,6 @@ class OrderController extends GetxController implements GetxService {
     return responseModel;
   }
 
-
   Future<ResponseModel> postPayOrderWallet({
     required int? orderId,
   }) async {
@@ -158,4 +157,6 @@ class OrderController extends GetxController implements GetxService {
 
     update();
   }
+
+  
 }

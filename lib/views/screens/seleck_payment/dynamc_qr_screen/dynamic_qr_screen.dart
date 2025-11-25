@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:lekra/controllers/dynamic_qr_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/screens/spin_wheel/spin_wheel_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -21,41 +22,39 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
   static const int _totalSeconds = 5 * 60;
   int _remainingSeconds = _totalSeconds;
   Timer? _countdownTimer;
+  Timer? _statusTimer;
 
   @override
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
-        // Get.find<OrderController>()
-        //     .postCheckout(
-        //         addressId: Get.find<BasicController>().selectAddress?.id,
-        //         code: Get.find<CouponController>().couponCode)
-        //     .then(
-        //   (value) {
-        //     if (value.isSuccess) {
-        //       _controller.dynamicQR().then((value) {
-        //         if (value.isSuccess) {
-        //           _startCountdown();
-        //         } else {
-        //           showToast(message: value.message, typeCheck: value.isSuccess);
-        //         }
-        //       });
-        //     } else {
-        //       showToast(message: value.message, typeCheck: value.isSuccess);
-        //     }
-        //   },
-        // );
-        _controller.dynamicQR().then((value) {
-          if (value.isSuccess) {
-            _startCountdown();
-          } else {
-            showToast(message: value.message, typeCheck: value.isSuccess);
-          }
-        });
-      },
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _controller.dynamicQR().then((value) {
+        if (value.isSuccess) {
+          _startCountdown();
+
+          _statusTimer =
+              Timer.periodic(const Duration(milliseconds: 1000), (_) async {
+            await _controller.checkPaymentStatus().then((val) {
+              if (val.isSuccess) {
+                _statusTimer?.cancel();
+                showToast(
+                    message:
+                        "Congratulations! Your order has been placed successfully",
+                    typeCheck: value.isSuccess);
+
+                navigate(context: context, page: const SpinWheelPage());
+                if (!mounted) return;
+              } else {
+                showToast(message: val.message, typeCheck: val.isSuccess);
+              }
+            });
+          });
+        } else {
+          showToast(message: value.message, typeCheck: value.isSuccess);
+        }
+      });
+    });
   }
 
   void _startCountdown() {
@@ -65,6 +64,10 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
       if (_remainingSeconds <= 1) {
         setState(() => _remainingSeconds = 0);
         t.cancel();
+
+        // stop polling if QR expired
+        _statusTimer?.cancel();
+
         if (Navigator.of(context).canPop()) {
           Navigator.of(context).pop();
         } else {
@@ -85,7 +88,8 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
   @override
   void dispose() {
     _countdownTimer?.cancel();
-    _controller.onClose();
+    _statusTimer?.cancel();
+    // ❌ don't call controller.onClose() manually; GetX handles it
     super.dispose();
   }
 
@@ -139,13 +143,15 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
                       },
                     ),
                     const SizedBox(height: 16),
-                    Text(_formatMMSS(_remainingSeconds),
-                        textAlign: TextAlign.center,
-                        style: Helper(context).textTheme.bodyLarge?.copyWith(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: red,
-                            )),
+                    Text(
+                      _formatMMSS(_remainingSeconds),
+                      textAlign: TextAlign.center,
+                      style: Helper(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: red,
+                          ),
+                    ),
                   ],
                 ),
               ),
