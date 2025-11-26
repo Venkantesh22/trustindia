@@ -89,7 +89,6 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
   void dispose() {
     _countdownTimer?.cancel();
     _statusTimer?.cancel();
-    // ❌ don't call controller.onClose() manually; GetX handles it
     super.dispose();
   }
 
