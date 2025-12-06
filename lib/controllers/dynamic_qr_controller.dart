@@ -29,7 +29,7 @@ class DynamicQRController extends GetxController implements GetxService {
             true, response.body['message'] ?? " dynamicQR success");
       } else {
         responseModel = ResponseModel(
-            false, response.body['message'] ?? "Error while dynamicQR user");
+            false, response.body['error'] ?? "Error while dynamicQR user");
       }
     } catch (e) {
       log('ERROR AT dynamicQR(): $e');
@@ -60,8 +60,8 @@ class DynamicQRController extends GetxController implements GetxService {
         responseModel = ResponseModel(
             true, response.body['message'] ?? " checkPaymentStatus success");
       } else {
-        responseModel = ResponseModel(false,
-            response.body['message'] ?? "Error while checkPaymentStatus user");
+       responseModel = ResponseModel(false,
+            response.body['error'] ?? "Error while checkPaymentStatus user");
       }
     } catch (e) {
       log('ERROR AT checkPaymentStatus(): $e');

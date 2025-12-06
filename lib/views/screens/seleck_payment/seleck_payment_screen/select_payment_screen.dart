@@ -11,6 +11,7 @@ import 'package:lekra/views/screens/dashboard/wallet/wallet_enter_pin_screen/wal
 class SelectPaymentScreen extends StatefulWidget {
   final bool isMemberShipPayment;
   final String totalAmount;
+  
   const SelectPaymentScreen(
       {super.key, this.isMemberShipPayment = false, required this.totalAmount});
 

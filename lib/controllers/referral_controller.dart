@@ -35,7 +35,7 @@ class ReferralController extends GetxController implements GetxService {
 
         responseModel = ResponseModel(
           false,
-          response.body['message'] ?? "Something went wrong",
+          response.body['error'] ?? "Something went wrong",
         );
       }
     } catch (e) {

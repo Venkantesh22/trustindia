@@ -45,10 +45,10 @@ class OrderController extends GetxController implements GetxService {
         orderId = response.body['order']['id'];
         log("Saved Order ID: $orderId");
         responseModel = ResponseModel(
-            true, response.body['message'] ?? " postCheckout success");
+            true, response.body['error'] ?? " postCheckout success");
       } else {
         responseModel = ResponseModel(
-            false, response.body['message'] ?? "Error while postCheckout user");
+            false, response.body['error'] ?? "Error while postCheckout user");
       }
     } catch (e) {
       log('ERROR AT postCheckout(): $e');
@@ -84,7 +84,7 @@ class OrderController extends GetxController implements GetxService {
         Get.find<ProductController>().fetchCard();
       } else {
         responseModel = ResponseModel(false,
-            response.body['message'] ?? "Error while postPayOrderWallet user");
+            response.body['error'] ?? "Error while postPayOrderWallet user");
       }
     } catch (e) {
       log('ERROR AT postPayOrderWallet(): $e');
@@ -135,7 +135,7 @@ class OrderController extends GetxController implements GetxService {
         log("orderList length else ${orderList.length}");
 
         responseModel = ResponseModel(
-            false, response.body['message'] ?? "Error while fetchOrder user");
+            false, response.body['error'] ?? "Error while fetchOrder user");
       }
     } catch (e) {
       log('ERROR AT fetchOrder(): $e');
@@ -157,6 +157,4 @@ class OrderController extends GetxController implements GetxService {
 
     update();
   }
-
-  
 }

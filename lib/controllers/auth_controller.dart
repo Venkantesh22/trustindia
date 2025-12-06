@@ -49,7 +49,7 @@ class AuthController extends GetxController implements GetxService {
             true, response.body['message'] ?? "generateOtp updated");
       } else {
         responseModel = ResponseModel(
-            false, response.body['message'] ?? "Error while generateOtp user");
+            false, response.body['error'] ?? "Error while generateOtp user");
       }
     } catch (e) {
       log('ERROR AT generateOtp(): $e');
@@ -85,8 +85,8 @@ class AuthController extends GetxController implements GetxService {
         responseModel = ResponseModel(
             true, response.body['message'] ?? "postVerifyOTP updated");
       } else {
-        responseModel = ResponseModel(false,
-            response.body['message'] ?? "Error while postVerifyOTP user");
+       responseModel = ResponseModel(false,
+            response.body['error'] ?? "Error while postVerifyOTP user");
       }
     } catch (e) {
       log('ERROR AT postVerifyOTP(): $e');
@@ -133,7 +133,7 @@ class AuthController extends GetxController implements GetxService {
         referralCodeController.clear();
       } else {
         responseModel = ResponseModel(
-            false, response.body['message'] ?? "Error while registering user");
+            false, response.body['error'] ?? "Error while registering user");
       }
     } catch (e) {
       log('ERROR AT registerUser(): $e');
@@ -177,7 +177,7 @@ class AuthController extends GetxController implements GetxService {
       // ✅ 3. API returned failure (but HTTP was 200)
       else {
         responseModel = ResponseModel(
-            false, response.body['message'] ?? "Error while login user");
+            false, response.body['error'] ?? "Error while login user");
       }
     } catch (e) {
       log('ERROR AT userLogin(): $e');
@@ -207,7 +207,7 @@ class AuthController extends GetxController implements GetxService {
         referralCodeController.clear();
       } else {
         responseModel = ResponseModel(
-            false, response.body['message'] ?? "Error while logout");
+            false, response.body['error'] ?? "Error while logout");
       }
     } catch (e) {
       log("****** Error in logout() ******", name: "logout");
@@ -241,7 +241,7 @@ class AuthController extends GetxController implements GetxService {
       } else {
         log("raw datat");
         responseModel = ResponseModel(
-            false, response.body['message'] ?? "Something Went Wrong");
+            false, response.body['error'] ?? "Something Went Wrong");
       }
     } catch (e) {
       responseModel = ResponseModel(false, "Catch");
@@ -290,7 +290,7 @@ class AuthController extends GetxController implements GetxService {
             true, response.body['message'] ?? "updateProfile updated");
       } else {
         responseModel = ResponseModel(
-            false, response.body['message'] ?? "Error while updating profile");
+            false, response.body['error'] ?? "Error while updating profile");
       }
     } catch (e) {
       log("****** Error in updateProfile() ******", name: "updateProfile");
@@ -330,7 +330,7 @@ class AuthController extends GetxController implements GetxService {
         passwordController.clear();
       } else {
         responseModel = ResponseModel(
-            false, response.body['message'] ?? "Error while updatePassword ");
+            false, response.body['error'] ?? "Error while updatePassword ");
       }
     } catch (e) {
       log('ERROR AT updatePassword(): $e');

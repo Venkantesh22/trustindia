@@ -82,7 +82,7 @@ class ProductController extends GetxController implements GetxService {
         log("Product length else ${cateProductList.length}");
 
         responseModel = ResponseModel(
-            false, response.body['message'] ?? "Something Went Wrong");
+            false, response.body['error'] ?? "Something Went Wrong");
       }
     } catch (e) {
       responseModel = ResponseModel(false, "Catch");
@@ -157,7 +157,7 @@ class ProductController extends GetxController implements GetxService {
             ResponseModel(true, response.body['message'] ?? "fetchProduct");
       } else {
         responseModel = ResponseModel(
-            false, response.body['message'] ?? "Something Went Wrong");
+            false, response.body['error'] ?? "Something Went Wrong");
       }
     } catch (e) {
       responseModel = ResponseModel(false, "Catch");
@@ -191,8 +191,8 @@ class ProductController extends GetxController implements GetxService {
             true, response.body['message'] ?? "Add to Card success");
         await fetchCard();
       } else {
-        responseModel = ResponseModel(false,
-            response.body['message'] ?? "Error while postAddToCard user");
+       responseModel = ResponseModel(false,
+            response.body['error'] ?? "Error while postAddToCard user");
       }
     } catch (e) {
       log('ERROR AT postAddToCard(): $e');
@@ -221,8 +221,8 @@ class ProductController extends GetxController implements GetxService {
             response.body['message'] ?? "remove to postRemoveToCard success");
         await fetchCard();
       } else {
-        responseModel = ResponseModel(false,
-            response.body['message'] ?? "Error while postRemoveToCard user");
+       responseModel = ResponseModel(false,
+            response.body['error'] ?? "Error while postRemoveToCard user");
       }
     } catch (e) {
       log('ERROR AT postRemoveToCard(): $e');
@@ -258,7 +258,7 @@ class ProductController extends GetxController implements GetxService {
       } else {
         log("cardModelList length else ");
         responseModel = ResponseModel(
-            false, response.body['message'] ?? "Something Went Wrong");
+            false, response.body['error'] ?? "Something Went Wrong");
       }
     } catch (e) {
       responseModel = ResponseModel(false, "Catch");

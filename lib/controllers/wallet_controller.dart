@@ -90,7 +90,7 @@ class WalletController extends GetxController implements GetxService {
       } else {
         responseModel = ResponseModel(
           false,
-          response.body['message'] ?? "Something went wrong",
+          response.body['error'] ?? "Something went wrong",
         );
       }
     } catch (e) {
@@ -129,7 +129,7 @@ class WalletController extends GetxController implements GetxService {
       } else {
         responseModel = ResponseModel(
           false,
-          response.body['message'] ?? "Something went wrong",
+          response.body['error'] ?? "Something went wrong",
         );
       }
     } catch (e) {
@@ -169,7 +169,7 @@ class WalletController extends GetxController implements GetxService {
       } else {
         responseModel = ResponseModel(
           false,
-          response.body['message'] ?? " Something went wrong createWalletPin",
+          response.body['error'] ?? " Something went wrong createWalletPin",
         );
       }
     } catch (e) {
@@ -205,7 +205,7 @@ class WalletController extends GetxController implements GetxService {
       } else {
         responseModel = ResponseModel(
           false,
-          response.body['message'] ?? " Something went wrong verifyWalletPin",
+          response.body['error'] ?? " Something went wrong verifyWalletPin",
         );
       }
     } catch (e) {
@@ -242,7 +242,7 @@ class WalletController extends GetxController implements GetxService {
       } else {
         responseModel = ResponseModel(
           false,
-          response.body['message'] ??
+          response.body['error'] ??
               " Something went wrong postWalletReSetPin",
         );
       }

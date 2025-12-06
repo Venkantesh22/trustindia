@@ -41,7 +41,7 @@ class BasicController extends GetxController implements GetxService {
       } else {
         responseModel = ResponseModel(
           false,
-          response.body['message'] ?? "Something went wrong",
+          response.body['error'] ?? "Something went wrong",
         );
       }
     } catch (e) {
@@ -85,7 +85,7 @@ class BasicController extends GetxController implements GetxService {
 
         responseModel = ResponseModel(
           false,
-          response.body['message'] ?? "Something went wrong",
+          response.body['error'] ?? "Something went wrong",
         );
       }
     } catch (e) {
@@ -139,7 +139,7 @@ class BasicController extends GetxController implements GetxService {
         fetchAddress();
       } else {
         responseModel = ResponseModel(
-            false, response.body['message'] ?? "Error while addAddress user");
+            false, response.body['error'] ?? "Error while addAddress user");
         fetchAddress();
       }
     } catch (e) {
@@ -173,7 +173,7 @@ class BasicController extends GetxController implements GetxService {
         fetchAddress();
       } else {
         responseModel = ResponseModel(
-            false, response.body['message'] ?? "Error while deleteAddress ");
+            false, response.body['error'] ?? "Error while deleteAddress ");
       }
     } catch (e) {
       log('ERROR AT deleteAddress(): $e');
@@ -210,7 +210,7 @@ class BasicController extends GetxController implements GetxService {
       } else {
         responseModel = ResponseModel(
           false,
-          response.body['message'] ?? "Something went wrong",
+          response.body['error'] ?? "Something went wrong",
         );
       }
     } catch (e) {

@@ -52,8 +52,8 @@ class FundRequestController extends GetxController implements GetxService {
         responseModel =
             ResponseModel(true, response.body['message'] ?? "getAssignBank");
       } else {
-        responseModel = ResponseModel(false,
-            response.body['message'] ?? "getAssignBank Something Went Wrong");
+       responseModel = ResponseModel(false,
+            response.body['error'] ?? "getAssignBank Something Went Wrong");
       }
     } catch (e) {
       responseModel = ResponseModel(false, "Catch");
@@ -91,8 +91,8 @@ class FundRequestController extends GetxController implements GetxService {
         dateController.clear();
         utrNoController.clear();
       } else {
-        responseModel = ResponseModel(false,
-            response.body['message'] ?? "postFundRequest Something Went Wrong");
+       responseModel = ResponseModel(false,
+            response.body['error'] ?? "postFundRequest Something Went Wrong");
       }
     } catch (e) {
       responseModel = ResponseModel(false, "Catch");
@@ -124,8 +124,8 @@ class FundRequestController extends GetxController implements GetxService {
         responseModel =
             ResponseModel(true, response.body['message'] ?? "fetchFundStatus");
       } else {
-        responseModel = ResponseModel(false,
-            response.body['message'] ?? "fetchFundStatus Something Went Wrong");
+       responseModel = ResponseModel(false,
+            response.body['error'] ?? "fetchFundStatus Something Went Wrong");
       }
     } catch (e) {
       responseModel = ResponseModel(false, "Catch");
