@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:lekra/controllers/product_controller.dart';
-import 'package:lekra/generated/assets.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
-import 'package:lekra/views/screens/card_screen/card_screen.dart';
 
 class NotIcon extends StatelessWidget {
   const NotIcon({
@@ -24,7 +21,7 @@ class NotIcon extends StatelessWidget {
               onTap: () {
                 //     navigate(context: context, page: const CardScreen());
               },
-              child: CustomImage(
+              child: const CustomImage(
                 path: Assets.imagesNotification,
                 height: 24,
                 width: 24,

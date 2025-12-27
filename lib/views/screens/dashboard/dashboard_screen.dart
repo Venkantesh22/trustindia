@@ -73,8 +73,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     onTap: () {
                       controller.dashPage = 3;
                     },
-                    title: 'Profile',
-                    icon: Assets.svgsProfile,
+                    title: 'Account',
+                    icon: Assets.svgsShoppingCart,
                     isActive: controller.dashPage == 3 ? true : false,
                   ),
                 ],
