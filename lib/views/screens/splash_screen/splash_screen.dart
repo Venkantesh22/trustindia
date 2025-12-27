@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
+import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/demo/screen/demo_dashboard_screen.dart';
@@ -90,11 +91,12 @@ class _SplashScreenState extends State<SplashScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Spacer(),
-            // CustomImage(
-            //   path: Assets.imagesLogo,
-            //   height: size.height * .3,
-            //   width: size.height * .3,
-            // ),
+            CustomImage(
+              alignment: Alignment.center,
+              path: Assets.imagesLogo,
+              height: size.height * .3,
+              width: size.height * .3,
+            ),
             const Spacer(flex: 3),
             Text(
               AppConstants.appName,
