@@ -5,6 +5,7 @@ import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/route_helper.dart';
+import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 
@@ -19,6 +20,8 @@ class SignUPScreen extends StatefulWidget {
 
 class _SignUPScreenState extends State<SignUPScreen> {
   bool showPassword = false;
+  bool termsAndConditions = false;
+  bool privacyPolicy = false;
 
   final _formKey = GlobalKey<FormState>();
   signUp(AuthController authController) {
@@ -62,6 +65,11 @@ class _SignUPScreenState extends State<SignUPScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  const CustomImage(
+                    path: Assets.imagesLogo,
+                    height: 34,
+                    width: 36,
+                  ),
                   Text(
                     "Create an Account",
                     style: Theme.of(context).textTheme.titleMedium,
@@ -283,12 +291,72 @@ class _SignUPScreenState extends State<SignUPScreen> {
                           const SizedBox(
                             height: 20,
                           ),
+                          Row(
+                            children: [
+                              Checkbox(
+                                  value: termsAndConditions,
+                                  side: BorderSide(color: primaryColor),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      termsAndConditions = !termsAndConditions;
+                                    });
+                                  }),
+                              Text(
+                                "Terms & Conditions",
+                                style: Helper(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Checkbox(
+                                  value: privacyPolicy,
+                                  side: BorderSide(color: primaryColor),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      privacyPolicy = !privacyPolicy;
+                                    });
+                                  }),
+                              Text(
+                                "Privacy Policy",
+                                style: Helper(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              )
+                            ],
+                          ),
                           GetBuilder<AuthController>(builder: (authController) {
                             return GestureDetector(
                               onTap: () {
                                 if (authController.isLoading) {
                                   return;
                                 }
+
+                                if (!termsAndConditions && !privacyPolicy) {
+                                  return showToast(
+                                      message:
+                                          "Select Term & condition and Privacy Policy",
+                                      toastType: ToastType.error);
+                                } else if (!termsAndConditions) {
+                                  return showToast(
+                                      message: "Select Term & condition",
+                                      toastType: ToastType.error);
+                                } else if (!privacyPolicy) {
+                                  return showToast(
+                                      message: "Select Privacy Policy",
+                                      toastType: ToastType.error);
+                                }
+
                                 if (_formKey.currentState?.validate() ??
                                     false) {
                                   signUp(authController);
@@ -300,18 +368,21 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                     color: primaryColor,
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(100)),
                                 child: Center(
-                                  child: Text(
-                                    "Register",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: white,
+                                  child: authController.isLoading
+                                      ? const CircularProgressIndicator(
+                                          color: Colors.white)
+                                      : Text(
+                                          "Register",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium
+                                              ?.copyWith(
+                                                fontWeight: FontWeight.bold,
+                                                color: white,
+                                              ),
                                         ),
-                                  ),
                                 ),
                               ),
                             );

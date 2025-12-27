@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
+import 'package:lekra/generated/assets.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/route_helper.dart';
+import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/auth_screens/forget_password/enter_number_for_opt_screen.dart';
 import 'package:lekra/views/screens/auth_screens/signup_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
@@ -56,6 +57,11 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              const CustomImage(
+                path: Assets.imagesLogo,
+                height: 34,
+                width: 36,
+              ),
               Text(
                 "Welcome Back",
                 style: Theme.of(context).textTheme.titleMedium,
