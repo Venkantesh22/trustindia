@@ -3,6 +3,7 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/dashboard/search_screen/search_screen.dart';
 import 'package:lekra/views/screens/widget/card_icon.dart';
+import 'package:lekra/views/screens/widget/not_icon.dart';
 
 class HomeApp extends StatelessWidget implements PreferredSizeWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -60,13 +61,11 @@ class HomeApp extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       actions: const [
+        NotIcon(),
         CardIcon(),
         SizedBox(
           width: 6,
         ),
-        SizedBox(
-          width: 14,
-        )
       ],
     );
   }

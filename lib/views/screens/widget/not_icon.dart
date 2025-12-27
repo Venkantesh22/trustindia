@@ -1,13 +1,15 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:lekra/controllers/product_controller.dart';
+import 'package:lekra/generated/assets.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/card_screen/card_screen.dart';
 
-class CardIcon extends StatelessWidget {
-  const CardIcon({
+class NotIcon extends StatelessWidget {
+  const NotIcon({
     super.key,
   });
 
@@ -18,13 +20,15 @@ class CardIcon extends StatelessWidget {
         onTap: () {},
         child: Stack(
           children: [
-            IconButton(
-              onPressed: () {
-                navigate(context: context, page: const CardScreen());
+            GestureDetector(
+              onTap: () {
+                //     navigate(context: context, page: const CardScreen());
               },
-              icon: const Icon(
-                Icons.shopping_cart_rounded,
-                color: black,
+              child: CustomImage(
+                path: Assets.imagesNotification,
+                height: 24,
+                width: 24,
+                fit: BoxFit.cover,
               ),
             ),
             (productController.cardModel?.products?.isNotEmpty ?? false)
