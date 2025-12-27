@@ -46,6 +46,10 @@ class Assets {
   /// assets/images/doller-demo.png
   static const String imagesDollerDemo = "assets/images/doller-demo.png";
 
+  /// Assets for imagesEditProfileIcon
+  /// assets/images/edit-profile-icon.png
+  static const String imagesEditProfileIcon = "assets/images/edit-profile-icon.png";
+
   /// Assets for imagesFastDemo
   /// assets/images/fast-demo.png
   static const String imagesFastDemo = "assets/images/fast-demo.png";

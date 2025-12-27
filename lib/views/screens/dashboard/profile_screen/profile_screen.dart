@@ -1,120 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
-import 'package:lekra/views/base/dialogs/logout_dialog.dart';
-import 'package:lekra/views/screens/dashboard/profile_edit/profile_edit_screen.dart';
-import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
-
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
-
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar2(
-        title: "Profile",
-        showBackButton: false,
-      ),
-      body: Center(
-        child: GetBuilder<AuthController>(builder: (authController) {
-          return Padding(
-            padding: AppConstants.screenPadding,
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  )
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    "My Profile",
-                    style: Helper(context)
-                        .textTheme
-                        .titleSmall
-                        ?.copyWith(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Center(
-                    child: Column(
-                      children: [
-                        CustomImage(
-                          isProfile: true,
-                          path: authController.userModel?.image != null
-                              ? authController.userModel?.image ?? ""
-                              : "",
-                          height: 100,
-                          width: 100,
-                          fit: BoxFit.cover,
-                          radius: 100,
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          authController.userModel?.name ?? "",
-                          style: Helper(context).textTheme.bodyLarge?.copyWith(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          authController.userModel?.email ?? "",
-                          style: Helper(context).textTheme.bodyMedium?.copyWith(
-                              fontSize: 14, fontWeight: FontWeight.w400),
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        ProfileButton(
-                          title: "Edit Profile",
-                          onPressed: () {
-                            navigate(
-                                context: context, page: ProfileEditScreen());
-                          },
-                          color: primaryColor,
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        ProfileButton(
-                          title: "Logout",
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) => const LogoutDialog());
-                          },
-                          color: secondaryColor,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        }),
-      ),
-    );
-  }
-}
+import 'package:lekra/views/screens/dashboard/profile_screen/conponents/profile_row_title.dart';
+import 'package:lekra/views/screens/widget/custom_back_button.dart';
 
 class ProfileButton extends StatelessWidget {
   final bool isLoading;
@@ -145,13 +37,68 @@ class ProfileButton extends StatelessWidget {
         ),
         child: isLoading
             ? const Center(
-                child: CircularProgressIndicator(color: white,),
+                child: CircularProgressIndicator(
+                  color: white,
+                ),
               )
             : Text(
                 title,
                 style: Helper(context).textTheme.bodyLarge?.copyWith(
                     fontWeight: FontWeight.w400, fontSize: 16, color: white),
               ),
+      ),
+    );
+  }
+}
+
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        padding: AppConstants.screenPadding,
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                const CustomBackButton(),
+                Text(
+                  "My Profile",
+                  style: Helper(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20,
+                      ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            UserProfileContainer(),
+            SizedBox(height: 35),
+            Row(
+              children: [
+                CustomImage(
+                  path: Assets.imagesEditProfileIcon,
+                  height: 40,
+                  width: 40,
+                  fit: BoxFit.cover,
+                ),
+                SizedBox(width: 16), 
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
