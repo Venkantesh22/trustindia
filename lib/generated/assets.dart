@@ -26,9 +26,37 @@ class Assets {
   /// assets/images/congratulations-apply-coupon.png
   static const String imagesCongratulationsApplyCoupon = "assets/images/congratulations-apply-coupon.png";
 
+  /// Assets for imagesDelivery
+  /// assets/images/delivery.png
+  static const String imagesDelivery = "assets/images/delivery.png";
+
+  /// Assets for imagesDemo1
+  /// assets/images/demo1.png
+  static const String imagesDemo1 = "assets/images/demo1.png";
+
+  /// Assets for imagesDemo2
+  /// assets/images/demo2.png
+  static const String imagesDemo2 = "assets/images/demo2.png";
+
+  /// Assets for imagesDemo3
+  /// assets/images/demo3.png
+  static const String imagesDemo3 = "assets/images/demo3.png";
+
+  /// Assets for imagesDollerDemo
+  /// assets/images/doller-demo.png
+  static const String imagesDollerDemo = "assets/images/doller-demo.png";
+
+  /// Assets for imagesFastDemo
+  /// assets/images/fast-demo.png
+  static const String imagesFastDemo = "assets/images/fast-demo.png";
+
   /// Assets for imagesGooglePay
   /// assets/images/google-pay.png
   static const String imagesGooglePay = "assets/images/google-pay.png";
+
+  /// Assets for imagesHomeDemo
+  /// assets/images/home-demo.png
+  static const String imagesHomeDemo = "assets/images/home-demo.png";
 
   /// Assets for imagesLocalBgGrey
   /// assets/images/local-bg-grey.png
@@ -54,9 +82,21 @@ class Assets {
   /// assets/images/scratch.jpg
   static const String imagesScratch = "assets/images/scratch.jpg";
 
+  /// Assets for imagesSearchDemo
+  /// assets/images/search-demo.png
+  static const String imagesSearchDemo = "assets/images/search-demo.png";
+
+  /// Assets for imagesSecureDemo
+  /// assets/images/secure-demo.png
+  static const String imagesSecureDemo = "assets/images/secure-demo.png";
+
   /// Assets for imagesShimmer
   /// assets/images/shimmer.gif
   static const String imagesShimmer = "assets/images/shimmer.gif";
+
+  /// Assets for imagesShopDome
+  /// assets/images/shop-dome.png
+  static const String imagesShopDome = "assets/images/shop-dome.png";
 
   /// Assets for imagesStitchRewardsHistoryWallet
   /// assets/images/stitch_rewards_history_wallet.zip
@@ -65,6 +105,10 @@ class Assets {
   /// Assets for imagesUpi
   /// assets/images/upi.png
   static const String imagesUpi = "assets/images/upi.png";
+
+  /// Assets for imagesWallet
+  /// assets/images/wallet.png
+  static const String imagesWallet = "assets/images/wallet.png";
 
   /// Assets for imagesYourWonDiscount
   /// assets/images/your_won_discount.png
@@ -78,20 +122,52 @@ class Assets {
   /// assets/svgs/cross-cirlce.svg
   static const String svgsCrossCirlce = "assets/svgs/cross-cirlce.svg";
 
+  /// Assets for svgsDeliver
+  /// assets/svgs/Deliver.svg
+  static const String svgsDeliver = "assets/svgs/Deliver.svg";
+
   /// Assets for svgsHome
   /// assets/svgs/home.svg
   static const String svgsHome = "assets/svgs/home.svg";
+
+  /// Assets for svgsHomeDem
+  /// assets/svgs/home_dem.svg
+  static const String svgsHomeDem = "assets/svgs/home_dem.svg";
 
   /// Assets for svgsProfile
   /// assets/svgs/profile.svg
   static const String svgsProfile = "assets/svgs/profile.svg";
 
+  /// Assets for svgsQuickMode
+  /// assets/svgs/Quick-Mode.svg
+  static const String svgsQuickMode = "assets/svgs/Quick-Mode.svg";
+
   /// Assets for svgsReferral
   /// assets/svgs/referral.svg
   static const String svgsReferral = "assets/svgs/referral.svg";
 
+  /// Assets for svgsSearchMore
+  /// assets/svgs/Search-More.svg
+  static const String svgsSearchMore = "assets/svgs/Search-More.svg";
+
+  /// Assets for svgsSecurityLock
+  /// assets/svgs/Security-Lock.svg
+  static const String svgsSecurityLock = "assets/svgs/Security-Lock.svg";
+
+  /// Assets for svgsShoppingCart
+  /// assets/svgs/shopping-cart.svg
+  static const String svgsShoppingCart = "assets/svgs/shopping-cart.svg";
+
+  /// Assets for svgsUsDollarCircled
+  /// assets/svgs/Us-Dollar-Circled.svg
+  static const String svgsUsDollarCircled = "assets/svgs/Us-Dollar-Circled.svg";
+
   /// Assets for svgsWallet
   /// assets/svgs/wallet.svg
   static const String svgsWallet = "assets/svgs/wallet.svg";
+
+  /// Assets for svgsWalletDemo
+  /// assets/svgs/wallet-demo.svg
+  static const String svgsWalletDemo = "assets/svgs/wallet-demo.svg";
 }
 

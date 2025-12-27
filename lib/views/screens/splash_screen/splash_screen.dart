@@ -1,9 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
+import 'package:lekra/views/screens/demo/screen/demo_dashboard_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../services/constants.dart';
 
@@ -45,6 +49,10 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 2));
     final authController = Get.find<AuthController>();
     String token = authController.getUserToken();
+    final sharedPreferences = await SharedPreferences.getInstance();
+
+    bool isDemoShow =
+        sharedPreferences.getBool(AppConstants.isDemoShowKey) ?? false;
 
     if (token.isNotEmpty) {
       final response = await authController.fetchUserProfile();
@@ -64,7 +72,9 @@ class _SplashScreenState extends State<SplashScreen> {
     } else {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const LoginScreen()),
+        isDemoShow
+            ? MaterialPageRoute(builder: (_) => const LoginScreen())
+            : MaterialPageRoute(builder: (_) => const DemoDashboardScreen()),
       );
     }
   }
@@ -92,10 +102,10 @@ class _SplashScreenState extends State<SplashScreen> {
                     fontSize: 26.0,
                   ),
             ),
-            Text(
-              "Subtitle",
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
+            // Text(
+            //   "Subtitle",
+            //   style: Theme.of(context).textTheme.bodyMedium,
+            // ),
             const Spacer(),
           ],
         ),

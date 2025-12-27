@@ -222,4 +222,25 @@ class BasicController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
+
+  int _demoPage = 0;
+  int get demoPage => _demoPage;
+
+  set demoPageSet(int page) {
+    _demoPage = page;
+    update();
+  }
+
+  void nextPage(int totalPages) {
+    if (_demoPage < totalPages - 1) {
+      _demoPage++;
+      update();
+    } else {
+      print("🎉 Onboarding complete!");
+    }
+  }
+
+  Future<bool> setIsDemoSave(bool value) async {
+    return await basicRepo.saveIsDemoShow(value);
+  }
 }

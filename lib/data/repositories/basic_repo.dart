@@ -1,11 +1,16 @@
+import 'dart:developer';
+
 import 'package:get/get_connect/http/src/multipart/form_data.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:lekra/data/api/api_client.dart';
 import 'package:lekra/services/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BasicRepo {
   final ApiClient apiClient;
-  const BasicRepo({required this.apiClient});
+    final SharedPreferences sharedPreferences;
+
+  const BasicRepo({required this.sharedPreferences, required this.apiClient});
 
   Future<Response> getBanner() async =>
       await apiClient.getData(AppConstants.bannerUri, "getBanner");
@@ -23,4 +28,15 @@ class BasicRepo {
 
   Future<Response> fetchAddressById({required int? addressId}) async =>
       await apiClient.getData(AppConstants.getAddressById, "fetchAddressById");
+
+       Future<bool> saveIsDemoShow(
+    bool value,
+  ) async {
+    try {
+      return await sharedPreferences.setBool(AppConstants.isDemoShowKey, value);
+    } catch (e, st) {
+      log('saveUserToken error: $e\n$st');
+      return false;
+    }
+  }
 }

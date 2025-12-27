@@ -234,4 +234,5 @@ class AppConstants {
   static const String razorpayKey = 'razorpay_key';
   static const String recentOrders = 'recent_orders';
   static const String isUser = 'is_user';
+  static const String isDemoShowKey = 'is_demo_show';
 }
