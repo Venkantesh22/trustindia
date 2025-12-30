@@ -20,8 +20,8 @@ class ProfileBalanceSection extends StatelessWidget {
           children: [
             CustomImage(
               path: authController.userModel?.image ?? "",
-              height: 120,
-              width: 120,
+              height: 58,
+              width: 58,
               radius: 100,
               fit: BoxFit.cover,
             ),
@@ -31,7 +31,7 @@ class ProfileBalanceSection extends StatelessWidget {
             Text(
               capitalize(authController.userModel?.name),
               style:
-                  Helper(context).textTheme.titleSmall?.copyWith(fontSize: 20),
+                  Helper(context).textTheme.titleSmall?.copyWith(fontSize: 14),
             ),
             GetBuilder<WalletController>(builder: (walletController) {
               return Text(
@@ -39,7 +39,7 @@ class ProfileBalanceSection extends StatelessWidget {
                 style: Helper(context)
                     .textTheme
                     .titleSmall
-                    ?.copyWith(color: primaryColor, fontSize: 26),
+                    ?.copyWith(color: primaryColor, fontSize: 16),
               );
             }),
             Text(
@@ -47,7 +47,7 @@ class ProfileBalanceSection extends StatelessWidget {
               style: Helper(context)
                   .textTheme
                   .bodyMedium
-                  ?.copyWith(color: grey, fontSize: 14),
+                  ?.copyWith(color: grey, fontSize: 12),
             )
           ],
         ),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/wallet_controller.dart';
@@ -6,10 +8,10 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/dashboard/wallet/create_wallet_pin_screen/wallet_create_pin_screen.dart';
+import 'package:lekra/views/screens/dashboard/wallet/wallet_enter_pin_screen/wallet_enter_pin_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/wallet_screen/components/profile-balalnce_section.dart';
+import 'package:lekra/views/screens/dashboard/wallet/wallet_screen/components/row_of_search_add_fund_section.dart';
 import 'package:lekra/views/screens/dashboard/wallet/wallet_screen/components/transaction_container.dart';
-import 'package:lekra/views/screens/drawer/drawer_screen.dart';
-import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class WalletScreen extends StatefulWidget {
   const WalletScreen({super.key});
@@ -22,6 +24,8 @@ class _WalletScreenState extends State<WalletScreen> {
   bool isWallPinCreate = true;
   final ScrollController _scrollController = ScrollController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  Timer? timer;
 
   @override
   void initState() {
@@ -77,11 +81,30 @@ class _WalletScreenState extends State<WalletScreen> {
         }
       },
       child: Scaffold(
-        key: scaffoldKey,
-        drawer: const DrawerScreen(),
-        appBar: const CustomAppBar2(
-          title: "Wallet",
-          showBackButton: false,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          actions: [
+            PopupMenuButton<String>(
+              icon: const Icon(Icons.more_vert, color: black),
+              onSelected: (value) {
+                if (value == 'change_pin') {
+                  navigate(
+                      context: context,
+                      page: const WalletEnterPinScreen(
+                        isForResetPin: true,
+                      ));
+                }
+              },
+              itemBuilder: (BuildContext context) {
+                return [
+                  const PopupMenuItem<String>(
+                    value: 'change_pin',
+                    child: Text('Change Wallet PIN'),
+                  ),
+                ];
+              },
+            ),
+          ],
         ),
         body: isWallPinCreate
             ? const Center(
@@ -97,6 +120,7 @@ class _WalletScreenState extends State<WalletScreen> {
                     const SizedBox(
                       height: 16,
                     ),
+                    const RowOFSearchAndAddFundButtonSection(),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -105,7 +129,6 @@ class _WalletScreenState extends State<WalletScreen> {
                           style:
                               Helper(context).textTheme.titleSmall?.copyWith(),
                         ),
-                        const SizedBox(height: 12),
                         GetBuilder<WalletController>(
                             builder: (walletController) {
                           final isInitialLoading = walletController

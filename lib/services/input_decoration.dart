@@ -8,8 +8,10 @@ class CustomDecoration {
   static InputDecoration inputDecoration({
     Widget? icon,
     String? prefixText,
+    TextStyle? prefixStyle,
     String? label,
     String? hint,
+    
     TextStyle? hintStyle,
     Widget? suffix,
     bool floating = false,
@@ -20,6 +22,11 @@ class CustomDecoration {
     EdgeInsetsGeometry contentPadding =
         const EdgeInsets.fromLTRB(20, 10, 20, 13),
   }) {
+    prefixStyle ??= GoogleFonts.montserrat(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      color: textSecondary,
+    );
     assert(prefixText == null || icon == null,
         "Strings are equal So this message is been displayed!!");
 
@@ -69,11 +76,7 @@ class CustomDecoration {
                       children: [
                         Text(
                           prefixText,
-                          style: GoogleFonts.montserrat(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: textSecondary,
-                          ),
+                          style: prefixStyle,
                         ),
                       ],
                     ),
@@ -95,7 +98,12 @@ class CustomDecoration {
             )
           : null,
       hintText: hint,
-      hintStyle: hintStyle,
+      hintStyle: hintStyle ??
+          GoogleFonts.montserrat(
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            color: textSecondary,
+          ),
       floatingLabelBehavior:
           floating ? FloatingLabelBehavior.always : FloatingLabelBehavior.auto,
       contentPadding: contentPadding,
@@ -151,7 +159,7 @@ class CustomDecoration {
               label,
               // textAlign: TextAlign.center,
               style: GoogleFonts.montserrat(
-                fontSize: 12,
+                fontSize: 16,
                 fontWeight: FontWeight.w400,
                 color: textPrimary,
               ),
@@ -160,7 +168,7 @@ class CustomDecoration {
       hintText: label,
       hintStyle: hintStyle ??
           GoogleFonts.montserrat(
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: FontWeight.w400,
             color: textSecondary,
           ),

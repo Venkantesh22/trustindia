@@ -263,4 +263,8 @@ class WalletController extends GetxController implements GetxService {
   }
 
   String walletPin = "";
+
+
+  TextEditingController walletSearchController = TextEditingController();
+  
 }

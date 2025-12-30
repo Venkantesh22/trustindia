@@ -18,6 +18,10 @@ class Assets {
   /// assets/images/banner3.png
   static const String imagesBanner3 = "assets/images/banner3.png";
 
+  /// Assets for imagesCalender
+  /// assets/images/calender.png
+  static const String imagesCalender = "assets/images/calender.png";
+
   /// Assets for imagesCall
   /// assets/images/call.svg
   static const String imagesCall = "assets/images/call.svg";
@@ -129,6 +133,10 @@ class Assets {
   /// Assets for svgsBottonAccount
   /// assets/svgs/botton-account.svg
   static const String svgsBottonAccount = "assets/svgs/botton-account.svg";
+
+  /// Assets for svgsCheckInCircle
+  /// assets/svgs/check-in-circle.svg
+  static const String svgsCheckInCircle = "assets/svgs/check-in-circle.svg";
 
   /// Assets for svgsCrossCirlce
   /// assets/svgs/cross-cirlce.svg
