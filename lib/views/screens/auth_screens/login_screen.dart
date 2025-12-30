@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
+import 'package:lekra/controllers/dashboard_controller.dart';
 import 'package:lekra/generated/assets.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/input_decoration.dart';
@@ -9,8 +10,6 @@ import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/auth_screens/forget_password/enter_number_for_opt_screen.dart';
 import 'package:lekra/views/screens/auth_screens/signup_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
-import 'package:lekra/views/screens/dashboard/home_screen/home_screen.dart';
-import 'package:page_transition/page_transition.dart';
 
 import '../../../services/theme.dart';
 
@@ -25,16 +24,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool showPassword = false;
 
   final _formKey = GlobalKey<FormState>();
-  login(AuthController authController) {
-    authController.userLogin().then((value) {
-      if (value.isSuccess) {
-        navigate(
-            context: context,
-            type: PageTransitionType.rightToLeft,
-            page: const HomeScreen());
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,6 +162,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               authController.userLogin().then(
                                 (value) {
                                   if (value.isSuccess) {
+                                    Get.find<DashBoardController>().dashPage =
+                                        0;
                                     navigate(
                                         context: context,
                                         page: const DashboardScreen(),

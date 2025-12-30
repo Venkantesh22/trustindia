@@ -85,8 +85,8 @@ class AuthController extends GetxController implements GetxService {
         responseModel = ResponseModel(
             true, response.body['message'] ?? "postVerifyOTP updated");
       } else {
-       responseModel = ResponseModel(false,
-            response.body['error'] ?? "Error while postVerifyOTP user");
+        responseModel = ResponseModel(
+            false, response.body['error'] ?? "Error while postVerifyOTP user");
       }
     } catch (e) {
       log('ERROR AT postVerifyOTP(): $e');
@@ -177,7 +177,7 @@ class AuthController extends GetxController implements GetxService {
       // ✅ 3. API returned failure (but HTTP was 200)
       else {
         responseModel = ResponseModel(
-            false, response.body['error'] ?? "Error while login user");
+            false, response.body['message'] ?? "Error while login user");
       }
     } catch (e) {
       log('ERROR AT userLogin(): $e');
