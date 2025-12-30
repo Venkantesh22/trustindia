@@ -6,6 +6,7 @@ import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/address/screen/address_screen.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
+import 'package:lekra/views/screens/dashboard/profile_edit/profile_edit_screen.dart';
 import 'package:lekra/views/screens/rewards/screen/reward_history_screen/reward_history_screen.dart';
 import 'package:lekra/views/screens/subscription_plan/subscription_category/subscription_category-screen.dart';
 
@@ -83,7 +84,7 @@ List<RowOfAccountModel> rowOfAccountModelList = [
     subTitle: "Make changes to your account",
     icon: Assets.imagesEditProfileIcon,
     onTap: (context) {
-      navigate(context: context, page: const RewardHistoryScreen());
+      navigate(context: context, page: const ProfileEditScreen());
     },
   ),
   RowOfAccountModel(
@@ -141,6 +142,7 @@ List<RowOfAccountModel> rowOfAccountModelList = [
   ),
   RowOfAccountModel(
     title: "Log out",
+    subTitle: "Further secure your account for safety",
     icon: Assets.svgsLogout,
     onTap: (context) {
       Get.find<AuthController>().logout().then((value) {

@@ -74,7 +74,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       controller.dashPage = 3;
                     },
                     title: 'Account',
-                    icon: Assets.svgsBottonAccount,
+                    icon: Assets.svgsProfile,
                     isActive: controller.dashPage == 3 ? true : false,
                   ),
                 ],
