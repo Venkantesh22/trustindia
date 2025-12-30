@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/dashboard/profile_screen/conponents/profile_row_title.dart';
+import 'package:lekra/views/screens/dashboard/profile_screen/conponents/row_of_account.dart';
 import 'package:lekra/views/screens/widget/custom_back_button.dart';
 
 class ProfileButton extends StatelessWidget {
@@ -84,19 +81,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(
               height: 16,
             ),
-            UserProfileContainer(),
-            SizedBox(height: 35),
-            Row(
-              children: [
-                CustomImage(
-                  path: Assets.imagesEditProfileIcon,
-                  height: 40,
-                  width: 40,
-                  fit: BoxFit.cover,
-                ),
-                SizedBox(width: 16), 
-              ],
+            const UserProfileContainer(),
+            const SizedBox(height: 35),
+            ListView.separated(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final rowOfAccountModel = rowOfAccountModelList[index];
+
+                return RowOfAccount(
+                  rowOfAccountModel: rowOfAccountModel,
+                );
+              },
+              separatorBuilder: (_, __) => const SizedBox(
+                height: 26,
+              ),
+              itemCount: rowOfAccountModelList.length,
             )
+            //
           ],
         ),
       ),

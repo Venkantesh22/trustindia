@@ -21,6 +21,7 @@ const Color greyBorder = Color(0xFFE5E7EB);
 const Color greyLight = Color(0xFF637587);
 const Color greyBillText = Color(0xFF5E788C);
 const Color greyNumberBg = Color(0xFF8B8A89);
+const Color greyAccountText = Color(0xFFABABAB);
 const Color black = Colors.black;
 const Color blackBillingText = Color(0xFF0F1417);
 const Color red = Colors.red;

@@ -126,6 +126,10 @@ class Assets {
   /// assets/images/your_Won_Point.png
   static const String imagesYourWonPoint = "assets/images/your_Won_Point.png";
 
+  /// Assets for svgsBottonAccount
+  /// assets/svgs/botton-account.svg
+  static const String svgsBottonAccount = "assets/svgs/botton-account.svg";
+
   /// Assets for svgsCrossCirlce
   /// assets/svgs/cross-cirlce.svg
   static const String svgsCrossCirlce = "assets/svgs/cross-cirlce.svg";
@@ -133,6 +137,10 @@ class Assets {
   /// Assets for svgsDeliver
   /// assets/svgs/Deliver.svg
   static const String svgsDeliver = "assets/svgs/Deliver.svg";
+
+  /// Assets for svgsHelpSupport
+  /// assets/svgs/help-support.png
+  static const String svgsHelpSupport = "assets/svgs/help-support.png";
 
   /// Assets for svgsHome
   /// assets/svgs/home.svg
@@ -142,9 +150,25 @@ class Assets {
   /// assets/svgs/home_dem.svg
   static const String svgsHomeDem = "assets/svgs/home_dem.svg";
 
+  /// Assets for svgsLogout
+  /// assets/svgs/logout.png
+  static const String svgsLogout = "assets/svgs/logout.png";
+
+  /// Assets for svgsMembershipSubscription
+  /// assets/svgs/membership-subscription.png
+  static const String svgsMembershipSubscription = "assets/svgs/membership-subscription.png";
+
   /// Assets for svgsNotification
   /// assets/svgs/notification.svg
   static const String svgsNotification = "assets/svgs/notification.svg";
+
+  /// Assets for svgsPersonAccount
+  /// assets/svgs/person-account.png
+  static const String svgsPersonAccount = "assets/svgs/person-account.png";
+
+  /// Assets for svgsPrivacyCenter
+  /// assets/svgs/Privacy-center.png
+  static const String svgsPrivacyCenter = "assets/svgs/Privacy-center.png";
 
   /// Assets for svgsProfile
   /// assets/svgs/profile.svg
@@ -158,6 +182,10 @@ class Assets {
   /// assets/svgs/referral.svg
   static const String svgsReferral = "assets/svgs/referral.svg";
 
+  /// Assets for svgsReward
+  /// assets/svgs/reward.png
+  static const String svgsReward = "assets/svgs/reward.png";
+
   /// Assets for svgsSearchMore
   /// assets/svgs/Search-More.svg
   static const String svgsSearchMore = "assets/svgs/Search-More.svg";
@@ -169,6 +197,10 @@ class Assets {
   /// Assets for svgsShoppingCart
   /// assets/svgs/shopping-cart.svg
   static const String svgsShoppingCart = "assets/svgs/shopping-cart.svg";
+
+  /// Assets for svgsTermsPolicies
+  /// assets/svgs/terms-policies.png
+  static const String svgsTermsPolicies = "assets/svgs/terms-policies.png";
 
   /// Assets for svgsUsDollarCircled
   /// assets/svgs/Us-Dollar-Circled.svg
