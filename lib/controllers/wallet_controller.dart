@@ -242,8 +242,7 @@ class WalletController extends GetxController implements GetxService {
       } else {
         responseModel = ResponseModel(
           false,
-          response.body['error'] ??
-              " Something went wrong postWalletReSetPin",
+          response.body['error'] ?? " Something went wrong postWalletReSetPin",
         );
       }
     } catch (e) {
@@ -264,7 +263,10 @@ class WalletController extends GetxController implements GetxService {
 
   String walletPin = "";
 
-
   TextEditingController walletSearchController = TextEditingController();
-  
+
+  void setWalletSearchController(String value) {
+    walletSearchController.text = value;
+    update();
+  }
 }

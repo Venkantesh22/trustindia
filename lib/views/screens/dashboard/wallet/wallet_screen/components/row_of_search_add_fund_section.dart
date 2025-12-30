@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/services/constants.dart';
+import 'package:lekra/services/date_formatters_and_converters.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/common_button.dart';
 import 'package:lekra/views/base/custom_image.dart';
@@ -30,13 +32,30 @@ class RowOFSearchAndAddFundButtonSection extends StatelessWidget {
                   Icons.search,
                   color: greyBillText,
                 ),
-                suffix: const Padding(
-                  padding: EdgeInsets.all(12),
-                  child: CustomImage(
-                    path: Assets.imagesCalender,
-                    height: 24,
-                    width: 24,
-                    fit: BoxFit.cover,
+                suffix: GestureDetector(
+                  onTap: () async {
+                    // 1. Open the date picker dialog
+                    final DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime.now(),
+                    );
+
+                    // 2. Handle the result
+                    if (pickedDate != null) {
+                      Get.find<WalletController>().setWalletSearchController(
+                          DateFormatters().dMyDash.format(pickedDate));
+                    }
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(12),
+                    child: CustomImage(
+                      path: Assets.imagesCalender,
+                      height: 24,
+                      width: 24,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
