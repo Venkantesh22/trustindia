@@ -230,7 +230,9 @@ class _FormFundRequestScreenState extends State<FormFundRequestScreen> {
                                   message: value.message,
                                   typeCheck: value.isSuccess);
                               navigate(
-                                  context: context, page: FundRequestScreen());
+                                context: context,
+                                page: FundRequestScreen(),
+                              );
                             } else {
                               showToast(
                                   message: value.message,

@@ -4,7 +4,6 @@ import 'package:lekra/controllers/reward_controller.dart';
 import 'package:lekra/data/models/scratch_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/custom_image.dart';
-import 'package:lekra/views/screens/drawer/drawer_screen.dart';
 import 'package:lekra/views/screens/rewards/screen/reward_details_screen/reward_details_screen.dart';
 import 'package:lekra/views/screens/rewards/screen/rewards_screen/component/scratch_card_widget.dart';
 import 'package:lekra/views/screens/rewards/screen/rewards_screen/component/total_point_section.dart';
@@ -27,15 +26,13 @@ class _RewardsScreenState extends State<RewardsScreen> {
     });
   }
 
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
-      drawer: const DrawerScreen(),
+     
       appBar:
-          CustomAppbarDrawer(scaffoldKey: scaffoldKey, title: "Your Rewards"),
+          CustomAppbarDrawer( title: "Your Rewards"),
       body: SingleChildScrollView(
         padding: AppConstants.screenPadding,
         child: Column(

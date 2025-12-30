@@ -4,7 +4,6 @@ import 'package:lekra/controllers/subscription_controller.dart';
 import 'package:lekra/data/models/subscription_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/shimmer.dart';
-import 'package:lekra/views/screens/drawer/drawer_screen.dart';
 import 'package:lekra/views/screens/subscription_plan/subscription_details_screen/subscription_details_screen.dart';
 import 'package:lekra/views/screens/subscription_plan/subscrption_screen/components/subscription_container.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
@@ -27,13 +26,12 @@ class _SubscriptionPlanScreenState extends State<SubscriptionPlanScreen> {
     });
   }
 
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const DrawerScreen(),
-      key: scaffoldKey,
+    
+      
       appBar: CustomAppBar2(title: widget.subscriptionPlanName ?? ""),
       body: SingleChildScrollView(
         padding: AppConstants.screenPadding,

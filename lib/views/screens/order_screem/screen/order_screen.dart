@@ -3,9 +3,7 @@ import 'package:get/get.dart';
 import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/data/models/product_model.dart';
 import 'package:lekra/services/constants.dart';
-import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/shimmer.dart';
-import 'package:lekra/views/screens/drawer/drawer_screen.dart';
 import 'package:lekra/views/screens/order_screem/components/order_container.dart';
 import 'package:lekra/views/screens/order_screem/screen/order_details_screen.dart';
 
@@ -25,25 +23,15 @@ class _OrderScreenState extends State<OrderScreen> {
     });
   }
 
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
-      drawer: const DrawerScreen(),
+
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            scaffoldKey.currentState?.openDrawer();
-          },
-          icon: const Icon(
-            Icons.menu,
-            color: black,
-          ),
-        ),
+       
         title: Text(
           "Order",
           style: Helper(context)

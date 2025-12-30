@@ -10,11 +10,9 @@ import 'package:lekra/views/screens/widget/card_icon.dart';
 import 'package:lekra/views/screens/widget/not_icon.dart';
 
 class HomeApp extends StatelessWidget implements PreferredSizeWidget {
-  final GlobalKey<ScaffoldState> scaffoldKey;
 
   const HomeApp({
     super.key,
-    required this.scaffoldKey,
   });
 
   @override

@@ -1,16 +1,13 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:lekra/services/constants.dart';
-import 'package:lekra/services/theme.dart';
 
-class CustomAppbarDrawer extends StatelessWidget implements PreferredSizeWidget {
-  final GlobalKey<ScaffoldState> scaffoldKey;
+class CustomAppbarDrawer extends StatelessWidget
+    implements PreferredSizeWidget {
   final String title;
 
   const CustomAppbarDrawer({
     super.key,
-    required this.scaffoldKey, required this.title,
+    required this.title,
   });
 
   @override
@@ -19,17 +16,8 @@ class CustomAppbarDrawer extends StatelessWidget implements PreferredSizeWidget 
       backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: true,
-      leading: IconButton(
-        onPressed: () {
-          scaffoldKey.currentState?.openDrawer();
-        },
-        icon: const Icon(
-          Icons.menu,
-          color: black,
-        ),
-      ),
       title: Text(
-      title,
+        title,
         style: Helper(context)
             .textTheme
             .bodyLarge

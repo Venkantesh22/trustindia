@@ -10,7 +10,6 @@ import 'package:lekra/views/screens/dashboard/home_screen/components/featured_se
 import 'package:lekra/views/screens/dashboard/home_screen/components/home_appbar.dart';
 import 'package:lekra/views/screens/dashboard/home_screen/components/home_banner.dart';
 import 'package:lekra/views/screens/dashboard/home_screen/components/hot_deals_today.dart';
-import 'package:lekra/views/screens/drawer/drawer_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,7 +20,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -59,10 +57,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
-      drawer: const DrawerScreen(),
+      
+    
       appBar: HomeApp(
-        scaffoldKey: scaffoldKey,
+        
       ),
       body: SingleChildScrollView(
         controller: _scrollController,

@@ -28,24 +28,24 @@ class NotIcon extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            (productController.cardModel?.products?.isNotEmpty ?? false)
-                ? Positioned(
-                    right: 4,
-                    top: 6,
-                    child: CircleAvatar(
-                      radius: 8,
-                      child: Center(
-                        child: Text(
-                          (productController.cardModel?.products?.length ?? 0)
-                              .toString(),
-                          style: Helper(context).textTheme.bodySmall?.copyWith(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              color: white),
-                        ),
-                      ),
-                    ))
-                : const SizedBox()
+            // (productController.cardModel?.products?.isNotEmpty ?? false)
+            //     ? Positioned(
+            //         right: 4,
+            //         top: 6,
+            //         child: CircleAvatar(
+            //           radius: 8,
+            //           child: Center(
+            //             child: Text(
+            //               (productController.cardModel?.products?.length ?? 0)
+            //                   .toString(),
+            //               style: Helper(context).textTheme.bodySmall?.copyWith(
+            //                   fontSize: 10,
+            //                   fontWeight: FontWeight.bold,
+            //                   color: white),
+            //             ),
+            //           ),
+            //         ))
+            //     : const SizedBox()
           ],
         ),
       );
