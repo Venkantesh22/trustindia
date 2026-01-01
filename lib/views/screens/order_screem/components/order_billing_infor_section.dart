@@ -27,36 +27,48 @@ class OrderBillingInforSection extends StatelessWidget {
                     .bodyLarge
                     ?.copyWith(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
-            buildBillingRow(
-                "Name :",
-                capitalize(orderController.selectOrder?.billingName ?? ""),
-                greyDark,
-                context),
-            buildBillingRow(
-                "Phone :",
-                "+91 ${orderController.selectOrder?.billingPhone ?? ""}",
-                greyDark,
-                context),
-            buildBillingRow(
-                "Email :",
-                orderController.selectOrder?.billingEmail ?? "",
-                greyDark,
-                context),
+            BuildBillingRow(
+              label: "Name :",
+              value: capitalize(orderController.selectOrder?.billingName ?? ""),
+              color: greyDark,
+            ),
+            BuildBillingRow(
+              label: "Phone :",
+              value: "+91 ${orderController.selectOrder?.billingPhone ?? ""}",
+              color: greyDark,
+            ),
+            BuildBillingRow(
+              label: "Email :",
+              value: orderController.selectOrder?.billingEmail ?? "",
+              color: greyDark,
+            ),
             GetBuilder<BasicController>(builder: (basicController) {
-              return buildBillingRow(
-                  "Address :",
-                  basicController.orderAddress?.fullAddress ?? "",
-                  greyDark,
-                  context);
+              return BuildBillingRow(
+                label: "Address :",
+                value: basicController.orderAddress?.fullAddress ?? "",
+                color: greyDark,
+              );
             }),
           ],
         ),
       );
     });
   }
+}
 
-  Widget buildBillingRow(
-      String label, String value, Color muted, BuildContext context) {
+class BuildBillingRow extends StatelessWidget {
+  final String label;
+  final String value;
+  final Color color;
+  const BuildBillingRow({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
@@ -65,7 +77,7 @@ class OrderBillingInforSection extends StatelessWidget {
               style: Helper(context)
                   .textTheme
                   .bodyMedium
-                  ?.copyWith(color: muted, fontSize: 14)),
+                  ?.copyWith(color: color, fontSize: 14)),
           SizedBox(
             width: 12,
           ),
