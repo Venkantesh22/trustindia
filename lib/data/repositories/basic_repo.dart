@@ -8,14 +8,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class BasicRepo {
   final ApiClient apiClient;
-    final SharedPreferences sharedPreferences;
+  final SharedPreferences sharedPreferences;
 
   const BasicRepo({required this.sharedPreferences, required this.apiClient});
 
   Future<Response> getBanner() async =>
       await apiClient.getData(AppConstants.bannerUri, "getBanner");
 
- 
   Future<Response> fetchAddress() async =>
       await apiClient.getData(AppConstants.getAddress, "fetchAddress");
 
@@ -27,9 +26,10 @@ class BasicRepo {
           "${AppConstants.postDeleteAddress}/$addressId", "deletesAddress", "");
 
   Future<Response> fetchAddressById({required int? addressId}) async =>
-      await apiClient.getData(AppConstants.getAddressById, "fetchAddressById");
+      await apiClient.getData(
+          "${AppConstants.getAddressById}/$addressId", "fetchAddressById");
 
-       Future<bool> saveIsDemoShow(
+  Future<bool> saveIsDemoShow(
     bool value,
   ) async {
     try {

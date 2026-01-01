@@ -6,6 +6,7 @@ import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart
 import 'package:lekra/views/screens/dashboard/home_screen/home_screen.dart';
 import 'package:lekra/views/screens/dashboard/referral_screen/referral_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/wallet_screen/wallet_screen.dart';
+import 'package:lekra/views/screens/order_screem/screen/order_screen.dart';
 
 import '../../../controllers/dashboard_controller.dart';
 import '../../../generated/assets.dart';
@@ -22,7 +23,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: false, 
+      canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
         Get.find<DashBoardController>().dashPage = 0;
         // Show Exit Dialog
@@ -58,6 +59,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             return [
               const HomeScreen(),
               const WalletScreen(),
+              const OrderScreen(),
               const ReferralScreen(),
               const ProfileScreen(),
             ][controller.dashPage];
@@ -97,17 +99,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       onTap: () {
                         controller.dashPage = 2;
                       },
-                      title: 'Referral ',
-                      icon: Assets.svgsReferral,
+                      title: 'Order',
+                      icon: Assets.svgsHome,
                       isActive: controller.dashPage == 2 ? true : false,
                     ),
                     BottomNavigationItemWidget(
                       onTap: () {
                         controller.dashPage = 3;
                       },
+                      title: 'Referral ',
+                      icon: Assets.svgsReferral,
+                      isActive: controller.dashPage == 3 ? true : false,
+                    ),
+                    BottomNavigationItemWidget(
+                      onTap: () {
+                        controller.dashPage = 4;
+                      },
                       title: 'Account',
                       icon: Assets.svgsProfile,
-                      isActive: controller.dashPage == 3 ? true : false,
+                      isActive: controller.dashPage == 4 ? true : false,
                     ),
                   ],
                 ),

@@ -158,7 +158,7 @@ class AppConstants {
   static const String getAddress = 'api/get-address';
   static const String postAddAddress = 'api/add-address';
   static const String postDeleteAddress = 'api/delete-address';
-  static const String getAddressById = 'api/order-address/2';
+  static const String getAddressById = 'api/order-address';
 
   // Basic
   static const String bannerUri = 'api/banners';
