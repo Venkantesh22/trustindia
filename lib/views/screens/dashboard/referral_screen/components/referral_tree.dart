@@ -1114,9 +1114,8 @@ class _FullScreenReferralTreeState extends State<FullScreenReferralTree>
           boundaryMargin:
               const EdgeInsets.all(500), // Huge margin so users don't hit edges
           transformationController: _controller,
-          minScale: 0.1, // Allow zooming out further
+          minScale: 0.1,
           maxScale: 4.0,
-          // REPAINT BOUNDARY IS KEY for smooth panning
           child: RepaintBoundary(
             child: GraphView(
               graph: graph,
