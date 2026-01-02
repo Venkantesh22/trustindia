@@ -22,7 +22,9 @@ const Color greyLight = Color(0xFF637587);
 const Color greyBillText = Color(0xFF5E788C);
 const Color greyNumberBg = Color(0xFF8B8A89);
 const Color greyAccountText = Color(0xFFABABAB);
+const Color greyMember = Color(0xFF787878);
 Color greyText = const Color(0xFF5C5B5B);
+const Color whiteBg2 = Color(0xFFFAFAFA);
 
 const Color black = Colors.black;
 const Color blackBillingText = Color(0xFF0F1417);

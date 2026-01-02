@@ -8,7 +8,7 @@ import 'package:lekra/views/screens/address/screen/address_screen.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
 import 'package:lekra/views/screens/dashboard/profile_edit/profile_edit_screen.dart';
 import 'package:lekra/views/screens/rewards/screen/reward_history_screen/reward_history_screen.dart';
-import 'package:lekra/views/screens/subscription_plan/subscription_category/subscription_category-screen.dart';
+import 'package:lekra/views/screens/subscription_plan/subscription_category/subscription_category_screen.dart';
 
 class RowOfAccount extends StatelessWidget {
   final RowOfAccountModel rowOfAccountModel;

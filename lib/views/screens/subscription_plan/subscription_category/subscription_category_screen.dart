@@ -1,14 +1,13 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/subscription_controller.dart';
 import 'package:lekra/data/models/subscription_cate_model.dart';
 import 'package:lekra/services/constants.dart';
+import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/shimmer.dart';
+import 'package:lekra/views/screens/subscription_plan/subscription_history/subscription_history_screen/subscription_history_screen.dart';
 import 'package:lekra/views/screens/subscription_plan/subscription_category/component/subscription_category_container.dart';
 import 'package:lekra/views/screens/subscription_plan/subscrption_screen/subscription_plan_screen.dart';
-import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_drawer.dart';
 import 'package:page_transition/page_transition.dart';
 
 class SubscriptionCategoryPlan extends StatefulWidget {
@@ -28,15 +27,53 @@ class _SubscriptionCategoryPlanState extends State<SubscriptionCategoryPlan> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    
-      
-      appBar: CustomAppbarDrawer(
-        
-        title: "Subscription Plans",
+      extendBodyBehindAppBar: false,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          "Subscription Plans",
+          style: Helper(context)
+              .textTheme
+              .bodyLarge
+              ?.copyWith(fontWeight: FontWeight.bold),
+        ),
+        leading: IconButton(
+          tooltip: 'Back',
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              Get.back();
+            }
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: black,
+          ),
+        ),
+        actions: [
+          IconButton(
+            tooltip: 'History',
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const SubscriptionHistoryScreen()));
+            },
+            icon: const Icon(
+              Icons.history,
+              color: black,
+            ),
+          ),
+          const SizedBox(
+            width: 20,
+          )
+        ],
       ),
       body: SingleChildScrollView(
         padding: AppConstants.screenPadding,
@@ -56,7 +93,6 @@ class _SubscriptionCategoryPlanState extends State<SubscriptionCategoryPlan> {
                       isLoading: subscriptionController.isLoading,
                       child: SubscriptionCategoryContainer(
                           onPressed: () {
-                            log("sub cate tap");
                             if (subscriptionController.isLoading) {
                               return;
                             }
