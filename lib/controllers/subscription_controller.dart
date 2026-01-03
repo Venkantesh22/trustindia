@@ -168,4 +168,36 @@ class SubscriptionController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
+
+  Future<ResponseModel> fetchSubscriptionHistory() async {
+    log('-----------  fetchSubscriptionHistory() -------------');
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+
+    try {
+      Response response = await subscriptionRepo.fetchSubscriptionHistory();
+
+      if (response.statusCode == 200 &&
+          response.body['status'] == true &&
+          response.body['data'] is Map) {
+        selectSubscription = SubscriptionModel.fromJson(response.body['data']);
+
+        responseModel = ResponseModel(
+            true, response.body['message'] ?? "fetchSubscriptionHistory");
+      } else {
+        responseModel = ResponseModel(
+            false,
+            response.body['message'] ??
+                "Something Went Wrong fetchSubscriptionHistory");
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "fetchSubscriptionHistory");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
 }

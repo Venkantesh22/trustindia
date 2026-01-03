@@ -18,8 +18,13 @@ class SubscriptionRepo {
       await apiClient.getData("${AppConstants.getSubscriptionDetails}/$id",
           "fetchSubscriptionPlan");
 
-  Future<Response> subscriptionCheckout({required int? id, required FormData data}) async =>
+  Future<Response> subscriptionCheckout(
+          {required int? id, required FormData data}) async =>
       await apiClient.postData(
           "${AppConstants.getSubscriptionCheckout}/$id/checkout",
-          "subscriptionCheckout", data);
+          "subscriptionCheckout",
+          data);
+
+  Future<Response> fetchSubscriptionHistory() async => await apiClient.getData(
+      AppConstants.getSubscriptionCheckout, "fetchSubscriptionHistory");
 }

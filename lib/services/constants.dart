@@ -207,6 +207,7 @@ class AppConstants {
   static const String getSubscriptionById = "api/membership-plans";
   static const String getSubscriptionDetails = "api/membership-plans-details";
   static const String getSubscriptionCheckout = "api/membership";
+  static const String getSubscriptionHistory = "api/memberships/user/plan";
 
   // Coupon
   static const String postCheckCouponCode = "api/check-coupon-code";

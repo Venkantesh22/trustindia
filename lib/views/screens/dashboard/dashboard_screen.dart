@@ -100,7 +100,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         controller.dashPage = 2;
                       },
                       title: 'Order',
-                      icon: Assets.svgsHome,
+                      icon: Assets.svgsShopping,
                       isActive: controller.dashPage == 2 ? true : false,
                     ),
                     BottomNavigationItemWidget(

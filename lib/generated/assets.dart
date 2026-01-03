@@ -202,6 +202,10 @@ class Assets {
   /// assets/svgs/Security-Lock.svg
   static const String svgsSecurityLock = "assets/svgs/Security-Lock.svg";
 
+  /// Assets for svgsShopping
+  /// assets/svgs/shopping.svg
+  static const String svgsShopping = "assets/svgs/shopping.svg";
+
   /// Assets for svgsShoppingCart
   /// assets/svgs/shopping-cart.svg
   static const String svgsShoppingCart = "assets/svgs/shopping-cart.svg";

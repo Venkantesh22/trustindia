@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:lekra/controllers/subscription_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/screens/subscription_plan/subscription_history/subscription_history_details/subscription_history_details_screen.dart';
 import 'package:lekra/views/screens/subscription_plan/subscription_history/subscription_history_screen/components/subscription_history_widget.dart';
@@ -14,6 +16,14 @@ class SubscriptionHistoryScreen extends StatefulWidget {
 
 class _SubscriptionHistoryScreenState extends State<SubscriptionHistoryScreen> {
   @override
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<SubscriptionController>().fetchSubscriptionHistory();
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar2(
