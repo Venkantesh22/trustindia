@@ -16,6 +16,7 @@ class DateFormatters {
 
   DateFormat dM2 = DateFormat('dd MMM');
   DateFormat dMyDash = DateFormat('dd-MM-yyyy');
+  DateFormat dMyDash2 = DateFormat('dd/MM/yyyy');
   DateFormat dMonthYear = DateFormat('dd MMMM yyyy');
   DateFormat dateTime = DateFormat('dd MMM yyyy, hh:mm a');
   DateFormat dayDMY = DateFormat('EEE,  dd MMM yyyy');

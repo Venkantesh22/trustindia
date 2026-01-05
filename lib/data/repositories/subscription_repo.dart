@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:lekra/data/api/api_client.dart';
 import 'package:lekra/services/constants.dart';
 
@@ -26,5 +25,5 @@ class SubscriptionRepo {
           data);
 
   Future<Response> fetchSubscriptionHistory() async => await apiClient.getData(
-      AppConstants.getSubscriptionCheckout, "fetchSubscriptionHistory");
+      AppConstants.getSubscriptionHistory, "fetchSubscriptionHistory");
 }

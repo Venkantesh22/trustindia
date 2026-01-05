@@ -24,6 +24,7 @@ const Color greyNumberBg = Color(0xFF8B8A89);
 const Color greyAccountText = Color(0xFFABABAB);
 const Color greyMember = Color(0xFF787878);
 Color greyText = const Color(0xFF5C5B5B);
+Color greyExpired = const Color(0xFF958B8B);
 const Color whiteBg2 = Color(0xFFFAFAFA);
 
 const Color black = Colors.black;

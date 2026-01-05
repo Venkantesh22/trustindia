@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:lekra/data/models/subscription/subscription_history_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/subscription_plan/subscription_history/subscription_history_screen/components/subscription_status_container.dart';
 
 class SubscriptionHistoryWidget extends StatelessWidget {
-  const SubscriptionHistoryWidget({super.key});
+  final SubscriptionHistoryModel subscriptionHistoryModel;
+  const SubscriptionHistoryWidget({
+    super.key,
+    required this.subscriptionHistoryModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +27,14 @@ class SubscriptionHistoryWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Basic Membership",
+                subscriptionHistoryModel.planName ?? "",
                 style: Helper(context).textTheme.bodyLarge?.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
               ),
               Text(
-                "₹199",
+                subscriptionHistoryModel.discountPriceFormat,
                 style: Helper(context).textTheme.bodyLarge?.copyWith(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -43,19 +48,21 @@ class SubscriptionHistoryWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "29/11/2025",
+                  subscriptionHistoryModel.startDateFormat,
                   style: Helper(context).textTheme.bodyLarge?.copyWith(
                         fontSize: 12,
                         color: greyMember,
                         fontWeight: FontWeight.w400,
                       ),
                 ),
-                SubscriptionStatusContainer()
+                SubscriptionStatusContainer(
+                  isActive: subscriptionHistoryModel.isActive,
+                )
               ],
             ),
           ),
           Text(
-            "Basic Membership for 29/11/2025-29/12/2025",
+            "Basic Membership for ${subscriptionHistoryModel.startDateFormat}-${subscriptionHistoryModel.endDateFormat}",
             style: Helper(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 12,
                   color: greyAccountText,

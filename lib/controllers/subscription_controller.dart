@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/data/models/response/response_model.dart';
+import 'package:lekra/data/models/subscription/subscription_history_model.dart';
 import 'package:lekra/data/models/subscription_cate_model.dart';
 import 'package:lekra/data/models/subscription_model.dart';
 import 'package:lekra/data/repositories/subscription_repo.dart';
@@ -169,6 +170,7 @@ class SubscriptionController extends GetxController implements GetxService {
     return responseModel;
   }
 
+  List<SubscriptionHistoryModel> subscriptionHistoryModelList = [];
   Future<ResponseModel> fetchSubscriptionHistory() async {
     log('-----------  fetchSubscriptionHistory() -------------');
     ResponseModel responseModel;
@@ -180,9 +182,10 @@ class SubscriptionController extends GetxController implements GetxService {
 
       if (response.statusCode == 200 &&
           response.body['status'] == true &&
-          response.body['data'] is Map) {
-        selectSubscription = SubscriptionModel.fromJson(response.body['data']);
-
+          response.body['data'] is List) {
+        subscriptionHistoryModelList = (response.body['data'] as List)
+            .map((e) => SubscriptionHistoryModel.fromJson(e))
+            .toList();
         responseModel = ResponseModel(
             true, response.body['message'] ?? "fetchSubscriptionHistory");
       } else {

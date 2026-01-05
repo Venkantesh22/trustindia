@@ -8,6 +8,7 @@ import 'package:lekra/views/screens/address/screen/address_screen.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
 import 'package:lekra/views/screens/dashboard/profile_edit/profile_edit_screen.dart';
 import 'package:lekra/views/screens/rewards/screen/reward_history_screen/reward_history_screen.dart';
+import 'package:lekra/views/screens/rewards/screen/rewards_screen/rewards_screen.dart';
 import 'package:lekra/views/screens/subscription_plan/subscription_category/subscription_category_screen.dart';
 
 class RowOfAccount extends StatelessWidget {
@@ -108,7 +109,7 @@ List<RowOfAccountModel> rowOfAccountModelList = [
     subTitle: "Gain your exclusive rewards",
     icon: Assets.svgsReward,
     onTap: (context) {
-      navigate(context: context, page: const RewardHistoryScreen());
+      navigate(context: context, page: const RewardsScreen());
     },
   ),
   RowOfAccountModel(

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/subscription_controller.dart';
+import 'package:lekra/data/models/subscription/subscription_history_model.dart';
 import 'package:lekra/services/constants.dart';
+import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/subscription_plan/subscription_history/subscription_history_details/subscription_history_details_screen.dart';
 import 'package:lekra/views/screens/subscription_plan/subscription_history/subscription_history_screen/components/subscription_history_widget.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
@@ -29,24 +31,43 @@ class _SubscriptionHistoryScreenState extends State<SubscriptionHistoryScreen> {
       appBar: const CustomAppBar2(
         title: "Subscription Hisory",
       ),
-      body: SingleChildScrollView(
-        padding: AppConstants.screenPadding,
-        child: ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return GestureDetector(
+      body:
+          GetBuilder<SubscriptionController>(builder: (subscriptionController) {
+        return SingleChildScrollView(
+          padding: AppConstants.screenPadding,
+          child: ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final subscriptionHistoryModel =
+                    subscriptionController.isLoading
+                        ? SubscriptionHistoryModel()
+                        : subscriptionController
+                            .subscriptionHistoryModelList[index];
+                return GestureDetector(
                   onTap: () {
+                    if (subscriptionController.isLoading) {
+                      return;
+                    }
                     navigate(
                       context: context,
                       page: const SubscriptionHistoryDetailsScreen(),
                     );
                   },
-                  child: const SubscriptionHistoryWidget());
-            },
-            separatorBuilder: (_, __) => const SizedBox(height: 18),
-            itemCount: 10),
-      ),
+                  child: CustomShimmer(
+                    isLoading: subscriptionController.isLoading,
+                    child: SubscriptionHistoryWidget(
+                      subscriptionHistoryModel: subscriptionHistoryModel,
+                    ),
+                  ),
+                );
+              },
+              separatorBuilder: (_, __) => const SizedBox(height: 18),
+              itemCount: subscriptionController.isLoading
+                  ? 4
+                  : subscriptionController.subscriptionHistoryModelList.length),
+        );
+      }),
     );
   }
 }
