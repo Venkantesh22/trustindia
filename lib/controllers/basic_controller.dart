@@ -261,7 +261,7 @@ class BasicController extends GetxController implements GetxService {
 
   String termsConditions = "";
   Future<ResponseModel> fetchTermsConditions() async {
-    log('----------- fetchPrivacyPolicy Called() -------------');
+    log('----------- fetchTermsConditions Called() -------------');
     ResponseModel responseModel;
     isLoading = true;
     update();

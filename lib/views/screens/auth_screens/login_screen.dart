@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
@@ -8,6 +9,8 @@ import 'package:lekra/services/route_helper.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/auth_screens/forget_password/enter_number_for_opt_screen.dart';
 import 'package:lekra/views/screens/auth_screens/signup_screen.dart';
+import 'package:lekra/views/screens/dashboard/account_screen/screen/privacy_center_screen.dart';
+import 'package:lekra/views/screens/dashboard/account_screen/screen/terms_conditions_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 
 import '../../../services/theme.dart';
@@ -214,17 +217,51 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         );
                       }),
-                      Row(
-                        children: [
-                          Checkbox(
-                            value: true,
-                            onChanged: (value) {},
-                          ),
-                          Text(
-                            "I agree the term and condition",
-                            style: Helper(context).textTheme.bodyMedium,
-                          ),
-                        ],
+                      SizedBox(height: 8),
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                  ),
+                          children: [
+                            const TextSpan(
+                              text:
+                                  "By continuing, you confirm that you are 18 years of age and you agree to the Trust India ",
+                            ),
+                            TextSpan(
+                              text: "Terms of Use",
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  navigate(
+                                      context: context,
+                                      page: const TermsAndConditionScreen());
+                                },
+                            ),
+                            const TextSpan(
+                              text: " and ",
+                            ),
+                            TextSpan(
+                              text: "Privacy Policy",
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  navigate(
+                                      context: context,
+                                      page: const PrivacyCenterScreen());
+                                },
+                            ),
+                          ],
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,

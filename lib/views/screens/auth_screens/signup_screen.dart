@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,8 @@ import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/route_helper.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
+import 'package:lekra/views/screens/dashboard/account_screen/screen/privacy_center_screen.dart';
+import 'package:lekra/views/screens/dashboard/account_screen/screen/terms_conditions_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 
 import '../../../services/theme.dart';
@@ -21,7 +24,6 @@ class SignUPScreen extends StatefulWidget {
 class _SignUPScreenState extends State<SignUPScreen> {
   bool showPassword = false;
   bool termsAndConditions = false;
-  bool privacyPolicy = false;
 
   final _formKey = GlobalKey<FormState>();
   signUp(AuthController authController) {
@@ -288,53 +290,100 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                   ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            children: [
-                              Checkbox(
-                                  value: termsAndConditions,
-                                  side: BorderSide(color: primaryColor),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      termsAndConditions = !termsAndConditions;
-                                    });
-                                  }),
-                              Text(
-                                "Terms & Conditions",
-                                style: Helper(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
+
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Checkbox(
+                                    value: termsAndConditions,
+                                    side: BorderSide(color: primaryColor),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        termsAndConditions =
+                                            !termsAndConditions;
+                                      });
+                                    }),
+                                Expanded(
+                                  child: RichText(
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                            color: Colors.grey,
+                                            fontSize: 12,
+                                          ),
+                                      children: [
+                                        const TextSpan(
+                                          text:
+                                              "By continuing, you confirm that you are 18 years of age and you agree to the Trust India ",
+                                        ),
+                                        TextSpan(
+                                          text: "Terms of Use",
+                                          style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              navigate(
+                                                  context: context,
+                                                  page:
+                                                      const TermsAndConditionScreen());
+                                            },
+                                        ),
+                                        const TextSpan(
+                                          text: " and ",
+                                        ),
+                                        TextSpan(
+                                          text: "Privacy Policy",
+                                          style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              navigate(
+                                                  context: context,
+                                                  page:
+                                                      const PrivacyCenterScreen());
+                                            },
+                                        ),
+                                      ],
                                     ),
-                              )
-                            ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          Row(
-                            children: [
-                              Checkbox(
-                                  value: privacyPolicy,
-                                  side: BorderSide(color: primaryColor),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      privacyPolicy = !privacyPolicy;
-                                    });
-                                  }),
-                              Text(
-                                "Privacy Policy",
-                                style: Helper(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                              )
-                            ],
-                          ),
+                          // Row(
+                          //   children: [
+                          //     Checkbox(
+                          //         value: privacyPolicy,
+                          //         side: BorderSide(color: primaryColor),
+                          //         onChanged: (value) {
+                          //           setState(() {
+                          //             privacyPolicy = !privacyPolicy;
+                          //           });
+                          //         }),
+                          //     Text(
+                          //       "Privacy Policy",
+                          //       style: Helper(context)
+                          //           .textTheme
+                          //           .bodyMedium
+                          //           ?.copyWith(
+                          //             fontSize: 16,
+                          //             fontWeight: FontWeight.w600,
+                          //           ),
+                          //     )
+                          //   ],
+                          // ),
                           GetBuilder<AuthController>(builder: (authController) {
                             return GestureDetector(
                               onTap: () {
@@ -342,7 +391,7 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                   return;
                                 }
 
-                                if (!termsAndConditions && !privacyPolicy) {
+                                if (!termsAndConditions) {
                                   return showToast(
                                       message:
                                           "Select Term & condition and Privacy Policy",
@@ -350,10 +399,6 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                 } else if (!termsAndConditions) {
                                   return showToast(
                                       message: "Select Term & condition",
-                                      toastType: ToastType.error);
-                                } else if (!privacyPolicy) {
-                                  return showToast(
-                                      message: "Select Privacy Policy",
                                       toastType: ToastType.error);
                                 }
 
