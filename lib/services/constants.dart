@@ -222,6 +222,10 @@ class AppConstants {
   static const String getSpinWheel = "api/spin/wheels";
   static const String postCreateScratchCard = "api/scratchcard/create";
 
+  //  Piracy center
+  static const String getPrivacyPolicy = "api/privacy-policy";
+  static const String getTermsConditions = "api/terms-conditions";
+
 // Padding
   static const double horizontalPadding = 16;
   static const double verticalPadding = 20;

@@ -29,6 +29,12 @@ class BasicRepo {
       await apiClient.getData(
           "${AppConstants.getAddressById}/$addressId", "fetchAddressById");
 
+  Future<Response> fetchPrivacyPolicy() async => await apiClient.getData(
+      AppConstants.getPrivacyPolicy, "fetchPrivacyPolicy");
+
+  Future<Response> fetchTermsConditions() async => await apiClient.getData(
+      AppConstants.getTermsConditions, "fetchTermsConditions");
+
   Future<bool> saveIsDemoShow(
     bool value,
   ) async {
