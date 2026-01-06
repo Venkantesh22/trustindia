@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lekra/data/models/subscription_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/screens/dashboard/account_screen/profile_screen.dart';
+import 'package:lekra/views/screens/dashboard/account_screen/account_screen.dart';
 
 class SubscriptionContainer extends StatelessWidget {
   const SubscriptionContainer({

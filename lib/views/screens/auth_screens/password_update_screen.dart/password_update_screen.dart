@@ -5,7 +5,7 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
-import 'package:lekra/views/screens/dashboard/account_screen/profile_screen.dart';
+import 'package:lekra/views/screens/dashboard/account_screen/account_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_back_button.dart';
 
 class PasswordUpdateScreen extends StatefulWidget {

@@ -4,7 +4,7 @@ import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
-import 'package:lekra/views/screens/dashboard/account_screen/profile_screen.dart';
+import 'package:lekra/views/screens/dashboard/account_screen/account_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/create_wallet_pin_screen/wallet_create_pin_confirm_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/widget/back_key_cell.dart';
 import 'package:lekra/views/screens/dashboard/wallet/widget/key_cell.dart';

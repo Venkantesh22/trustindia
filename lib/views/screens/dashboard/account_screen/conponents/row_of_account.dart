@@ -80,18 +80,11 @@ class RowOfAccountModel {
 }
 
 List<RowOfAccountModel> rowOfAccountModelList = [
-  RowOfAccountModel(
-    title: "Edit Profile",
-    subTitle: "Make changes to your account",
-    icon: Assets.imagesEditProfileIcon,
-    onTap: (context) {
-      navigate(context: context, page: const ProfileEditScreen());
-    },
-  ),
+ 
   RowOfAccountModel(
     title: "Saved Addresses",
     subTitle: "Manage your saved Address",
-    icon: Assets.svgsPersonAccount,
+    icon: Assets.svgsAddresssAccount,
     onTap: (context) {
       navigate(context: context, page: const AddressScreen());
     },

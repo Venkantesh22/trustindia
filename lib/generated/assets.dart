@@ -134,6 +134,10 @@ class Assets {
   /// assets/images/your_Won_Point.png
   static const String imagesYourWonPoint = "assets/images/your_Won_Point.png";
 
+  /// Assets for svgsAddresssAccount
+  /// assets/svgs/addresss_account.png
+  static const String svgsAddresssAccount = "assets/svgs/addresss_account.png";
+
   /// Assets for svgsBottonAccount
   /// assets/svgs/botton-account.svg
   static const String svgsBottonAccount = "assets/svgs/botton-account.svg";

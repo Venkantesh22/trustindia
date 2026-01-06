@@ -4,7 +4,7 @@ import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
-import 'package:lekra/views/screens/dashboard/account_screen/profile_screen.dart';
+import 'package:lekra/views/screens/dashboard/account_screen/account_screen.dart';
 import 'package:lekra/views/screens/dashboard/search_screen/search_screen.dart';
 import 'package:lekra/views/screens/widget/card_icon.dart';
 import 'package:lekra/views/screens/widget/not_icon.dart';

@@ -7,7 +7,7 @@ import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
-import 'package:lekra/views/screens/dashboard/account_screen/profile_screen.dart';
+import 'package:lekra/views/screens/dashboard/account_screen/account_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/widget/back_key_cell.dart';
 import 'package:lekra/views/screens/dashboard/wallet/widget/key_cell.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_back_button.dart';

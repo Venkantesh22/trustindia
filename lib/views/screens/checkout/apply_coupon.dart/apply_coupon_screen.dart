@@ -6,7 +6,7 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/checkout/checkout_screen/checkout_screen.dart';
-import 'package:lekra/views/screens/dashboard/account_screen/profile_screen.dart';
+import 'package:lekra/views/screens/dashboard/account_screen/account_screen.dart';
 import 'package:lekra/views/screens/widget/custom_back_button.dart';
 
 class ApplyCouponScreen extends StatefulWidget {

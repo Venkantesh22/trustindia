@@ -4,6 +4,7 @@ import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
+import 'package:lekra/views/screens/dashboard/profile_edit/profile_edit_screen.dart';
 
 class UserProfileContainer extends StatelessWidget {
   const UserProfileContainer({
@@ -64,21 +65,28 @@ class UserProfileContainer extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          "Edit Profile  ",
-                          style: Helper(context).textTheme.bodyMedium?.copyWith(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12,
-                              color: white),
-                        ),
-                        const Icon(
-                          Icons.arrow_forward_ios,
-                          color: white,
-                          size: 14,
-                        )
-                      ],
+                    GestureDetector(
+                      onTap: () => navigate(
+                          context: context, page: const ProfileEditScreen()),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Edit Profile  ",
+                            style: Helper(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                    color: white),
+                          ),
+                          const Icon(
+                            Icons.arrow_forward_ios,
+                            color: white,
+                            size: 14,
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 )
