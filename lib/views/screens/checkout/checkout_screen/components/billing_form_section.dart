@@ -174,7 +174,7 @@ class _BillingFormSectionState extends State<BillingFormSection> {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      "Billing Number",
+                      "Billing Mobile Number",
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium

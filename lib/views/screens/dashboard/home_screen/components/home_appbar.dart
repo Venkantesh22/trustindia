@@ -10,7 +10,6 @@ import 'package:lekra/views/screens/widget/card_icon.dart';
 import 'package:lekra/views/screens/widget/not_icon.dart';
 
 class HomeApp extends StatelessWidget implements PreferredSizeWidget {
-
   const HomeApp({
     super.key,
   });
@@ -38,24 +37,24 @@ class HomeApp extends StatelessWidget implements PreferredSizeWidget {
                   isProfile: true,
                   radius: 100,
                 ),
-                Positioned(
-                  bottom: 4,
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                    decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(40)),
-                    child: Text(
-                      "Premium",
-                      style: Helper(context).textTheme.bodyMedium?.copyWith(
-                            fontSize: 8,
-                            fontWeight: FontWeight.w600,
-                            color: white,
-                          ),
-                    ),
-                  ),
-                )
+                // Positioned(
+                //   bottom: 4,
+                //   child: Container(
+                //     padding:
+                //         const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                //     decoration: BoxDecoration(
+                //         color: Colors.amber,
+                //         borderRadius: BorderRadius.circular(40)),
+                //     child: Text(
+                //       "Premium",
+                //       style: Helper(context).textTheme.bodyMedium?.copyWith(
+                //             fontSize: 8,
+                //             fontWeight: FontWeight.w600,
+                //             color: white,
+                //           ),
+                //     ),
+                //   ),
+                // )
               ],
             ),
           ),
