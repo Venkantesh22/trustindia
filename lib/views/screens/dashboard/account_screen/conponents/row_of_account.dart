@@ -6,7 +6,6 @@ import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/address/screen/address_screen.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
-import 'package:lekra/views/screens/dashboard/profile_edit/profile_edit_screen.dart';
 import 'package:lekra/views/screens/rewards/screen/reward_history_screen/reward_history_screen.dart';
 import 'package:lekra/views/screens/rewards/screen/rewards_screen/rewards_screen.dart';
 import 'package:lekra/views/screens/subscription_plan/subscription_category/subscription_category_screen.dart';
@@ -80,7 +79,6 @@ class RowOfAccountModel {
 }
 
 List<RowOfAccountModel> rowOfAccountModelList = [
- 
   RowOfAccountModel(
     title: "Saved Addresses",
     subTitle: "Manage your saved Address",

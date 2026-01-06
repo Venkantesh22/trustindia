@@ -92,36 +92,40 @@ class UserProfileContainer extends StatelessWidget {
                 )
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Divider(
-                color: white,
-                radius: BorderRadius.circular(6),
-              ),
-            ),
-            Row(
+            Column(
               children: [
-                const CustomImage(
-                  path: Assets.imagesPremium,
-                  height: 24,
-                  width: 24,
-                  fit: BoxFit.cover,
-                ),
-                const SizedBox(width: 6),
-                Expanded(
-                  child: Text(
-                    "Premium",
-                    style: Helper(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                        color: yellow),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Divider(
+                    color: white,
+                    radius: BorderRadius.circular(6),
                   ),
                 ),
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  size: 16,
-                  color: yellow,
-                )
+                Row(
+                  children: [
+                    const CustomImage(
+                      path: Assets.imagesPremium,
+                      height: 24,
+                      width: 24,
+                      fit: BoxFit.cover,
+                    ),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        "Premium",
+                        style: Helper(context).textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                            color: yellow),
+                      ),
+                    ),
+                    const Icon(
+                      Icons.arrow_forward_ios,
+                      size: 16,
+                      color: yellow,
+                    )
+                  ],
+                ),
               ],
             )
           ],
