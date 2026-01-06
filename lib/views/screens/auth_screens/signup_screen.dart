@@ -411,7 +411,7 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                       ),
                                 ),
                                 Text(
-                                  "Sign Up",
+                                  "Login",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium

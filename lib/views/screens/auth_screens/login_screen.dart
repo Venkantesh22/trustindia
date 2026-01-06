@@ -204,8 +204,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         );
                       }),
-                      const SizedBox(
-                        height: 20,
+                      Row(
+                        children: [
+                          Checkbox(
+                            value: true,
+                            onChanged: (value) {},
+                          ),
+                          Text(
+                            "I agree the term and condition",
+                            style: Helper(context).textTheme.bodyMedium,
+                          ),
+                        ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,

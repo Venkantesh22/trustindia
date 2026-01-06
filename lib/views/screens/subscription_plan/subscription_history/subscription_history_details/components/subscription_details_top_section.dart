@@ -33,7 +33,9 @@ class SubscriptionDetailsTopSection extends StatelessWidget {
             children: [
               const RowOfSubscriptionDetails(
                 label: "Basic Membership",
-                value: SubscriptionStatusContainer(),
+                value: SubscriptionStatusContainer(
+                  isActive: true,
+                ),
               ),
               const SizedBox(height: 24),
               RowOfSubscriptionDetails(
