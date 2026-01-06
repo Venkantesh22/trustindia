@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lekra/controllers/dashboard_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/data/models/product_model.dart';
 import 'package:lekra/services/constants.dart';
+import 'package:flutter/services.dart' as SystemNavigator;
 import 'package:lekra/views/base/shimmer.dart';
+import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/order_screem/components/order_container.dart';
 import 'package:lekra/views/screens/order_screem/screen/order_details_screen.dart';
+import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({super.key});
@@ -23,70 +27,70 @@ class _OrderScreenState extends State<OrderScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        Get.find<DashBoardController>().dashPage = 0;
 
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        centerTitle: true,
-       
-        title: Text(
-          "Order",
-          style: Helper(context)
-              .textTheme
-              .bodyLarge
-              ?.copyWith(fontWeight: FontWeight.bold),
+        navigate(
+            context: context,
+            page: const DashboardScreen(),
+            isRemoveUntil: true);
+      },
+      child: Scaffold(
+        appBar: const CustomAppBar2(
+          title: "Order",
         ),
-      ),
-      body: SingleChildScrollView(
-        padding: AppConstants.screenPadding,
-        child: GetBuilder<OrderController>(builder: (orderController) {
-          if (orderController.orderProductList.isEmpty) {
-            return const Center(child: Text("No Order"));
-          }
-          return Column(
-            children: [
-              ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  final product = orderController.isLoading
-                      ? ProductModel()
-                      : orderController.orderProductList[index];
-                  return CustomShimmer(
-                    isLoading: orderController.isLoading,
-                    child: GestureDetector(
-                        onTap: () {
-                          if (orderController.isLoading) {
-                            showToast(
-                                message: "Please waiting...",
-                                toastType: ToastType.info);
-                            return;
-                          }
-                          orderController.updateSelectOrder(product.orderId);
-                          navigate(
-                              context: context,
-                              page: OrderDetailsScreen(
-                                productModel: product,
-                              ));
-                        },
-                        child: OrderContainer(productModel: product)),
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(
-                    height: 12,
-                  );
-                },
-                itemCount: orderController.isLoading
-                    ? 2
-                    : orderController.orderProductList.length,
-              )
-            ],
-          );
-        }),
+        body: SingleChildScrollView(
+          padding: AppConstants.screenPadding,
+          child: GetBuilder<OrderController>(builder: (orderController) {
+            if (orderController.orderProductList.isEmpty) {
+              return const Center(child: Text("No Order"));
+            }
+            return Column(
+              children: [
+                ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    final product = orderController.isLoading
+                        ? ProductModel()
+                        : orderController.orderProductList[index];
+                    return CustomShimmer(
+                      isLoading: orderController.isLoading,
+                      child: GestureDetector(
+                          onTap: () {
+                            if (orderController.isLoading) {
+                              showToast(
+                                  message: "Please waiting...",
+                                  toastType: ToastType.info);
+                              return;
+                            }
+                            orderController.updateSelectOrder(product.orderId);
+                            navigate(
+                                context: context,
+                                page: OrderDetailsScreen(
+                                  productModel: product,
+                                ));
+                          },
+                          child: OrderContainer(productModel: product)),
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(
+                      height: 12,
+                    );
+                  },
+                  itemCount: orderController.isLoading
+                      ? 2
+                      : orderController.orderProductList.length,
+                )
+              ],
+            );
+          }),
+        ),
       ),
     );
   }
