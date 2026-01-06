@@ -145,7 +145,7 @@ class AuthController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  Future<ResponseModel> userLogin() async {
+  Future<ResponseModel> userLogin({required bool isEmail}) async {
     log('----------- userLogin Called ----------');
 
     ResponseModel responseModel;
@@ -154,7 +154,8 @@ class AuthController extends GetxController implements GetxService {
 
     try {
       Map<String, dynamic> data = {
-        "email": emailController.text.trim(),
+        "email": isEmail ? emailController.text.trim() : "",
+        "mobile": isEmail ? "" : emailController.text.trim(),
         "password": passwordController.text.trim(),
       };
 

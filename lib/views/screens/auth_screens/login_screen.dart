@@ -23,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool showPassword = false;
 
   final _formKey = GlobalKey<FormState>();
+  bool isEmailLogin = false;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Email",
+                        "Mobile/Email",
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -83,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextFormField(
                         controller: authController.emailController,
                         decoration: CustomDecoration.inputDecoration(
-                          hint: "Enter your Email",
+                          hint: "Enter your Mobile no. / Email",
                           hintStyle:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     fontWeight: FontWeight.bold,
@@ -94,10 +95,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Please enter your email";
+                            return "Please enter your email or number";
                           }
-                          if (!GetUtils.isEmail(value)) {
-                            return "Please enter a valid email";
+
+                          bool isEmail = GetUtils.isEmail(value);
+
+                          bool isPhone = RegExp(r'^[0-9]{10}$').hasMatch(value);
+
+                          if (!isEmail && !isPhone) {
+                            return "Please enter a valid email or 10-digit mobile number";
                           }
                           return null;
                         },
@@ -158,7 +164,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               return;
                             }
                             if (_formKey.currentState?.validate() ?? false) {
-                              authController.userLogin().then(
+                              isEmailLogin = GetUtils.isEmail(
+                                  authController.emailController.text.trim());
+                              authController
+                                  .userLogin(isEmail: isEmailLogin)
+                                  .then(
                                 (value) {
                                   if (value.isSuccess) {
                                     Get.find<DashBoardController>().dashPage =
