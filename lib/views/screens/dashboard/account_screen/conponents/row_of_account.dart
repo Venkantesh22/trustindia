@@ -7,6 +7,7 @@ import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/address/screen/address_screen.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/screen/privacy_center_screen.dart';
+import 'package:lekra/views/screens/dashboard/account_screen/screen/terms_conditions_screen.dart';
 import 'package:lekra/views/screens/rewards/screen/reward_history_screen/reward_history_screen.dart';
 import 'package:lekra/views/screens/rewards/screen/rewards_screen/rewards_screen.dart';
 import 'package:lekra/views/screens/subscription_plan/subscription_category/subscription_category_screen.dart';
@@ -123,14 +124,14 @@ List<RowOfAccountModel> rowOfAccountModelList = [
     title: "Privacy Center",
     icon: Assets.svgsPrivacyCenter,
     onTap: (context) {
-      navigate(context: context, page: PrivacyCenterScreen());
+      navigate(context: context, page: const PrivacyCenterScreen());
     },
   ),
   RowOfAccountModel(
-    title: "Terms and Policies",
+    title: "Terms And Conditions",
     icon: Assets.svgsTermsPolicies,
     onTap: (context) {
-      // navigate(context: context, page: SubscriptionCategoryPlan());
+      navigate(context: context, page: const TermsAndConditionScreen());
     },
   ),
   RowOfAccountModel(

@@ -259,6 +259,43 @@ class BasicController extends GetxController implements GetxService {
     return responseModel;
   }
 
+  String termsConditions = "";
+  Future<ResponseModel> fetchTermsConditions() async {
+    log('----------- fetchPrivacyPolicy Called() -------------');
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+
+    try {
+      Response response = await basicRepo.fetchTermsConditions();
+
+      // ✅ Correct key is 'status'
+      if (response.statusCode == 200 &&
+          response.body['status'] == true &&
+          response.body['data'] is Map) {
+        privacyPolicy = response.body['data']['description'].toString();
+
+        responseModel = ResponseModel(
+          true,
+          response.body['message'] ?? "fetchTermsConditions fetched",
+        );
+      } else {
+        responseModel = ResponseModel(
+          false,
+          response.body['error'] ?? "Something went wrong ",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** fetchTermsConditions ****** $e",
+          name: "fetchTermsConditions");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
+
   int _demoPage = 0;
   int get demoPage => _demoPage;
 
