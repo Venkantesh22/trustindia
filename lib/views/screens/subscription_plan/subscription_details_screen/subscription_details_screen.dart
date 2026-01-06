@@ -5,7 +5,7 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/seleck_payment/seleck_payment_screen/select_payment_screen.dart';
-import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
+import 'package:lekra/views/screens/dashboard/account_screen/profile_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class SubscriptionDetailsScreen extends StatefulWidget {

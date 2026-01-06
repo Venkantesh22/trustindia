@@ -4,7 +4,7 @@ import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
-import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
+import 'package:lekra/views/screens/dashboard/account_screen/profile_screen.dart';
 import 'package:lekra/views/screens/dashboard/search_screen/search_screen.dart';
 import 'package:lekra/views/screens/widget/card_icon.dart';
 import 'package:lekra/views/screens/widget/not_icon.dart';
@@ -25,7 +25,7 @@ class HomeApp extends StatelessWidget implements PreferredSizeWidget {
       leading: GetBuilder<AuthController>(builder: (authController) {
         return GestureDetector(
           onTap: () {
-            navigate(context: context, page: const ProfileScreen());
+            navigate(context: context, page: const AccountScreen());
           },
           child: Padding(
             padding: const EdgeInsets.only(top: 12, left: 16),

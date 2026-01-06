@@ -8,7 +8,7 @@ import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/base/image_picker_sheet.dart';
-import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
+import 'package:lekra/views/screens/dashboard/account_screen/profile_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class ProfileEditScreen extends StatefulWidget {

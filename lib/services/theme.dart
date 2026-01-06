@@ -26,6 +26,7 @@ const Color greyMember = Color(0xFF787878);
 Color greyText = const Color(0xFF5C5B5B);
 Color greyExpired = const Color(0xFF958B8B);
 const Color whiteBg2 = Color(0xFFFAFAFA);
+const Color yellow = Color(0xFFFFDB4C);
 
 const Color black = Colors.black;
 const Color blackBillingText = Color(0xFF0F1417);

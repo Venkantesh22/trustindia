@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lekra/data/models/subscription_cate_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
+import 'package:lekra/views/screens/dashboard/account_screen/profile_screen.dart';
 
 class SubscriptionCategoryContainer extends StatelessWidget {
   final Function() onPressed;

@@ -7,7 +7,7 @@ import 'package:lekra/services/date_formatters_and_converters.dart';
 import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/checkout/checkout_screen/components/textbox_title.dart';
-import 'package:lekra/views/screens/dashboard/profile_screen/profile_screen.dart';
+import 'package:lekra/views/screens/dashboard/account_screen/profile_screen.dart';
 import 'package:lekra/views/screens/fund_request/fund_request_list_screen/fund_request_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 

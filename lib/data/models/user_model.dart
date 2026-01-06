@@ -10,6 +10,8 @@ class UserModel {
   double? currentWallet;
   final String? referralLink;
   final String? rewardPoint;
+  final int? membershipPlanId;
+  final String? membershipPlanName;
 
   UserModel({
     this.id,
@@ -23,6 +25,8 @@ class UserModel {
     this.currentWallet,
     this.referralLink,
     this.rewardPoint,
+    this.membershipPlanId,
+    this.membershipPlanName,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -45,6 +49,8 @@ class UserModel {
                 : double.tryParse(json["current_wallet"].toString())),
         rewardPoint: json["reward_point"],
         referralLink: json["referralLink"],
+        membershipPlanId: json["membership_plan_id"],
+        membershipPlanName: json["membership_plan_name"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,5 +65,7 @@ class UserModel {
         "current_wallet": currentWallet,
         "reward_point": rewardPoint,
         "referralLink": referralLink,
+        "membership_plan_id": membershipPlanId,
+        "membership_plan_name": membershipPlanName,
       };
 }

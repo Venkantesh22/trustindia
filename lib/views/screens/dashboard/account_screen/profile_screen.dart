@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/screens/dashboard/profile_screen/conponents/profile_row_title.dart';
-import 'package:lekra/views/screens/dashboard/profile_screen/conponents/row_of_account.dart';
+import 'package:lekra/views/screens/dashboard/account_screen/conponents/profile_row_title.dart';
+import 'package:lekra/views/screens/dashboard/account_screen/conponents/row_of_account.dart';
 import 'package:lekra/views/screens/widget/custom_back_button.dart';
 
 class ProfileButton extends StatelessWidget {
@@ -48,14 +48,14 @@ class ProfileButton extends StatelessWidget {
   }
 }
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class AccountScreen extends StatefulWidget {
+  const AccountScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<AccountScreen> createState() => _AccountScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ListView.separated(
               padding: EdgeInsets.zero,
               shrinkWrap: true,
-              physics: const AlwaysScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 final rowOfAccountModel = rowOfAccountModelList[index];
 

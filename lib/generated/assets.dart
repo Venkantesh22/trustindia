@@ -90,6 +90,10 @@ class Assets {
   /// assets/images/placeholder.jpg
   static const String imagesPlaceholder = "assets/images/placeholder.jpg";
 
+  /// Assets for imagesPremium
+  /// assets/images/premium.png
+  static const String imagesPremium = "assets/images/premium.png";
+
   /// Assets for imagesScratch
   /// assets/images/scratch.jpg
   static const String imagesScratch = "assets/images/scratch.jpg";
