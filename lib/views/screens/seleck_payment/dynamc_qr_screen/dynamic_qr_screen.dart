@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:lekra/controllers/dynamic_qr_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/screens/spin_wheel/spin_wheel_screen.dart';
+import 'package:lekra/views/screens/order_confirmed/order_confirmed_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -43,7 +43,7 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
                         "Congratulations! Your order has been placed successfully",
                     typeCheck: value.isSuccess);
 
-                navigate(context: context, page: const SpinWheelPage());
+                navigate(context: context, page: const OrderConfirmedScreen());
                 if (!mounted) return;
               } else {
                 showToast(message: val.message, typeCheck: val.isSuccess);

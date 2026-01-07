@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
-
 import 'package:lekra/controllers/dashboard_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/controllers/subscription_controller.dart';
@@ -16,7 +15,7 @@ import 'package:lekra/views/screens/dashboard/account_screen/account_screen.dart
 import 'package:lekra/views/screens/dashboard/wallet/create_wallet_pin_screen/wallet_create_pin_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/widget/back_key_cell.dart';
 import 'package:lekra/views/screens/dashboard/wallet/widget/key_cell.dart';
-import 'package:lekra/views/screens/spin_wheel/spin_wheel_screen.dart';
+import 'package:lekra/views/screens/order_confirmed/order_confirmed_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_back_button.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -118,7 +117,7 @@ class _WalletEnterPinScreenState extends State<WalletEnterPinScreen>
           navigate(
               context: context,
               type: PageTransitionType.rightToLeft,
-              page:  WalletCreatePinScreen(
+              page: WalletCreatePinScreen(
                 isForResetPin: widget.isForResetPin,
               ));
           showToast(message: value.message, typeCheck: value.isSuccess);
@@ -138,7 +137,7 @@ class _WalletEnterPinScreenState extends State<WalletEnterPinScreen>
                   "Congratulations! Your order has been placed successfully",
               typeCheck: value.isSuccess);
 
-          navigate(context: context, page: const SpinWheelPage());
+          navigate(context: context, page: const OrderConfirmedScreen());
         } else {
           _triggerShake();
           showToast(message: value.message, typeCheck: value.isSuccess);
