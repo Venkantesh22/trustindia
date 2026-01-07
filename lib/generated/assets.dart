@@ -30,6 +30,10 @@ class Assets {
   /// assets/images/congratulations-apply-coupon.png
   static const String imagesCongratulationsApplyCoupon = "assets/images/congratulations-apply-coupon.png";
 
+  /// Assets for imagesCureentBenefit
+  /// assets/images/cureent-benefit.png
+  static const String imagesCureentBenefit = "assets/images/cureent-benefit.png";
+
   /// Assets for imagesDelivery
   /// assets/images/delivery.png
   static const String imagesDelivery = "assets/images/delivery.png";
@@ -58,9 +62,17 @@ class Assets {
   /// assets/images/fast-demo.png
   static const String imagesFastDemo = "assets/images/fast-demo.png";
 
+  /// Assets for imagesGiftPremium
+  /// assets/images/gift-premium.png
+  static const String imagesGiftPremium = "assets/images/gift-premium.png";
+
   /// Assets for imagesGooglePay
   /// assets/images/google-pay.png
   static const String imagesGooglePay = "assets/images/google-pay.png";
+
+  /// Assets for imagesGrowPremium
+  /// assets/images/grow-premium.png
+  static const String imagesGrowPremium = "assets/images/grow-premium.png";
 
   /// Assets for imagesHomeDemo
   /// assets/images/home-demo.png
@@ -221,6 +233,10 @@ class Assets {
   /// Assets for svgsShoppingCart
   /// assets/svgs/shopping-cart.svg
   static const String svgsShoppingCart = "assets/svgs/shopping-cart.svg";
+
+  /// Assets for svgsStar
+  /// assets/svgs/star.svg
+  static const String svgsStar = "assets/svgs/star.svg";
 
   /// Assets for svgsTermsPolicies
   /// assets/svgs/terms-policies.png

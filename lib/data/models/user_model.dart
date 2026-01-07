@@ -1,3 +1,5 @@
+import 'package:lekra/data/models/subscription/subscription_history_model.dart';
+
 class UserModel {
   int? id;
   String? name;
@@ -10,8 +12,7 @@ class UserModel {
   double? currentWallet;
   final String? referralLink;
   final String? rewardPoint;
-  final int? membershipPlanId;
-  final String? membershipPlanName;
+  final SubscriptionHistoryModel? subscription;
 
   UserModel({
     this.id,
@@ -25,8 +26,7 @@ class UserModel {
     this.currentWallet,
     this.referralLink,
     this.rewardPoint,
-    this.membershipPlanId,
-    this.membershipPlanName,
+    this.subscription,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -49,8 +49,9 @@ class UserModel {
                 : double.tryParse(json["current_wallet"].toString())),
         rewardPoint: json["reward_point"],
         referralLink: json["referralLink"],
-        membershipPlanId: json["membership_plan_id"],
-        membershipPlanName: json["membership_plan_name"],
+        subscription: json["subscription"] == null
+            ? null
+            : SubscriptionHistoryModel.fromJson(json["subscription"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -65,7 +66,6 @@ class UserModel {
         "current_wallet": currentWallet,
         "reward_point": rewardPoint,
         "referralLink": referralLink,
-        "membership_plan_id": membershipPlanId,
-        "membership_plan_name": membershipPlanName,
+        "subscription": subscription?.toJson(),
       };
 }

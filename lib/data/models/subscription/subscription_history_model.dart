@@ -55,7 +55,7 @@ class SubscriptionHistoryModel {
         "used_days": usedDays,
         "remaining_days": remainingDays,
       };
-  bool get isActive => status == 1 ? true : false;
+  bool get isActive => remainingDays != 0;
 
   String get priceFormat =>
       PriceConverter.convertToNumberFormat(double.tryParse(price ?? "") ?? 0.0);

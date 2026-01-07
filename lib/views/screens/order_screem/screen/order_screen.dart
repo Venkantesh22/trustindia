@@ -4,7 +4,6 @@ import 'package:lekra/controllers/dashboard_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/data/models/product_model.dart';
 import 'package:lekra/services/constants.dart';
-import 'package:flutter/services.dart' as SystemNavigator;
 import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/order_screem/components/order_container.dart';

@@ -8,7 +8,6 @@ class SubscriptionModel {
   final String? price;
   final String? timePeriods;
   final String? discountPrice;
-
   final List<String>? features;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -61,4 +60,7 @@ class SubscriptionModel {
 
   String get discountPriceFormat => PriceConverter.convertToNumberFormat(
       double.parse(discountPrice ?? "0.0"));
+
+
+
 }
