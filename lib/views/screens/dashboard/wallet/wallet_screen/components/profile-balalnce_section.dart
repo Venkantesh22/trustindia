@@ -29,7 +29,7 @@ class ProfileBalanceSection extends StatelessWidget {
               height: 12,
             ),
             Text(
-              capitalize(authController.userModel?.name),
+              capitalize(authController.userModel?.fullName ?? ""),
               style:
                   Helper(context).textTheme.titleSmall?.copyWith(fontSize: 14),
             ),

@@ -75,7 +75,7 @@ class _SpinWheelPageState extends State<SpinWheelPage> {
             context: context, page: const OrderScreen(), isRemoveUntil: true);
       },
       child: Scaffold(
-        appBar: const CustomAppbarBackButton(),
+        appBar: CustomAppbarBackButton(),
         body: GetBuilder<RewardsController>(
           builder: (c) {
             final raw = c.spinWheelList;

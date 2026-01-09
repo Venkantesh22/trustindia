@@ -31,7 +31,8 @@ class _BillingFormSectionState extends State<BillingFormSection> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final orderController = Get.find<OrderController>();
       final authController = Get.find<AuthController>();
-      orderController.billingName.text = authController.userModel?.name ?? "";
+      orderController.billingName.text =
+          authController.userModel?.fullName ?? "";
       orderController.billingEmail.text = authController.userModel?.email ?? "";
       orderController.billingNumber.text =
           authController.userModel?.mobile ?? "";

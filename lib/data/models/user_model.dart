@@ -2,7 +2,10 @@ import 'package:lekra/data/models/subscription/subscription_history_model.dart';
 
 class UserModel {
   int? id;
-  String? name;
+  final String? firstName;
+  final String? lastName;
+  final dynamic gender;
+  final int? isVerified;
   String? image;
   String? email;
   String? mobile;
@@ -11,12 +14,15 @@ class UserModel {
   DateTime? updatedAt;
   double? currentWallet;
   final String? referralLink;
-  final String? rewardPoint;
+  final int? rewardPoint;
   final SubscriptionHistoryModel? subscription;
 
   UserModel({
     this.id,
-    this.name,
+    this.firstName,
+    this.lastName,
+    this.gender,
+    this.isVerified,
     this.image,
     this.email,
     this.mobile,
@@ -31,7 +37,10 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json["id"],
-        name: json["name"],
+        firstName: json["first_name"].toString(),
+        lastName: json["last_name"].toString(),
+        gender: json["gender"],
+        isVerified: json["is_verified"],
         image: json["image"],
         email: json["email"],
         mobile: json["mobile"],
@@ -47,7 +56,9 @@ class UserModel {
             : (json["current_wallet"] is num
                 ? (json["current_wallet"] as num).toDouble()
                 : double.tryParse(json["current_wallet"].toString())),
-        rewardPoint: json["reward_point"],
+        rewardPoint: json["reward_point"] is String
+            ? int.tryParse(json["reward_point"])
+            : json["reward_point"],
         referralLink: json["referralLink"],
         subscription: json["subscription"] == null
             ? null
@@ -56,7 +67,10 @@ class UserModel {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "name": name,
+        "first_name": firstName,
+        "last_name": lastName,
+        "gender": gender,
+        "is_verified": isVerified,
         "image": image,
         "email": email,
         "mobile": mobile,
@@ -68,4 +82,7 @@ class UserModel {
         "referralLink": referralLink,
         "subscription": subscription?.toJson(),
       };
+
+  String get fullName => "$firstName $lastName";
+  bool get isPhoneVerified => isVerified == 1;
 }

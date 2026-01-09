@@ -158,7 +158,7 @@ class _WalletEnterPinScreenState extends State<WalletEnterPinScreen>
 
         return Scaffold(
           backgroundColor: Colors.white,
-          appBar: const CustomAppbarBackButton(),
+          appBar:  CustomAppbarBackButton(),
           body: SafeArea(
             child: Padding(
               padding: AppConstants.screenPadding,

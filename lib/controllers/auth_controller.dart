@@ -348,8 +348,8 @@ class AuthController extends GetxController implements GetxService {
         responseModel =
             ResponseModel(true, response.body['message'] ?? "fetchUserProfile");
         userModel = UserModel.fromJson(response.body["data"]);
-        lastNameController.text = userModel?.name ?? "";
-        firstNameController.text = userModel?.name ?? "";
+        lastNameController.text = userModel?.lastName ?? "";
+        firstNameController.text = userModel?.firstName ?? "";
         emailController.text = userModel?.email ?? "";
         numberController.text = userModel?.mobile ?? "";
       } else {

@@ -22,7 +22,7 @@ class _PasswordUpdateScreenState extends State<PasswordUpdateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppbarBackButton(),
+      appBar:  CustomAppbarBackButton(),
       bottomNavigationBar: SafeArea(
         child: GetBuilder<AuthController>(builder: (authController) {
           return Padding(

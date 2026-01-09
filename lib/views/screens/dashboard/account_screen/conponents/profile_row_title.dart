@@ -41,6 +41,7 @@ class UserProfileContainer extends StatelessWidget {
                         height: 64,
                         width: 64,
                         radius: 100,
+                        isProfile: true,
                         path: authController.userModel?.image ?? ""),
                   ),
                   const SizedBox(width: 11),
@@ -48,7 +49,7 @@ class UserProfileContainer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        authController.userModel?.name ?? "",
+                        authController.userModel?.fullName ?? "qqq",
                         style: Helper(context).textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.w700,
                             fontSize: 14,

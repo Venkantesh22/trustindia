@@ -83,7 +83,7 @@ class _WalletCreatePinComfirmScreenState
         final isComplete = walletController.createWalletPinConfirm.length == 6;
         return Scaffold(
           backgroundColor: Colors.white,
-          appBar: const CustomAppbarBackButton(),
+          appBar:  CustomAppbarBackButton(),
           body: SafeArea(
             child: Padding(
               padding: AppConstants.screenPadding,

@@ -28,7 +28,7 @@ class RewardHistoryProfileSection extends StatelessWidget {
               height: 12,
             ),
             Text(
-              capitalize(authController.userModel?.name),
+              capitalize(authController.userModel?.firstName ?? ""),
               style:
                   Helper(context).textTheme.titleSmall?.copyWith(fontSize: 20),
             ),

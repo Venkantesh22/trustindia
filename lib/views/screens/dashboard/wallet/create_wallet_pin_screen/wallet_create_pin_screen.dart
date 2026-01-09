@@ -35,7 +35,7 @@ class WalletCreatePinScreen extends StatelessWidget {
 
         return Scaffold(
           backgroundColor: Colors.white,
-          appBar: const CustomAppbarBackButton(),
+          appBar:  CustomAppbarBackButton(),
           body: SafeArea(
             child: Padding(
               padding: AppConstants.screenPadding,

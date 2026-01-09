@@ -87,7 +87,7 @@ class _ReferralScreenState extends State<ReferralScreen> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      capitalize(authController.userModel?.name ?? ""),
+                      capitalize(authController.userModel?.fullName ?? ""),
                       style: Helper(context)
                           .textTheme
                           .bodyLarge
