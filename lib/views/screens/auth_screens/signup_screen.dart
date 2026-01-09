@@ -7,10 +7,10 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/route_helper.dart';
 import 'package:lekra/views/base/custom_image.dart';
+import 'package:lekra/views/screens/auth_screens/forget_password/opt_verification_screen.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/screen/privacy_center_screen.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/screen/terms_conditions_screen.dart';
-import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 
 import '../../../services/theme.dart';
 
@@ -32,7 +32,10 @@ class _SignUPScreenState extends State<SignUPScreen> {
         if (value.isSuccess) {
           Navigator.of(context).push(
             getCustomRoute(
-              child: const DashboardScreen(),
+              child: OTPVerification(
+                phone: authController.numberController.text.trim(),
+                isVerificationPhone: true,
+              ),
             ),
           );
           showToast(message: value.message, typeCheck: value.isSuccess);
@@ -93,39 +96,96 @@ class _SignUPScreenState extends State<SignUPScreen> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Name",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          TextFormField(
-                            controller: authController.nameController,
-                            decoration: CustomDecoration.inputDecoration(
-                              hint: "Enter your name",
-                              hintStyle: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: grey,
-                                  ),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Please enter your name";
-                              }
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "First Name",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                    ),
+                                    const SizedBox(
+                                      height: 6,
+                                    ),
+                                    TextFormField(
+                                      controller:
+                                          authController.firstNameController,
+                                      decoration:
+                                          CustomDecoration.inputDecoration(
+                                        hint: "Enter your first name",
+                                        hintStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                              color: grey,
+                                            ),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return "Please enter your first name";
+                                        }
 
-                              return null;
-                            },
+                                        return null;
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Last Name",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                    ),
+                                    const SizedBox(
+                                      height: 6,
+                                    ),
+                                    TextFormField(
+                                      controller:
+                                          authController.lastNameController,
+                                      decoration:
+                                          CustomDecoration.inputDecoration(
+                                        hint: "Enter your last name",
+                                        hintStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                              color: grey,
+                                            ),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return "Please enter your last name";
+                                        }
+
+                                        return null;
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                           const SizedBox(
                             height: 20,
@@ -290,7 +350,6 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                   ),
                             ),
                           ),
-
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             child: Row(
@@ -362,28 +421,6 @@ class _SignUPScreenState extends State<SignUPScreen> {
                               ],
                             ),
                           ),
-                          // Row(
-                          //   children: [
-                          //     Checkbox(
-                          //         value: privacyPolicy,
-                          //         side: BorderSide(color: primaryColor),
-                          //         onChanged: (value) {
-                          //           setState(() {
-                          //             privacyPolicy = !privacyPolicy;
-                          //           });
-                          //         }),
-                          //     Text(
-                          //       "Privacy Policy",
-                          //       style: Helper(context)
-                          //           .textTheme
-                          //           .bodyMedium
-                          //           ?.copyWith(
-                          //             fontSize: 16,
-                          //             fontWeight: FontWeight.w600,
-                          //           ),
-                          //     )
-                          //   ],
-                          // ),
                           GetBuilder<AuthController>(builder: (authController) {
                             return GestureDetector(
                               onTap: () {

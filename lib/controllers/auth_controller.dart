@@ -19,7 +19,8 @@ class AuthController extends GetxController implements GetxService {
 
   bool get acceptTerms => _acceptTerms;
 
-  TextEditingController nameController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   TextEditingController numberController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -54,6 +55,78 @@ class AuthController extends GetxController implements GetxService {
     } catch (e) {
       log('ERROR AT generateOtp(): $e');
       responseModel = ResponseModel(false, "Error while generateOtp user $e");
+    }
+
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> generateEditOptSend({required String mobile}) async {
+    log('----------- generateEditOptSend Called ----------');
+
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+
+    try {
+      Map<String, dynamic> data = {
+        "mobile": mobile,
+      };
+
+      Response response = await authRepo.generateEditOptSend(
+        data: FormData(data),
+      );
+
+      log("Raw Response: ${response.body}");
+
+      if (response.body['status'] == true) {
+        responseModel = ResponseModel(
+            true, response.body['message'] ?? "generateEditOptSend updated");
+      } else {
+        responseModel = ResponseModel(false,
+            response.body['error'] ?? "Error while generateEditOptSend user");
+      }
+    } catch (e) {
+      log('ERROR AT generateEditOptSend(): $e');
+      responseModel =
+          ResponseModel(false, "Error while generateEditOptSend user $e");
+    }
+
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> generateResendOtp({required String mobile}) async {
+    log('----------- generateResendOtp Called ----------');
+
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+
+    try {
+      Map<String, dynamic> data = {
+        "mobile": mobile,
+      };
+
+      Response response = await authRepo.generateResendOtp(
+        data: FormData(data),
+      );
+
+      log("Raw Response: ${response.body}");
+
+      if (response.body['status'] == true) {
+        responseModel = ResponseModel(
+            true, response.body['message'] ?? "generateResendOtp updated");
+      } else {
+        responseModel = ResponseModel(false,
+            response.body['error'] ?? "Error while generateResendOtp user");
+      }
+    } catch (e) {
+      log('ERROR AT generateResendOtp(): $e');
+      responseModel =
+          ResponseModel(false, "Error while generateResendOtp user $e");
     }
 
     _isLoading = false;
@@ -107,7 +180,8 @@ class AuthController extends GetxController implements GetxService {
 
     try {
       Map<String, dynamic> data = {
-        "name": nameController.text.trim(),
+        "first_name": firstNameController.text.trim(),
+        "last_name": lastNameController.text.trim(),
         "email": emailController.text.trim(),
         "password": passwordController.text.trim(),
         "referral_code": referralCodeController.text.trim(),
@@ -127,7 +201,8 @@ class AuthController extends GetxController implements GetxService {
 
         responseModel =
             ResponseModel(true, response.body['message'] ?? "Profile updated");
-        nameController.clear();
+        firstNameController.clear();
+        lastNameController.clear();
         emailController.clear();
         passwordController.clear();
         referralCodeController.clear();
@@ -190,6 +265,42 @@ class AuthController extends GetxController implements GetxService {
     return responseModel;
   }
 
+  Future<ResponseModel> registerVerifyOtp({required String otp}) async {
+    log('----------- registerVerifyOtp Called ----------');
+
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+
+    try {
+      Map<String, dynamic> data = {
+        "otp": otp,
+        "mobile": numberController.text.trim(),
+      };
+
+      Response response =
+          await authRepo.registerVerifyOtp(data: FormData(data));
+
+      if (response.body['status'] == true || response.body['success'] == true) {
+        if (response.body['token'] != null) {
+          authRepo.saveUserToken(response.body['token']);
+        }
+        responseModel = ResponseModel(
+            true, response.body['message'] ?? "registerVerifyOtp successful");
+      } else {
+        responseModel = ResponseModel(
+            false, response.body['message'] ?? "Error while registerVerifyOtp");
+      }
+    } catch (e) {
+      log('ERROR AT registerVerifyOtp(): $e');
+      responseModel = ResponseModel(false, "Error while registerVerifyOtp  $e");
+    }
+
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
   Future<ResponseModel> logout() async {
     log('----------- logout Called ----------');
 
@@ -202,7 +313,8 @@ class AuthController extends GetxController implements GetxService {
       if (response.statusCode == 200) {
         responseModel =
             ResponseModel(true, response.body['message'] ?? "logout ");
-        nameController.clear();
+        firstNameController.clear();
+        lastNameController.clear();
         emailController.clear();
         passwordController.clear();
         referralCodeController.clear();
@@ -236,7 +348,8 @@ class AuthController extends GetxController implements GetxService {
         responseModel =
             ResponseModel(true, response.body['message'] ?? "fetchUserProfile");
         userModel = UserModel.fromJson(response.body["data"]);
-        nameController.text = userModel?.name ?? "";
+        lastNameController.text = userModel?.name ?? "";
+        firstNameController.text = userModel?.name ?? "";
         emailController.text = userModel?.email ?? "";
         numberController.text = userModel?.mobile ?? "";
       } else {
@@ -271,7 +384,7 @@ class AuthController extends GetxController implements GetxService {
 
     try {
       Map<String, dynamic> data = {
-        "name": nameController.text,
+        // "name": nameController.text,
         "mobile": numberController.text,
       };
       if (profileImage != null) {

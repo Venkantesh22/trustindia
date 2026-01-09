@@ -92,17 +92,17 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      CustomProfileTextfeild(
-                        hint: "Enter your name",
-                        title: "Name",
-                        controller: authController.nameController,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Name is required";
-                          }
-                          return null;
-                        },
-                      ),
+                      // CustomProfileTextfeild(
+                      //   hint: "Enter your name",
+                      //   title: "Name",
+                      //   controller: authController.nameController,
+                      //   validator: (value) {
+                      //     if (value == null || value.isEmpty) {
+                      //       return "Name is required";
+                      //     }
+                      //     return null;
+                      //   },
+                      // ),
                       const SizedBox(height: 12),
                       CustomProfileTextfeild(
                         hint: "Enter your Mobile number",

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/views/screens/auth_screens/password_update_screen.dart/password_update_screen.dart';
+import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/create_wallet_pin_screen/wallet_create_pin_screen.dart';
 import 'package:pinput/pinput.dart';
 
@@ -15,8 +16,13 @@ import '../../../base/common_button.dart';
 class OTPVerification extends StatefulWidget {
   final String phone;
   final bool isForResetPin;
-  const OTPVerification(
-      {super.key, required this.phone, this.isForResetPin = false});
+  final bool isVerificationPhone;
+  const OTPVerification({
+    super.key,
+    required this.phone,
+    this.isForResetPin = false,
+    this.isVerificationPhone = false,
+  });
 
   @override
   State<OTPVerification> createState() => _OTPVerificationState();
@@ -41,7 +47,7 @@ class _OTPVerificationState extends State<OTPVerification> {
     super.dispose();
   }
 
-  static const _otpWindow = Duration(minutes: 1);
+  static const _otpWindow = Duration(minutes: 5);
   Timer? _timer;
   int _secondsLeft = _otpWindow.inSeconds;
   bool reSendCode = false; // true => user can tap to resend
@@ -81,10 +87,14 @@ class _OTPVerificationState extends State<OTPVerification> {
     setState(() => _resending = true);
 
     try {
-      // Call your resend endpoint
-      await Get.find<AuthController>().generateOtp(mobile: widget.phone);
+      if (widget.isVerificationPhone) {
+        await Get.find<AuthController>()
+            .generateResendOtp(mobile: widget.phone);
+      } else {
+        await Get.find<AuthController>().generateOtp(mobile: widget.phone);
+      }
 
-      // Restart cooldown
+      // Restart  cooldown
       _startTimer();
     } catch (e) {
       // Optionally show error toast
@@ -92,6 +102,44 @@ class _OTPVerificationState extends State<OTPVerification> {
       // Keep reSendCode = true so user can try again
     } finally {
       if (mounted) setState(() => _resending = false);
+    }
+  }
+
+  Future<void> onTap() async {
+    if (_pinController.text.length != 6) {
+      showToast(message: 'Invalid Otp', toastType: ToastType.error);
+      return;
+    }
+    if (widget.isVerificationPhone) {
+      Get.find<AuthController>()
+          .registerVerifyOtp(otp: _pinController.text.trim())
+          .then((value) {
+        if (value.isSuccess) {
+          showToast(message: value.message, typeCheck: value.isSuccess);
+          navigate(context: context, page: const DashboardScreen());
+        } else {
+          showToast(message: value.message, typeCheck: value.isSuccess);
+        }
+      });
+      return;
+    } else {
+      Get.find<AuthController>()
+          .postVerifyOTP(mobile: widget.phone, otp: _pinController.text)
+          .then((value) {
+        if (value.isSuccess) {
+          showToast(message: value.message, typeCheck: value.isSuccess);
+
+          widget.isForResetPin
+              ? navigate(
+                  context: context,
+                  page: const WalletCreatePinScreen(
+                    isForResetPin: true,
+                  ))
+              : navigate(context: context, page: const PasswordUpdateScreen());
+        } else {
+          showToast(message: value.message, typeCheck: value.isSuccess);
+        }
+      });
     }
   }
 
@@ -239,35 +287,7 @@ class _OTPVerificationState extends State<OTPVerification> {
               radius: 6,
               elevation: 0,
               color: primaryColor,
-              onTap: () {
-                if (_pinController.text.length != 6) {
-                  showToast(message: 'Invalid Otp', toastType: ToastType.error);
-                  return;
-                }
-                Get.find<AuthController>()
-                    .postVerifyOTP(
-                        mobile: widget.phone, otp: _pinController.text)
-                    .then((value) {
-                  if (value.isSuccess) {
-                    showToast(
-                        message: value.message, typeCheck: value.isSuccess);
-
-                        widget.isForResetPin ? 
-                    navigate(
-                        context: context,
-                        page: const WalletCreatePinScreen(
-                          isForResetPin: true,
-                        )) : navigate(
-                        context: context,
-                        page: const PasswordUpdateScreen(
-
-                        )) ;
-                  } else {
-                    showToast(
-                        message: value.message, typeCheck: value.isSuccess);
-                  }
-                });
-              },
+              onTap: onTap,
               child: Text(
                 'Next',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(

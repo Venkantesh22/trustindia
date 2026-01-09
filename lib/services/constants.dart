@@ -151,8 +151,13 @@ class AppConstants {
   static const String loginUri = 'api/login-post';
   static const String logoutUri = 'api/logout';
   static const String profileUri = 'api/profile';
-  static const String updateProfile = 'api/edit-profile';
   static const String postUpdatePassword = 'api/update-password';
+  static const String postRegisterVerifyOtp = 'api/register-verify-otp';
+  static const String postResendVerifyOtp = 'api/resend-otp';
+
+//Edit Profile
+  static const String postEditOptSend = 'api/edit-otp-send';
+  static const String updateProfile = 'api/edit-profile';
 
   // Address
   static const String getAddress = 'api/get-address';
@@ -175,10 +180,8 @@ class AppConstants {
   static const String getWallet = "api/consumer/wallet";
   static const String postVerifyPin = "api/wallet/pin/verify";
   static const String postWalletPinRest = "api/wallet/pin/reset";
-  static const String getWalletTransactionByDate =
-      "api/wallet/transactions";
-  static const String getWalletTransactionByAmount =
-      "api/wallet/transactions";
+  static const String getWalletTransactionByDate = "api/wallet/transactions";
+  static const String getWalletTransactionByAmount = "api/wallet/transactions";
 
   // Check out
   static const String postCheckOut = "api/checkout";

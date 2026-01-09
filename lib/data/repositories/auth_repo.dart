@@ -17,6 +17,18 @@ class AuthRepo {
   Future<Response> generateOtp({required FormData data}) async =>
       await apiClient.postData(AppConstants.generateOtp, "generateOtp", data);
 
+  Future<Response> generateEditOptSend({required FormData data}) async =>
+      await apiClient.postData(
+          AppConstants.postEditOptSend, "generateEditOptSend", data);
+
+  Future<Response> generateResendOtp({required FormData data}) async =>
+      await apiClient.postData(
+          AppConstants.postResendVerifyOtp, "generateResendOtp", data);
+
+  Future<Response> registerVerifyOtp({required FormData data}) async =>
+      await apiClient.postData(
+          AppConstants.postRegisterVerifyOtp, "registerVerifyOtp", data);
+
   Future<Response> postVerifyOTP({required FormData data}) async =>
       await apiClient.postData(
           AppConstants.postVerifyOTP, "postVerifyOTP", data);
