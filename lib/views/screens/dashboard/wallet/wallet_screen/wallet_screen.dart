@@ -41,18 +41,19 @@ class _WalletScreenState extends State<WalletScreen> {
           navigate(context: context, page: const WalletCreatePinScreen());
         }
       });
+      Get.find<WalletController>().walletSearchController.clear();
     });
     _scrollController.addListener(_onScroll);
   }
 
   void _onScroll() {
-    final walletController = Get.find<WalletController>();
-    if (_scrollController.position.pixels >=
-            _scrollController.position.maxScrollExtent - 300 &&
-        !walletController.fetchWalletTransactionState.isMoreLoading &&
-        walletController.fetchWalletTransactionState.canLoadMore) {
-      // trigger load more
-      walletController.fetchWalletTransaction(loadMore: true);
+    final controller = Get.find<WalletController>();
+    final state = controller.walletTxnState;
+
+    if (_scrollController.position.extentAfter < 300 &&
+        !state.isMoreLoading &&
+        state.canLoadMore) {
+      controller.fetchWalletTransaction(loadMore: true);
     }
   }
 
@@ -129,58 +130,69 @@ class _WalletScreenState extends State<WalletScreen> {
                               Helper(context).textTheme.titleSmall?.copyWith(),
                         ),
                         GetBuilder<WalletController>(
-                            builder: (walletController) {
-                          final isInitialLoading = walletController
-                              .fetchWalletTransactionState.isInitialLoading;
-                          final isMoreLoading = walletController
-                              .fetchWalletTransactionState.isMoreLoading;
-                          final items = walletController.transactionList;
+                          id: 'wallet_txn',
+                          builder: (walletController) {
+                            final state = walletController.walletTxnState;
+                            final items = walletController.transactionList;
 
-                          final showLoaderTile = isMoreLoading;
+                            // 1️⃣ FIRST LOAD → shimmer list
+                            if (state.isInitialLoading) {
+                              return ListView.separated(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: 4,
+                                itemBuilder: (_, __) {
+                                  return CustomShimmer(
+                                    isLoading: true,
+                                    child: TransactionsContainer(
+                                      transactionModel: TransactionModel(),
+                                    ),
+                                  );
+                                },
+                                separatorBuilder: (_, __) =>
+                                    const SizedBox(height: 12),
+                              );
+                            }
 
-                          final itemCount = isInitialLoading
-                              ? 4 // skeleton placeholders
-                              : items.length + (showLoaderTile ? 1 : 0);
+                            // 2️⃣ EMPTY STATE
+                            if (items.isEmpty) {
+                              return const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 40),
+                                child: Center(
+                                  child: Text(
+                                    "No transactions found",
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                ),
+                              );
+                            }
 
-                          return ListView.separated(
-                              physics: const NeverScrollableScrollPhysics(),
+                            // 3️⃣ DATA + PAGINATION
+                            return ListView.separated(
                               shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount:
+                                  items.length + (state.isMoreLoading ? 1 : 0),
                               itemBuilder: (context, index) {
-                                if (isInitialLoading) {
-                                  final transactionModel = TransactionModel();
-                                  return CustomShimmer(
-                                    isLoading: true,
-                                    child: TransactionsContainer(
-                                        transactionModel: transactionModel),
-                                  );
-                                }
-                                // if this is the loader tile (last tile)
-                                if (showLoaderTile && index == items.length) {
-                                  final transactionModel = TransactionModel();
-                                  return CustomShimmer(
-                                    isLoading: true,
-                                    child: TransactionsContainer(
-                                        transactionModel: transactionModel),
+                                // pagination loader (bottom)
+                                if (state.isMoreLoading &&
+                                    index == items.length) {
+                                  return const Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 16),
+                                    child: Center(
+                                        child: CircularProgressIndicator()),
                                   );
                                 }
 
-                                final transactionModel = walletController
-                                        .isLoading
-                                    ? TransactionModel()
-                                    : walletController.transactionList[index];
-                                return CustomShimmer(
-                                    isLoading: walletController.isLoading,
-                                    child: TransactionsContainer(
-                                      transactionModel: transactionModel,
-                                    ));
-                              },
-                              separatorBuilder: (context, index) {
-                                return const SizedBox(
-                                  height: 12,
+                                return TransactionsContainer(
+                                  transactionModel: items[index],
                                 );
                               },
-                              itemCount: itemCount);
-                        }),
+                              separatorBuilder: (_, __) =>
+                                  const SizedBox(height: 12),
+                            );
+                          },
+                        ),
                       ],
                     )
                   ],

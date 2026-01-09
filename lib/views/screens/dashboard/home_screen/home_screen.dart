@@ -57,11 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-    
-      appBar: HomeApp(
-        
-      ),
+      appBar: const HomeApp(),
       body: SingleChildScrollView(
         controller: _scrollController,
         padding: AppConstants.screenPadding,

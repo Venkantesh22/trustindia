@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/data/models/pagination/pagination_model.dart';
@@ -10,105 +9,116 @@ import 'package:lekra/data/models/wallet_model.dart';
 import 'package:lekra/data/repositories/wallet_repo.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 
+enum WalletFilterType { none, date, amount }
+
 class WalletController extends GetxController implements GetxService {
   final WallerRepo wallerRepo;
   WalletController({required this.wallerRepo});
   bool isLoading = false;
 
-  final PaginationState<TransactionModel> fetchWalletTransactionState =
+  final PaginationState<TransactionModel> walletTxnState =
       PaginationState<TransactionModel>();
 
-  List<TransactionModel> get transactionList =>
-      fetchWalletTransactionState.items;
+  /// UI should ALWAYS read from this
+  List<TransactionModel> get transactionList => walletTxnState.items;
 
-  // List<TransactionModel> transactionList = [];
+  WalletFilterType _activeFilter = WalletFilterType.none;
+  String? _filterValue;
+
+  /// MAIN FUNCTION (use everywhere)
   Future<ResponseModel> fetchWalletTransaction({
-    bool loadMore = false,
     bool refresh = false,
+    bool loadMore = false,
+    WalletFilterType filterType = WalletFilterType.none,
+    String? filterValue,
   }) async {
-    log('------------fetchWalletTransaction called (loadMore: $loadMore, refresh: $refresh)----------------');
-    ResponseModel responseModel;
-    if (refresh) {
-      fetchWalletTransactionState.reset();
-      fetchWalletTransactionState.page = 1;
-    }
-    if (loadMore) {
-      if (!fetchWalletTransactionState.canLoadMore) {
-        return ResponseModel(false, "No more pages");
-      }
-      // prepare for next page
-      fetchWalletTransactionState.page += 1;
-      fetchWalletTransactionState.isMoreLoading = true;
-    } else {
-      // initial load (or refresh)
-      fetchWalletTransactionState.isInitialLoading = true;
-      fetchWalletTransactionState.page = 1;
-    }
-
-    isLoading = true;
-    update();
-
     try {
-      Response response = await wallerRepo.fetchWalletTransaction(
-        page: fetchWalletTransactionState.page,
-      );
+      if (refresh) {
+        walletTxnState.reset();
+      }
 
-      if (response.statusCode == 200 && response.body['status'] == true) {
-        final pagination = PaginationModel<TransactionModel>.fromJson(
+      if (loadMore) {
+        if (!walletTxnState.canLoadMore ||
+            walletTxnState.isMoreLoading) {
+          return ResponseModel(false, "No more pages");
+        }
+        walletTxnState.page++;
+        walletTxnState.isMoreLoading = true;
+      } else {
+        walletTxnState.isInitialLoading = true;
+        walletTxnState.page = 1;
+        _activeFilter = filterType;
+        _filterValue = filterValue;
+      }
+
+      update(['wallet_txn']);
+
+      final Response response = await _fetchByFilter();
+
+      if (response.statusCode == 200 &&
+          (response.body['status'] == true ||
+              response.body['status'] == 'success')) {
+        final pagination =
+            PaginationModel<TransactionModel>.fromJson(
           response.body['data']['transactions'],
           (json) => TransactionModel.fromJson(json),
         );
 
-        fetchWalletTransactionState.lastPage = pagination.lastPage;
-        fetchWalletTransactionState.page = pagination.currentPage;
-
-        //    // update canLoadMore
-        // fetchWalletTransactionState. =
-        //     fetchWalletTransactionState.page < fetchWalletTransactionState.lastPage;
+        walletTxnState.lastPage = pagination.lastPage;
+        walletTxnState.page = pagination.currentPage;
 
         if (loadMore) {
-          // dedupe by id (if your ProductModel has `id`)
-          for (final p in pagination.data) {
-            if (!fetchWalletTransactionState.dedupeIds.contains(p.id)) {
-              fetchWalletTransactionState.dedupeIds.add(p.id);
-              fetchWalletTransactionState.items.add(p);
+          for (final item in pagination.data) {
+            if (!walletTxnState.dedupeIds.contains(item.id)) {
+              walletTxnState.dedupeIds.add(item.id);
+              walletTxnState.items.add(item);
             }
           }
         } else {
-          fetchWalletTransactionState.items
+          walletTxnState.items
             ..clear()
             ..addAll(pagination.data);
-          fetchWalletTransactionState.dedupeIds.clear();
-          fetchWalletTransactionState.dedupeIds
-              .addAll(pagination.data.map((e) => e.id));
+          walletTxnState.dedupeIds
+            ..clear()
+            ..addAll(pagination.data.map((e) => e.id));
         }
 
-        responseModel = ResponseModel(
-          true,
-          response.body['message'] ?? "fetchWalletTransaction fetched",
-        );
-      } else {
-        responseModel = ResponseModel(
-          false,
-          response.body['error'] ?? "Something went wrong",
-        );
+        return ResponseModel(true, "Success");
       }
+
+      return ResponseModel(false, "Failed");
     } catch (e) {
-      responseModel = ResponseModel(false, "Catch");
-      log("****** Error ****** $e", name: "fetchWalletTransaction");
-      if (loadMore && fetchWalletTransactionState.page > 1) {
-        fetchWalletTransactionState.page -= 1;
+      if (loadMore && walletTxnState.page > 1) {
+        walletTxnState.page--;
       }
+      return ResponseModel(false, e.toString());
     } finally {
-      fetchWalletTransactionState.isInitialLoading = false;
-      fetchWalletTransactionState.isMoreLoading = false;
-      isLoading = false;
-
-      update();
+      walletTxnState.isInitialLoading = false;
+      walletTxnState.isMoreLoading = false;
+      update(['wallet_txn']);
     }
-
-    return responseModel;
   }
+
+  /// Filter router (PRIVATE)
+  Future<Response> _fetchByFilter() {
+    switch (_activeFilter) {
+      case WalletFilterType.date:
+        return wallerRepo.fetchWalletTransactionByDate(
+          date: _filterValue!,
+          page: walletTxnState.page,
+        );
+      case WalletFilterType.amount:
+        return wallerRepo.fetchWalletTransactionByAmount(
+          amount: _filterValue!,
+          page: walletTxnState.page,
+        );
+      default:
+        return wallerRepo.fetchWalletTransaction(
+          page: walletTxnState.page,
+        );
+    }
+  }
+
 
   WalletModel? walletModel;
   Future<ResponseModel> fetchWallet() async {
@@ -268,5 +278,73 @@ class WalletController extends GetxController implements GetxService {
   void setWalletSearchController(String value) {
     walletSearchController.text = value;
     update();
+  }
+
+  List<TransactionModel> filerTransactionModel = [];
+  Future<ResponseModel> fetchWalletTransactionByDate(String date) async {
+    log('----------- fetchWalletTransactionByDate Called() -------------');
+    ResponseModel responseModel;
+    isLoading = true;
+    filerTransactionModel.clear();
+    update();
+
+    try {
+      Response response =
+          await wallerRepo.fetchWalletTransactionByDate(date: date);
+
+      if (response.statusCode == 200 && response.body['status'] == true) {
+        responseModel = ResponseModel(
+          true,
+          response.body['message'] ?? "fetchWalletTransactionByDate fetched",
+        );
+      } else {
+        responseModel = ResponseModel(
+          false,
+          response.body['error'] ??
+              " Something went wrong fetchWalletTransactionByDate",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** fetchWalletTransactionByDate ****** $e",
+          name: "fetchWalletTransactionByDate");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> fetchWalletTransactionByAmount(String amount) async {
+    log('----------- fetchWalletTransactionByAmount Called() -------------');
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+
+    try {
+      Response response =
+          await wallerRepo.fetchWalletTransactionByAmount(amount: amount);
+
+      if (response.statusCode == 200 && response.body['status'] == true) {
+        responseModel = ResponseModel(
+          true,
+          response.body['message'] ?? "fetchWalletTransactionByAmount fetched",
+        );
+      } else {
+        responseModel = ResponseModel(
+          false,
+          response.body['error'] ??
+              " Something went wrong fetchWalletTransactionByAmount",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** fetchWalletTransactionByAmount ****** $e",
+          name: "fetchWalletTransactionByAmount");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
   }
 }

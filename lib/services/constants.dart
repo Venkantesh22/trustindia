@@ -175,6 +175,10 @@ class AppConstants {
   static const String getWallet = "api/consumer/wallet";
   static const String postVerifyPin = "api/wallet/pin/verify";
   static const String postWalletPinRest = "api/wallet/pin/reset";
+  static const String getWalletTransactionByDate =
+      "api/wallet/transactions";
+  static const String getWalletTransactionByAmount =
+      "api/wallet/transactions";
 
   // Check out
   static const String postCheckOut = "api/checkout";

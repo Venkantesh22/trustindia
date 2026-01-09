@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:lekra/data/api/api_client.dart';
 import 'package:lekra/services/constants.dart';
 
@@ -10,6 +9,17 @@ class WallerRepo {
   Future<Response> fetchWalletTransaction({int page = 1}) async =>
       await apiClient.getData("${AppConstants.getWalletTransaction}?page=$page",
           "fetchWalletTransaction");
+  Future<Response> fetchWalletTransactionByDate(
+          {required String date, int page = 1}) async =>
+      await apiClient.getData(
+          "${AppConstants.getWalletTransactionByDate}?date=$date?page=$page",
+          "fetchWalletTransactionByDate");
+
+  Future<Response> fetchWalletTransactionByAmount(
+          {required String amount, int page = 1}) async =>
+      await apiClient.getData(
+          "${AppConstants.getWalletTransactionByAmount}?amount=$amount?page=$page",
+          "fetchWalletTransactionByAmount");
 
   Future<Response> fetchWallet() async =>
       await apiClient.getData(AppConstants.getWallet, "fetchWallet");
