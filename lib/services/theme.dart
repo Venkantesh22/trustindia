@@ -17,6 +17,7 @@ const Color white = Colors.white;
 const Color grey = Colors.grey;
 
 const Color greyDark = Color(0xFF64748B);
+const Color greyVeryDark = Color(0xFF555555);
 const Color greyBorder = Color(0xFFE5E7EB);
 const Color greyLight = Color(0xFF637587);
 const Color greyBillText = Color(0xFF5E788C);

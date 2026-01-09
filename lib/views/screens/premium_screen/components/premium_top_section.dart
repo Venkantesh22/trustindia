@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -36,15 +35,13 @@ class PremiumTopSection extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 9, vertical: 14),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               decoration: BoxDecoration(
                   color: black,
                   borderRadius: BorderRadius.circular(100),
-                  border:
-                      Border.all(color: yellow.withValues(alpha: 0.30))),
+                  border: Border.all(color: yellow.withValues(alpha: 0.30))),
               child: Text(
-                "${authController.userModel?.subscription?.remainingDays ?? ""}days remaining",
+                "${authController.userModel?.subscription?.remainingDays ?? ""} days remaining",
                 style: Helper(context).textTheme.bodyLarge?.copyWith(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
