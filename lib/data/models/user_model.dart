@@ -84,5 +84,5 @@ class UserModel {
       };
 
   String get fullName => "$firstName $lastName";
-  bool get isPhoneVerified => isVerified == 1;
+  bool get isPhoneVerified => isVerified == 1 ? true : false;
 }

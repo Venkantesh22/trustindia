@@ -8,7 +8,6 @@ import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/common_button.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/premium_screen/components/premium_benefit_container.dart';
-import 'package:lekra/views/screens/seleck_payment/seleck_payment_screen/select_payment_screen.dart';
 
 class PremiumBottomSection extends StatelessWidget {
   const PremiumBottomSection({super.key});

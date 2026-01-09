@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +10,7 @@ import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/route_helper.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/auth_screens/forget_password/enter_number_for_opt_screen.dart';
+import 'package:lekra/views/screens/auth_screens/forget_password/opt_verification_screen.dart';
 import 'package:lekra/views/screens/auth_screens/signup_screen.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/screen/privacy_center_screen.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/screen/terms_conditions_screen.dart';
@@ -174,15 +177,30 @@ class _LoginScreenState extends State<LoginScreen> {
                                   .then(
                                 (value) {
                                   if (value.isSuccess) {
-                                    Get.find<DashBoardController>().dashPage =
-                                        0;
-                                    navigate(
-                                        context: context,
-                                        page: const DashboardScreen(),
-                                        isRemoveUntil: true);
-                                    showToast(
-                                        message: value.message,
-                                        typeCheck: value.isSuccess);
+                                    if (authController.isPhoneNumberVerified) {
+                                      Get.find<DashBoardController>().dashPage =
+                                          0;
+                                      navigate(
+                                          context: context,
+                                          page: const DashboardScreen(),
+                                          isRemoveUntil: true);
+                                      showToast(
+                                          message: value.message,
+                                          typeCheck: value.isSuccess);
+                                    } else {
+                                      navigate(
+                                          context: context,
+                                          page: OTPVerification(
+                                            phone: authController
+                                                    .userPhoneNumber ??
+                                                "",
+                                            isVerificationPhone: true,
+                                          ),
+                                          isRemoveUntil: true);
+                                      showToast(
+                                          message: value.message,
+                                          typeCheck: value.isSuccess);
+                                    }
                                   } else {
                                     showToast(
                                         message: value.message,

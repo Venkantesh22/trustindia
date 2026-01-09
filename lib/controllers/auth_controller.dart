@@ -199,8 +199,8 @@ class AuthController extends GetxController implements GetxService {
           authRepo.saveUserToken(response.body['token']);
         }
 
-        responseModel =
-            ResponseModel(true, response.body['message'] ?? "Profile updated");
+        responseModel = ResponseModel(
+            true, response.body['message'] ?? "success registerUser ");
         firstNameController.clear();
         lastNameController.clear();
         emailController.clear();
@@ -220,6 +220,8 @@ class AuthController extends GetxController implements GetxService {
     return responseModel;
   }
 
+  bool isPhoneNumberVerified = false;
+  String? userPhoneNumber;
   Future<ResponseModel> userLogin({required bool isEmail}) async {
     log('----------- userLogin Called ----------');
 
@@ -238,11 +240,21 @@ class AuthController extends GetxController implements GetxService {
 
       log("Raw Response: ${response.body}");
 
-      if (response.body['status'] == true || response.body['success'] == true) {
-        // ✅ 3. Save token if exists
+      if (response.body['status'] == true) {
         if (response.body['token'] != null) {
           authRepo.saveUserToken(response.body['token']);
         }
+
+        var userData = response.body['user'];
+
+        if (userData != null) {
+          isPhoneNumberVerified = (userData['otp_verified'].toString() == "1");
+
+          userPhoneNumber = userData['mobile']?.toString();
+        }
+
+        log("isPhoneNumberVerified: $isPhoneNumberVerified");
+        log("userPhoneNumber: $userPhoneNumber");
 
         responseModel =
             ResponseModel(true, response.body['message'] ?? "Login successful");
