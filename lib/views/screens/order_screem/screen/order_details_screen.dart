@@ -68,11 +68,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         style: Helper(context).textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold, fontSize: 18)),
                     const SizedBox(height: 6),
-                    const BuildBillingRow(
-                      label: "Payment Method:",
-                      value: "wallet",
-                      color: greyDark,
-                    ),
                     BuildBillingRow(
                       label: "Payment status:",
                       value: orderController.selectOrder?.paymentStatus ?? "",

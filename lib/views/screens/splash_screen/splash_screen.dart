@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/views/base/custom_image.dart';
-import 'package:lekra/views/screens/auth_screens/forget_password/opt_verification_screen.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/demo/screen/demo_dashboard_screen.dart';
@@ -52,20 +51,20 @@ class _SplashScreenState extends State<SplashScreen> {
     final authController = Get.find<AuthController>();
     String token = authController.getUserToken();
     final sharedPreferences = await SharedPreferences.getInstance();
-    await authController.fetchUserProfile();
-    if (authController.userModel?.isPhoneVerified == false) {
-      navigate(
-          context: context,
-          page: OTPVerification(
-            phone: authController.userModel?.mobile ?? "",
-            isVerificationPhone: true,
-          ),
-          isRemoveUntil: true);
-      showToast(
-          message: "Verified phone number to container..",
-          toastType: ToastType.warning);
-      return;
-    }
+    // await authController.fetchUserProfile();
+    // if (authController.userModel?.isPhoneVerified == false) {
+    //   navigate(
+    //       context: context,
+    //       page: OTPVerification(
+    //         phone: authController.userModel?.mobile ?? "",
+    //         isVerificationPhone: true,
+    //       ),
+    //       isRemoveUntil: true);
+    //   showToast(
+    //       message: "Verified phone number to container..",
+    //       toastType: ToastType.warning);
+    //   return;
+    // }
 
     bool isDemoShow =
         sharedPreferences.getBool(AppConstants.isDemoShowKey) ?? false;

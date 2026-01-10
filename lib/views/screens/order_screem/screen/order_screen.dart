@@ -40,6 +40,7 @@ class _OrderScreenState extends State<OrderScreen> {
       },
       child: Scaffold(
         appBar: const CustomAppBar2(
+          showBackButton: false,
           title: "Order",
         ),
         body: SingleChildScrollView(
