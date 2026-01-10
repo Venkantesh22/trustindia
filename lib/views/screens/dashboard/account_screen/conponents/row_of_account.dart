@@ -8,9 +8,9 @@ import 'package:lekra/views/screens/address/screen/address_screen.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/screen/privacy_center_screen.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/screen/terms_conditions_screen.dart';
-import 'package:lekra/views/screens/rewards/screen/reward_history_screen/reward_history_screen.dart';
 import 'package:lekra/views/screens/rewards/screen/rewards_screen/rewards_screen.dart';
 import 'package:lekra/views/screens/subscription_plan/subscription_category/subscription_category_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RowOfAccount extends StatelessWidget {
   final RowOfAccountModel rowOfAccountModel;
@@ -93,8 +93,21 @@ List<RowOfAccountModel> rowOfAccountModelList = [
     title: "Create a Seller Account",
     subTitle: "Create your seller account for app",
     icon: Assets.svgsPersonAccount,
-    onTap: (context) {
-      navigate(context: context, page: const RewardHistoryScreen());
+    onTap: (context) async {
+      final Uri url = Uri.parse('https://trustindia.in/');
+
+      try {
+        if (await canLaunchUrl(url)) {
+          await launchUrl(
+            url,
+            mode: LaunchMode.externalApplication,
+          );
+        } else {
+          debugPrint("Could not launch $url");
+        }
+      } catch (e) {
+        debugPrint("Error launching URL: $e");
+      }
     },
   ),
   RowOfAccountModel(
@@ -115,6 +128,7 @@ List<RowOfAccountModel> rowOfAccountModelList = [
   ),
   RowOfAccountModel(
     title: "Update Password",
+    subTitle: "Update Password to secure your account",
     icon: Assets.svgsHelpSupport,
     onTap: (context) {
       // navigate(context: context, page: SubscriptionCategoryPlan());
