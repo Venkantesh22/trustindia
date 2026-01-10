@@ -35,14 +35,14 @@ class TotalPointSection extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Total Points",
+                    Text("Total Coins",
                         style: Helper(context)
                             .textTheme
                             .bodyLarge
                             ?.copyWith(fontSize: 14, color: grey)),
                     const SizedBox(height: 4),
                     Text(
-                      "${authController.userModel?.rewardPoint ?? ""} points",
+                      "${authController.userModel?.rewardPoint ?? ""} coins",
                       style: Helper(context).textTheme.titleSmall?.copyWith(
                           color: primaryColor,
                           fontSize: 24,

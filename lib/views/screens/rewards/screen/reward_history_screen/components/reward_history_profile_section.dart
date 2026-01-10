@@ -33,7 +33,7 @@ class RewardHistoryProfileSection extends StatelessWidget {
                   Helper(context).textTheme.titleSmall?.copyWith(fontSize: 20),
             ),
             Text(
-              "${authController.userModel?.rewardPoint ?? ""} Points",
+              "${authController.userModel?.rewardPoint ?? ""} Coins",
               style: Helper(context)
                   .textTheme
                   .titleSmall
