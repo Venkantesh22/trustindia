@@ -17,11 +17,13 @@ class OTPVerification extends StatefulWidget {
   final String phone;
   final bool isForResetPin;
   final bool isVerificationPhone;
+  final bool isUpdateNumber;
   const OTPVerification({
     super.key,
     required this.phone,
     this.isForResetPin = false,
     this.isVerificationPhone = false,
+    this.isUpdateNumber = false,
   });
 
   @override
@@ -35,7 +37,11 @@ class _OTPVerificationState extends State<OTPVerification> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.find<AuthController>().generateOtp(mobile: widget.phone);
+      if (widget.isForResetPin) {
+        Get.find<AuthController>().generateOtp(mobile: widget.phone);
+      } else if (widget.isUpdateNumber) {
+        Get.find<AuthController>().generateResendOtp(mobile: widget.phone);
+      }
       _startTimer();
     });
   }

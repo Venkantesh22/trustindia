@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
+import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/base/image_picker_sheet.dart';
@@ -12,7 +13,7 @@ class EditProfileTopSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<AuthController>(builder: (authController) {
       return Stack(
-        alignment: Alignment.center, // Helps center the profile image
+        alignment: Alignment.center,
         children: [
           Container(
             height: MediaQuery.of(context).size.height * 0.25,
@@ -27,7 +28,7 @@ class EditProfileTopSection extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: InkWell(
-                  onTap: () => Get.back(),
+                  onTap: () => pop(context),
                   child: Container(
                     margin: const EdgeInsets.only(left: 16, top: 10),
                     height: 35,
