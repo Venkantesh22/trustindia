@@ -35,41 +35,14 @@ class HomeApp extends StatelessWidget implements PreferredSizeWidget {
                   height: 36,
                   width: 36,
                   isProfile: true,
+                  fit: BoxFit.cover,
                   radius: 100,
                 ),
-                // Positioned(
-                //   bottom: 4,
-                //   child: Container(
-                //     padding:
-                //         const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                //     decoration: BoxDecoration(
-                //         color: Colors.amber,
-                //         borderRadius: BorderRadius.circular(40)),
-                //     child: Text(
-                //       "Premium",
-                //       style: Helper(context).textTheme.bodyMedium?.copyWith(
-                //             fontSize: 8,
-                //             fontWeight: FontWeight.w600,
-                //             color: white,
-                //           ),
-                //     ),
-                //   ),
-                // )
               ],
             ),
           ),
         );
       }),
-      //  IconButton(
-      //   onPressed: () {
-      //     scaffoldKey.currentState?.openDrawer();
-      //   },
-      //   icon: const Icon(
-      //     Icons.menu_rounded,
-      //     color: black,
-      //     size: 30,
-      //   ),
-      // ),
       title: GestureDetector(
         onTap: () {
           navigate(context: context, page: const SearchScreen());
