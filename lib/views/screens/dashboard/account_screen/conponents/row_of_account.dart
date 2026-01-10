@@ -97,16 +97,19 @@ List<RowOfAccountModel> rowOfAccountModelList = [
       final Uri url = Uri.parse('https://trustindia.in/');
 
       try {
-        if (await canLaunchUrl(url)) {
-          await launchUrl(
-            url,
-            mode: LaunchMode.externalApplication,
-          );
-        } else {
-          debugPrint("Could not launch $url");
+        // Attempting to launch directly is often more reliable
+        bool launched = await launchUrl(
+          url,
+          mode: LaunchMode.externalApplication,
+        );
+
+        if (!launched) {
+          Get.snackbar("Error", "Could not open the website");
         }
       } catch (e) {
-        debugPrint("Error launching URL: $e");
+        debugPrint("Error: $e");
+        // Fallback: If externalApplication fails, try inAppBrowserView
+        await launchUrl(url, mode: LaunchMode.platformDefault);
       }
     },
   ),
