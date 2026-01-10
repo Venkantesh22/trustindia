@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:lekra/data/models/response/response_model.dart';
@@ -26,6 +25,7 @@ class AuthController extends GetxController implements GetxService {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController referralCodeController = TextEditingController();
+  TextEditingController birthdayCodeController = TextEditingController();
 
   Future<ResponseModel> generateOtp({required String mobile}) async {
     log('----------- generateOtp Called ----------');
@@ -396,8 +396,11 @@ class AuthController extends GetxController implements GetxService {
 
     try {
       Map<String, dynamic> data = {
-        // "name": nameController.text,
-        "mobile": numberController.text,
+        "first_name": firstNameController.text.trim(),
+        "last_name": lastNameController.text.trim(),
+        "email": emailController.text.trim(),
+        'birthdate': birthdayCodeController.text.trim(),
+        'gender': gender,
       };
       if (profileImage != null) {
         data.addAll({
@@ -466,6 +469,15 @@ class AuthController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return responseModel;
+  }
+
+  String? gender;
+
+  List<String> genderList = ["Male", "Female", "Other"];
+
+  void setGender({required String value}) {
+    gender = value;
+    update();
   }
 
   void toggleTerms() {
