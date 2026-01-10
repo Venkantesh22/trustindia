@@ -39,7 +39,11 @@ class _OTPVerificationState extends State<OTPVerification> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.isForResetPin) {
         Get.find<AuthController>().generateOtp(mobile: widget.phone);
-      } else if (widget.isUpdateNumber) {
+      }
+      // else if (widget.isUpdateNumber) {
+      //   Get.find<AuthController>().generateResendOtp(mobile: widget.phone);
+      // }
+      else if (widget.isVerificationPhone) {
         Get.find<AuthController>().generateResendOtp(mobile: widget.phone);
       }
       _startTimer();

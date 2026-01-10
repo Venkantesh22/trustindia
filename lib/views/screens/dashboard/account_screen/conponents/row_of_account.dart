@@ -114,6 +114,13 @@ List<RowOfAccountModel> rowOfAccountModelList = [
     },
   ),
   RowOfAccountModel(
+    title: "Update Password",
+    icon: Assets.svgsHelpSupport,
+    onTap: (context) {
+      // navigate(context: context, page: SubscriptionCategoryPlan());
+    },
+  ),
+  RowOfAccountModel(
     title: "Help & Support",
     icon: Assets.svgsHelpSupport,
     onTap: (context) {
