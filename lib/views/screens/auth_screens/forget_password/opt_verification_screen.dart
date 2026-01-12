@@ -1,9 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
+import 'package:lekra/controllers/dashboard_controller.dart';
 import 'package:lekra/views/screens/auth_screens/password_update_screen.dart/password_update_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/create_wallet_pin_screen/wallet_create_pin_screen.dart';
@@ -17,13 +20,13 @@ class OTPVerification extends StatefulWidget {
   final String phone;
   final bool isForResetPin;
   final bool isVerificationPhone;
-  final bool isUpdateNumber;
+  final bool isUpdatePassword;
   const OTPVerification({
     super.key,
     required this.phone,
     this.isForResetPin = false,
     this.isVerificationPhone = false,
-    this.isUpdateNumber = false,
+    this.isUpdatePassword = false,
   });
 
   @override
@@ -39,11 +42,9 @@ class _OTPVerificationState extends State<OTPVerification> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.isForResetPin) {
         Get.find<AuthController>().generateOtp(mobile: widget.phone);
-      }
-      // else if (widget.isUpdateNumber) {
-      //   Get.find<AuthController>().generateResendOtp(mobile: widget.phone);
-      // }
-      else if (widget.isVerificationPhone) {
+      } else if (widget.isUpdatePassword) {
+        Get.find<AuthController>().generateOtp(mobile: widget.phone);
+      } else if (widget.isVerificationPhone) {
         Get.find<AuthController>().generateResendOtp(mobile: widget.phone);
       }
       _startTimer();
@@ -97,11 +98,18 @@ class _OTPVerificationState extends State<OTPVerification> {
     setState(() => _resending = true);
 
     try {
-      if (widget.isVerificationPhone) {
-        await Get.find<AuthController>()
-            .generateResendOtp(mobile: widget.phone);
-      } else {
-        await Get.find<AuthController>().generateOtp(mobile: widget.phone);
+      // if (widget.isVerificationPhone) {
+      //   await Get.find<AuthController>()
+      //       .generateResendOtp(mobile: widget.phone);
+      // } else {
+      //   await Get.find<AuthController>().generateOtp(mobile: widget.phone);
+      // }
+      if (widget.isForResetPin) {
+        Get.find<AuthController>().generateOtp(mobile: widget.phone);
+      } else if (widget.isUpdatePassword) {
+        Get.find<AuthController>().generateOtp(mobile: widget.phone);
+      } else if (widget.isVerificationPhone) {
+        Get.find<AuthController>().generateResendOtp(mobile: widget.phone);
       }
 
       // Restart  cooldown
@@ -139,13 +147,21 @@ class _OTPVerificationState extends State<OTPVerification> {
         if (value.isSuccess) {
           showToast(message: value.message, typeCheck: value.isSuccess);
 
-          widget.isForResetPin
-              ? navigate(
-                  context: context,
-                  page: const WalletCreatePinScreen(
-                    isForResetPin: true,
-                  ))
-              : navigate(context: context, page: const PasswordUpdateScreen());
+          if (widget.isForResetPin) {
+            navigate(
+                context: context,
+                page: const WalletCreatePinScreen(
+                  isForResetPin: true,
+                ));
+            return;
+          } else if (widget.isUpdatePassword) {
+            
+           
+            navigate(context: context, page: const PasswordUpdateScreen(updatePassword : true));
+            return;
+          } else {
+            navigate(context: context, page: const PasswordUpdateScreen());
+          }
         } else {
           showToast(message: value.message, typeCheck: value.isSuccess);
         }

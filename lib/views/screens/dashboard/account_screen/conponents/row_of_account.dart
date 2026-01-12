@@ -5,6 +5,7 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/address/screen/address_screen.dart';
+import 'package:lekra/views/screens/auth_screens/forget_password/opt_verification_screen.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/screen/privacy_center_screen.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/screen/terms_conditions_screen.dart';
@@ -134,7 +135,13 @@ List<RowOfAccountModel> rowOfAccountModelList = [
     subTitle: "Update Password to secure your account",
     icon: Assets.svgsHelpSupport,
     onTap: (context) {
-      // navigate(context: context, page: SubscriptionCategoryPlan());
+      navigate(
+        context: context,
+        page: OTPVerification(
+          phone: Get.find<AuthController>().userModel?.mobile ?? "",
+          isUpdatePassword: true,
+        ),
+      );
     },
   ),
   RowOfAccountModel(

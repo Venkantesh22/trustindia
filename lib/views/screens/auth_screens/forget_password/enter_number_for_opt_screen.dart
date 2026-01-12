@@ -23,7 +23,7 @@ class _EnterNumberForOPTScreenState extends State<EnterNumberForOPTScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  CustomAppbarBackButton(),
+      appBar: CustomAppbarBackButton(),
       bottomNavigationBar: SafeArea(
         child: GetBuilder<AuthController>(builder: (authController) {
           return Padding(
@@ -133,7 +133,7 @@ class _EnterNumberForOPTScreenState extends State<EnterNumberForOPTScreen> {
                     ),
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 301,
                   ),
                 ],

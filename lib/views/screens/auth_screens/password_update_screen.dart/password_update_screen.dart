@@ -1,15 +1,20 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
+import 'package:lekra/controllers/dashboard_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/account_screen.dart';
+import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_back_button.dart';
 
 class PasswordUpdateScreen extends StatefulWidget {
-  const PasswordUpdateScreen({super.key});
+  final bool? updatePassword;
+  const PasswordUpdateScreen({super.key, this.updatePassword = false});
 
   @override
   State<PasswordUpdateScreen> createState() => _PasswordUpdateScreenState();
@@ -22,7 +27,7 @@ class _PasswordUpdateScreenState extends State<PasswordUpdateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  CustomAppbarBackButton(),
+      appBar: CustomAppbarBackButton(),
       bottomNavigationBar: SafeArea(
         child: GetBuilder<AuthController>(builder: (authController) {
           return Padding(
@@ -42,10 +47,17 @@ class _PasswordUpdateScreenState extends State<PasswordUpdateScreen> {
                 if (_formKey.currentState!.validate()) {
                   authController.updatePassword().then((value) {
                     if (value.isSuccess) {
-                      navigate(
-                          context: context,
-                          isRemoveUntil: true,
-                          page: const LoginScreen());
+                      if (widget.updatePassword == true) {
+                        Get.find<DashBoardController>().dashPage = 4;
+                        navigate(
+                            context: context, page: const DashboardScreen());
+                      } else {
+                        navigate(
+                            context: context,
+                            isRemoveUntil: true,
+                            page: const LoginScreen());
+                      }
+
                       showToast(
                         message: value.message,
                         typeCheck: value.isSuccess,
@@ -121,8 +133,9 @@ class _PasswordUpdateScreenState extends State<PasswordUpdateScreen> {
                           validator: (value) {
                             final v = (value ?? '').trim();
                             if (v.isEmpty) return "Please enter new password";
-                            if (v.length < 6)
+                            if (v.length < 6) {
                               return "Password must be at least 6 characters";
+                            }
                             return null;
                           },
                         ),
