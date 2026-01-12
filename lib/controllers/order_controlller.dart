@@ -9,6 +9,8 @@ import 'package:lekra/data/models/product_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/repositories/order_repo.dart';
 
+enum OrderStatus { all, pending, processing, completed, cancelled }
+
 class OrderController extends GetxController implements GetxService {
   final OrderRepo orderRepo;
   OrderController({required this.orderRepo});
@@ -59,7 +61,6 @@ class OrderController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
-
 
   Future<ResponseModel> postPayOrderWallet({
     required int? orderId,
@@ -117,7 +118,6 @@ class OrderController extends GetxController implements GetxService {
         // Clear before adding
         orderProductList.clear();
 
-// Extract products from each order
         for (var order in response.body["data"]) {
           if (order["products"] != null) {
             orderProductList.addAll(
@@ -127,6 +127,7 @@ class OrderController extends GetxController implements GetxService {
             );
           }
         }
+        orderFilterList.addAll(orderProductList);
         responseModel = ResponseModel(
             true, response.body['message'] ?? " fetchOrder success");
 
@@ -158,4 +159,24 @@ class OrderController extends GetxController implements GetxService {
 
     update();
   }
+
+  OrderStatus selectedOrderStatus = OrderStatus.all;
+
+  void updateOrderStatus(OrderStatus status) {
+    selectedOrderStatus = status;
+
+    if (status == OrderStatus.all) {
+      orderFilterList = List.from(orderProductList);
+    } else {
+      orderFilterList = orderProductList.where((element) {
+        return element.status.toString().toLowerCase() ==
+            status.name.toLowerCase();
+      }).toList();
+    }
+
+    log("Filtered items: ${orderFilterList.length}");
+    update();
+  }
+
+  List<ProductModel> orderFilterList = [];
 }

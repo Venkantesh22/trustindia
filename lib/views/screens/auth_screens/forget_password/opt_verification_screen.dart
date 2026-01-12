@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -11,7 +10,6 @@ import 'package:lekra/views/screens/auth_screens/password_update_screen.dart/pas
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/create_wallet_pin_screen/wallet_create_pin_screen.dart';
 import 'package:pinput/pinput.dart';
-
 import '../../../../services/constants.dart';
 import '../../../../services/theme.dart';
 import '../../../base/common_button.dart';
@@ -156,7 +154,7 @@ class _OTPVerificationState extends State<OTPVerification> {
           .then((value) {
         if (value.isSuccess) {
           showToast(message: value.message, typeCheck: value.isSuccess);
-          Get.find<DashBoardController>().dashPage = 3;
+          Get.find<DashBoardController>().dashPage = 4;
           navigate(context: context, page: const DashboardScreen());
         } else {
           showToast(message: value.message, typeCheck: value.isSuccess);
