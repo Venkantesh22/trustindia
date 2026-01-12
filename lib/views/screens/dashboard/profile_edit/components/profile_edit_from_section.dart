@@ -217,7 +217,7 @@ class _ProfileEditFormSectionState extends State<ProfileEditFormSection> {
                                   page: OTPVerification(
                                     phone: authController.numberController.text
                                         .trim(),
-                                    // isUpdateNumber: true,
+                                    isUpdateNumber: true,
                                   ),
                                 );
                               }

@@ -21,12 +21,14 @@ class OTPVerification extends StatefulWidget {
   final bool isForResetPin;
   final bool isVerificationPhone;
   final bool isUpdatePassword;
+  final bool isUpdateNumber;
   const OTPVerification({
     super.key,
     required this.phone,
     this.isForResetPin = false,
     this.isVerificationPhone = false,
     this.isUpdatePassword = false,
+    this.isUpdateNumber = false,
   });
 
   @override
@@ -46,6 +48,9 @@ class _OTPVerificationState extends State<OTPVerification> {
         Get.find<AuthController>().generateOtp(mobile: widget.phone);
       } else if (widget.isVerificationPhone) {
         Get.find<AuthController>().generateResendOtp(mobile: widget.phone);
+      } else if (widget.isUpdateNumber) {
+        Get.find<AuthController>()
+            .generateOtpFoUpdateMobileNo(mobile: widget.phone);
       }
       _startTimer();
     });
@@ -110,6 +115,9 @@ class _OTPVerificationState extends State<OTPVerification> {
         Get.find<AuthController>().generateOtp(mobile: widget.phone);
       } else if (widget.isVerificationPhone) {
         Get.find<AuthController>().generateResendOtp(mobile: widget.phone);
+      } else if (widget.isUpdateNumber) {
+        Get.find<AuthController>()
+            .generateOtpFoUpdateMobileNo(mobile: widget.phone);
       }
 
       // Restart  cooldown
@@ -140,6 +148,20 @@ class _OTPVerificationState extends State<OTPVerification> {
         }
       });
       return;
+    } else if (widget.isUpdateNumber) {
+      Get.find<AuthController>()
+          .verifyOtpFoUpdateMobileNo(
+        otp: _pinController.text.trim(),
+      )
+          .then((value) {
+        if (value.isSuccess) {
+          showToast(message: value.message, typeCheck: value.isSuccess);
+          Get.find<DashBoardController>().dashPage = 3;
+          navigate(context: context, page: const DashboardScreen());
+        } else {
+          showToast(message: value.message, typeCheck: value.isSuccess);
+        }
+      });
     } else {
       Get.find<AuthController>()
           .postVerifyOTP(mobile: widget.phone, otp: _pinController.text)
@@ -155,9 +177,9 @@ class _OTPVerificationState extends State<OTPVerification> {
                 ));
             return;
           } else if (widget.isUpdatePassword) {
-            
-           
-            navigate(context: context, page: const PasswordUpdateScreen(updatePassword : true));
+            navigate(
+                context: context,
+                page: const PasswordUpdateScreen(updatePassword: true));
             return;
           } else {
             navigate(context: context, page: const PasswordUpdateScreen());
@@ -299,7 +321,7 @@ class _OTPVerificationState extends State<OTPVerification> {
                 )
               ],
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),

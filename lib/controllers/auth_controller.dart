@@ -482,6 +482,79 @@ class AuthController extends GetxController implements GetxService {
     update();
   }
 
+  Future<ResponseModel> generateOtpFoUpdateMobileNo(
+      {required String mobile}) async {
+    log('----------- generateOtpFoUpdateMobileNo Called ----------');
+
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+
+    try {
+      Map<String, dynamic> data = {
+        "mobile": mobile,
+      };
+
+      Response response = await authRepo.generateOtpFoUpdateMobileNo(
+        data: FormData(data),
+      );
+
+      if (response.body['status'] == true) {
+        responseModel = ResponseModel(true,
+            response.body['message'] ?? "generateOtpFoUpdateMobileNo updated");
+      } else {
+        responseModel = ResponseModel(
+            false,
+            response.body['error'] ??
+                "Error while generateOtpFoUpdateMobileNo user");
+      }
+    } catch (e) {
+      log('ERROR AT generateOtpFoUpdateMobileNo(): $e');
+      responseModel = ResponseModel(
+          false, "Error while generateOtpFoUpdateMobileNo user $e");
+    }
+
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> verifyOtpFoUpdateMobileNo({required String otp}) async {
+    log('----------- verifyOtpFoUpdateMobileNo Called ----------');
+
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+
+    try {
+      Map<String, dynamic> data = {
+        "otp": otp,
+        "mobile": numberController.text.trim(),
+      };
+
+      Response response =
+          await authRepo.verifyOtpFoUpdateMobileNo(data: FormData(data));
+
+      if (response.body['status'] == true || response.body['success'] == true) {
+        responseModel = ResponseModel(true,
+            response.body['message'] ?? "verifyOtpFoUpdateMobileNo successful");
+      } else {
+        responseModel = ResponseModel(
+            false,
+            response.body['message'] ??
+                "Error while verifyOtpFoUpdateMobileNo");
+      }
+    } catch (e) {
+      log('ERROR AT verifyOtpFoUpdateMobileNo(): $e');
+      responseModel =
+          ResponseModel(false, "Error while verifyOtpFoUpdateMobileNo  $e");
+    }
+
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
   void toggleTerms() {
     _acceptTerms = !_acceptTerms;
     update();

@@ -158,6 +158,8 @@ class AppConstants {
 //Edit Profile
   static const String postEditOptSend = 'api/edit-otp-send';
   static const String updateProfile = 'api/edit-profile';
+  static const String postGenerateOtpFoUpdateMobileNo = 'api/edit-otp-send';
+  static const String postVerifyOtpFoUpdateMobileNo = 'api/edit-verify-otp';
 
   // Address
   static const String getAddress = 'api/get-address';

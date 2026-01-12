@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:get/get_connect/http/src/multipart/form_data.dart';
 import 'package:get/get.dart';
 import 'package:lekra/services/extensions.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -11,8 +10,6 @@ class AuthRepo {
   final SharedPreferences sharedPreferences;
   final ApiClient apiClient;
   AuthRepo({required this.sharedPreferences, required this.apiClient});
-
-  // Future<Response> generateOtp({required String phone}) async => await apiClient.postData(AppConstants.generateOtp, {"mobile": phone});
 
   Future<Response> generateOtp({required FormData data}) async =>
       await apiClient.postData(AppConstants.generateOtp, "generateOtp", data);
@@ -37,29 +34,14 @@ class AuthRepo {
       await apiClient.postData(
           AppConstants.postUpdatePassword, "postUpdatePassword", data);
 
-  // Future<Response> verifyOtp({required String phone, required String otp}) async => await apiClient.postData(
-  // AppConstants.loginUri, {
-  // "mobile": phone,
-  // 'otp': otp,
-  // 'device_id': await getDeviceId(),
-  // },
-  // );
+  Future<Response> generateOtpFoUpdateMobileNo(
+          {required FormData data}) async =>
+      await apiClient.postData(AppConstants.postGenerateOtpFoUpdateMobileNo,
+          "generateOtpFoUpdateMobileNo", data);
 
-  // Future<Response> login({required String phone}) async => await apiClient.postData(
-  //       AppConstants.sendOtp,
-  //       {
-  //         "phone": phone,
-  //         "app_signature": await Get.find<OtpAutofillController>().getAppSignature(),
-  //       },
-  //     );
-
-  // Future<Response> verifyOtp({required String phone, required String otp}) async => await apiClient.postData(
-  //       AppConstants.verifyOtp,
-  //       {
-  //         "phone": phone,
-  //         "otp": otp,
-  //       },
-  //     );
+  Future<Response> verifyOtpFoUpdateMobileNo({required FormData data}) async =>
+      await apiClient.postData(AppConstants.postVerifyOtpFoUpdateMobileNo,
+          "verifyOtpFoUpdateMobileNo", data);
 
   Future<Response> fetchUserProfile() async =>
       await apiClient.getData(AppConstants.profileUri, "fetchUserProfile");
