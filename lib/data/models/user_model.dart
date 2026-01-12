@@ -1,4 +1,5 @@
 import 'package:lekra/data/models/subscription/subscription_history_model.dart';
+import 'package:lekra/services/date_formatters_and_converters.dart';
 
 class UserModel {
   int? id;
@@ -12,6 +13,7 @@ class UserModel {
   String? referralCode;
   DateTime? createdAt;
   DateTime? updatedAt;
+  DateTime? dob;
   double? currentWallet;
   final String? referralLink;
   final int? rewardPoint;
@@ -29,6 +31,7 @@ class UserModel {
     this.referralCode,
     this.createdAt,
     this.updatedAt,
+    this.dob,
     this.currentWallet,
     this.referralLink,
     this.rewardPoint,
@@ -51,6 +54,9 @@ class UserModel {
         updatedAt: json["updated_at"] == null
             ? null
             : DateTime.parse(json["updated_at"]),
+        dob: json["dob"] == null
+            ? null
+            : DateTime.parse(json["dob"]),
         currentWallet: json["current_wallet"] == null
             ? null
             : (json["current_wallet"] is num
@@ -77,6 +83,7 @@ class UserModel {
         "referral_code": referralCode,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
+        "dob": dob?.toIso8601String(),
         "current_wallet": currentWallet,
         "reward_point": rewardPoint,
         "referralLink": referralLink,
@@ -85,4 +92,5 @@ class UserModel {
 
   String get fullName => "$firstName $lastName";
   bool get isPhoneVerified => isVerified != 1 ? true : false;
+  String get dobFormat => DateFormatters().dMyDash.format(dob ?? getDateTime());
 }

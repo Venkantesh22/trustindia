@@ -364,6 +364,8 @@ class AuthController extends GetxController implements GetxService {
         firstNameController.text = userModel?.firstName ?? "";
         emailController.text = userModel?.email ?? "";
         numberController.text = userModel?.mobile ?? "";
+        birthdayCodeController.text = userModel?.dobFormat ?? "";
+        setGender(value: userModel?.gender ?? "");
       } else {
         log("raw datat");
         responseModel = ResponseModel(
@@ -399,7 +401,7 @@ class AuthController extends GetxController implements GetxService {
         "first_name": firstNameController.text.trim(),
         "last_name": lastNameController.text.trim(),
         "email": emailController.text.trim(),
-        'birthdate': birthdayCodeController.text.trim(),
+        'dob': birthdayCodeController.text.trim(),
         'gender': gender,
       };
       if (profileImage != null) {
@@ -408,7 +410,7 @@ class AuthController extends GetxController implements GetxService {
               MultipartFile(profileImage, filename: profileImage?.path ?? "")
         });
       }
-      log(data.toString());
+
       Response response =
           await authRepo.postUpdateProfile(data: FormData(data));
 
