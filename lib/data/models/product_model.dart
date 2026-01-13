@@ -11,7 +11,6 @@ class ProductModel {
   final List<String>? features;
   final String? offers;
   final String? offerType;
-
   final String? priceCategory;
   final String? categoryName;
   final String? status;
@@ -47,19 +46,29 @@ class ProductModel {
         id: json["id"],
         name: json["name"],
         description: json["description"],
+
+        // FIX 1: Handle price safely (String OR Number)
         price: json["price"] == null
             ? null
-            : double.parse(json["price"].replaceAll(',', '')),
+            : double.tryParse(json["price"].toString().replaceAll(',', '')),
+
+        // FIX 2: Handle discounted_price safely
         discountedPrice: json["discounted_price"] == null
             ? null
-            : double.parse(json["discounted_price"].replaceAll(',', '')),
+            : double.tryParse(
+                json["discounted_price"].toString().replaceAll(',', '')),
+
         features: json["features"] == null
             ? []
             : List<String>.from(json["features"]!.map((x) => x)),
-        offers: json["offers"],
+        offers:
+            json["offers"]?.toString(), // Safely convert to string if needed
         offerType: json["offer_type"],
         priceCategory: json["price_category"],
-        categoryName: capitalize(json["category_name"]),
+        // Added null check for category_name to avoid crash if null
+        categoryName: json["category_name"] != null
+            ? capitalize(json["category_name"])
+            : null,
         status: json["status"],
         images: json["images"] == null
             ? []
@@ -70,7 +79,6 @@ class ProductModel {
             ? null
             : DateTime.parse(json["created_at"]),
       );
-
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,

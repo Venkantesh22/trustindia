@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/product_controller.dart';
+import 'package:lekra/views/screens/category_screen/cate_filte_bottom_sheet_section/cate_filter_bottom_sheet.dart';
 import 'package:lekra/views/screens/category_screen/components/category_filter_button.dart';
 
 class CategoryFilterBar extends StatelessWidget {
@@ -24,6 +25,23 @@ class CategoryFilterBar extends StatelessWidget {
                   onTap: () {
                     productController
                         .updateCateFilterBarEnum(categoryFilterModel.filterId);
+
+                    showModalBottomSheet(
+                      context: context,
+                      elevation: 0,
+                      enableDrag: false,
+                      backgroundColor: Colors.transparent,
+                      isDismissible: true,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          topLeft: Radius.circular(10),
+                        ),
+                      ),
+                      builder: (context) {
+                        return CateFilterBottomSheet();
+                      },
+                    );
                   },
                   isSelected: categoryFilterModel.filterId ==
                       productController.selectCateFilterBar,
@@ -34,3 +52,4 @@ class CategoryFilterBar extends StatelessWidget {
     });
   }
 }
+

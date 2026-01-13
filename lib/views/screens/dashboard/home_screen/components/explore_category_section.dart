@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:lekra/controllers/home_controller.dart';
 import 'package:lekra/data/models/home/category_model.dart';
@@ -67,6 +68,7 @@ class _CategoryCard extends StatelessWidget {
         InkWell(
           borderRadius: BorderRadius.circular(50),
           onTap: () {
+            Get.find<HomeController>().updateSelectCategoryModel(category);
             navigate(
                 context: context,
                 page: CategoryDetailsScreen(

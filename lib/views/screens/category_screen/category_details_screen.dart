@@ -58,110 +58,95 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
+    return Scaffold(
       backgroundColor: white,
-      onRefresh: () async {
-        final res = await Get.find<ProductController>()
-            .fetchCategory(categoryId: widget.categoryModel.id, refresh: true);
-        if (!res.isSuccess) {
-          if (!mounted) return;
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(res.message)),
-          );
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          leading: IconButton(
-              onPressed: () => pop(context),
-              icon: const Icon(Icons.arrow_back_ios, color: black)),
-          centerTitle: true,
-          title: Text(
-            capitalize(widget.categoryModel.name ?? ""),
-            style: Helper(context).textTheme.titleMedium?.copyWith(
-                  color: black,
-                  fontSize: 22,
-                ),
-          ),
-        ),
-        body: GetBuilder<ProductController>(builder: (productController) {
-          final isInitialLoading =
-              productController.cateProductListState.isInitialLoading;
-          final isMoreLoading =
-              productController.cateProductListState.isMoreLoading;
-          final items = productController.cateProductList;
-
-          final showLoaderTile = isMoreLoading;
-
-          final itemCount = isInitialLoading
-              ? 4 // skeleton placeholders
-              : items.length + (showLoaderTile ? 1 : 0);
-          if (productController.cateProductList.isEmpty) {
-            return const Center(
-              child: Text("No Product available "),
-            );
-          }
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CategoryFilterBar(),
-              SingleChildScrollView(
-                controller: _scrollController,
-                padding: AppConstants.screenPadding,
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 16,
-                    crossAxisSpacing: 16,
-                    childAspectRatio: 0.7,
-                  ),
-                  itemCount: productController.isLoading ? 4 : itemCount,
-                  itemBuilder: (context, index) {
-                    if (isInitialLoading) {
-                      final productModel = ProductModel();
-                      return CustomShimmer(
-                        isLoading: true,
-                        child: ProductCardForCategory(product: productModel),
-                      );
-                    }
-                    if (showLoaderTile && index == items.length) {
-                      final productModel = ProductModel();
-                      return CustomShimmer(
-                        isLoading: true,
-                        child: ProductCardForCategory(product: productModel),
-                      );
-                    }
-
-                    final product = productController.isLoading
-                        ? ProductModel()
-                        : productController.cateProductList[index];
-
-                    return CustomShimmer(
-                      isLoading: productController.isLoading,
-                      child: GestureDetector(
-                        onTap: () {
-                          if (productController.isLoading) {
-                            return;
-                          }
-                          navigate(
-                            context: context,
-                            page: ProductDetailsScreen(
-                              productId: product.id,
-                            ),
-                          );
-                        },
-                        child: ProductCardForCategory(product: product),
-                      ),
-                    );
-                  },
-                ),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+            onPressed: () => pop(context),
+            icon: const Icon(Icons.arrow_back_ios, color: black)),
+        centerTitle: true,
+        title: Text(
+          capitalize(widget.categoryModel.name ?? ""),
+          style: Helper(context).textTheme.titleMedium?.copyWith(
+                color: black,
+                fontSize: 22,
               ),
-            ],
+        ),
+      ),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await Get.find<ProductController>().fetchCategory(
+            categoryId: widget.categoryModel.id,
+            refresh: true,
           );
-        }),
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const CategoryFilterBar(),
+            const SizedBox(height: 10),
+            // Inside CategoryDetailsScreen build method
+            Expanded(
+              child: GetBuilder<ProductController>(
+                builder: (productController) {
+                  final state = productController.cateProductListState;
+                  final items = productController
+                      .cateProductList; // ✅ This is the list we sorted
+
+                  if (!state.isInitialLoading && items.isEmpty) {
+                    return const Center(child: Text("No Product available"));
+                  }
+
+                  return SingleChildScrollView(
+                    controller: _scrollController,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: AppConstants.screenPadding,
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 16,
+                        crossAxisSpacing: 16,
+                        childAspectRatio: 0.7,
+                      ),
+                      // If we are loading the first time, show 4 shimmers
+                      itemCount: state.isInitialLoading
+                          ? 4
+                          : items.length + (state.isMoreLoading ? 1 : 0),
+                      itemBuilder: (context, index) {
+                        if (state.isInitialLoading ||
+                            (state.isMoreLoading && index == items.length)) {
+                          return CustomShimmer(
+                            isLoading: true,
+                            child:
+                                ProductCardForCategory(product: ProductModel()),
+                          );
+                        }
+
+                        // ✅ This will now show the product in the NEW sorted order
+                        final product = items[index];
+                        return CustomShimmer(
+                          isLoading: productController.isLoading,
+                          child: GestureDetector(
+                            onTap: () => navigate(
+                              context: context,
+                              page: ProductDetailsScreen(productId: product.id),
+                            ),
+                            child: ProductCardForCategory(product: product),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

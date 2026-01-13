@@ -10,13 +10,15 @@ import 'package:lekra/data/repositories/product_repo.dart';
 
 enum CateFilterBarEnum { all, price }
 
+enum PriceSortOrder { lowToHigh, highToLow, none }
+
 class ProductController extends GetxController implements GetxService {
   final ProductRepo productRepo;
   ProductController({required this.productRepo});
   bool isLoading = false;
 
 // FEATURED: Pagination state
-  final PaginationState<ProductModel> cateProductListState =
+  PaginationState<ProductModel> cateProductListState =
       PaginationState<ProductModel>();
 
   // convenient getter for UI
@@ -77,6 +79,7 @@ class ProductController extends GetxController implements GetxService {
           cateProductListState.dedupeIds
               .addAll(pagination.data.map((e) => e.id));
         }
+        updateCateFilter();
 
         responseModel =
             ResponseModel(true, response.body['message'] ?? "fetchCategory");
@@ -239,6 +242,31 @@ class ProductController extends GetxController implements GetxService {
 
   void updateCateFilterBarEnum(CateFilterBarEnum value) {
     selectCateFilterBar = value;
+    log("selectCateFilterBar  = $selectCateFilterBar");
+    update();
+  }
+
+  PriceSortOrder selectedPriceSort = PriceSortOrder.none;
+
+  void updatePriceSort(PriceSortOrder order) {
+    selectedPriceSort = order;
+
+    update();
+  }
+
+  void updateCateFilter() {
+    if (selectedPriceSort == PriceSortOrder.highToLow) {
+      cateProductListState.items.sort(
+        (a, b) => (b.discountedPrice ?? 0).compareTo(a.discountedPrice ?? 0),
+      );
+      log("Sorting: High to Low1");
+    } else if (selectedPriceSort == PriceSortOrder.lowToHigh) {
+      cateProductListState.items.sort(
+        (a, b) => (a.discountedPrice ?? 0).compareTo(b.discountedPrice ?? 0),
+      );
+      log("Sorting: Low to High1");
+    }
+
     update();
   }
 }

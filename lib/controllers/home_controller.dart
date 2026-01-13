@@ -54,6 +54,12 @@ class HomeController extends GetxController implements GetxService {
     return responseModel;
   }
 
+  CategoryModel? selectCategoryModel;
+  void updateSelectCategoryModel(CategoryModel value){
+    selectCategoryModel = value;
+    update();
+  }
+
   // FEATURED: Pagination state
   final PaginationState<ProductModel> featuredState =
       PaginationState<ProductModel>();
