@@ -5,7 +5,7 @@ import 'package:lekra/services/theme.dart';
 class OrderStatusButton extends StatelessWidget {
   final bool isSelect;
   final OrderStatusButtonModel orderStatusButtonModel;
-  final VoidCallback onTap; // Add this
+  final VoidCallback onTap;
 
   const OrderStatusButton({
     super.key,

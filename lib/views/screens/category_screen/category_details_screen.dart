@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/product_controller.dart';
 import 'package:lekra/data/models/home/category_model.dart';
-import 'package:lekra/data/models/product_model.dart'; 
+import 'package:lekra/data/models/product_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/shimmer.dart';
+import 'package:lekra/views/screens/category_screen/components/category_filter_bar.dart';
 import 'package:lekra/views/screens/category_screen/components/product_card_category.dart';
 import 'package:lekra/views/screens/product_details_screen/product_details_screen.dart';
 
@@ -101,58 +102,64 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
               child: Text("No Product available "),
             );
           }
-          return SingleChildScrollView(
-            controller: _scrollController,
-            padding: AppConstants.screenPadding,
-            child: GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 16,
-                crossAxisSpacing: 16,
-                childAspectRatio: 0.7,
-              ),
-              itemCount: productController.isLoading ? 4 : itemCount,
-              itemBuilder: (context, index) {
-                if (isInitialLoading) {
-                  final productModel = ProductModel();
-                  return CustomShimmer(
-                    isLoading: true,
-                    child: ProductCardForCategory(product: productModel),
-                  );
-                }
-                if (showLoaderTile && index == items.length) {
-                  final productModel = ProductModel();
-                  return CustomShimmer(
-                    isLoading: true,
-                    child: ProductCardForCategory(product: productModel),
-                  );
-                }
-
-                final product = productController.isLoading
-                    ? ProductModel()
-                    : productController.cateProductList[index];
-
-                return CustomShimmer(
-                  isLoading: productController.isLoading,
-                  child: GestureDetector(
-                    onTap: () {
-                      if (productController.isLoading) {
-                        return;
-                      }
-                      navigate(
-                        context: context,
-                        page: ProductDetailsScreen(
-                          productId: product.id,
-                        ),
-                      );
-                    },
-                    child: ProductCardForCategory(product: product),
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CategoryFilterBar(),
+              SingleChildScrollView(
+                controller: _scrollController,
+                padding: AppConstants.screenPadding,
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 16,
+                    crossAxisSpacing: 16,
+                    childAspectRatio: 0.7,
                   ),
-                );
-              },
-            ),
+                  itemCount: productController.isLoading ? 4 : itemCount,
+                  itemBuilder: (context, index) {
+                    if (isInitialLoading) {
+                      final productModel = ProductModel();
+                      return CustomShimmer(
+                        isLoading: true,
+                        child: ProductCardForCategory(product: productModel),
+                      );
+                    }
+                    if (showLoaderTile && index == items.length) {
+                      final productModel = ProductModel();
+                      return CustomShimmer(
+                        isLoading: true,
+                        child: ProductCardForCategory(product: productModel),
+                      );
+                    }
+
+                    final product = productController.isLoading
+                        ? ProductModel()
+                        : productController.cateProductList[index];
+
+                    return CustomShimmer(
+                      isLoading: productController.isLoading,
+                      child: GestureDetector(
+                        onTap: () {
+                          if (productController.isLoading) {
+                            return;
+                          }
+                          navigate(
+                            context: context,
+                            page: ProductDetailsScreen(
+                              productId: product.id,
+                            ),
+                          );
+                        },
+                        child: ProductCardForCategory(product: product),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           );
         }),
       ),

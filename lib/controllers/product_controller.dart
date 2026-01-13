@@ -8,6 +8,8 @@ import 'package:lekra/data/models/product_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/repositories/product_repo.dart';
 
+enum CateFilterBarEnum { all, price }
+
 class ProductController extends GetxController implements GetxService {
   final ProductRepo productRepo;
   ProductController({required this.productRepo});
@@ -99,43 +101,6 @@ class ProductController extends GetxController implements GetxService {
 
     return responseModel;
   }
-  // List<ProductModel> cateProductList = [];
-  // Future<ResponseModel> fetchCategory({required int? categoryId}) async {
-  //   log('-----------  fetchCategory() -------------');
-  //   ResponseModel responseModel;
-
-  //   isLoading = true;
-  //   update();
-
-  //   try {
-  //     Response response =
-  //         await productRepo.fetchCategoryDetails(categoryId: categoryId);
-
-  //     if (response.statusCode == 200 &&
-  //         response.body['success'] == true &&
-  //         response.body['data']['products'] is List) {
-  //       cateProductList = (response.body['data']['products'] as List)
-  //           .map((product) => ProductModel.fromJson(product))
-  //           .toList();
-
-  //       log("Product length ${cateProductList.length}");
-
-  //       responseModel =
-  //           ResponseModel(true, response.body['message'] ?? "fetchCategory");
-  //     } else {
-  //       log("Product length else ${cateProductList.length}");
-  //       responseModel = ResponseModel(
-  //           false, response.body['message'] ?? "Something Went Wrong");
-  //     }
-  //   } catch (e) {
-  //     responseModel = ResponseModel(false, "Catch");
-  //     log("****** Error ****** $e", name: "fetchCategory");
-  //   }
-
-  //   isLoading = false;
-  //   update();
-  //   return responseModel;
-  // }
 
   ProductModel? productModel;
   Future<ResponseModel> fetchProduct({required int? productId}) async {
@@ -191,8 +156,8 @@ class ProductController extends GetxController implements GetxService {
             true, response.body['message'] ?? "Add to Card success");
         await fetchCard();
       } else {
-       responseModel = ResponseModel(false,
-            response.body['error'] ?? "Error while postAddToCard user");
+        responseModel = ResponseModel(
+            false, response.body['error'] ?? "Error while postAddToCard user");
       }
     } catch (e) {
       log('ERROR AT postAddToCard(): $e');
@@ -221,7 +186,7 @@ class ProductController extends GetxController implements GetxService {
             response.body['message'] ?? "remove to postRemoveToCard success");
         await fetchCard();
       } else {
-       responseModel = ResponseModel(false,
+        responseModel = ResponseModel(false,
             response.body['error'] ?? "Error while postRemoveToCard user");
       }
     } catch (e) {
@@ -270,39 +235,10 @@ class ProductController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  // Future<ResponseModel> fetchCategory({required int? categoryId}) async {
-  //   log('-----------  fetchCategory() -------------');
-  //   ResponseModel responseModel;
-  //   isLoading = true;
-  //   update();
+  CateFilterBarEnum selectCateFilterBar = CateFilterBarEnum.all;
 
-  //   try {
-  //     Response response =
-  //         await categoryRepo.fetchCategoryDetails(categoryId: categoryId);
-  //     if (response.statusCode == 200 &&
-  //         response.body['status'] == true &&
-  //         response.body['data']['products'] is List) {
-  //       cateProductList = (response.body['data']['products'] as List)
-  //           .map((product) => ProductModel.fromJson(product))
-  //           .toList();
-
-  //       log("Product length ${cateProductList.length}");
-
-  //       responseModel =
-  //           ResponseModel(true, response.body['message'] ?? "fetchCategory");
-  //     } else {
-  //               log("Product length else ${cateProductList.length}");
-
-  //       responseModel = ResponseModel(
-  //           false, response.body['message'] ?? "Something Went Wrong");
-  //     }
-  //   } catch (e) {
-  //     responseModel = ResponseModel(false, "Catch");
-  //     log("****** Error ****** $e", name: "fetchCategory");
-  //   }
-
-  //   isLoading = false;
-  //   update();
-  //   return responseModel;
-  // }
+  void updateCateFilterBarEnum(CateFilterBarEnum value) {
+    selectCateFilterBar = value;
+    update();
+  }
 }
