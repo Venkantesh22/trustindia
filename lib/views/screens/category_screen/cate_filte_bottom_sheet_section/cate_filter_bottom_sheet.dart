@@ -79,7 +79,9 @@ class CateFilterBottomSheet extends StatelessWidget {
                     Expanded(
                         child: CustomButton(
                       color: white,
-                      onTap: () {},
+                      onTap: () {
+                        productController.reSetCateFilter();
+                      },
                       child: Text(
                         "Clear all",
                         style: Helper(context).textTheme.bodyLarge?.copyWith(
