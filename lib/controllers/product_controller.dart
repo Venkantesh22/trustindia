@@ -8,7 +8,7 @@ import 'package:lekra/data/models/product_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/repositories/product_repo.dart';
 
-enum CateFilterBarEnum { all, price }
+enum CateFilterBarEnum { all, price, none }
 
 enum PriceSortOrder { lowToHigh, highToLow, none }
 
@@ -261,5 +261,9 @@ class ProductController extends GetxController implements GetxService {
     update();
   }
 
-  void reSetCateFilter() {}
+  void reSetCateFilter() {
+    updateCateFilterBarEnum(CateFilterBarEnum.all);
+    updatePriceSort(PriceSortOrder.none);
+    update();
+  }
 }
