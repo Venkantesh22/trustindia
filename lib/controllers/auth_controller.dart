@@ -461,7 +461,7 @@ class AuthController extends GetxController implements GetxService {
         passwordController.clear();
       } else {
         responseModel = ResponseModel(
-            false, response.body['error'] ?? "Error while updatePassword ");
+            false, response.body['message'] ?? "Error while updatePassword ");
       }
     } catch (e) {
       log('ERROR AT updatePassword(): $e');

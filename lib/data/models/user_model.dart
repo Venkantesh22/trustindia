@@ -54,9 +54,7 @@ class UserModel {
         updatedAt: json["updated_at"] == null
             ? null
             : DateTime.parse(json["updated_at"]),
-        dob: json["dob"] == null
-            ? null
-            : DateTime.parse(json["dob"]),
+        dob: json["dob"] == null ? null : DateTime.parse(json["dob"]),
         currentWallet: json["current_wallet"] == null
             ? null
             : (json["current_wallet"] is num
@@ -91,6 +89,6 @@ class UserModel {
       };
 
   String get fullName => "$firstName $lastName";
-  bool get isPhoneVerified => isVerified != 1 ? true : false;
+  bool get isPhoneVerified => isVerified == 1 ? true : false;
   String get dobFormat => DateFormatters().dMyDash.format(dob ?? getDateTime());
 }

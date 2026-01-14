@@ -67,21 +67,21 @@ class _HomeBannerState extends State<HomeBanner> {
               ),
             );
           }),
-          // const SizedBox(height: 10),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: List.generate(
-          //     basicController.isLoading ? 4 : basicController.sliders.length,
-          //     (index) {
-          //       return CustomShimmer(
-          //         isLoading: basicController.isLoading,
-          //         child: BannerIndicatorWidget(
-          //           isActive: currentIndex == index,
-          //         ),
-          //       );
-          //     },
-          //   ),
-          // ),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              basicController.isLoading ? 4 : basicController.sliders.length,
+              (index) {
+                return CustomShimmer(
+                  isLoading: basicController.isLoading,
+                  child: BannerIndicatorWidget(
+                    isActive: currentIndex == index,
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       );
     });
