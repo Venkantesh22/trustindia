@@ -25,8 +25,13 @@ class ProductController extends GetxController implements GetxService {
   List<ProductModel> get cateProductList => cateProductListState.items;
 
   // List<ProductModel> cateProductList = [];
-  Future<ResponseModel> fetchCategory(
-      {int? categoryId, bool loadMore = false, bool refresh = false}) async {
+  Future<ResponseModel> fetchCategory({
+    int? categoryId,
+    bool loadMore = false,
+    bool refresh = false,
+    bool lowToHight = false,
+    bool hightToLow = false,
+  }) async {
     log('fetchCategory called (loadMore: $loadMore, refresh: $refresh)');
     ResponseModel responseModel;
     if (refresh) {
@@ -51,7 +56,10 @@ class ProductController extends GetxController implements GetxService {
 
     try {
       Response response = await productRepo.fetchCategoryDetails(
-          categoryId: categoryId, page: cateProductListState.page);
+          categoryId: categoryId,
+          page: cateProductListState.page,
+          lowToHight: lowToHight,
+          hightToLow: hightToLow);
 
       if (response.statusCode == 200 &&
           response.body['success'] == true &&
@@ -79,7 +87,6 @@ class ProductController extends GetxController implements GetxService {
           cateProductListState.dedupeIds
               .addAll(pagination.data.map((e) => e.id));
         }
-        updateCateFilter();
 
         responseModel =
             ResponseModel(true, response.body['message'] ?? "fetchCategory");
@@ -254,19 +261,5 @@ class ProductController extends GetxController implements GetxService {
     update();
   }
 
-  void updateCateFilter() {
-    if (selectedPriceSort == PriceSortOrder.highToLow) {
-      cateProductListState.items.sort(
-        (a, b) => (b.discountedPrice ?? 0).compareTo(a.discountedPrice ?? 0),
-      );
-      log("Sorting: High to Low1");
-    } else if (selectedPriceSort == PriceSortOrder.lowToHigh) {
-      cateProductListState.items.sort(
-        (a, b) => (a.discountedPrice ?? 0).compareTo(b.discountedPrice ?? 0),
-      );
-      log("Sorting: Low to High1");
-    }
-
-    update();
-  }
+  void reSetCateFilter() {}
 }

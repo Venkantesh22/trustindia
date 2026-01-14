@@ -7,9 +7,16 @@ class ProductRepo {
   final ApiClient apiClient;
   const ProductRepo({required this.apiClient});
 
-  Future<Response> fetchCategoryDetails({required int? categoryId, int? page = 1}) async =>
-      await apiClient.getData("${AppConstants.getCategoryDetails}/$categoryId?page=$page",
+  Future<Response> fetchCategoryDetails({
+    required int? categoryId,
+    int? page = 1,
+    bool lowToHight = false,
+    bool hightToLow = false,
+  }) async =>
+      await apiClient.getData(
+          "${AppConstants.getCategoryDetails}/$categoryId?page=$page&sort=${lowToHight ? "low_high" : hightToLow ? "high_low" : null}",
           "fetchCategoryDetails");
+
   Future<Response> fetchProductDetails({required int? productId}) async =>
       await apiClient.getData("${AppConstants.getProductDetails}/$productId",
           "fetchProductDetails");

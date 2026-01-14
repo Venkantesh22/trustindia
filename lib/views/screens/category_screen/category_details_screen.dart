@@ -24,8 +24,9 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.find<ProductController>()
-          .fetchCategory(categoryId: widget.categoryModel.id);
+      final productController = Get.find<ProductController>();
+      productController.fetchCategory(categoryId: widget.categoryModel.id);
+      // productController.
     });
     _scrollController.addListener(_onScroll);
   }

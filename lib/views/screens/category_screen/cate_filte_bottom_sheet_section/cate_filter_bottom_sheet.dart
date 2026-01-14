@@ -89,13 +89,18 @@ class CateFilterBottomSheet extends StatelessWidget {
                             ),
                       ),
                     )),
-                    SizedBox(width: 6),
+                    const SizedBox(width: 6),
                     Expanded(
                         child: CustomButton(
                       color: primaryColor,
                       onTap: () async {
                         await productController.fetchCategory(
-                            categoryId: homeController.selectCategoryModel?.id);
+                          categoryId: homeController.selectCategoryModel?.id,
+                          lowToHight: productController.selectedPriceSort ==
+                              PriceSortOrder.lowToHigh,
+                          hightToLow: productController.selectedPriceSort ==
+                              PriceSortOrder.highToLow,
+                        );
                       },
                       child: Text(
                         "Apply",
