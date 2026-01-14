@@ -10,6 +10,7 @@ import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/address/screen/add_address_screen.dart';
+import 'package:lekra/views/screens/checkout/checkout_screen/components/check_box_of_order_user_reward.dart';
 import 'package:lekra/views/screens/checkout/checkout_screen/components/textbox_title.dart';
 
 class BillingFormSection extends StatefulWidget {
@@ -213,7 +214,8 @@ class _BillingFormSectionState extends State<BillingFormSection> {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
+              CheckBoxOfOrderUserReward()
             ],
           );
         }),

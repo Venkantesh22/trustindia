@@ -179,4 +179,11 @@ class OrderController extends GetxController implements GetxService {
   }
 
   List<ProductModel> orderFilterList = [];
+
+  bool userRewordCoinsState = false;
+
+  void updateRewordCoinsState({required bool? value}) {
+    userRewordCoinsState = value ?? false;
+    update();
+  }
 }
