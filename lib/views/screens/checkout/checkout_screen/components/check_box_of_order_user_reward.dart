@@ -30,9 +30,10 @@ class CheckBoxOfOrderUserReward extends StatelessWidget {
                     value: orderController.userRewordCoinsState,
                     onChanged: (value) {
                       orderController.updateRewordCoinsState(value: value);
+                      productController.fetchCard(isUserRewardCoin: value);
                     }),
                 Text(
-                  "You can user ${productController.cardModel?.rewardPointsUsed}",
+                  "You can user 10% Coins",
                   style: Helper(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                         fontSize: 14,

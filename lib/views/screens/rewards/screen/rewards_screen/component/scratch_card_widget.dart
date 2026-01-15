@@ -76,7 +76,7 @@ class ScratchCardWidget extends StatelessWidget {
                     Text(
                       scratchCardModel.isDiscount
                           ? "${scratchCardModel.rewardPoints} OFF"
-                          : "${scratchCardModel.rewardPoints} Points",
+                          : "${scratchCardModel.rewardPoints} Coins",
                       style: Helper(context).textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 26,

@@ -26,13 +26,10 @@ class _RewardsScreenState extends State<RewardsScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
-      appBar:
-          CustomAppbarDrawer( title: "Your Rewards"),
+      appBar: CustomAppbarDrawer(title: "Your Rewards"),
       body: SingleChildScrollView(
         padding: AppConstants.screenPadding,
         child: Column(
@@ -133,7 +130,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                   "Revealed!",
                   scratchCardModel.isDiscount
                       ? "You’ve unlocked ${scratchCardModel.rewardPoints} OFF 🎉"
-                      : "You’ve won ${scratchCardModel.rewardPoints} points 🎁",
+                      : "You’ve won ${scratchCardModel.rewardPoints} Coins 🎁",
                   snackPosition: SnackPosition.BOTTOM,
                   backgroundColor: Colors.black87,
                   colorText: Colors.white,
@@ -166,7 +163,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                     Text(
                       scratchCardModel.isDiscount
                           ? "${scratchCardModel.rewardPoints} OFF"
-                          : "${scratchCardModel.rewardPoints} Points",
+                          : "${scratchCardModel.rewardPoints} Coins",
                       style: Helper(context).textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 26,
