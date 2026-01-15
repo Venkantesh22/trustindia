@@ -6,6 +6,7 @@ import 'package:lekra/data/models/home/category_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
+import 'package:lekra/views/pay_section/pay_home/screen/pay_home_screen.dart';
 import 'package:lekra/views/screens/category_screen/category_details_screen.dart';
 
 class ExploreCategorySection extends StatelessWidget {
@@ -37,13 +38,43 @@ class ExploreCategorySection extends StatelessWidget {
             height: 110,
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 4),
-              itemCount: homeController.categoryList.length,
+              itemCount: homeController.categoryList.length + 1,
               scrollDirection: Axis.horizontal,
               separatorBuilder: (_, __) => const SizedBox(width: 16),
               itemBuilder: (context, index) {
+                if (index == 0) {
+                  return Column(
+                    children: [
+                      InkWell(
+                        borderRadius: BorderRadius.circular(50),
+                        onTap: () {
+                          navigate(context: context, page: PayHomeScreen());
+                        },
+                        child: const CircleAvatar(
+                            radius: 32,
+                            backgroundColor: white,
+                            child: CustomImage(
+                              path: Assets.imagesLogo,
+                              width: 40,
+                              height: 40,
+                              fit: BoxFit.cover,
+                            )),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "${AppConstants.appName} Pay",
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  );
+                }
                 final category = homeController.isLoading
                     ? CategoryModel()
-                    : homeController.categoryList[index];
+                    : homeController.categoryList[index - 1];
+
                 return _CategoryCard(category: category);
               },
             ),
