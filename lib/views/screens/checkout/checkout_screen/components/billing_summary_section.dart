@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/controllers/product_controller.dart';
@@ -51,7 +50,8 @@ class BillingSummarySection extends StatelessWidget {
             return orderController.userRewordCoinsState
                 ? RowBillingText(
                     label: "Reward Coin",
-                    price: productController.cardModel?.discountFormat ?? "",
+                    price:
+                        productController.cardModel?.rewardDiscountFormat ?? "",
                   )
                 : const SizedBox();
           }),
