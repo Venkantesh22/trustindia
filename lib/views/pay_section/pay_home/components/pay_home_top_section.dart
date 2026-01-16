@@ -51,7 +51,9 @@ class PayTopSection extends StatelessWidget {
                   )
                 ],
               ),
-              const SizedBox(height: 18),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.02,
+              ),
               GetBuilder<AuthController>(builder: (authController) {
                 return Row(
                   children: [

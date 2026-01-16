@@ -6,7 +6,7 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/common_button.dart';
 import 'package:lekra/views/base/shimmer.dart';
-import 'package:lekra/views/pay_section/pay_home/transaction_screen.dart/transaction_screen.dart';
+import 'package:lekra/views/pay_section/transaction_screen.dart/transaction_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/wallet_screen/components/transaction_container.dart';
 
 class PayHomeRecentTransactionSection extends StatelessWidget {
@@ -20,6 +20,7 @@ class PayHomeRecentTransactionSection extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
+          SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -30,35 +31,44 @@ class PayHomeRecentTransactionSection extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
               ),
-              CustomButton(
-                onTap: () {
-                  navigate(context: context, page: TransactionScreen());
-                },
-                color: white,
-                borderColor: primaryColor,
-                radius: 100,
-                child: Row(
-                  children: [
-                    Text(
-                      "view all",
-                      style: Helper(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          color: primaryColor),
-                    ),
-                    const SizedBox(width: 6),
-                    CircleAvatar(
-                      radius: 12,
-                      backgroundColor: primaryColor,
-                      child: const Icon(
-                        Icons.arrow_forward_ios,
+              GetBuilder<WalletController>(builder: (walletController) {
+                return walletController.transactionList.isNotEmpty
+                    ? CustomButton(
+                        onTap: () {
+                          navigate(
+                              context: context,
+                              page: const TransactionScreen());
+                        },
                         color: white,
-                        size: 18,
-                      ),
-                    )
-                  ],
-                ),
-              )
+                        borderColor: primaryColor,
+                        radius: 100,
+                        child: Row(
+                          children: [
+                            Text(
+                              "view all",
+                              style: Helper(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                      color: primaryColor),
+                            ),
+                            const SizedBox(width: 6),
+                            CircleAvatar(
+                              radius: 12,
+                              backgroundColor: primaryColor,
+                              child: const Icon(
+                                Icons.arrow_forward_ios,
+                                color: white,
+                                size: 18,
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    : const SizedBox();
+              })
             ],
           ),
           const SizedBox(height: 8),
@@ -89,7 +99,7 @@ class PayHomeRecentTransactionSection extends StatelessWidget {
               // 2️⃣ EMPTY STATE
               if (items.isEmpty) {
                 return const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 40),
+                  padding: EdgeInsets.only(top: 60),
                   child: Center(
                     child: Text(
                       "No transactions found",
