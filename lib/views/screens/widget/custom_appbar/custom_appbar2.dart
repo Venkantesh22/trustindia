@@ -5,10 +5,12 @@ import 'package:lekra/services/theme.dart';
 class CustomAppBar2 extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showBackButton;
+  final bool centerTitle;
   const CustomAppBar2({
     super.key,
     required this.title,
     this.showBackButton = true,
+    this.centerTitle = true,
   });
 
   @override
@@ -28,7 +30,7 @@ class CustomAppBar2 extends StatelessWidget implements PreferredSizeWidget {
                 color: black,
               ))
           : const SizedBox(),
-      centerTitle: true,
+      centerTitle: centerTitle,
       title: Text(
         title,
         style: Helper(context)

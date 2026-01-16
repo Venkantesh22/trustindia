@@ -2,22 +2,6 @@
 class Assets {
   Assets._();
   
-  /// Assets for images3tL32ZC2WfE2fOx0UFPjOxGk7lGey11d
-  /// assets/images/3tL32ZC2WfE2fOx0UFPjOxGk7lGey11d.png
-  static const String images3tL32ZC2WfE2fOx0UFPjOxGk7lGey11d = "assets/images/3tL32ZC2WfE2fOx0UFPjOxGk7lGey11d.png";
-
-  /// Assets for imagesBanner1
-  /// assets/images/banner1.png
-  static const String imagesBanner1 = "assets/images/banner1.png";
-
-  /// Assets for imagesBanner2
-  /// assets/images/banner2.webp
-  static const String imagesBanner2 = "assets/images/banner2.webp";
-
-  /// Assets for imagesBanner3
-  /// assets/images/banner3.png
-  static const String imagesBanner3 = "assets/images/banner3.png";
-
   /// Assets for imagesCalender
   /// assets/images/calender.png
   static const String imagesCalender = "assets/images/calender.png";
@@ -98,6 +82,14 @@ class Assets {
   /// assets/images/order_status_confirmed.png
   static const String imagesOrderStatusConfirmed = "assets/images/order_status_confirmed.png";
 
+  /// Assets for imagesPayUserProfile
+  /// assets/images/pay-user-profile.png
+  static const String imagesPayUserProfile = "assets/images/pay-user-profile.png";
+
+  /// Assets for imagesPayWallet
+  /// assets/images/pay-wallet.png
+  static const String imagesPayWallet = "assets/images/pay-wallet.png";
+
   /// Assets for imagesPhonePe
   /// assets/images/PhonePe.png
   static const String imagesPhonePe = "assets/images/PhonePe.png";
@@ -109,6 +101,10 @@ class Assets {
   /// Assets for imagesPremium
   /// assets/images/premium.png
   static const String imagesPremium = "assets/images/premium.png";
+
+  /// Assets for imagesRechargeDemo
+  /// assets/images/recharge-demo.png
+  static const String imagesRechargeDemo = "assets/images/recharge-demo.png";
 
   /// Assets for imagesScratch
   /// assets/images/scratch.jpg
@@ -129,10 +125,6 @@ class Assets {
   /// Assets for imagesShopDome
   /// assets/images/shop-dome.png
   static const String imagesShopDome = "assets/images/shop-dome.png";
-
-  /// Assets for imagesStitchRewardsHistoryWallet
-  /// assets/images/stitch_rewards_history_wallet.zip
-  static const String imagesStitchRewardsHistoryWallet = "assets/images/stitch_rewards_history_wallet.zip";
 
   /// Assets for imagesUpi
   /// assets/images/upi.png

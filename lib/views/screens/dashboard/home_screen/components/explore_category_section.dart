@@ -6,7 +6,7 @@ import 'package:lekra/data/models/home/category_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
-import 'package:lekra/views/pay_section/pay_home/screen/pay_home_screen.dart';
+import 'package:lekra/views/pay_section/pay_home/pay_home_screen.dart';
 import 'package:lekra/views/screens/category_screen/category_details_screen.dart';
 
 class ExploreCategorySection extends StatelessWidget {

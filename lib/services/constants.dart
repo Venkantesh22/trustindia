@@ -139,6 +139,7 @@ class AppConstants {
   // static String baseUrl = 'http://192.168.1.5:9000/'; ///USE FOR LOCAL
   //TODO: Change Base Url
   static String appName = 'Sathiya';
+  static String payAppName = 'Sathiya Pay';
 
   static const String agoraAppId = 'c87b710048c049f59570bd1895b7e561';
 
