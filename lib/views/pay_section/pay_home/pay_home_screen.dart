@@ -13,7 +13,7 @@ class PayHomeScreen extends StatefulWidget {
 class _PayHomeScreenState extends State<PayHomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

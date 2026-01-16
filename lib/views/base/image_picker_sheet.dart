@@ -35,8 +35,9 @@ class ShowImageOptions extends StatelessWidget {
         topRight: Radius.circular(10.0),
       ),
       child: Container(
+        padding: EdgeInsets.only(bottom: 50),
         width: double.infinity,
-        height: 70.0,
+        height: 120,
         decoration: BoxDecoration(
           color: Colors.grey[200],
         ),
@@ -49,7 +50,8 @@ class ShowImageOptions extends StatelessWidget {
               InkWell(
                 onTap: () async {
                   var navigator = Navigator.of(context);
-                  File? data = await ServiceController().pickImage(ImageSource.gallery, context);
+                  File? data = await ServiceController()
+                      .pickImage(ImageSource.gallery, context);
                   navigator.pop(data);
                 },
                 child: Ink(
@@ -78,7 +80,8 @@ class ShowImageOptions extends StatelessWidget {
               InkWell(
                 onTap: () async {
                   var navigator = Navigator.of(context);
-                  File? data = await ServiceController().pickImage(ImageSource.camera, context);
+                  File? data = await ServiceController()
+                      .pickImage(ImageSource.camera, context);
 
                   navigator.pop(data);
                 },

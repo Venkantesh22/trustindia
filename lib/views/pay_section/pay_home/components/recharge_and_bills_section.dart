@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/custom_image.dart';
+import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no_screen.dart/mobile_recharge_select_no_screen.dart';
 
 class RechargeAndBillsSection extends StatelessWidget {
   const RechargeAndBillsSection({
@@ -22,7 +23,7 @@ class RechargeAndBillsSection extends StatelessWidget {
                 ),
           ),
           GridView.builder(
-              padding: EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 20),
               shrinkWrap: true,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
@@ -32,24 +33,31 @@ class RechargeAndBillsSection extends StatelessWidget {
               ),
               itemCount: 10,
               itemBuilder: (context, index) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const CustomImage(
-                      path: Assets.imagesRechargeDemo,
-                      height: 56,
-                      width: 56,
-                      radius: 100,
-                    ),
-                    Text(
-                      "Mobile Recharge",
-                      textAlign: TextAlign.center,
-                      style: Helper(context).textTheme.bodySmall?.copyWith(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    )
-                  ],
+                return GestureDetector(
+                  onTap: () {
+                    navigate(
+                        context: context,
+                        page: const MobileRechargeSelectNoScreen());
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const CustomImage(
+                        path: Assets.imagesRechargeDemo,
+                        height: 56,
+                        width: 56,
+                        radius: 100,
+                      ),
+                      Text(
+                        "Mobile Recharge",
+                        textAlign: TextAlign.center,
+                        style: Helper(context).textTheme.bodySmall?.copyWith(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      )
+                    ],
+                  ),
                 );
               })
         ],
