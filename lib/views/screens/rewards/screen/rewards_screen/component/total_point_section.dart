@@ -64,8 +64,15 @@ class TotalPointSection extends StatelessWidget {
               navigate(context: context, page: const RewardHistoryScreen());
             },
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Text(
+                  "10 coins = ₹ 1",
+                  style: Helper(context).textTheme.bodyMedium?.copyWith(
+                      fontSize: 12,
+                      color: primaryColor,
+                      fontWeight: FontWeight.bold),
+                ),
                 Container(
                   decoration: BoxDecoration(
                     border: Border(

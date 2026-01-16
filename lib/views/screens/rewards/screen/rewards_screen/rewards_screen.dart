@@ -7,6 +7,7 @@ import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/rewards/screen/reward_details_screen/reward_details_screen.dart';
 import 'package:lekra/views/screens/rewards/screen/rewards_screen/component/scratch_card_widget.dart';
 import 'package:lekra/views/screens/rewards/screen/rewards_screen/component/total_point_section.dart';
+import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_drawer.dart';
 import 'package:scratcher/scratcher.dart';
 
@@ -29,7 +30,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppbarDrawer(title: "Your Rewards"),
+      appBar: const CustomAppBar2(title: "Rewards"),
       body: SingleChildScrollView(
         padding: AppConstants.screenPadding,
         child: Column(
