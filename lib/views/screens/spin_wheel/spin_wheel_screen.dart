@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:get/get.dart';
+import 'package:lekra/controllers/dashboard_controller.dart';
 
 import 'package:lekra/controllers/reward_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/order_screem/screen/order_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_back_button.dart';
 
@@ -193,10 +195,12 @@ class _SpinWheelPageState extends State<SpinWheelPage> {
                                     showToast(
                                         message: value.message,
                                         typeCheck: value.isSuccess);
+                                    Get.find<DashBoardController>().dashPage =
+                                        2;
                                     navigate(
                                         isRemoveUntil: true,
                                         context: context,
-                                        page: OrderScreen());
+                                        page: const DashboardScreen());
                                   } else {
                                     showToast(
                                         message: value.message,
