@@ -68,7 +68,7 @@ class _RewardDetailsScreenState extends State<RewardDetailsScreen> {
                   Text(
                     widget.scratchCardModel.isDiscount
                         ? "${widget.scratchCardModel.rewardPoints} Discount"
-                        : "${widget.scratchCardModel.rewardPoints} Points Credited",
+                        : "${widget.scratchCardModel.rewardPoints} Coins Credited",
                     style: Helper(context)
                         .textTheme
                         .displayLarge

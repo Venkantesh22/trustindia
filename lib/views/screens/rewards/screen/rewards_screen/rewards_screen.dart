@@ -8,7 +8,6 @@ import 'package:lekra/views/screens/rewards/screen/reward_details_screen/reward_
 import 'package:lekra/views/screens/rewards/screen/rewards_screen/component/scratch_card_widget.dart';
 import 'package:lekra/views/screens/rewards/screen/rewards_screen/component/total_point_section.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
-import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_drawer.dart';
 import 'package:scratcher/scratcher.dart';
 
 class RewardsScreen extends StatefulWidget {
