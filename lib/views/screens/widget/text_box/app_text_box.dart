@@ -28,6 +28,7 @@ class AppTextFieldWithHeading extends StatefulWidget {
   final double borderRadius;
   final double hight;
   final Function(String)? onChanged;
+  final TextStyle? style;
 
   AppTextFieldWithHeading({
     super.key,
@@ -52,6 +53,7 @@ class AppTextFieldWithHeading extends StatefulWidget {
     this.onChanged,
     this.borderRadius = 12.0,
     this.hight = 48,
+    this.style,
   });
 
   Color get borderColorLocal => borderColor ?? grey.withValues(alpha: 0.5);
@@ -134,6 +136,7 @@ class _AppTextFieldWithHeadingState extends State<AppTextFieldWithHeading> {
             inputFormatters: widget.inputFormatters,
             maxLines: effectiveMaxLines,
             readOnly: widget.readOnly,
+            style: widget.style,
             onChanged: widget.onChanged,
             decoration: CustomDecoration.inputDecoration(
               borderRadius: widget.borderRadius,

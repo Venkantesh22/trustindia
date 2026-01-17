@@ -14,6 +14,10 @@ class Assets {
   /// assets/images/congratulations-apply-coupon.png
   static const String imagesCongratulationsApplyCoupon = "assets/images/congratulations-apply-coupon.png";
 
+  /// Assets for imagesContext
+  /// assets/images/context.png
+  static const String imagesContext = "assets/images/context.png";
+
   /// Assets for imagesCureentBenefit
   /// assets/images/cureent-benefit.png
   static const String imagesCureentBenefit = "assets/images/cureent-benefit.png";
