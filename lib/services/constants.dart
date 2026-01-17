@@ -235,6 +235,7 @@ class AppConstants {
   //  Piracy center
   static const String getPrivacyPolicy = "api/privacy-policy";
   static const String getTermsConditions = "api/terms-conditions";
+  static const String getSupport = "api/support";
 
 // Padding
   static const double horizontalPadding = 16;

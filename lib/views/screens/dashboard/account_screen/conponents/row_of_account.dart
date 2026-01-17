@@ -11,6 +11,7 @@ import 'package:lekra/views/screens/dashboard/account_screen/screen/privacy_cent
 import 'package:lekra/views/screens/dashboard/account_screen/screen/terms_conditions_screen.dart';
 import 'package:lekra/views/screens/rewards/screen/rewards_screen/rewards_screen.dart';
 import 'package:lekra/views/screens/subscription_plan/subscription_category/subscription_category_screen.dart';
+import 'package:lekra/views/screens/support/support_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RowOfAccount extends StatelessWidget {
@@ -148,7 +149,7 @@ List<RowOfAccountModel> rowOfAccountModelList = [
     title: "Help & Support",
     icon: Assets.svgsHelpSupport,
     onTap: (context) {
-      // navigate(context: context, page: SubscriptionCategoryPlan());
+      navigate(context: context, page: HelpAndSupport());
     },
   ),
   RowOfAccountModel(

@@ -35,6 +35,9 @@ class BasicRepo {
   Future<Response> fetchTermsConditions() async => await apiClient.getData(
       AppConstants.getTermsConditions, "fetchTermsConditions");
 
+  Future<Response> fetchSupport() async =>
+      await apiClient.getData(AppConstants.getSupport, "fetchSupport");
+
   Future<bool> saveIsDemoShow(
     bool value,
   ) async {

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lekra/data/models/body/address_model.dart';
 import 'package:lekra/data/models/home/banner_model';
 import 'package:lekra/data/models/response/response_model.dart';
+import 'package:lekra/data/models/support_model.dart';
 import 'package:lekra/data/repositories/basic_repo.dart';
 
 class BasicController extends GetxController implements GetxService {
@@ -260,6 +261,7 @@ class BasicController extends GetxController implements GetxService {
   }
 
   String termsConditions = "";
+
   Future<ResponseModel> fetchTermsConditions() async {
     log('----------- fetchTermsConditions Called() -------------');
     ResponseModel responseModel;
@@ -289,6 +291,42 @@ class BasicController extends GetxController implements GetxService {
       responseModel = ResponseModel(false, "Catch");
       log("****** fetchTermsConditions ****** $e",
           name: "fetchTermsConditions");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  SupportModel? supportModel;
+  Future<ResponseModel> fetchSupport() async {
+    log('----------- fetchSupport Called() -------------');
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+
+    try {
+      Response response = await basicRepo.fetchSupport();
+
+      // ✅ Correct key is 'status'
+      if (response.statusCode == 200 &&
+          response.body['status'] == true &&
+          response.body['data'] is Map) {
+        supportModel = SupportModel.fromJson(response.body['data']);
+
+        responseModel = ResponseModel(
+          true,
+          response.body['message'] ?? "fetchSupport fetched",
+        );
+      } else {
+        responseModel = ResponseModel(
+          false,
+          response.body['error'] ?? "Something went wrong ",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** fetchSupport ****** $e", name: "fetchSupport");
     }
 
     isLoading = false;

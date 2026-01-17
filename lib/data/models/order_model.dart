@@ -76,5 +76,5 @@ class OrderModel {
         "products": products == null
             ? []
             : List<dynamic>.from(products!.map((x) => x.toJson())),
-      };
+      }; 
 }
