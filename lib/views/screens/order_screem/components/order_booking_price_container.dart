@@ -64,7 +64,7 @@ class OrderBookingPriceDetailsContainer extends StatelessWidget {
                             fontWeight: FontWeight.bold, fontSize: 18)),
                   ],
                 ),
-                OrderStatusContainer(productModel: widget.productModel)
+                // OrderStatusContainer(productModel: widget.productModel)
               ],
             ),
             const Padding(

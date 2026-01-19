@@ -110,12 +110,12 @@ class OrderController extends GetxController implements GetxService {
 
     try {
       Response response = await orderRepo.fetchOrder();
-
+      orderFilterList.clear();
+      orderList.clear();
       if (response.statusCode == 200 && response.body['status'] == true) {
         orderList = (response.body["data"] as List)
             .map((order) => OrderModel.fromJson(order))
             .toList();
-        // Clear before adding
         orderProductList.clear();
 
         for (var order in response.body["data"]) {

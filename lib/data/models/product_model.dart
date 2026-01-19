@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:lekra/generated/assets.dart';
 import 'package:lekra/services/constants.dart';
 
 class ProductModel {
@@ -101,8 +102,10 @@ class ProductModel {
 
   // ✅ Formatters for display
   String get priceFormat => PriceConverter.convertToNumberFormat(price ?? 0.0);
+
   String get discountedPriceFormat =>
       PriceConverter.convertToNumberFormat(discountedPrice ?? price ?? 0.0);
+
   String get offersFormat {
     if (offers == null || offers!.isEmpty) return "";
     if (offerType == "percentage") {
@@ -111,6 +114,18 @@ class ProductModel {
       return offers ?? "";
     }
   }
+
+  String? get orderStatus => status == "pending"
+      ? Assets.imagesOrderStatusConfirmed
+      : status == "processing"
+          ? Assets.imagesOrderStatusConfirmed
+          : status == "shipped"
+              ? Assets.imagesOrderStatusConfirmed
+              : status == "delivered"
+                  ? Assets.imagesOrderStatusConfirmed
+                  : status == "cancelled"
+                      ? Assets.imagesOrderStatusCancel
+                      : null;
 }
 
 class Image {

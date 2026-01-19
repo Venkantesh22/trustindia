@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/basic_controller.dart';
@@ -8,6 +10,7 @@ import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/order_screem/components/order_billing_infor_section.dart';
 import 'package:lekra/views/screens/order_screem/components/order_booking_price_container.dart';
 import 'package:lekra/views/screens/order_screem/components/order_product_section.dart';
+import 'package:lekra/views/screens/order_screem/screen/order_status_widget.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
@@ -43,6 +46,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         child: GetBuilder<OrderController>(builder: (orderController) {
           return Column(
             children: [
+              OrderStatusWidget(widget: widget,),
               OrderBookingPriceDetailsContainer(widget: widget),
               const SizedBox(
                 height: 14,
