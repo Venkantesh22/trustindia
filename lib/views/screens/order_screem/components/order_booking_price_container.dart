@@ -6,7 +6,6 @@ import 'package:lekra/services/date_formatters_and_converters.dart';
 import 'package:lekra/services/theme.dart' as Colors;
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/order_screem/screen/order_details_screen.dart';
-import 'package:lekra/views/screens/widget/order_status_container.dart';
 
 class OrderBookingPriceDetailsContainer extends StatelessWidget {
   const OrderBookingPriceDetailsContainer({

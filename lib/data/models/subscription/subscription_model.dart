@@ -60,7 +60,4 @@ class SubscriptionModel {
 
   String get discountPriceFormat => PriceConverter.convertToNumberFormat(
       double.parse(discountPrice ?? "0.0"));
-
-
-
 }

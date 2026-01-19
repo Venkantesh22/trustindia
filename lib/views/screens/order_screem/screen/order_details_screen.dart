@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/basic_controller.dart';
@@ -46,7 +44,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         child: GetBuilder<OrderController>(builder: (orderController) {
           return Column(
             children: [
-              OrderStatusWidget(widget: widget,),
+              OrderStatusWidget(
+                widget: widget,
+              ),
               OrderBookingPriceDetailsContainer(widget: widget),
               const SizedBox(
                 height: 14,

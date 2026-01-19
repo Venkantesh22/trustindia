@@ -71,19 +71,32 @@ class _SubscriptionDetailsScreenState extends State<SubscriptionDetailsScreen> {
                   const SizedBox(
                     height: 30,
                   ),
+                  subscriptionController.selectSubscription?.discountPrice !=
+                              null &&
+                          subscriptionController
+                                  .selectSubscription?.discountPrice !=
+                              "0"
+                      ? Text(
+                          subscriptionController
+                                  .selectSubscription?.priceFormat ??
+                              "",
+                          style: Helper(context).textTheme.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: grey,
+                                decoration: TextDecoration.lineThrough,
+                                decorationColor: grey,
+                                decorationThickness: 2,
+                              ))
+                      : SizedBox(),
                   Text(
-                      subscriptionController.selectSubscription?.priceFormat ??
-                          "",
-                      style: Helper(context).textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20,
-                            color: grey,
-                            decoration: TextDecoration.lineThrough,
-                            decorationColor: grey,
-                            decorationThickness: 2,
-                          )),
-                  Text(
-                    "${subscriptionController.selectSubscription?.discountPriceFormat ?? ""}/month",
+                    subscriptionController.selectSubscription?.discountPrice !=
+                                null &&
+                            subscriptionController
+                                    .selectSubscription?.discountPrice !=
+                                "0"
+                        ? "${subscriptionController.selectSubscription?.discountPriceFormat ?? ""}/ ${subscriptionController.selectSubscription?.timePeriods} day"
+                        : "${subscriptionController.selectSubscription?.priceFormat ?? ""}/ ${subscriptionController.selectSubscription?.timePeriods} day",
                     style: Helper(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w500,
                           fontSize: 20,

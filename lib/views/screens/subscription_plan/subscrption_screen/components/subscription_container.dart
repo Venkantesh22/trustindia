@@ -38,27 +38,40 @@ class SubscriptionContainer extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                subscription?.priceFormat ?? "",
-                style: Helper(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                      color: grey,
-                      decoration: TextDecoration.lineThrough,
-                      decorationColor: grey,
-                      decorationThickness: 2,
-                    ),
-              ),
+              subscription?.discountPrice != null &&
+                      subscription?.discountPrice != "0"
+                  ? Text(
+                      subscription?.priceFormat ?? "",
+                      style: Helper(context).textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20,
+                            color: grey,
+                            decoration: TextDecoration.lineThrough,
+                            decorationColor: grey,
+                            decorationThickness: 2,
+                          ),
+                    )
+                  : const SizedBox(),
               RichText(
                 text: TextSpan(
-                  text: subscription?.discountPriceFormat,
+                  text: subscription?.discountPrice != null &&
+                          subscription?.discountPrice != "0"
+                      ? subscription?.discountPriceFormat
+                      : subscription?.priceFormat ?? "",
                   style: Helper(context).textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.w700,
                         fontSize: 36,
                       ),
                   children: <TextSpan>[
                     TextSpan(
-                      text: " /month",
+                      text: " / ",
+                      style: Helper(context).textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                          color: black),
+                    ),
+                    TextSpan(
+                      text: "${subscription?.timePeriods} day",
                       style: Helper(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w700,
                           fontSize: 16,
