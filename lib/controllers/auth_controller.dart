@@ -248,7 +248,7 @@ class AuthController extends GetxController implements GetxService {
         var userData = response.body['user'];
 
         if (userData != null) {
-          isPhoneNumberVerified = (userData['otp_verified'].toString() == "1");
+          isPhoneNumberVerified = (userData['is_verified'] == 1);
 
           userPhoneNumber = userData['mobile']?.toString();
         }

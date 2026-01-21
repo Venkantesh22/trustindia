@@ -36,304 +36,313 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: loginPageBg,
       body: Center(
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-              color: white,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                    color: grey.withValues(alpha: 0.3),
-                    blurRadius: 4,
-                    spreadRadius: 0,
-                    offset: const Offset(0, 4))
-              ]),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const CustomImage(
-                path: Assets.imagesLogo,
-                height: 34,
-                width: 36,
-              ),
-              Text(
-                "Welcome Back",
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(
-                height: 2,
-              ),
-              Text(
-                "Login to continue",
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Form(
-                key: _formKey,
-                child: GetBuilder<AuthController>(builder: (authController) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Mobile/Email",
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
-                      ),
-                      const SizedBox(
-                        height: 6,
-                      ),
-                      TextFormField(
-                        controller: authController.emailController,
-                        decoration: CustomDecoration.inputDecoration(
-                          hint: "Enter your Mobile no. / Email",
-                          hintStyle:
+        child: SingleChildScrollView(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+                color: white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                      color: grey.withValues(alpha: 0.3),
+                      blurRadius: 4,
+                      spreadRadius: 0,
+                      offset: const Offset(0, 4))
+                ]),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const CustomImage(
+                  path: Assets.imagesLogo,
+                  height: 34,
+                  width: 36,
+                ),
+                Text(
+                  "Welcome Back",
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(
+                  height: 2,
+                ),
+                Text(
+                  "Login to continue",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Form(
+                  key: _formKey,
+                  child: GetBuilder<AuthController>(builder: (authController) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Mobile/Email",
+                          style:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: grey,
+                                    fontSize: 18,
                                   ),
                         ),
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Please enter your email or number";
-                          }
-
-                          bool isEmail = GetUtils.isEmail(value);
-
-                          bool isPhone = RegExp(r'^[0-9]{10}$').hasMatch(value);
-
-                          if (!isEmail && !isPhone) {
-                            return "Please enter a valid email or 10-digit mobile number";
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Password",
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
-                      ),
-                      const SizedBox(
-                        height: 6,
-                      ),
-                      TextFormField(
-                        controller: authController.passwordController,
-                        obscureText: !showPassword,
-                        decoration: CustomDecoration.inputDecoration(
-                          suffix: IconButton(
-                            icon: Icon(
-                              showPassword
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: grey,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                showPassword = !showPassword;
-                              });
-                            },
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        TextFormField(
+                          controller: authController.emailController,
+                          decoration: CustomDecoration.inputDecoration(
+                            hint: "Enter your Mobile no. / Email",
+                            hintStyle: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: grey,
+                                ),
                           ),
-                          hint: "Enter your Password",
-                          hintStyle:
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter your email or number";
+                            }
+
+                            bool isEmail = GetUtils.isEmail(value);
+
+                            bool isPhone =
+                                RegExp(r'^[0-9]{10}$').hasMatch(value);
+
+                            if (!isEmail && !isPhone) {
+                              return "Please enter a valid email or 10-digit mobile number";
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Password",
+                          style:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: grey,
+                                    fontSize: 18,
                                   ),
                         ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Please enter your Password";
-                          }
-
-                          return null;
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      GetBuilder<AuthController>(builder: (authController) {
-                        return GestureDetector(
-                          onTap: () async {
-                            if (authController.isLoading) {
-                              return;
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        TextFormField(
+                          controller: authController.passwordController,
+                          obscureText: !showPassword,
+                          decoration: CustomDecoration.inputDecoration(
+                            suffix: IconButton(
+                              icon: Icon(
+                                showPassword
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: grey,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  showPassword = !showPassword;
+                                });
+                              },
+                            ),
+                            hint: "Enter your Password",
+                            hintStyle: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: grey,
+                                ),
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Please enter your Password";
                             }
-                            if (_formKey.currentState?.validate() ?? false) {
-                              isEmailLogin = GetUtils.isEmail(
-                                  authController.emailController.text.trim());
-                              authController
-                                  .userLogin(isEmail: isEmailLogin)
-                                  .then(
-                                (value) {
-                                  if (value.isSuccess) {
-                                    if (authController.isPhoneNumberVerified) {
-                                      Get.find<DashBoardController>().dashPage =
-                                          0;
-                                      navigate(
-                                          context: context,
-                                          page: const DashboardScreen(),
-                                          isRemoveUntil: true);
-                                      showToast(
-                                          message: value.message,
-                                          typeCheck: value.isSuccess);
+
+                            return null;
+                          },
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        GetBuilder<AuthController>(builder: (authController) {
+                          return GestureDetector(
+                            onTap: () async {
+                              if (authController.isLoading) {
+                                return;
+                              }
+                              if (_formKey.currentState?.validate() ?? false) {
+                                isEmailLogin = GetUtils.isEmail(
+                                    authController.emailController.text.trim());
+                                authController
+                                    .userLogin(isEmail: isEmailLogin)
+                                    .then(
+                                  (value) {
+                                    if (value.isSuccess) {
+                                      if (authController
+                                          .isPhoneNumberVerified) {
+                                        Get.find<DashBoardController>()
+                                            .dashPage = 0;
+                                        navigate(
+                                            context: context,
+                                            page: const DashboardScreen(),
+                                            isRemoveUntil: true);
+                                        showToast(
+                                            message: value.message,
+                                            typeCheck: value.isSuccess);
+                                      } else {
+                                        navigate(
+                                            context: context,
+                                            page: OTPVerification(
+                                              phone: authController
+                                                  .numberController.text,
+                                              isVerificationPhone: true,
+                                            ),
+                                            isRemoveUntil: true);
+                                        showToast(
+                                            message: value.message,
+                                            typeCheck: value.isSuccess);
+                                      }
                                     } else {
-                                      navigate(
-                                          context: context,
-                                          page: OTPVerification(
-                                            phone: authController
-                                                    .userPhoneNumber ??
-                                                "",
-                                            isVerificationPhone: true,
-                                          ),
-                                          isRemoveUntil: true);
                                       showToast(
                                           message: value.message,
                                           typeCheck: value.isSuccess);
                                     }
-                                  } else {
-                                    showToast(
-                                        message: value.message,
-                                        typeCheck: value.isSuccess);
-                                  }
-                                },
-                              );
-                            }
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                color: primaryColor,
-                                borderRadius: BorderRadius.circular(12)),
-                            child: Center(
-                              child: authController.isLoading
-                                  ? const CircularProgressIndicator(
-                                      color: white,
-                                    )
-                                  : Text(
-                                      "Login",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            color: white,
-                                          ),
-                                    ),
-                            ),
-                          ),
-                        );
-                      }),
-                      SizedBox(height: 8),
-                      RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          style:
-                              Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: Colors.grey,
-                                    fontSize: 12,
-                                  ),
-                          children: [
-                            const TextSpan(
-                              text:
-                                  "By continuing, you confirm that you are 18 years of age and you agree to the Trust India ",
-                            ),
-                            TextSpan(
-                              text: "Terms of Use",
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold,
+                                  },
+                                );
+                              }
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: primaryColor,
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: Center(
+                                child: authController.isLoading
+                                    ? const CircularProgressIndicator(
+                                        color: white,
+                                      )
+                                    : Text(
+                                        "Login",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              color: white,
+                                            ),
+                                      ),
                               ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  navigate(
-                                      context: context,
-                                      page: const TermsAndConditionScreen());
-                                },
-                            ),
-                            const TextSpan(
-                              text: " and ",
-                            ),
-                            TextSpan(
-                              text: "Privacy Policy",
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  navigate(
-                                      context: context,
-                                      page: const PrivacyCenterScreen());
-                                },
-                            ),
-                          ],
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TextButton(
-                              onPressed: () {
-                                navigate(
-                                    context: context,
-                                    page: const EnterNumberForOPTScreen());
-                              },
-                              child: Text(
-                                "Forget password",
-                                style: Helper(context).textTheme.bodyMedium,
-                              )),
-                        ],
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            getCustomRoute(
-                              child: const SignUPScreen(),
                             ),
                           );
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        }),
+                        SizedBox(height: 8),
+                        RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            style:
+                                Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: Colors.grey,
+                                      fontSize: 12,
+                                    ),
+                            children: [
+                              const TextSpan(
+                                text:
+                                    "By continuing, you confirm that you are 18 years of age and you agree to the Trust India ",
+                              ),
+                              TextSpan(
+                                text: "Terms of Use",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    navigate(
+                                        context: context,
+                                        page: const TermsAndConditionScreen());
+                                  },
+                              ),
+                              const TextSpan(
+                                text: " and ",
+                              ),
+                              TextSpan(
+                                text: "Privacy Policy",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    navigate(
+                                        context: context,
+                                        page: const PrivacyCenterScreen());
+                                  },
+                              ),
+                            ],
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text(
-                              "Don`t have an account? ",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                            Text(
-                              "Register",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: secondaryColor,
-                                  ),
-                            )
+                            TextButton(
+                                onPressed: () {
+                                  navigate(
+                                      context: context,
+                                      page: const EnterNumberForOPTScreen());
+                                },
+                                child: Text(
+                                  "Forget password",
+                                  style: Helper(context).textTheme.bodyMedium,
+                                )),
                           ],
                         ),
-                      )
-                    ],
-                  );
-                }),
-              )
-            ],
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              getCustomRoute(
+                                child: const SignUPScreen(),
+                              ),
+                            );
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Don`t have an account? ",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                              Text(
+                                "Register",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: secondaryColor,
+                                    ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    );
+                  }),
+                )
+              ],
+            ),
           ),
         ),
       ),
