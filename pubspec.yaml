@@ -70,6 +70,8 @@ dependencies:
   flutter_launcher_icons: ^0.14.4
   flutter_widget_from_html: ^0.17.1
   contacts_service_plus: ^0.0.2
+  firebase_core: ^4.3.0
+  cloud_firestore: ^6.1.1
 
 dev_dependencies:
   flutter_test:

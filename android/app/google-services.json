@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "252507782720",
+    "project_id": "chat-app-9a664",
+    "storage_bucket": "chat-app-9a664.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252507782720:android:c9988e00b81b09682fe9a5",
+        "android_client_info": {
+          "package_name": "com.example.chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252507782720-fqg5ua56seqnbmnt8gmni05trl11928n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chat_app",
+            "certificate_hash": "60157474b794785c61a1d312a37c57572cd2bc35"
+          }
+        },
+        {
+          "client_id": "252507782720-87ui6a7ig0c3sv2btb13sqk842s3v9k8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeBj2IvMd1WhTEyb7Daf7hj7BsKID259w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252507782720-87ui6a7ig0c3sv2btb13sqk842s3v9k8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252507782720:android:9d07aecf80ccd95f2fe9a5",
+        "android_client_info": {
+          "package_name": "com.tpipay.trustindia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252507782720-87ui6a7ig0c3sv2btb13sqk842s3v9k8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeBj2IvMd1WhTEyb7Daf7hj7BsKID259w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252507782720-87ui6a7ig0c3sv2btb13sqk842s3v9k8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

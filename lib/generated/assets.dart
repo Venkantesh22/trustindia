@@ -90,6 +90,14 @@ class Assets {
   /// assets/images/order_status_confirmed.png
   static const String imagesOrderStatusConfirmed = "assets/images/order_status_confirmed.png";
 
+  /// Assets for imagesOrderStatusDelivered
+  /// assets/images/order_status_delivered.png
+  static const String imagesOrderStatusDelivered = "assets/images/order_status_delivered.png";
+
+  /// Assets for imagesOrderStatusShipping
+  /// assets/images/order_status_shipping.png
+  static const String imagesOrderStatusShipping = "assets/images/order_status_shipping.png";
+
   /// Assets for imagesPayUserProfile
   /// assets/images/pay-user-profile.png
   static const String imagesPayUserProfile = "assets/images/pay-user-profile.png";

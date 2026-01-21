@@ -120,9 +120,9 @@ class ProductModel {
       : status == "processing"
           ? Assets.imagesOrderStatusConfirmed
           : status == "shipped"
-              ? Assets.imagesOrderStatusConfirmed
+              ? Assets.imagesOrderStatusShipping
               : status == "delivered"
-                  ? Assets.imagesOrderStatusConfirmed
+                  ? Assets.imagesOrderStatusDelivered
                   : status == "cancelled"
                       ? Assets.imagesOrderStatusCancel
                       : null;

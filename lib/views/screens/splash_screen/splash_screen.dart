@@ -4,6 +4,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
+import 'package:lekra/controllers/basic_controller.dart';
+import 'package:lekra/firebase/block_screen.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/auth_screens/forget_password/opt_verification_screen.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
@@ -24,34 +26,29 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    checkAuth(); // <-- Call here
+    WidgetsBinding.instance.addPostFrameCallback((_){
+    checkAuth(); 
+    });
+
   }
 
-  // Future<void> checkAuth() async {
-  //   await Future.delayed(const Duration(seconds: 2));
-  //   final authController = Get.find<AuthController>();
-  //   log("splash screen");
-  //   String token = authController.getUserToken();
-
-  //   if (token.isNotEmpty) {
-  //     // User is signed in → go to HomeScreen
-  //     Navigator.pushReplacement(
-  //       context,
-  //       MaterialPageRoute(builder: (_) => const DashboardScreen()),
-  //     );
-  //   } else {
-  //     // User not signed in → go to LoginScreen
-  //     Navigator.pushReplacement(
-  //       context,
-  //       MaterialPageRoute(builder: (_) => const LoginScreen()),
-  //     );
-  //   }
-  // }
+ 
   Future<void> checkAuth() async {
+    final basicController = Get.find<BasicController>();
+    await basicController.isCheckApp();
+    if (basicController.blockModel?.isBlock ?? false) {
+      navigate(
+          context: context, page: FlashMessageScreen(), isRemoveUntil: true);
+      return;
+    }
+
     await Future.delayed(const Duration(seconds: 2));
     final authController = Get.find<AuthController>();
+
     String token = authController.getUserToken();
+
     final sharedPreferences = await SharedPreferences.getInstance();
+
     await authController.fetchUserProfile();
     if (authController.userModel?.isPhoneVerified == false) {
       navigate(

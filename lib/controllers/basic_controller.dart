@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/data/models/body/address_model.dart';
@@ -6,6 +7,7 @@ import 'package:lekra/data/models/home/banner_model';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/support_model.dart';
 import 'package:lekra/data/repositories/basic_repo.dart';
+import 'package:lekra/firebase/block_model.dart';
 
 class BasicController extends GetxController implements GetxService {
   final BasicRepo basicRepo;
@@ -353,5 +355,16 @@ class BasicController extends GetxController implements GetxService {
 
   Future<bool> setIsDemoSave(bool value) async {
     return await basicRepo.saveIsDemoShow(value);
+  }
+
+  BlockModel? blockModel;
+  Future<void> isCheckApp() async {
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+        await FirebaseFirestore.instance
+            .collection('trustIndia')
+            .doc("APfQtG9XsPKx7k0Cnqfy")
+            .get();
+
+    blockModel = BlockModel.fromJson(documentSnapshot.data()!);
   }
 }
