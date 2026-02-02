@@ -50,7 +50,7 @@ class AuthController extends GetxController implements GetxService {
             true, response.body['message'] ?? "generateOtp updated");
       } else {
         responseModel = ResponseModel(
-            false, response.body['error'] ?? "Error while generateOtp user");
+            false, response.body['message'] ?? "Error while generateOtp user");
       }
     } catch (e) {
       log('ERROR AT generateOtp(): $e');

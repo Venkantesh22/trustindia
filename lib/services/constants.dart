@@ -135,8 +135,7 @@ class AppConstants {
   set setBaseUrl(String url) => baseUrl = url;
 //http://ecom.tpipaygroup.com/api/register-user
   //TODO: Change Base Url
-  static String baseUrl = 'https://trustindia.in/';
-  // static String baseUrl = 'http://192.168.1.5:9000/'; ///USE FOR LOCAL
+  static String baseUrl = 'https://sathiyasmart.com/';
   //TODO: Change Base Url
   static String appName = 'Sathiya';
   static String payAppName = 'Sathiya Pay';
