@@ -42,6 +42,7 @@ class RowOfAccount extends StatelessWidget {
               children: [
                 Text(
                   rowOfAccountModel.title,
+                  overflow: TextOverflow.ellipsis,
                   style: Helper(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w700,
                         fontSize: 13,
@@ -50,6 +51,7 @@ class RowOfAccount extends StatelessWidget {
                 if (rowOfAccountModel.subTitle != null)
                   Text(
                     rowOfAccountModel.subTitle ?? "",
+                    overflow: TextOverflow.clip,
                     style: Helper(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w400,
                           fontSize: 11,

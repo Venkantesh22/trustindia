@@ -45,53 +45,61 @@ class UserProfileContainer extends StatelessWidget {
                         path: authController.userModel?.image ?? ""),
                   ),
                   const SizedBox(width: 11),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        authController.userModel?.fullName ?? "qqq",
-                        style: Helper(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14,
-                            color: white),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        authController.userModel?.email ?? "",
-                        style: Helper(context).textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12,
-                            color: white),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      GestureDetector(
-                        onTap: () => navigate(
-                            context: context, page: const ProfileEditScreen()),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Edit Profile  ",
-                              style: Helper(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                      color: white),
-                            ),
-                            const Icon(
-                              Icons.arrow_forward_ios,
-                              color: white,
-                              size: 14,
-                            )
-                          ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          authController.userModel?.fullName ?? "qqq",
+                          overflow: TextOverflow.ellipsis,
+                          style: Helper(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                  color: white),
                         ),
-                      ),
-                    ],
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          authController.userModel?.email ?? "",
+                          overflow: TextOverflow.ellipsis,
+                          style: Helper(context).textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                              color: white),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        GestureDetector(
+                          onTap: () => navigate(
+                              context: context,
+                              page: const ProfileEditScreen()),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Edit Profile  ",
+                                style: Helper(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 12,
+                                        color: white),
+                              ),
+                              const Icon(
+                                Icons.arrow_forward_ios,
+                                color: white,
+                                size: 14,
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),
