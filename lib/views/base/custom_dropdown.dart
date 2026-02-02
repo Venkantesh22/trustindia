@@ -81,8 +81,8 @@ class CustomDropDownList<T> extends StatelessWidget {
           const SizedBox(height: 7),
         ],
         DropdownButtonFormField<T>(
-          initialValue: value,
-          style: textStyle,
+          initialValue: value == "" ? null : value,
+           style: textStyle,
           dropdownColor: white,
           elevation: 2,
           icon: const Icon(Icons.keyboard_arrow_down),

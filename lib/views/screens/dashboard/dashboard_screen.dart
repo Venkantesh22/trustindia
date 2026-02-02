@@ -76,50 +76,52 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     top: BorderSide(color: Colors.grey.shade200),
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    BottomNavigationItemWidget(
-                      onTap: () {
-                        controller.dashPage = 0;
-                      },
-                      title: 'Home',
-                      icon: Assets.svgsHome,
-                      isActive: controller.dashPage == 0 ? true : false,
-                    ),
-                    BottomNavigationItemWidget(
-                      onTap: () {
-                        controller.dashPage = 1;
-                      },
-                      title: 'Wallet',
-                      icon: Assets.svgsWallet,
-                      isActive: controller.dashPage == 1 ? true : false,
-                    ),
-                    BottomNavigationItemWidget(
-                      onTap: () {
-                        controller.dashPage = 2;
-                      },
-                      title: 'Order',
-                      icon: Assets.svgsShopping,
-                      isActive: controller.dashPage == 2 ? true : false,
-                    ),
-                    BottomNavigationItemWidget(
-                      onTap: () {
-                        controller.dashPage = 3;
-                      },
-                      title: 'Referral ',
-                      icon: Assets.svgsReferral,
-                      isActive: controller.dashPage == 3 ? true : false,
-                    ),
-                    BottomNavigationItemWidget(
-                      onTap: () {
-                        controller.dashPage = 4;
-                      },
-                      title: 'Account',
-                      icon: Assets.svgsProfile,
-                      isActive: controller.dashPage == 4 ? true : false,
-                    ),
-                  ],
+                child: Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      BottomNavigationItemWidget(
+                        onTap: () {
+                          controller.dashPage = 0;
+                        },
+                        title: 'Home',
+                        icon: Assets.svgsHome,
+                        isActive: controller.dashPage == 0 ? true : false,
+                      ),
+                      BottomNavigationItemWidget(
+                        onTap: () {
+                          controller.dashPage = 1;
+                        },
+                        title: 'Wallet',
+                        icon: Assets.svgsWallet,
+                        isActive: controller.dashPage == 1 ? true : false,
+                      ),
+                      BottomNavigationItemWidget(
+                        onTap: () {
+                          controller.dashPage = 2;
+                        },
+                        title: 'Order',
+                        icon: Assets.svgsShopping,
+                        isActive: controller.dashPage == 2 ? true : false,
+                      ),
+                      BottomNavigationItemWidget(
+                        onTap: () {
+                          controller.dashPage = 3;
+                        },
+                        title: 'Referral ',
+                        icon: Assets.svgsReferral,
+                        isActive: controller.dashPage == 3 ? true : false,
+                      ),
+                      BottomNavigationItemWidget(
+                        onTap: () {
+                          controller.dashPage = 4;
+                        },
+                        title: 'Account',
+                        icon: Assets.svgsProfile,
+                        isActive: controller.dashPage == 4 ? true : false,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

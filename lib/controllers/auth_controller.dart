@@ -366,6 +366,7 @@ class AuthController extends GetxController implements GetxService {
         numberController.text = userModel?.mobile ?? "";
         birthdayCodeController.text = userModel?.dobFormat ?? "";
         setGender(value: userModel?.gender ?? "");
+        
       } else {
         log("raw datat");
         responseModel = ResponseModel(
@@ -475,7 +476,11 @@ class AuthController extends GetxController implements GetxService {
 
   String? gender;
 
-  List<String> genderList = ["Male", "Female", "Other"];
+  List<String>? genderList = [
+    "Male",
+    "Female",
+    "Other",
+  ];
 
   void setGender({required String value}) {
     gender = value;

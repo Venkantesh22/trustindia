@@ -144,7 +144,7 @@ class _ProfileEditFormSectionState extends State<ProfileEditFormSection> {
                   const SizedBox(height: 12),
                   CustomDropDownList<String>(
                     value: authController.gender,
-                    items: authController.genderList,
+                    items: authController.genderList ?? [],
                     hintText: "Gender",
                     hintStyle: Helper(context).textTheme.bodyLarge?.copyWith(
                         fontSize: 12,

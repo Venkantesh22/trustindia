@@ -36,6 +36,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
             children: [
               EditProfileTopSection(),
               ProfileEditFormSection(),
+              SizedBox(
+                height: 20,
+              )
             ],
           ),
         );
