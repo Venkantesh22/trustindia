@@ -54,9 +54,10 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const CustomImage(
-                  path: Assets.imagesLogo,
-                  height: 34,
-                  width: 36,
+                  path: Assets.imagesOnlyLogo,
+                  height: 80,
+                  width: 80,
+                  fit: BoxFit.contain,
                 ),
                 Text(
                   "Welcome Back",
@@ -307,34 +308,35 @@ class _LoginScreenState extends State<LoginScreen> {
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context).push(
-                              getCustomRoute(
-                                child: const SignUPScreen(),
-                              ),
+                              getCustomRoute(child: const SignUPScreen()),
                             );
                           },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Don`t have an account? ",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                              ),
-                              Text(
-                                "Register",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: secondaryColor,
-                                    ),
-                              )
-                            ],
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.clip,
+                            text: TextSpan(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                              children: [
+                                const TextSpan(
+                                  text: "Don’t have an account? ",
+                                ),
+                                TextSpan(
+                                  text: "Register",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: secondaryColor,
+                                      ),
+                                ),
+                              ],
+                            ),
                           ),
                         )
                       ],

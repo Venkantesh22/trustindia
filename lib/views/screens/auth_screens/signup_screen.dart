@@ -71,9 +71,10 @@ class _SignUPScreenState extends State<SignUPScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const CustomImage(
-                    path: Assets.imagesLogo,
-                    height: 34,
-                    width: 36,
+                    path: Assets.imagesOnlyLogo,
+                    height: 80,
+                    width: 80,
+                    fit: BoxFit.contain,
                   ),
                   Text(
                     "Create an Account",
@@ -473,38 +474,42 @@ class _SignUPScreenState extends State<SignUPScreen> {
                             height: 20,
                           ),
                           GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                getCustomRoute(
-                                  child: const LoginScreen(),
-                                ),
-                              );
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Already have an account? ",
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  getCustomRoute(
+                                    child: const LoginScreen(),
+                                  ),
+                                );
+                              },
+                              child: RichText(
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.clip,
+                                text: TextSpan(
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium
                                       ?.copyWith(
                                         fontWeight: FontWeight.bold,
                                       ),
+                                  children: [
+                                    const TextSpan(
+                                      text: "Already have an account? ",
+                                    ),
+                                    TextSpan(
+                                      text: "Login",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: secondaryColor,
+                                          ),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  "Login",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: secondaryColor,
-                                      ),
-                                )
-                              ],
-                            ),
-                          )
+                              )
+
+                              )
                         ],
                       );
                     }),
