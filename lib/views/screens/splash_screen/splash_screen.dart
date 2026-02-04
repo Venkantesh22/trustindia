@@ -26,13 +26,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
-    checkAuth(); 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkAuth();
     });
-
   }
 
- 
   Future<void> checkAuth() async {
     final basicController = Get.find<BasicController>();
     await basicController.isCheckApp();
@@ -105,9 +103,9 @@ class _SplashScreenState extends State<SplashScreen> {
             const Spacer(),
             CustomImage(
               alignment: Alignment.center,
-              path: Assets.imagesLogo,
-              height: size.height * .3,
-              width: size.height * .3,
+              path: Assets.imagesOnlyLogo,
+              height: size.height * 0.3,
+              width: size.height * 0.3,
             ),
             const Spacer(flex: 3),
             Text(
