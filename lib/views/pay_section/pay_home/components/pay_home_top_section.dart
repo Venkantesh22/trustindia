@@ -18,7 +18,6 @@ class PayTopSection extends StatelessWidget {
       children: [
         Container(
           padding: AppConstants.screenPadding,
-          height: MediaQuery.of(context).size.height * 0.20,
           width: double.infinity,
           decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
@@ -34,9 +33,12 @@ class PayTopSection extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(
-                    Icons.arrow_back_ios,
-                    color: white,
+                  GestureDetector(
+                    onTap: () => pop(context),
+                    child: const Icon(
+                      Icons.arrow_back_ios,
+                      color: white,
+                    ),
                   ),
                   Text(
                     AppConstants.payAppName,
@@ -74,6 +76,7 @@ class PayTopSection extends StatelessWidget {
                         children: [
                           Text(
                             "Hello, ${authController.userModel?.fullName ?? ""}",
+                            overflow: TextOverflow.clip,
                             style:
                                 Helper(context).textTheme.bodyLarge?.copyWith(
                                       fontSize: 16,
@@ -82,6 +85,7 @@ class PayTopSection extends StatelessWidget {
                           ),
                           Text(
                             "Your Wallet Balance: ₹${authController.userModel?.currentWallet ?? ""}",
+                            overflow: TextOverflow.clip,
                             style:
                                 Helper(context).textTheme.bodyLarge?.copyWith(
                                       fontSize: 12,

@@ -24,12 +24,15 @@ class PayHomeRecentTransactionSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "Recent Transaction",
-                style: Helper(context).textTheme.bodyLarge?.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+              Expanded(
+                child: Text(
+                  "Recent Transaction",
+                  overflow: TextOverflow.ellipsis,
+                  style: Helper(context).textTheme.bodyLarge?.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
               ),
               GetBuilder<WalletController>(builder: (walletController) {
                 return walletController.transactionList.isNotEmpty

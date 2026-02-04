@@ -57,7 +57,7 @@ class ExploreCategorySection extends StatelessWidget {
                             radius: 32,
                             backgroundColor: white,
                             child: CustomImage(
-                              path: Assets.imagesLogo,
+                              path: Assets.imagesOnlyLogo,
                               width: 40,
                               height: 40,
                               fit: BoxFit.cover,
@@ -65,7 +65,7 @@ class ExploreCategorySection extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        "${AppConstants.appName} Pay",
+                        AppConstants.payAppName,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                           fontSize: 12,
@@ -92,7 +92,6 @@ class _CategoryCard extends StatelessWidget {
   final CategoryModel category;
 
   const _CategoryCard({required this.category});
-
 
   @override
   Widget build(BuildContext context) {

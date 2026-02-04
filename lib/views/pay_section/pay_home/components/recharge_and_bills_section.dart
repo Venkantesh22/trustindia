@@ -48,13 +48,17 @@ class RechargeAndBillsSection extends StatelessWidget {
                         width: 56,
                         radius: 100,
                       ),
-                      Text(
-                        "Mobile Recharge",
-                        textAlign: TextAlign.center,
-                        style: Helper(context).textTheme.bodySmall?.copyWith(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                            ),
+                      Expanded(
+                        child: Text(
+                          "Mobile Recharge",
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          style: Helper(context).textTheme.bodySmall?.copyWith(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
                       )
                     ],
                   ),
