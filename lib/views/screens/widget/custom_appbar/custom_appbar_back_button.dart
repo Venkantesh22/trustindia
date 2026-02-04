@@ -6,7 +6,11 @@ import 'package:lekra/views/screens/widget/custom_back_button.dart';
 class CustomAppbarBackButton extends StatelessWidget
     implements PreferredSizeWidget {
   bool goHomeScreen;
-  CustomAppbarBackButton({super.key, this.goHomeScreen = false});
+
+  final void Function()? onPressed;
+
+  CustomAppbarBackButton(
+      {super.key, this.goHomeScreen = false, this.onPressed});
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
@@ -14,7 +18,9 @@ class CustomAppbarBackButton extends StatelessWidget
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.transparent,
-      leading: CustomBackButton(),
+      leading: CustomBackButton(
+        onPressed: onPressed,
+      ),
     );
   }
 }

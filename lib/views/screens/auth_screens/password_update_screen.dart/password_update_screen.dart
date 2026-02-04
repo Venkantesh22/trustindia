@@ -25,9 +25,23 @@ class _PasswordUpdateScreenState extends State<PasswordUpdateScreen> {
   bool isMatch = true;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<AuthController>().confirmPasswordController.clear();
+      Get.find<AuthController>().passwordController.clear();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppbarBackButton(),
+      appBar: CustomAppbarBackButton(
+        onPressed: () {
+          Get.find<DashBoardController>().dashPage = 4;
+          navigate(context: context, page: const DashboardScreen());
+        },
+      ),
       bottomNavigationBar: SafeArea(
         child: GetBuilder<AuthController>(builder: (authController) {
           return Padding(
@@ -133,8 +147,8 @@ class _PasswordUpdateScreenState extends State<PasswordUpdateScreen> {
                           validator: (value) {
                             final v = (value ?? '').trim();
                             if (v.isEmpty) return "Please enter new password";
-                            if (v.length < 6) {
-                              return "Password must be at least 6 characters";
+                            if (v.length < 8) {
+                              return "Password must be at least 8 characters";
                             }
                             return null;
                           },
