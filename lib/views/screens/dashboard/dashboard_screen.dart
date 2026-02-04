@@ -66,7 +66,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           },
         ),
         bottomNavigationBar: GetBuilder<DashBoardController>(
-          builder: (DashBoardController controller) {
+          builder: (controller) {
             return SafeArea(
               child: Container(
                 padding: const EdgeInsets.all(5),
@@ -76,52 +76,46 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     top: BorderSide(color: Colors.grey.shade200),
                   ),
                 ),
-                child: Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      BottomNavigationItemWidget(
-                        onTap: () {
-                          controller.dashPage = 0;
-                        },
-                        title: 'Home',
-                        icon: Assets.svgsHome,
-                        isActive: controller.dashPage == 0 ? true : false,
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    // Each item approx width
+                    const itemWidth = 80.0; // adjust if needed
+                    final needScroll = 5 * itemWidth > constraints.maxWidth;
+
+                    if (!needScroll) {
+                      // ⭐ Items fit → use Row expanded
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          buildItem(controller, 0, "Home", Assets.svgsHome),
+                          buildItem(controller, 1, "Wallet", Assets.svgsWallet),
+                          buildItem(
+                              controller, 2, "Order", Assets.svgsShopping),
+                          buildItem(
+                              controller, 3, "Referral", Assets.svgsReferral),
+                          buildItem(
+                              controller, 4, "Account", Assets.svgsProfile),
+                        ],
+                      );
+                    }
+
+                    // ⭐ Overflow → enable horizontal scroll
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          buildItem(controller, 0, "Home", Assets.svgsHome),
+                          buildItem(controller, 1, "Wallet", Assets.svgsWallet),
+                          buildItem(
+                              controller, 2, "Order", Assets.svgsShopping),
+                          buildItem(
+                              controller, 3, "Referral", Assets.svgsReferral),
+                          buildItem(
+                              controller, 4, "Account", Assets.svgsProfile),
+                        ],
                       ),
-                      BottomNavigationItemWidget(
-                        onTap: () {
-                          controller.dashPage = 1;
-                        },
-                        title: 'Wallet',
-                        icon: Assets.svgsWallet,
-                        isActive: controller.dashPage == 1 ? true : false,
-                      ),
-                      BottomNavigationItemWidget(
-                        onTap: () {
-                          controller.dashPage = 2;
-                        },
-                        title: 'Order',
-                        icon: Assets.svgsShopping,
-                        isActive: controller.dashPage == 2 ? true : false,
-                      ),
-                      BottomNavigationItemWidget(
-                        onTap: () {
-                          controller.dashPage = 3;
-                        },
-                        title: 'Referral ',
-                        icon: Assets.svgsReferral,
-                        isActive: controller.dashPage == 3 ? true : false,
-                      ),
-                      BottomNavigationItemWidget(
-                        onTap: () {
-                          controller.dashPage = 4;
-                        },
-                        title: 'Account',
-                        icon: Assets.svgsProfile,
-                        isActive: controller.dashPage == 4 ? true : false,
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
               ),
             );
@@ -179,4 +173,18 @@ class BottomNavigationItemWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget buildItem(
+    DashBoardController controller, int index, String title, String icon) {
+  return Expanded(
+    child: GestureDetector(
+      onTap: () => controller.dashPage = index,
+      child: BottomNavigationItemWidget(
+        title: title,
+        icon: icon,
+        isActive: controller.dashPage == index,
+      ),
+    ),
+  );
 }
