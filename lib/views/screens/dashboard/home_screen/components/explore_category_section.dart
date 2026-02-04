@@ -24,11 +24,14 @@ class ExploreCategorySection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                "Explore Categories",
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 24,
+              Expanded(
+                child: Text(
+                  "Explore Categories",
+                  overflow: TextOverflow.clip,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 24,
+                  ),
                 ),
               ),
             ],
