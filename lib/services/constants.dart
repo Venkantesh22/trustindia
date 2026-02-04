@@ -137,7 +137,7 @@ class AppConstants {
   //TODO: Change Base Url
   static String baseUrl = 'https://sathiyasmart.com/';
   //TODO: Change Base Url
-  static String appName = 'Sathiya';
+  static String appName = 'Sathiya Smart';
   static String payAppName = 'Sathiya Pay';
 
   static const String agoraAppId = 'c87b710048c049f59570bd1895b7e561';
