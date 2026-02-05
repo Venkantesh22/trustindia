@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:lekra/controllers/product_controller.dart';
 import 'package:lekra/data/models/product_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
-import 'package:lekra/views/screens/widget/add_to_card_button.dart';
 
 class ProductCardForCategory extends StatelessWidget {
   const ProductCardForCategory({
@@ -61,15 +58,22 @@ class ProductCardForCategory extends StatelessWidget {
                           fontSize: 14),
                     ),
                     // (product.description ?? "").isNotEmpty
-                    //     ? Text(
-                    //         product.description ?? "Loading...",
-                    //         style:
-                    //             Helper(context).textTheme.bodySmall?.copyWith(
-                    //                   color: grey,
-                    //                 ),
-                    //         maxLines: 1,
-                    //       )
-                    //     : SizedBox(),
+                    //     ?
+                    Text(
+                      // product.description ?? "Loading...",
+                      "Join us to see how the Google Security ecosystem empowers your team to stay ahead of modern attacks. We’ll explore the powerful synergy between Google Security Operations and Google Threat Intelligence, showing you how to",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Helper(context).textTheme.bodySmall?.copyWith(
+                            color: grey,
+                            fontSize: 10,
+                          ),
+                    )
+                    // : SizedBox()
+                    ,
+                    SizedBox(
+                      height: 8,
+                    ),
                     Text(
                       PriceConverter.convertToNumberFormat(
                           product.price ?? 0.00),
@@ -84,18 +88,18 @@ class ProductCardForCategory extends StatelessWidget {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsetsGeometry.all(6),
-            child: Column(
-              children: [
-                GetBuilder<ProductController>(builder: (productController) {
-                  return AddToCardButton(
-                    product: product,
-                  );
-                }),
-              ],
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsetsGeometry.all(6),
+          //   child: Column(
+          //     children: [
+          //       GetBuilder<ProductController>(builder: (productController) {
+          //         return AddToCardButton(
+          //           product: product,
+          //         );
+          //       }),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );

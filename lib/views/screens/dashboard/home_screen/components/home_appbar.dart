@@ -74,7 +74,7 @@ class HomeApp extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       actions: const [
-        NotIcon(),
+        // NotIcon(),
         CardIcon(),
         SizedBox(
           width: 6,
