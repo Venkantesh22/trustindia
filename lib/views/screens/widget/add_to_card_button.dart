@@ -31,9 +31,6 @@ class AddToCardButton extends StatelessWidget {
 
           if (isAdd) {
             navigate(context: context, page: const CardScreen());
-            // showToast(
-            //     message: "Product also read add to card",
-            //     toastType: ToastType.info);
           } else {
             productController.postAddToCard(product: product).then((value) {
               if (value.isSuccess) {
@@ -70,15 +67,23 @@ class AddToCardButton extends StatelessWidget {
                     )
                   ],
                 )
-              : Center(
-                  child: Text(
-                    "Add to Card",
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: white,
+              : Row(
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: Text(
+                          "Add to Card",
+                          overflow: TextOverflow.ellipsis,
+                          style:
+                              Theme.of(context).textTheme.titleSmall?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: white,
+                                  ),
                         ),
-                  ),
+                      ),
+                    ),
+                  ],
                 ),
         ),
       );

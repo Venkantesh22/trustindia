@@ -47,29 +47,29 @@ class ProductCard extends StatelessWidget {
               ],
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  height: 120,
-                  width: 120,
-                  child: CustomImage(
-                    height: 120,
-                    width: 120,
-                    path: (product.images != null &&
-                            product.images!.isNotEmpty &&
-                            product.images![0].url != null &&
-                            product.images![0].url!.isNotEmpty)
-                        ? product.images![0].url!
-                        : "",
-                    fit: BoxFit.cover,
-                    radius: 12,
-                  ),
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Center(
+                      child: CustomImage(
+                        height: 120,
+                        width: 120,
+                        path: (product.images != null &&
+                                product.images!.isNotEmpty &&
+                                product.images![0].url != null &&
+                                product.images![0].url!.isNotEmpty)
+                            ? product.images![0].url!
+                            : "",
+                        fit: BoxFit.cover,
+                        radius: 12,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
                     Text(
                       product.name ?? "",
                       maxLines: 2,
@@ -90,6 +90,10 @@ class ProductCard extends StatelessWidget {
                             color: primaryColor,
                           ),
                     ),
+                  ],
+                ),
+                Column(
+                  children: [
                     const SizedBox(
                       height: 4,
                     ),
@@ -99,7 +103,7 @@ class ProductCard extends StatelessWidget {
                       );
                     }),
                   ],
-                ),
+                )
               ],
             ),
           ),

@@ -55,13 +55,10 @@ class FeaturedSection extends StatelessWidget {
 
               // if this is the loader tile (last tile)
               if (showLoaderTile && index == items.length) {
-                return const SizedBox(
-                  height: 120,
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    ),
+                return const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(strokeWidth: 2),
                   ),
                 );
               }
