@@ -24,17 +24,20 @@ class ProductDescSection extends StatelessWidget {
               children: [
                 Icon(Icons.description, color: Theme.of(context).primaryColor),
                 const SizedBox(width: 8),
-                Text("Product Description",
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall
-                        ?.copyWith(fontWeight: FontWeight.bold)),
+                Expanded(
+                  child: Text("Product Description",
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall
+                          ?.copyWith(fontWeight: FontWeight.bold)),
+                ),
               ],
             ),
             const SizedBox(height: 8),
             Text(
-              capitalize(productController.productModel?.description ?? "No description provided.") 
-                  ,
+              capitalize(productController.productModel?.description ??
+                  "No description provided."),
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
