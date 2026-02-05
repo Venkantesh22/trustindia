@@ -86,12 +86,25 @@ class _ReferralScreenState extends State<ReferralScreen> {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    Text(
-                      capitalize(authController.userModel?.fullName ?? ""),
-                      style: Helper(context)
-                          .textTheme
-                          .bodyLarge
-                          ?.copyWith(fontWeight: FontWeight.bold, fontSize: 18),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Center(
+                            child: Text(
+                              capitalize(
+                                  authController.userModel?.fullName ?? ""),
+                              overflow: TextOverflow.clip,
+                              style: Helper(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 4),
                     Text(
