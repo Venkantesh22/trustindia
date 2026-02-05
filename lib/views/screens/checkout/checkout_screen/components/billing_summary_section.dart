@@ -4,6 +4,7 @@ import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/controllers/product_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/checkout/checkout_screen/components/row_billing_text.dart';
 
 class BillingSummarySection extends StatelessWidget {
@@ -48,10 +49,14 @@ class BillingSummarySection extends StatelessWidget {
               : const SizedBox(),
           GetBuilder<OrderController>(builder: (orderController) {
             return orderController.userRewordCoinsState
-                ? RowBillingText(
-                    label: "Reward Coin",
-                    price:
-                        productController.cardModel?.rewardDiscountFormat ?? "",
+                ? CustomShimmer(
+                    isLoading: orderController.isLoading,
+                    child: RowBillingText(
+                      label: "Reward Coin",
+                      price:
+                          productController.cardModel?.rewardDiscountFormat ??
+                              "",
+                    ),
                   )
                 : const SizedBox();
           }),
