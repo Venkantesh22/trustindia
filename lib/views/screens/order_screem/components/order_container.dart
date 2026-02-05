@@ -77,13 +77,17 @@ class OrderContainer extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      DateFormatters().dateTime.format(
-                          productModel.createdAt?.toLocal() ?? DateTime.now()),
-                      style: Helper(context).textTheme.bodySmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: secondaryColor,
-                          ),
+                    Expanded(
+                      child: Text(
+                        DateFormatters().dateTime.format(
+                            productModel.createdAt?.toLocal() ??
+                                DateTime.now()),
+                        overflow: TextOverflow.clip,
+                        style: Helper(context).textTheme.bodySmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: secondaryColor,
+                            ),
+                      ),
                     ),
                     OrderStatusContainer(productModel: productModel)
                   ],
