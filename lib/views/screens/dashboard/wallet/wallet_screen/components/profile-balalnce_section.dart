@@ -20,8 +20,8 @@ class ProfileBalanceSection extends StatelessWidget {
           children: [
             CustomImage(
               path: authController.userModel?.image ?? "",
-              height: 58,
-              width: 58,
+              height: 80,
+              width: 80,
               radius: 100,
               fit: BoxFit.cover,
             ),
