@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/state_manager.dart';
-import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/generated/assets.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/base/common_button.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/premium_screen/components/premium_benefit_container.dart';
 
@@ -62,34 +59,34 @@ class PremiumBottomSection extends StatelessWidget {
         const SizedBox(
           height: 16,
         ),
-        GetBuilder<AuthController>(builder: (authController) {
-          return CustomButton(
-            onTap: () {
-//! ----- need to update   Get.find<SubscriptionController>()
-//!          .subscriptionCheckout(
-//!              id: Get.find<SubscriptionController>().selectSubscription?.id)
+//         GetBuilder<AuthController>(builder: (authController) {
+//           return CustomButton(
+//             onTap: () {
+// //! ----- need to update   Get.find<SubscriptionController>()
+// //!          .subscriptionCheckout(
+// //!              id: Get.find<SubscriptionController>().selectSubscription?.id)
 
-              // navigate(
-              //     context: context,
-              //     page: SelectPaymentScreen(
-              //       isMemberShipPayment: true,
-              //       totalAmount:
-              //           authController.userModel?.subscription?.discountPrice ??
-              //               "",
-              //     ));
-            },
-            borderColor: secondaryColor,
-            radius: 8,
-            color: white,
-            child: Text(
-              "Renew Membership",
-              style: Helper(context).textTheme.bodyLarge?.copyWith(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: secondaryColor),
-            ),
-          );
-        }),
+//               // navigate(
+//               //     context: context,
+//               //     page: SelectPaymentScreen(
+//               //       isMemberShipPayment: true,
+//               //       totalAmount:
+//               //           authController.userModel?.subscription?.discountPrice ??
+//               //               "",
+//               //     ));
+//             },
+//             borderColor: secondaryColor,
+//             radius: 8,
+//             color: white,
+//             child: Text(
+//               "Renew Membership",
+//               style: Helper(context).textTheme.bodyLarge?.copyWith(
+//                   fontSize: 16,
+//                   fontWeight: FontWeight.w500,
+//                   color: secondaryColor),
+//             ),
+//           );
+//         }),
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 16),
           child: Divider(),

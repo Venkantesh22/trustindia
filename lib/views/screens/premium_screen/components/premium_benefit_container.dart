@@ -16,7 +16,7 @@ class PremiumBenefitContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.18,
+      // height: MediaQuery.of(context).size.height * 0.18
       padding: const EdgeInsets.fromLTRB(25, 19, 25, 23),
       decoration: BoxDecoration(
         color: greyVeryDark,

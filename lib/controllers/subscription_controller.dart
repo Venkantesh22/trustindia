@@ -58,6 +58,7 @@ class SubscriptionController extends GetxController implements GetxService {
 
   void updateSelectSubscriptionCategoryModel(SubscriptionCategoryModel value) {
     selectSubscriptionCategoryModel = value;
+    // log("select subcateg ${selectSubscriptionCategoryModel?.id ?? 0}");
   }
 
   List<SubscriptionModel> subscriptionList = [];

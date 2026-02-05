@@ -98,7 +98,7 @@ List<RowOfAccountModel> rowOfAccountModelList = [
     subTitle: "Create your seller account for app",
     icon: Assets.svgsPersonAccount,
     onTap: (context) async {
-      final Uri url = Uri.parse('https://trustindia.in/');
+      final Uri url = Uri.parse('https://sathiyasmart.com/');
 
       try {
         // Attempting to launch directly is often more reliable
