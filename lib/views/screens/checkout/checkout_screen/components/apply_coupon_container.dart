@@ -11,8 +11,8 @@ class ApplyCouponContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        navigate(context: context, page:ApplyCouponScreen() );
+      onTap: () {
+        navigate(context: context, page: const ApplyCouponScreen());
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),

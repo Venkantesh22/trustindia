@@ -11,7 +11,7 @@ import 'package:lekra/views/screens/dashboard/wallet/wallet_enter_pin_screen/wal
 class SelectPaymentScreen extends StatefulWidget {
   final bool isMemberShipPayment;
   final String totalAmount;
-  
+
   const SelectPaymentScreen(
       {super.key, this.isMemberShipPayment = false, required this.totalAmount});
 
@@ -79,33 +79,55 @@ class _SelectPaymentScreenState extends State<SelectPaymentScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CustomShimmer(
-                                  isLoading: walletController.isLoading,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Pay with Wallet",
-                                        style: Helper(context)
-                                            .textTheme
-                                            .displaySmall
-                                            ?.copyWith(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        "Available balance: ${walletController.walletModel?.walletBalance}",
-                                        style: Helper(context)
-                                            .textTheme
-                                            .displaySmall
-                                            ?.copyWith(
-                                                fontSize: 16,
-                                                color: greyLight,
-                                                fontWeight: FontWeight.w500),
-                                      ),
-                                    ],
+                                Expanded(
+                                  child: CustomShimmer(
+                                    isLoading: walletController.isLoading,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Pay with Wallet",
+                                          style: Helper(context)
+                                              .textTheme
+                                              .displaySmall
+                                              ?.copyWith(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Wrap(
+                                          children: [
+                                            Text(
+                                              "Available balance: ",
+                                              overflow: TextOverflow.clip,
+                                              style: Helper(context)
+                                                  .textTheme
+                                                  .displaySmall
+                                                  ?.copyWith(
+                                                      fontSize: 16,
+                                                      color: greyLight,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                            ),
+                                            Text(
+                                              walletController.walletModel
+                                                      ?.walletBalance ??
+                                                  "",
+                                              overflow: TextOverflow.clip,
+                                              style: Helper(context)
+                                                  .textTheme
+                                                  .displaySmall
+                                                  ?.copyWith(
+                                                      fontSize: 16,
+                                                      color: greyLight,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 const Icon(Icons.arrow_forward_ios_rounded)
@@ -136,13 +158,19 @@ class _SelectPaymentScreenState extends State<SelectPaymentScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Total Amount",
-                          style: Helper(context).textTheme.bodyLarge?.copyWith(
-                              fontSize: 20, fontWeight: FontWeight.w600),
+                        Expanded(
+                          child: Text(
+                            "Total Amount",
+                            style: Helper(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(
+                                    fontSize: 20, fontWeight: FontWeight.w600),
+                          ),
                         ),
                         Text(
                           widget.totalAmount,
+                          overflow: TextOverflow.ellipsis,
                           style: Helper(context).textTheme.bodyLarge?.copyWith(
                               fontSize: 20, fontWeight: FontWeight.w600),
                         ),

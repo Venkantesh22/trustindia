@@ -14,6 +14,10 @@ class CheckBoxOfOrderUserReward extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<ProductController>(builder: (productController) {
       return GetBuilder<OrderController>(builder: (orderController) {
+        if (productController.cardModel?.rewardPointsBalance == null ||
+            productController.cardModel?.rewardPointsBalance == 0.0) {
+          return SizedBox();
+        }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
