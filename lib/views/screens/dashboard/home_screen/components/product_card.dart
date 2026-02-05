@@ -22,19 +22,16 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (isLoading) {
-          return;
-        }
+        if (isLoading) return;
         navigate(
-            context: context,
-            page: ProductDetailsScreen(
-              productId: product.id,
-            ));
+          context: context,
+          page: ProductDetailsScreen(productId: product.id),
+        );
       },
       child: Stack(
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: white,
               borderRadius: BorderRadius.circular(12),
@@ -48,82 +45,96 @@ class ProductCard extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // don't use spaceBetween + nested Columns that have intrinsic heights;
+              // instead give Flexible parts
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: CustomImage(
-                        height: 120,
-                        width: 120,
-                        path: (product.images != null &&
-                                product.images!.isNotEmpty &&
-                                product.images![0].url != null &&
-                                product.images![0].url!.isNotEmpty)
-                            ? product.images![0].url!
-                            : "",
-                        fit: BoxFit.cover,
-                        radius: 12,
+                // Top: image + texts (flexible)
+                Flexible(
+                  flex: 6,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: SizedBox(
+                          height: 120,
+                          width: 120,
+                          child: CustomImage(
+                            height: 120,
+                            width: 120,
+                            path: (product.images != null &&
+                                    product.images!.isNotEmpty &&
+                                    product.images![0].url != null &&
+                                    product.images![0].url!.isNotEmpty)
+                                ? product.images![0].url!
+                                : "",
+                            fit: BoxFit.cover,
+                            radius: 12,
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      product.name ?? "",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                          ),
-                    ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Text(
-                      product.discountedPriceFormat,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                            color: primaryColor,
-                          ),
-                    ),
-                  ],
+                      const SizedBox(height: 8),
+                      Text(
+                        product.name ?? "",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        product.discountedPriceFormat,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: primaryColor,
+                            ),
+                      ),
+                    ],
+                  ),
                 ),
-                Column(
-                  children: [
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    GetBuilder<ProductController>(builder: (productController) {
-                      return AddToCardButton(
-                        product: product,
-                      );
+
+                const SizedBox(height: 8),
+
+                // Bottom: button area (flexible but reserved space)
+                Flexible(
+                  flex: 2,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: GetBuilder<ProductController>(
+                        builder: (productController) {
+                      return AddToCardButton(product: product);
                     }),
-                  ],
-                )
+                  ),
+                ),
               ],
             ),
           ),
+
+          // Offer badge
           Positioned(
-              top: 10,
-              right: 10,
-              child: product.offers != null &&
-                      (product.offers?.isNotEmpty ?? false)
-                  ? Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 4, horizontal: 8),
-                      decoration: BoxDecoration(
-                          color: red, borderRadius: BorderRadius.circular(20)),
-                      child: Text(
-                        product.offersFormat,
-                        style: Helper(context).textTheme.bodySmall?.copyWith(
-                            color: white, fontWeight: FontWeight.w500),
-                      ),
-                    )
-                  : const SizedBox())
+            top: 10,
+            right: 10,
+            child: product.offers != null &&
+                    (product.offers?.isNotEmpty ?? false)
+                ? Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                    decoration: BoxDecoration(
+                      color: red,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      product.offersFormat,
+                      style: Helper(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: white, fontWeight: FontWeight.w500),
+                    ),
+                  )
+                : const SizedBox(),
+          ),
         ],
       ),
     );

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:lekra/controllers/product_controller.dart';
@@ -19,6 +18,7 @@ class ProductCardForCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 200,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
           color: white,
@@ -32,60 +32,63 @@ class ProductCardForCategory extends StatelessWidget {
           borderRadius: BorderRadius.circular(12)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CustomImage(
-            path: product.images?[0].url ?? "",
-            height: 140,
-            width: double.infinity,
-            fit: BoxFit.cover,
-          ),
-          const SizedBox(
-            height: 12,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomImage(
+                path: product.images?[0].url ?? "",
+                height: 140,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              Padding(
+                padding: const EdgeInsetsGeometry.all(6),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      capitalize(product.name ?? ""),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Helper(context).textTheme.bodyMedium?.copyWith(
+                          color: black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14),
+                    ),
+                    // (product.description ?? "").isNotEmpty
+                    //     ? Text(
+                    //         product.description ?? "Loading...",
+                    //         style:
+                    //             Helper(context).textTheme.bodySmall?.copyWith(
+                    //                   color: grey,
+                    //                 ),
+                    //         maxLines: 1,
+                    //       )
+                    //     : SizedBox(),
+                    Text(
+                      PriceConverter.convertToNumberFormat(
+                          product.price ?? 0.00),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            color: primaryColor,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           Padding(
             padding: const EdgeInsetsGeometry.all(6),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  capitalize(product.name ?? ""),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Helper(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(
-                          color: black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14),
-                ),
-                Text(
-                  product.description ?? "Loading...",
-                  style: Helper(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(
-                        color: grey,
-                      ),
-                  maxLines: 1,
-                ),
-                Text(
-                  PriceConverter.convertToNumberFormat(
-                      product.price ?? 0.00),
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        color: primaryColor,
-                      ),
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                GetBuilder<ProductController>(
-                    builder: (productController) {
+                GetBuilder<ProductController>(builder: (productController) {
                   return AddToCardButton(
                     product: product,
                   );

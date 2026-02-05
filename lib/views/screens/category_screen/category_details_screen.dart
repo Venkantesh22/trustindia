@@ -88,7 +88,6 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
           children: [
             const CategoryFilterBar(),
             const SizedBox(height: 10),
-            // Inside CategoryDetailsScreen build method
             Expanded(
               child: GetBuilder<ProductController>(
                 builder: (productController) {
@@ -107,12 +106,11 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                     child: GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         mainAxisSpacing: 16,
                         crossAxisSpacing: 16,
-                        childAspectRatio: 0.7,
+                        childAspectRatio: 0.65,
                       ),
                       // If we are loading the first time, show 4 shimmers
                       itemCount: state.isInitialLoading

@@ -42,7 +42,7 @@ class AddToCardButton extends StatelessWidget {
           }
         },
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 7),
           decoration: BoxDecoration(
               color: isAdd ? secondaryColor : primaryColor,
               borderRadius: BorderRadius.circular(12)),
@@ -57,29 +57,52 @@ class AddToCardButton extends StatelessWidget {
                     const SizedBox(
                       width: 6,
                     ),
-                    Text(
-                      "In Card",
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: white,
+                    RichText(
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.clip,
+                      text: TextSpan(
+                        style: Helper(context).textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                        children: [
+                          TextSpan(
+                            text: "In Card",
                           ),
-                    )
+                        ],
+                      ),
+                    ),
+                    // Text(
+                    //   "In Card",
+                    //   style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    //         fontWeight: FontWeight.bold,
+                    //         fontSize: 16,
+                    //         color: white,
+                    //       ),
+                    // )
                   ],
                 )
               : Row(
                   children: [
                     Expanded(
                       child: Center(
-                        child: Text(
-                          "Add to Card",
-                          overflow: TextOverflow.ellipsis,
-                          style:
-                              Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: white,
-                                  ),
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.clip,
+                          text: TextSpan(
+                            style:
+                                Helper(context).textTheme.bodyMedium?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ),
+                            children: [
+                              TextSpan(
+                                text: "Add to Card",
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
