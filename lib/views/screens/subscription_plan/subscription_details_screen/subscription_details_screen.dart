@@ -113,9 +113,8 @@ class _SubscriptionDetailsScreenState extends State<SubscriptionDetailsScreen> {
                             page: SelectPaymentScreen(
                               isMemberShipPayment: true,
                               totalAmount: subscriptionController
-                                      .selectSubscription
-                                      ?.discountPriceFormat ??
-                                  "",
+                                      .selectSubscription?.priceFormat ??
+                                  "0.00",
                             ));
                       },
                       color: primaryColor),

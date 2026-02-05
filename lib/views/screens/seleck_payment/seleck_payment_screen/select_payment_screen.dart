@@ -12,8 +12,11 @@ class SelectPaymentScreen extends StatefulWidget {
   final bool isMemberShipPayment;
   final String totalAmount;
 
-  const SelectPaymentScreen(
-      {super.key, this.isMemberShipPayment = false, required this.totalAmount});
+  const SelectPaymentScreen({
+    super.key,
+    this.isMemberShipPayment = false,
+    required this.totalAmount,
+  });
 
   @override
   State<SelectPaymentScreen> createState() => _SelectPaymentScreenState();
