@@ -35,9 +35,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             const TotalPointSection(),
-            
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Text(
@@ -140,8 +138,6 @@ class _RewardsScreenState extends State<RewardsScreen> {
                 );
               },
               child: Container(
-                height: 300,
-                width: 300,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -162,23 +158,31 @@ class _RewardsScreenState extends State<RewardsScreen> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                      scratchCardModel.isDiscount
-                          ? "${scratchCardModel.rewardPoints} OFF"
-                          : "${scratchCardModel.rewardPoints} Coins",
-                      style: Helper(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 26,
-                        color: Colors.black,
-                        shadows: const [
-                          Shadow(
-                            color: Colors.white,
-                            offset: Offset(1, 1),
-                            blurRadius: 4,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            scratchCardModel.isDiscount
+                                ? "${scratchCardModel.rewardPoints} OFF"
+                                : "${scratchCardModel.rewardPoints} Coins",
+                            overflow: TextOverflow.ellipsis,
+                            style:
+                                Helper(context).textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 26,
+                              color: Colors.black,
+                              shadows: const [
+                                Shadow(
+                                  color: Colors.white,
+                                  offset: Offset(1, 1),
+                                  blurRadius: 4,
+                                ),
+                              ],
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                        ],
-                      ),
-                      textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   ],
                 ),

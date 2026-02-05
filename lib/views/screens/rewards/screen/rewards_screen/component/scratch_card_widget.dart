@@ -61,22 +61,28 @@ class ScratchCardWidget extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      scratchCardModel.isDiscount
-                          ? "🎉 Congratulation You've won a Discount!"
-                          : "🎁 Congratulation You've won!",
-                      style: Helper(context).textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white.withValues(alpha: 0.9),
-                            fontSize: 14,
-                          ),
-                      textAlign: TextAlign.center,
+                    Center(
+                      child: Text(
+                        scratchCardModel.isDiscount
+                            ? "🎉 Congratulation You've won a Discount!"
+                            : "🎁 Congratulation You've won!",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: Helper(context).textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white.withValues(alpha: 0.9),
+                              fontSize: 14,
+                            ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       scratchCardModel.isDiscount
                           ? "${scratchCardModel.rewardPoints} OFF"
                           : "${scratchCardModel.rewardPoints} Coins",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                       style: Helper(context).textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 26,
