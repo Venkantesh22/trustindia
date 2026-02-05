@@ -35,7 +35,9 @@ class _RewardsScreenState extends State<RewardsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             const TotalPointSection(),
+            
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Text(

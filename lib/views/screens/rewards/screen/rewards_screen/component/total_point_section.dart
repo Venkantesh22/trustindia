@@ -66,28 +66,33 @@ class TotalPointSection extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "10 coins = ₹ 1",
-                  style: Helper(context).textTheme.bodyMedium?.copyWith(
-                      fontSize: 12,
-                      color: primaryColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: secondaryColor,
-                        width: 1.0,
-                      ),
-                    ),
-                  ),
+                Expanded(
                   child: Text(
-                    "View Rewards History",
+                    "10 coins = ₹ 1",
                     style: Helper(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 12,
-                        color: secondaryColor,
+                        color: primaryColor,
                         fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: secondaryColor,
+                          width: 1.0,
+                        ),
+                      ),
+                    ),
+                    child: Text(
+                      "View Rewards History",
+                      overflow: TextOverflow.clip,
+                      style: Helper(context).textTheme.bodyMedium?.copyWith(
+                          fontSize: 12,
+                          color: secondaryColor,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
               ],

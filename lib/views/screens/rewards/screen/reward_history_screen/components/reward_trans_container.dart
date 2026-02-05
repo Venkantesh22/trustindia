@@ -54,7 +54,7 @@ class RewardTransContainer extends StatelessWidget {
                 color: rewardsTransactionModel.isDebit ? red : green),
           ),
           Text(
-            "${rewardsTransactionModel.points ?? 111} point",
+            "${rewardsTransactionModel.points ?? 111} coins",
             style: Helper(context).textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w600,
                 color: rewardsTransactionModel.isDebit ? red : green),
