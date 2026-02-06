@@ -111,6 +111,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
               image: Image.asset(
                 Assets.imagesScratch,
                 fit: BoxFit.cover,
+                height: MediaQuery.of(context).size.height * 0.4,
               ),
               accuracy: ScratchAccuracy.medium,
               brushSize: 50,
@@ -138,6 +139,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                 );
               },
               child: Container(
+                height: MediaQuery.of(context).size.height * 0.4,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: Colors.white,
