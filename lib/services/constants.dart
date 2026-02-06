@@ -205,6 +205,8 @@ class AppConstants {
 
   // Referral Structure
   static const String getReferral = "api/referrals";
+  static const String getReferralLevels = "api/referrals/levels";
+  static const String getReferralLevelsDataByID = "api/referrals/level";
 
   // rewards Structure
   static const String fetchScratchCard = "api/rewards";
