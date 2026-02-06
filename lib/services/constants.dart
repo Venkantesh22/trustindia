@@ -140,7 +140,8 @@ class AppConstants {
   static String appName = 'Sathiya Smart';
   static String payAppName = 'Sathiya Pay';
 
-  static const String agoraAppId = 'c87b710048c049f59570bd1895b7e561';
+  static String googlePlayStoreLink =
+      'https://play.google.com/store/apps/details?id=com.tpipay.trustindia';
 
   //OTP
   static const String generateOtp = 'api/send-otp';

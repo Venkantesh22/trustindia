@@ -57,20 +57,18 @@ class ProductCardForCategory extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           fontSize: 14),
                     ),
-                    // (product.description ?? "").isNotEmpty
-                    //     ?
-                    Text(
-                      // product.description ?? "Loading...",
-                      "Join us to see how the Google Security ecosystem empowers your team to stay ahead of modern attacks. We’ll explore the powerful synergy between Google Security Operations and Google Threat Intelligence, showing you how to",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: Helper(context).textTheme.bodySmall?.copyWith(
-                            color: grey,
-                            fontSize: 10,
-                          ),
-                    )
-                    // : SizedBox()
-                    ,
+                    (product.description ?? "").isNotEmpty
+                        ? Text(
+                            product.description ?? "Loading...",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style:
+                                Helper(context).textTheme.bodySmall?.copyWith(
+                                      color: grey,
+                                      fontSize: 10,
+                                    ),
+                          )
+                        : SizedBox(),
                     SizedBox(
                       height: 8,
                     ),
