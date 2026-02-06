@@ -3,7 +3,6 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/conponents/profile_row_title.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/conponents/row_of_account.dart';
-import 'package:lekra/views/screens/widget/custom_back_button.dart';
 
 class ProfileButton extends StatelessWidget {
   final bool isLoading;
@@ -68,7 +67,6 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             Row(
               children: [
-                const CustomBackButton(),
                 Text(
                   "My Profile",
                   style: Helper(context).textTheme.titleMedium?.copyWith(

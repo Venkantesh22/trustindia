@@ -6,7 +6,7 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/address/screen/add_address_screen.dart';
-import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_drawer.dart';
+import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class AddressScreen extends StatefulWidget {
   const AddressScreen({super.key});
@@ -16,7 +16,6 @@ class AddressScreen extends StatefulWidget {
 }
 
 class _AddressScreenState extends State<AddressScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -28,8 +27,7 @@ class _AddressScreenState extends State<AddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
-      appBar: CustomAppbarDrawer( title: "Address"),
+      appBar: CustomAppBar2(title: "Address"),
       floatingActionButton: Container(
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
         decoration: BoxDecoration(
