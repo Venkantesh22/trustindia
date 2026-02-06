@@ -28,12 +28,12 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>(); 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.find<BasicController>().fetchAddress();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Get.find<BasicController>().fetchAddress();
       if (widget.showDialogOfDiscount) {
         showDialog(
             context: context,

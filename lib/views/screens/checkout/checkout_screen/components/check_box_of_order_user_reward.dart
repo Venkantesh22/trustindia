@@ -15,7 +15,8 @@ class CheckBoxOfOrderUserReward extends StatelessWidget {
     return GetBuilder<ProductController>(builder: (productController) {
       return GetBuilder<OrderController>(builder: (orderController) {
         if (productController.cardModel?.rewardPointsBalance == null ||
-            productController.cardModel?.rewardPointsBalance == 0.0) {
+            productController.cardModel?.rewardPointsBalance == 0.0 &&
+                orderController.userRewordCoinsState == false) {
           return SizedBox();
         }
         return Column(
