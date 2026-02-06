@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import 'package:lekra/controllers/home_controller.dart';
 import 'package:lekra/data/models/home/category_model.dart';
 import 'package:lekra/services/constants.dart';
@@ -51,7 +50,7 @@ class ExploreCategorySection extends StatelessWidget {
                       InkWell(
                         borderRadius: BorderRadius.circular(50),
                         onTap: () {
-                          navigate(context: context, page: PayHomeScreen());
+                          // navigate(context: context, page: PayHomeScreen());
                         },
                         child: const CircleAvatar(
                             radius: 32,
@@ -65,7 +64,8 @@ class ExploreCategorySection extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        AppConstants.payAppName,
+                        // AppConstants.payAppName,
+                        "Coming soon",
                         style: theme.textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                           fontSize: 12,
