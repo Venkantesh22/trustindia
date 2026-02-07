@@ -108,6 +108,8 @@ class ReferralController extends GetxController implements GetxService {
         referralLevelDetailsModelList = (response.body['data'] as List)
             .map((item) => ReferralLevelDetailsModel.fromJson(item))
             .toList();
+        referralLevelDetailsModelFilterList
+            .addAll(referralLevelDetailsModelList);
 
         responseModel =
             ResponseModel(true, "Success fetch fetchReferralLevelDataByID");
@@ -128,5 +130,24 @@ class ReferralController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  TextEditingController searchReferralTeam = TextEditingController();
+  TextEditingController searchReferralTeamController = TextEditingController();
+
+  List<ReferralLevelDetailsModel> referralLevelDetailsModelFilterList = [];
+
+  void searchReferralTeam(String value) {
+    isLoading = true;
+    update();
+    if (searchReferralTeamController.text.isNotEmpty) {
+      referralLevelDetailsModelFilterList =
+          referralLevelDetailsModelList.where((element) {
+        return element.name!.toLowerCase().contains(value.toLowerCase()) ||
+            element.email!.toLowerCase().contains(value.toLowerCase());
+      }).toList();
+    } else {
+      referralLevelDetailsModelFilterList.addAll(referralLevelDetailsModelList);
+    }
+    isLoading = false;
+
+    update();
+  }
 }

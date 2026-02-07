@@ -45,9 +45,12 @@ class _ReferralLevelDetailsScreenState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AppTextFieldWithHeading(
-                controller: referralController.searchReferralTeam,
+                controller: referralController.searchReferralTeamController,
                 hindText: "Search by name or Email...",
                 preFixWidget: const Icon(Icons.search),
+                onChanged: (value) {
+                  referralController.searchReferralTeam(value);
+                },
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
@@ -78,7 +81,7 @@ class _ReferralLevelDetailsScreenState
                     final referralMemberDetails = referralController.isLoading
                         ? ReferralLevelDetailsModel()
                         : referralController
-                            .referralLevelDetailsModelList[index];
+                            .referralLevelDetailsModelFilterList[index];
                     return CustomShimmer(
                       isLoading: referralController.isLoading,
                       child: ReferralTeamMemberDetailContainer(
@@ -89,7 +92,8 @@ class _ReferralLevelDetailsScreenState
                   separatorBuilder: (_, __) => SizedBox(height: 12),
                   itemCount: referralController.isLoading
                       ? 4
-                      : referralController.referralLevelDetailsModelList.length,
+                      : referralController
+                          .referralLevelDetailsModelFilterList.length,
                 ),
               )
             ],
