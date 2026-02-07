@@ -586,7 +586,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:graphview/GraphView.dart';
-import 'package:lekra/data/models/referral_model.dart';
+import 'package:lekra/data/models/referral/referral_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 

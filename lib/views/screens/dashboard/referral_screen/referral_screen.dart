@@ -6,8 +6,7 @@ import 'package:lekra/controllers/referral_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
-import 'package:lekra/views/base/shimmer.dart';
-import 'package:lekra/views/screens/dashboard/referral_screen/components/referral_tree.dart';
+import 'package:lekra/views/screens/dashboard/referral_screen/components/referral_level_section.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -23,7 +22,8 @@ class _ReferralScreenState extends State<ReferralScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.find<ReferralController>().fetchReferral();
+      // Get.find<ReferralController>().fetchReferral();
+      Get.find<ReferralController>().fetchReferralLevel();
     });
   }
 
@@ -53,7 +53,7 @@ class _ReferralScreenState extends State<ReferralScreen> {
         title: "Referral Structure",
         showBackButton: false,
       ),
-      body: SingleChildScrollView(
+      body: Padding(
         padding: AppConstants.screenPadding,
         child: Column(
           children: [
@@ -156,20 +156,21 @@ class _ReferralScreenState extends State<ReferralScreen> {
               }),
             ),
             const SizedBox(height: 16),
+            Expanded(child: ReferralLevelSection())
 
-            GetBuilder<ReferralController>(builder: (referralController) {
-              if (referralController.isLoading) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              return CustomShimmer(
-                isLoading: referralController.isLoading,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child:
-                      ReferralGraphTree(roots: referralController.referralList),
-                ),
-              );
-            }),
+            // GetBuilder<ReferralController>(builder: (referralController) {
+            //   if (referralController.isLoading) {
+            //     return const Center(child: CircularProgressIndicator());
+            //   }
+            //   return CustomShimmer(
+            //     isLoading: referralController.isLoading,
+            //     child: Padding(
+            //       padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            //       child:
+            //           ReferralGraphTree(roots: referralController.referralList),
+            //     ),
+            //   );
+            // }),
           ],
         ),
       ),

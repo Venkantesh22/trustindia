@@ -256,6 +256,7 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                     color: grey,
                                   ),
                             ),
+                            keyboardType: TextInputType.number,
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(10),
                               FilteringTextInputFormatter.digitsOnly
@@ -507,9 +508,7 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                     ),
                                   ],
                                 ),
-                              )
-
-                              )
+                              ))
                         ],
                       );
                     }),

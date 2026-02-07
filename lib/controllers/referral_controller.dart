@@ -1,7 +1,8 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:lekra/data/models/referral_model.dart';
+import 'package:lekra/data/models/referral/referral_level_model.dart';
+import 'package:lekra/data/models/referral/referral_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/repositories/refarral_repo.dart';
 
@@ -48,6 +49,7 @@ class ReferralController extends GetxController implements GetxService {
     return responseModel;
   }
 
+  List<ReferralLevelModel> referralLevelModelList = [];
   Future<ResponseModel> fetchReferralLevel() async {
     log('----------- fetchReferralLevel Called() -------------');
     ResponseModel responseModel = ResponseModel(false, "Unknown error");
@@ -60,9 +62,9 @@ class ReferralController extends GetxController implements GetxService {
       // ✅ Correct key is 'status'
       if (response.statusCode == 200 &&
           response.body['status'] == true &&
-          response.body['data']) {
-        referralList = (response.body['data'] as List)
-            .map((item) => ReferralModel.fromJson(item))
+          response.body['data'] is List) {
+        referralLevelModelList = (response.body['data'] as List)
+            .map((item) => ReferralLevelModel.fromJson(item))
             .toList();
 
         responseModel = ResponseModel(true, "Success fetch fetchReferralLevel");
@@ -76,7 +78,7 @@ class ReferralController extends GetxController implements GetxService {
       }
     } catch (e) {
       responseModel = ResponseModel(false, "Catch");
-      log("****** fetchReferralLevel ****** $e", name: "fetchReferralLevel");
+      log("****** Error ****** $e", name: "fetchReferralLevel");
     }
 
     isLoading = false;
