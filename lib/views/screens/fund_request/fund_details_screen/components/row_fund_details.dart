@@ -23,20 +23,15 @@ class RowFundDetails extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          label,
-          style: Helper(context).textTheme.bodyMedium?.copyWith(
-              fontSize: 14, fontWeight: FontWeight.w400, color: greyDark),
+        Expanded(
+          child: Text(
+            label,
+            style: Helper(context).textTheme.bodyMedium?.copyWith(
+                fontSize: 14, fontWeight: FontWeight.w400, color: greyDark),
+          ),
         ),
         Row(
           children: [
-            Text(
-              value,
-              style: Helper(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
             if (showCopy)
               IconButton(
                 onPressed: () => copyReferralCode(context, value),
@@ -46,6 +41,14 @@ class RowFundDetails extends StatelessWidget {
                   color: primaryColor,
                 ),
               ),
+            Text(
+              value,
+              overflow: TextOverflow.clip,
+              style: Helper(context).textTheme.bodyMedium?.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
           ],
         ),
       ],

@@ -12,84 +12,85 @@ class FundDetailsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
-                padding: const EdgeInsets.all(16),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                          color: black.withValues(alpha: 0.1),
-                          blurRadius: 4,
-                          spreadRadius: 0,
-                          offset: const Offset(0, 5))
-                    ]),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Transaction Amount",
-                          style: Helper(context).textTheme.bodyMedium?.copyWith(
-                              fontSize: 14,
-                              color: greyDark,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        Text(
-                          DateFormatters().dMonthYear.format(
-                              fundRequestsModel?.createdAt ??
-                                  DateTime.now()),
-                          style: TextStyle(
-                            color: secondaryColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6),
-                      child: Text(
-                       fundRequestsModel?.amountFormat ??
-                            "",
-                        style: Helper(context).textTheme.titleMedium?.copyWith(
-                            fontSize: 34, fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    StatusChip(
-                        status:fundRequestsModel?.statusFormat ??
-                            FundStatus.pending),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Divider(
-                        color: grey,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    RowFundDetails(
-                      label: "Request ID",
-                      value: fundRequestsModel?.id
-                              .toString() ??
-                          "",
-                    ),
-                    RowFundDetails(
-                      label: "UTR",
-                      value: fundRequestsModel?.utr
-                              .toString() ??
-                          "",
-                      showCopy: true,
-                    ),
-                    RowFundDetails(
-                        label: "Transaction Date",
-                        value: DateFormatters().dMy.format(fundRequestsModel?.transDate ??
-                            DateTime.now())),
-                  ],
+    return Container(
+      padding: const EdgeInsets.all(16),
+      width: double.infinity,
+      decoration: BoxDecoration(
+          color: white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+                color: black.withValues(alpha: 0.1),
+                blurRadius: 4,
+                spreadRadius: 0,
+                offset: const Offset(0, 5))
+          ]),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  "Transaction Amount",
+                  overflow: TextOverflow.clip,
+                  style: Helper(context).textTheme.bodyMedium?.copyWith(
+                      fontSize: 14,
+                      color: greyDark,
+                      fontWeight: FontWeight.w500),
                 ),
-              );
+              ),
+              Text(
+                DateFormatters()
+                    .dMy
+                    .format(fundRequestsModel?.createdAt ?? DateTime.now()),
+                overflow: TextOverflow.clip,
+                style: TextStyle(
+                  color: secondaryColor,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6),
+            child: Text(
+              fundRequestsModel?.amountFormat ?? "",
+              style: Helper(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(fontSize: 34, fontWeight: FontWeight.w500),
+            ),
+          ),
+          StatusChip(
+              status: fundRequestsModel?.statusFormat ?? FundStatus.pending),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 10),
+            child: Divider(
+              color: grey,
+            ),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          RowFundDetails(
+            label: "Request ID",
+            value: fundRequestsModel?.id.toString() ?? "",
+          ),
+          RowFundDetails(
+            label: "UTR",
+            value: fundRequestsModel?.utr.toString() ?? "",
+            showCopy: true,
+          ),
+          RowFundDetails(
+              label: "Transaction Date",
+              value: DateFormatters()
+                  .dMy
+                  .format(fundRequestsModel?.transDate ?? DateTime.now())),
+        ],
+      ),
+    );
   }
 }

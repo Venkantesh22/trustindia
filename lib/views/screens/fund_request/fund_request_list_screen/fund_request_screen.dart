@@ -5,9 +5,11 @@ import 'package:lekra/controllers/fund_request_controller.dart';
 import 'package:lekra/data/models/fund_reqests/fund_ruquest_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/fund_request/form_fund_request/form_fund_request_screen.dart';
 import 'package:lekra/views/screens/fund_request/fund_details_screen/fund_details_screen.dart';
 import 'package:lekra/views/screens/fund_request/fund_request_list_screen/component/fund_request_widget.dart';
+import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_drawer.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -61,10 +63,8 @@ class _FundRequestScreenState extends State<FundRequestScreen> {
       //   }
       // },
       child: Scaffold(
-       
-        appBar: CustomAppbarDrawer(
+        appBar: CustomAppBar2(
           title: "Fund Requests",
-          
         ),
         floatingActionButton: Container(
           child: GestureDetector(
@@ -123,8 +123,11 @@ class _FundRequestScreenState extends State<FundRequestScreen> {
                           type: PageTransitionType.rightToLeft,
                           page: const FundDetailsScreen());
                     },
-                    child: FundRequestCard(
-                      fundRequestModel: fundRequest,
+                    child: CustomShimmer(
+                      isLoading: fundRequestController.isLoading,
+                      child: FundRequestCard(
+                        fundRequestModel: fundRequest,
+                      ),
                     ),
                   );
                 },

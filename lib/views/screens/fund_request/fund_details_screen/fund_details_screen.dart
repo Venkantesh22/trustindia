@@ -40,7 +40,7 @@ class _FundDetailsScreenState extends State<FundDetailsScreen> {
                       fundRequestController.selectFundRequestModel,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 12,
               ),
               CustomShimmer(
