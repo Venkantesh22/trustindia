@@ -6,6 +6,7 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/common_button.dart';
 import 'package:lekra/views/base/shimmer.dart';
+import 'package:lekra/views/screens/dashboard/referral/referral_level_details/referral_level_details_screen.dart';
 import 'package:lekra/views/screens/dashboard/referral/referral_screen/components/referral_level_container.dart';
 import 'package:lekra/views/screens/dashboard/referral/referral_screen/components/referral_tree.dart';
 
@@ -80,6 +81,11 @@ class ReferralLevelSection extends StatelessWidget {
                         return showToast(
                             message: "Loading...", toastType: ToastType.info);
                       }
+                      navigate(
+                        context: context,
+                        page: ReferralLevelDetailsScreen(
+                            referralLevelModel: referralLevelModel),
+                      );
                     },
                     child: CustomShimmer(
                       isLoading: referralController.isLoading,

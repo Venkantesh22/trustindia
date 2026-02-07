@@ -11,8 +11,8 @@ class ReferralRepo {
 
   Future<Response> fetchReferralLevel() async => await apiClient.getData(
       AppConstants.getReferralLevels, "fetchReferralLevel");
-      
-  Future<Response> fetchReferralLevelDataByID({required int levelId}) async =>
+
+  Future<Response> fetchReferralLevelDataByID({required int? levelId}) async =>
       await apiClient.getData(
           "${AppConstants.getReferralLevelsDataByID}/$levelId",
           "fetchReferralLevelDataByID");

@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lekra/data/models/referral/referral_level_details_model.dart';
 import 'package:lekra/data/models/referral/referral_level_model.dart';
 import 'package:lekra/data/models/referral/referral_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
@@ -86,8 +88,10 @@ class ReferralController extends GetxController implements GetxService {
     return responseModel;
   }
 
+  List<ReferralLevelDetailsModel> referralLevelDetailsModelList = [];
+
   Future<ResponseModel> fetchReferralLevelDataByID(
-      {required int levelId}) async {
+      {required int? levelId}) async {
     log('----------- fetchReferralLevelDataByID Called() -------------');
     ResponseModel responseModel = ResponseModel(false, "Unknown error");
     isLoading = true;
@@ -101,8 +105,8 @@ class ReferralController extends GetxController implements GetxService {
       if (response.statusCode == 200 &&
           response.body['status'] == true &&
           response.body['data'] is List) {
-        referralList = (response.body['data'] as List)
-            .map((item) => ReferralModel.fromJson(item))
+        referralLevelDetailsModelList = (response.body['data'] as List)
+            .map((item) => ReferralLevelDetailsModel.fromJson(item))
             .toList();
 
         responseModel =
@@ -123,4 +127,6 @@ class ReferralController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
+
+  TextEditingController searchReferralTeam = TextEditingController();
 }
