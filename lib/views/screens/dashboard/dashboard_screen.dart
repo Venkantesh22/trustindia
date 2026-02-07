@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/account_screen.dart';
 import 'package:lekra/views/screens/dashboard/home_screen/home_screen.dart';
-import 'package:lekra/views/screens/dashboard/referral_screen/referral_screen.dart';
+import 'package:lekra/views/screens/dashboard/referral/referral_screen/referral_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/wallet_screen/wallet_screen.dart';
 import 'package:lekra/views/screens/order_screem/screen/order_screen.dart';
 
