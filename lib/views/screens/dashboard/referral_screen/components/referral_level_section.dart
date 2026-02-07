@@ -7,6 +7,7 @@ import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/common_button.dart';
 import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/dashboard/referral_screen/components/referral_level_container.dart';
+import 'package:lekra/views/screens/dashboard/referral_screen/components/referral_tree.dart';
 
 class ReferralLevelSection extends StatelessWidget {
   const ReferralLevelSection({super.key});
@@ -17,10 +18,10 @@ class ReferralLevelSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Header Row
-        Row(
-          children: [
-            GetBuilder<ReferralController>(builder: (referralController) {
-              return Expanded(
+        GetBuilder<ReferralController>(builder: (referralController) {
+          return Row(
+            children: [
+              Expanded(
                 child: CustomShimmer(
                   isLoading: referralController.isLoading,
                   child: Text(
@@ -32,20 +33,30 @@ class ReferralLevelSection extends StatelessWidget {
                         ),
                   ),
                 ),
-              );
-            }),
-            CustomButton(
-              onTap: () {},
-              color: secondaryColor,
-              borderColor: secondaryColor,
-              child: Text(
-                "Graph View",
-                style: Helper(context).textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w700, fontSize: 14, color: white),
               ),
-            ),
-          ],
-        ),
+              CustomButton(
+                onTap: () {
+                  if (referralController.isLoading) {
+                    return showToast(
+                        message: "Loading...", toastType: ToastType.info);
+                  }
+                  navigate(
+                      context: context,
+                      page: FullScreenReferralTree(
+                        roots: referralController.referralList,
+                      ));
+                },
+                color: secondaryColor,
+                borderColor: secondaryColor,
+                child: Text(
+                  "Graph View",
+                  style: Helper(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w700, fontSize: 14, color: white),
+                ),
+              ),
+            ],
+          );
+        }),
         const SizedBox(height: 12),
 
         /// Make the list scrollable
@@ -63,10 +74,18 @@ class ReferralLevelSection extends StatelessWidget {
                   final referralLevelModel = referralController.isLoading
                       ? ReferralLevelModel()
                       : referralController.referralLevelModelList[index];
-                  return CustomShimmer(
-                    isLoading: referralController.isLoading,
-                    child: ReferralLevelContainer(
-                      referralLevelModel: referralLevelModel,
+                  return GestureDetector(
+                    onTap: () {
+                      if (referralController.isLoading) {
+                        return showToast(
+                            message: "Loading...", toastType: ToastType.info);
+                      }
+                    },
+                    child: CustomShimmer(
+                      isLoading: referralController.isLoading,
+                      child: ReferralLevelContainer(
+                        referralLevelModel: referralLevelModel,
+                      ),
                     ),
                   );
                 },

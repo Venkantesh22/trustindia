@@ -22,7 +22,7 @@ class _ReferralScreenState extends State<ReferralScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Get.find<ReferralController>().fetchReferral();
+      Get.find<ReferralController>().fetchReferral();
       Get.find<ReferralController>().fetchReferralLevel();
     });
   }
