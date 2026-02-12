@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/data/models/fund_reqests/bank_model.dart';
 import 'package:lekra/data/models/fund_reqests/fund_ruquest_model.dart';
+import 'package:lekra/data/models/fund_reqests/upi_qr_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
+import 'package:lekra/data/models/user_model.dart';
 import 'package:lekra/data/repositories/fund_request_repo.dart';
 
 class FundRequestController extends GetxController implements GetxService {
@@ -52,7 +54,7 @@ class FundRequestController extends GetxController implements GetxService {
         responseModel =
             ResponseModel(true, response.body['message'] ?? "getAssignBank");
       } else {
-       responseModel = ResponseModel(false,
+        responseModel = ResponseModel(false,
             response.body['error'] ?? "getAssignBank Something Went Wrong");
       }
     } catch (e) {
@@ -91,7 +93,7 @@ class FundRequestController extends GetxController implements GetxService {
         dateController.clear();
         utrNoController.clear();
       } else {
-       responseModel = ResponseModel(false,
+        responseModel = ResponseModel(false,
             response.body['error'] ?? "postFundRequest Something Went Wrong");
       }
     } catch (e) {
@@ -124,7 +126,7 @@ class FundRequestController extends GetxController implements GetxService {
         responseModel =
             ResponseModel(true, response.body['message'] ?? "fetchFundStatus");
       } else {
-       responseModel = ResponseModel(false,
+        responseModel = ResponseModel(false,
             response.body['error'] ?? "fetchFundStatus Something Went Wrong");
       }
     } catch (e) {
@@ -173,6 +175,54 @@ class FundRequestController extends GetxController implements GetxService {
     } catch (e) {
       responseModel = ResponseModel(false, "Catch");
       log("****** Error ****** $e", name: "fetchFundDetails");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  void updateAmountControllerPrice(String value) {
+    amountController.text = value;
+    update();
+  }
+
+  UpiQrModel? upiQRModel;
+
+  Future<ResponseModel> createUPIQR({required UserModel userModel}) async {
+    log('-----------  createUPIQR() -------------');
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+
+    try {
+      Map<String, dynamic> data = {
+        "amount": amountController.text.trim(),
+        "mobile": userModel.mobile,
+        "name": userModel.firstName,
+        "email": userModel.email,
+      };
+      Response response =
+          await fundRequestRepo.createUPIQR(data: FormData(data));
+
+      if (response.statusCode == 200 &&
+          response.body['status'] == "success" &&
+          response.body['qrString'] != null) {
+        upiQRModel = UpiQrModel(
+          orderId: response.body['orderId'],
+          amount: response.body['amount'],
+          qrString: response.body['qrString'],
+        );
+
+        responseModel =
+            ResponseModel(true, response.body['message'] ?? "createUPIQR");
+      } else {
+        responseModel = ResponseModel(
+            false, response.body['message'] ?? "Something Went Wrong");
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "createUPIQR");
     }
 
     isLoading = false;

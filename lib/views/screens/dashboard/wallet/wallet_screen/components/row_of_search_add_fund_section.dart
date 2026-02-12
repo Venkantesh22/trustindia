@@ -9,6 +9,7 @@ import 'package:lekra/services/date_formatters_and_converters.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/common_button.dart';
 import 'package:lekra/views/base/custom_image.dart';
+import 'package:lekra/views/screens/fund_requent_qr/fund_requent_qr_screen.dart';
 import 'package:lekra/views/screens/fund_request/fund_request_list_screen/fund_request_screen.dart';
 import 'package:lekra/views/screens/widget/text_box/app_text_box.dart';
 
@@ -59,20 +60,20 @@ class _RowOFSearchAndAddFundButtonSectionState
                     );
 
                     // 2. Handle the result
-                 if (pickedDate != null) {
-  final displayDate =
-      DateFormatters().dMyDash.format(pickedDate); // UI
-  final apiDate =
-      DateFormatters().yMD.format(pickedDate); // API
+                    if (pickedDate != null) {
+                      final displayDate =
+                          DateFormatters().dMyDash.format(pickedDate); // UI
+                      final apiDate =
+                          DateFormatters().yMD.format(pickedDate); // API
 
-  walletController.walletSearchController.text = displayDate;
+                      walletController.walletSearchController.text =
+                          displayDate;
 
-  walletController.fetchWalletTransaction(
-    filterType: WalletFilterType.date,
-    filterValue: apiDate,
-  );
-}
-
+                      walletController.fetchWalletTransaction(
+                        filterType: WalletFilterType.date,
+                        filterValue: apiDate,
+                      );
+                    }
                   },
                   child: const Padding(
                     padding: EdgeInsets.all(12),
@@ -84,24 +85,23 @@ class _RowOFSearchAndAddFundButtonSectionState
                     ),
                   ),
                 ),
-               onChanged: (value) {
-  if (timer?.isActive ?? false) timer!.cancel();
+                onChanged: (value) {
+                  if (timer?.isActive ?? false) timer!.cancel();
 
-  timer = Timer(const Duration(milliseconds: 500), () {
-    if (value.isEmpty) {
-      walletController.fetchWalletTransaction(
-        filterType: WalletFilterType.none,
-        refresh: true,
-      );
-    } else {
-      walletController.fetchWalletTransaction(
-        filterType: WalletFilterType.amount,
-        filterValue: value.trim(),
-      );
-    }
-  });
-},
-
+                  timer = Timer(const Duration(milliseconds: 500), () {
+                    if (value.isEmpty) {
+                      walletController.fetchWalletTransaction(
+                        filterType: WalletFilterType.none,
+                        refresh: true,
+                      );
+                    } else {
+                      walletController.fetchWalletTransaction(
+                        filterType: WalletFilterType.amount,
+                        filterValue: value.trim(),
+                      );
+                    }
+                  });
+                },
               ),
             ),
             const SizedBox(
@@ -110,6 +110,7 @@ class _RowOFSearchAndAddFundButtonSectionState
             CustomButton(
               onTap: () {
                 navigate(context: context, page: const FundRequestScreen());
+                // navigate(context: context, page: const FundRequestQrScreen());
               },
               child: Row(
                 children: [

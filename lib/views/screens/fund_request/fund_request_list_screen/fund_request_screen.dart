@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/fund_request_controller.dart';
 import 'package:lekra/data/models/fund_reqests/fund_ruquest_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/shimmer.dart';
+import 'package:lekra/views/screens/fund_requent_qr/fund_requent_qr_screen.dart';
 import 'package:lekra/views/screens/fund_request/form_fund_request/form_fund_request_screen.dart';
 import 'package:lekra/views/screens/fund_request/fund_details_screen/fund_details_screen.dart';
 import 'package:lekra/views/screens/fund_request/fund_request_list_screen/component/fund_request_widget.dart';
-import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
-import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar_drawer.dart';
 import 'package:page_transition/page_transition.dart';
 
 class FundRequestScreen extends StatefulWidget {
@@ -32,39 +30,37 @@ class _FundRequestScreenState extends State<FundRequestScreen> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      // canPop: false, // Prevent the default back action
-      // // UPDATED: Using onPopInvokedWithResult
-      // onPopInvokedWithResult: (didPop, result) async {
-      //   // Show Exit Dialog
-      //   final shouldExit = await showDialog<bool>(
-      //     context: context,
-      //     builder: (context) => AlertDialog(
-      //       title: const Text('Exit App'),
-      //       content: const Text('Do you want to exit the app?'),
-      //       actions: [
-      //         TextButton(
-      //           onPressed: () => Navigator.of(context).pop(false),
-      //           child: const Text('No'),
-      //         ),
-      //         TextButton(
-      //           onPressed: () =>
-      //               Navigator.of(context).pop(true), // Returns true
-      //           child: const Text('Yes'),
-      //         ),
-      //       ],
-      //     ),
-      //   );
-
-      //   if (shouldExit == true) {
-      //     // Close the app
-      //     if (context.mounted) {
-      //       SystemNavigator.pop();
-      //     }
-      //   }
-      // },
       child: Scaffold(
-        appBar: CustomAppBar2(
-          title: "Fund Requests",
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          actions: [
+            IconButton(
+              onPressed: () {
+                navigate(context: context, page: const FundRequestQrScreen());
+              },
+              icon: const Icon(
+                Icons.qr_code_scanner_sharp,
+                color: black,
+              ),
+            ),
+            const SizedBox(width: 10)
+          ],
+          leading: IconButton(
+              onPressed: () {
+                pop(context);
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: black,
+              )),
+          centerTitle: true,
+          title: Text(
+            "Fund Requests",
+            style: Helper(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(fontWeight: FontWeight.bold),
+          ),
         ),
         floatingActionButton: Container(
           child: GestureDetector(

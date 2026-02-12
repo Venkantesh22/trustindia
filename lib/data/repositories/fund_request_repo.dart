@@ -24,4 +24,7 @@ class FundRequestRepo {
         "${AppConstants.getFundDetails}/$id/deatils",
         "fetchFundDetails",
       );
+
+  Future<Response> createUPIQR({required FormData data}) async =>
+      await apiClient.postData(AppConstants.postCreateQR, "createUPIQR", data);
 }
