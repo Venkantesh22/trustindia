@@ -27,4 +27,7 @@ class FundRequestRepo {
 
   Future<Response> createUPIQR({required FormData data}) async =>
       await apiClient.postData(AppConstants.postCreateQR, "createUPIQR", data);
+
+  Future<Response> uPIQRStatus({required FormData data}) async =>
+      await apiClient.postData(AppConstants.postCreateQRStatus, "uPIQRStatus", data);
 }

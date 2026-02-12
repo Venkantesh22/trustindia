@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -66,15 +68,17 @@ class TextBoxAndOptionSection extends StatelessWidget {
           GetBuilder<AuthController>(builder: (authController) {
             return CustomButton(
               isLoading: fundRequestController.isLoading,
-              onTap: () {
-                fundRequestController
+              onTap: () async {
+                await fundRequestController
                     .createUPIQR(
                         userModel: authController.userModel ?? UserModel())
-                    .then((value) {
+                    .then((value) async {
                   if (value.isSuccess) {
                     DynamicQrSheet.show(
                       context,
                     );
+                    
+                    
                   } else {
                     showToast(message: value.message, typeCheck: value.isBlank);
                   }

@@ -189,6 +189,11 @@ class FundRequestController extends GetxController implements GetxService {
 
   UpiQrModel? upiQRModel;
 
+  void setUpiQrModelNull() {
+    upiQRModel = null;
+    update();
+  }
+
   Future<ResponseModel> createUPIQR({required UserModel userModel}) async {
     log('-----------  createUPIQR() -------------');
     ResponseModel responseModel;
@@ -209,7 +214,7 @@ class FundRequestController extends GetxController implements GetxService {
           response.body['status'] == "success" &&
           response.body['qrString'] != null) {
         upiQRModel = UpiQrModel(
-          orderId: response.body['orderId'],
+          orderId: response.body['order_id'],
           amount: response.body['amount'],
           qrString: response.body['qrString'],
         );
@@ -223,6 +228,40 @@ class FundRequestController extends GetxController implements GetxService {
     } catch (e) {
       responseModel = ResponseModel(false, "Catch");
       log("****** Error ****** $e", name: "createUPIQR");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  bool isPaymentDone = false;
+
+  Future<ResponseModel> uPIQRStatus() async {
+    log('-----------  uPIQRStatus() -------------');
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+
+    try {
+      Map<String, dynamic> data = {
+        "order_id": upiQRModel?.orderId ?? "",
+      };
+      Response response =
+          await fundRequestRepo.uPIQRStatus(data: FormData(data));
+
+      if (response.statusCode == 200 && response.body['status'] == true) {
+        isPaymentDone =
+            response.body['data']['status'] == "success" ? true : false;
+        responseModel =
+            ResponseModel(true, response.body['message'] ?? "uPIQRStatus");
+      } else {
+        responseModel = ResponseModel(false,
+            response.body['message'] ?? "Something Went Wrong in uPIQRStatus");
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "uPIQRStatus");
     }
 
     isLoading = false;

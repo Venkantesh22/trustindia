@@ -46,9 +46,7 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
                 navigate(context: context, page: const OrderConfirmedScreen());
                 if (!mounted) return;
               }
-              //  else {
-              //   showToast(message: val.message, typeCheck: val.isSuccess);
-              // }
+              
             });
           });
         } else {

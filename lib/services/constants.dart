@@ -230,6 +230,7 @@ class AppConstants {
   static const String getFundStatus = "api/fund/request/status";
   static const String getFundDetails = "api/fund/request/status";
   static const String postCreateQR = "api/upi/create-order";
+  static const String postCreateQRStatus = "api/upi/status";
 
   // Spin Wheel
   static const String getSpinWheel = "api/spin/wheels";

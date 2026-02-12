@@ -1,3 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/fund_request_controller.dart';
@@ -13,12 +17,41 @@ class FundRequestQrScreen extends StatefulWidget {
 }
 
 class _FundRequestQrScreenState extends State<FundRequestQrScreen> {
+  Timer? _statusTimer;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.find<FundRequestController>().amountController.clear();
+      final fundController = Get.find<FundRequestController>();
+      fundController.setUpiQrModelNull();
+      fundController.amountController.clear();
+      _statusTimer =
+          Timer.periodic(const Duration(milliseconds: 2000), (_) async {
+        if ((fundController.upiQRModel?.orderId != null &&
+            (fundController.upiQRModel?.orderId?.isNotEmpty ?? false))) {
+          await fundController.uPIQRStatus().then(
+            (value) {
+              if (fundController.isPaymentDone) {
+                _statusTimer?.cancel();
+                pop(context);
+                pop(context);
+                showToast(
+                    message:
+                        "Congratulations! Your order has been placed successfully",
+                    typeCheck: value.isSuccess);
+              }
+            },
+          );
+        }
+      });
     });
+  }
+
+  void dispose() {
+    _statusTimer?.cancel();
+    // Get.find<FundRequestController>().setUpiQrModelNull();
+    super.dispose();
   }
 
   @override
