@@ -78,7 +78,8 @@ class TextBoxAndOptionSection extends StatelessWidget {
                       context,
                     );
                     
-                    
+                      fundRequestController.startPaymentFlow(context);
+
                   } else {
                     showToast(message: value.message, typeCheck: value.isBlank);
                   }

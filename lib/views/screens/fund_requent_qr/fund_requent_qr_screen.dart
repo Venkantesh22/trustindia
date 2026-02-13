@@ -17,7 +17,7 @@ class FundRequestQrScreen extends StatefulWidget {
 }
 
 class _FundRequestQrScreenState extends State<FundRequestQrScreen> {
-  Timer? _statusTimer;
+  // Timer? _statusTimer;
 
   @override
   void initState() {
@@ -26,31 +26,32 @@ class _FundRequestQrScreenState extends State<FundRequestQrScreen> {
       final fundController = Get.find<FundRequestController>();
       fundController.setUpiQrModelNull();
       fundController.amountController.clear();
-      _statusTimer =
-          Timer.periodic(const Duration(milliseconds: 2000), (_) async {
-        if ((fundController.upiQRModel?.orderId != null &&
-            (fundController.upiQRModel?.orderId?.isNotEmpty ?? false))) {
-          await fundController.uPIQRStatus().then(
-            (value) {
-              if (fundController.isPaymentDone) {
-                _statusTimer?.cancel();
-                pop(context);
-                pop(context);
-                showToast(
-                    message:
-                        "Congratulations! Your order has been placed successfully",
-                    typeCheck: value.isSuccess);
-              }
-            },
-          );
-        }
-      });
+      // _statusTimer = Timer.periodic(
+      //   const Duration(milliseconds: 2000),
+      //   (_) async {
+      //     if ((fundController.upiQRModel?.orderId != null &&
+      //         (fundController.upiQRModel?.orderId?.isNotEmpty ?? false))) {
+      //       await fundController.uPIQRStatus().then(
+      //         (value) {
+      //           if (fundController.isPaymentDone) {
+      //             _statusTimer?.cancel();
+      //             pop(context);
+      //             pop(context);
+      //             showToast(
+      //                 message:
+      //                     "Congratulations! Your order has been placed successfully",
+      //                 typeCheck: value.isSuccess);
+      //           }
+      //         },
+      //       );
+      //     }
+      //   },
+      // );
     });
   }
 
   void dispose() {
-    _statusTimer?.cancel();
-    // Get.find<FundRequestController>().setUpiQrModelNull();
+    // _statusTimer?.cancel();
     super.dispose();
   }
 

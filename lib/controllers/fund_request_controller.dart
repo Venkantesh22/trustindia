@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:lekra/data/models/fund_reqests/upi_qr_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/user_model.dart';
 import 'package:lekra/data/repositories/fund_request_repo.dart';
+import 'package:lekra/services/constants.dart';
 
 class FundRequestController extends GetxController implements GetxService {
   final FundRequestRepo fundRequestRepo;
@@ -158,9 +160,6 @@ class FundRequestController extends GetxController implements GetxService {
       if (response.statusCode == 200 &&
           response.body['status'] == true &&
           response.body['data'] is Map) {
-        // fundRequestsList = (response.body['data'] as List)
-        //     .map((fund) => FundRequestsModel.fromJson(fund))
-        //     .toList();
         selectFundRequestModel =
             FundRequestsModel.fromJson(response.body['data']);
 
@@ -203,9 +202,6 @@ class FundRequestController extends GetxController implements GetxService {
     try {
       Map<String, dynamic> data = {
         "amount": amountController.text.trim(),
-        "mobile": userModel.mobile,
-        "name": userModel.firstName,
-        "email": userModel.email,
       };
       Response response =
           await fundRequestRepo.createUPIQR(data: FormData(data));
@@ -268,4 +264,136 @@ class FundRequestController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
+
+  Timer? _statusTimer;
+  Timer? _countdownTimer;
+
+  int totalSeconds = 5 * 60;
+  int remainingSeconds = 0;
+
+  void startPaymentFlow(BuildContext context) {
+    remainingSeconds = totalSeconds;
+    isPaymentDone = false;
+
+    update();
+
+    _startCountdown(context);
+    _startPolling(context);
+  }
+
+  void _startCountdown(BuildContext context) {
+    _countdownTimer?.cancel();
+
+    _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (remainingSeconds <= 1) {
+        stopAllTimers();
+        if (Navigator.of(context).canPop()) {
+          Navigator.of(context).pop();
+        }
+        return;
+      }
+
+      remainingSeconds--;
+      update();
+    });
+  }
+
+  void _startPolling(BuildContext context) {
+    _statusTimer?.cancel();
+
+    _statusTimer = Timer.periodic(const Duration(seconds: 2), (_) async {
+      if (upiQRModel?.orderId == null) return;
+
+      await uPIQRStatus();
+
+      if (isPaymentDone) {
+        stopAllTimers();
+
+        if (Navigator.of(context).canPop()) {
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+        }
+
+        showToast(
+          message: "Payment Successful 🎉",
+          typeCheck: true,
+        );
+
+        upiQRModel = null;
+      }
+    });
+  }
+
+  void stopAllTimers() {
+    _countdownTimer?.cancel();
+    _statusTimer?.cancel();
+
+    _countdownTimer = null;
+    _statusTimer = null;
+  }
+
+  // Timer? _statusTimer;
+
+  // void startUPIQRStatusPolling(BuildContext context) {
+  //   startUpiQRTimer(context);
+
+  //   _statusTimer =
+  //       Timer.periodic(const Duration(milliseconds: 2000), (_) async {
+  //     if ((upiQRModel?.orderId != null &&
+  //         (upiQRModel?.orderId?.isNotEmpty ?? false))) {
+  //       await uPIQRStatus().then(
+  //         (value) {
+  //           if (isPaymentDone) {
+  //             _statusTimer?.cancel();
+  //             pop(context);
+  //             pop(context);
+  //             stopAlTimer();
+
+  //             showToast(
+  //                 message:
+  //                     "Congratulations! Your order has been placed successfully",
+  //                 typeCheck: value.isSuccess);
+  //             upiQRModel = null;
+  //           }
+  //         },
+  //       );
+  //     }
+  //   });
+  // }
+
+  // int totalSeconds = 5 * 60;
+  // int remainingSeconds = 0;
+  // Timer? modalUpiQrTimer;
+
+  // void startUpiQRTimer(BuildContext context) {
+  //   remainingSeconds = totalSeconds;
+  //   update();
+
+  //   modalUpiQrTimer = Timer.periodic(const Duration(seconds: 1), (t) {
+  //     if (!Get.context!.mounted) {
+  //       t.cancel();
+  //       return;
+  //     }
+  //     if (remainingSeconds <= 1) {
+  //       remainingSeconds = 0;
+  //       update();
+  //       t.cancel();
+  //       _statusTimer?.cancel();
+  //       upiQRModel = null;
+  //       if (Navigator.of(context).canPop()) {
+  //         Navigator.of(context).pop();
+  //         stopAlTimer();
+  //       }
+  //       return;
+  //     }
+  //     remainingSeconds--;
+  //     update();
+  //   });
+  // }
+
+  // void stopAlTimer() {
+  //   modalUpiQrTimer?.cancel();
+  //   _statusTimer?.cancel();
+  //   update();
+  // }
 }

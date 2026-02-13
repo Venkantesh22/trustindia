@@ -19,8 +19,11 @@ class DynamicQrSheet {
 
   /// Shows the bottom sheet. Returns when sheet is dismissed.
   static Future<void> show(BuildContext context) async {
-    int remainingSeconds = _totalSeconds;
-    Timer? modalTimer;
+    // int remainingSeconds = _totalSeconds;
+    // Timer? modalTimer;
+    final controller = Get.find<FundRequestController>();
+
+    // Start polling AFTER first frame
 
     // If you want to expose a controller-level timer outside, you can start it before calling this.
     // For now we manage a local modal timer and also ensure we cancel any external timers if present.
@@ -34,29 +37,30 @@ class DynamicQrSheet {
             builder: (fundRequestController) {
           return SafeArea(
             child: StatefulBuilder(builder: (modalContext, setModalState) {
+              //   fundRequestController.startUPIQRStatusPolling(context);
               // Start the modal timer lazily the first time builder runs
-              modalTimer ??= Timer.periodic(const Duration(seconds: 1), (t) {
-                if (!modalContext.mounted) {
-                  t.cancel();
-                  return;
-                }
+              // modalTimer ??= Timer.periodic(const Duration(seconds: 1), (t) {
+              //   if (!modalContext.mounted) {
+              //     t.cancel();
+              //     return;
+              //   }
 
-                if (remainingSeconds <= 1) {
-                  // cancel any timers and close sheet
-                  modalTimer?.cancel();
-                  remainingSeconds = 0;
-                  setModalState(() {});
-                  t.cancel();
+              //   if (remainingSeconds <= 1) {
+              //     // cancel any timers and close sheet
+              //     modalTimer?.cancel();
+              //     remainingSeconds = 0;
+              //     setModalState(() {});
+              //     t.cancel();
 
-                  if (Navigator.of(modalContext).canPop()) {
-                    Navigator.of(modalContext).pop();
-                  }
-                  return;
-                }
+              //     if (Navigator.of(modalContext).canPop()) {
+              //       Navigator.of(modalContext).pop();
+              //     }
+              //     return;
+              //   }
 
-                remainingSeconds--;
-                setModalState(() {});
-              });
+              //   remainingSeconds--;
+              //   setModalState(() {});
+              // });
 
               String formatMMSS(int seconds) {
                 final m = (seconds ~/ 60).toString().padLeft(2, '0');
@@ -79,12 +83,8 @@ class DynamicQrSheet {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            modalTimer?.cancel();
-                            if (Navigator.of(modalContext).canPop()) {
-                              Navigator.of(modalContext).pop();
-                            } else {
-                              pop(modalContext);
-                            }
+                            fundRequestController.stopAllTimers();
+                            Navigator.of(modalContext).pop();
                           },
                           child: CircleAvatar(
                             radius: 20,
@@ -143,7 +143,7 @@ class DynamicQrSheet {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       child: Text(
-                        "QR expires in ${formatMMSS(remainingSeconds)}",
+                        "QR expires in ${formatMMSS(fundRequestController.remainingSeconds)}",
                         style:
                             Helper(modalContext).textTheme.bodyMedium?.copyWith(
                                   fontSize: 12,
@@ -187,7 +187,7 @@ class DynamicQrSheet {
                       radius: 5,
                       height: 50,
                       onTap: () {
-                        modalTimer?.cancel();
+                        // modalTimer?.cancel();
                         LaunchHelper.launchUpiViaSystemChooser(
                             fundRequestController.upiQRModel?.qrString ?? "");
                       },
@@ -210,6 +210,7 @@ class DynamicQrSheet {
       },
     );
 
-    modalTimer?.cancel();
+    // modalTimer?.cancel();
+    controller.stopAllTimers();
   }
 }
