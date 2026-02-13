@@ -26,18 +26,40 @@ class TransactionsContainer extends StatelessWidget {
                 offset: const Offset(0, 4))
           ]),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  capitalize(transactionModel.description),
+                  (transactionModel.orderId == null)
+                      ? capitalize(transactionModel.description)
+                      : "Wallet recharge",
                   style: Helper(context)
                       .textTheme
                       .bodyMedium
                       ?.copyWith(fontSize: 15, fontWeight: FontWeight.w600),
                 ),
+                transactionModel.orderId != null
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 4),
+                          Text(
+                            "upi id : ${transactionModel.utr ?? "N/A"}",
+                            style:
+                                Helper(context).textTheme.bodySmall?.copyWith(),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            "Order : ${transactionModel.orderId ?? "N/A"}",
+                            style:
+                                Helper(context).textTheme.bodySmall?.copyWith(),
+                          ),
+                        ],
+                      )
+                    : const SizedBox(),
                 const SizedBox(height: 4),
                 Text(
                   DateFormat()

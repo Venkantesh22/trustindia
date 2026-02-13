@@ -38,8 +38,7 @@ class WalletController extends GetxController implements GetxService {
       }
 
       if (loadMore) {
-        if (!walletTxnState.canLoadMore ||
-            walletTxnState.isMoreLoading) {
+        if (!walletTxnState.canLoadMore || walletTxnState.isMoreLoading) {
           return ResponseModel(false, "No more pages");
         }
         walletTxnState.page++;
@@ -58,17 +57,35 @@ class WalletController extends GetxController implements GetxService {
       if (response.statusCode == 200 &&
           (response.body['status'] == true ||
               response.body['status'] == 'success')) {
-        final pagination =
+        final transactionsJson = response.body['data']['transactions'];
+        final upiJson = response.body['data']['upi_intents'];
+
+        final transactionPagination =
             PaginationModel<TransactionModel>.fromJson(
-          response.body['data']['transactions'],
+          transactionsJson,
           (json) => TransactionModel.fromJson(json),
         );
 
-        walletTxnState.lastPage = pagination.lastPage;
-        walletTxnState.page = pagination.currentPage;
+        final upiPagination = PaginationModel<TransactionModel>.fromJson(
+          upiJson,
+          (json) => TransactionModel.fromJson(json),
+        );
+
+        final combinedList = [
+          ...transactionPagination.data,
+          ...upiPagination.data,
+        ];
+
+        /// SORT NEW → OLD
+        combinedList.sort((a, b) => (b.createdAt ??
+                DateTime.fromMillisecondsSinceEpoch(0))
+            .compareTo(a.createdAt ?? DateTime.fromMillisecondsSinceEpoch(0)));
+
+        walletTxnState.lastPage = transactionPagination.lastPage;
+        walletTxnState.page = transactionPagination.currentPage;
 
         if (loadMore) {
-          for (final item in pagination.data) {
+          for (final item in combinedList) {
             if (!walletTxnState.dedupeIds.contains(item.id)) {
               walletTxnState.dedupeIds.add(item.id);
               walletTxnState.items.add(item);
@@ -77,10 +94,11 @@ class WalletController extends GetxController implements GetxService {
         } else {
           walletTxnState.items
             ..clear()
-            ..addAll(pagination.data);
+            ..addAll(combinedList);
+
           walletTxnState.dedupeIds
             ..clear()
-            ..addAll(pagination.data.map((e) => e.id));
+            ..addAll(combinedList.map((e) => e.id));
         }
 
         return ResponseModel(true, "Success");
@@ -118,7 +136,6 @@ class WalletController extends GetxController implements GetxService {
         );
     }
   }
-
 
   WalletModel? walletModel;
   Future<ResponseModel> fetchWallet() async {
