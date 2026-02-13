@@ -134,7 +134,7 @@ class _ReferralScreenState extends State<ReferralScreen> {
                         ElevatedButton.icon(
                           onPressed: () => shareReferralCode(
                               authController.userModel?.referralCode ?? "",
-                              AppConstants.googlePlayStoreLink),
+                              authController.userModel?.referralLink),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
                             shape: RoundedRectangleBorder(

@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:android_play_install_referrer/android_play_install_referrer.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:lekra/data/models/response/response_model.dart';
@@ -366,7 +367,6 @@ class AuthController extends GetxController implements GetxService {
         numberController.text = userModel?.mobile ?? "";
         birthdayCodeController.text = userModel?.dobFormat ?? "";
         setGender(value: userModel?.gender ?? "");
-        
       } else {
         log("raw datat");
         responseModel = ResponseModel(
@@ -558,6 +558,43 @@ class AuthController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return responseModel;
+  }
+
+  Future<void> checkReferral() async {
+    log('----------- checkReferral ----------');
+    _isLoading = true;
+    update();
+
+    try {
+      ReferrerDetails details =
+          await AndroidPlayInstallReferrer.installReferrer;
+      String? referrerUrl = details.installReferrer;
+
+      // Check if we got anything at all
+      if (referrerUrl != null &&
+          referrerUrl.isNotEmpty &&
+          referrerUrl != "unknown") {
+        String finalCode = "";
+
+        if (referrerUrl.contains('referrer=')) {
+          finalCode = referrerUrl.split('referrer=')[1].split('&')[0];
+        } else {
+          log("Referrer URL does not contain 'referrer=' parameter. Using entire URL as code.");      
+          // Most common case: the string IS the code (6QXXXLVJJC)
+          // finalCode = referrerUrl;
+        }
+
+        referralCodeController.text = finalCode;
+        log("Successfully found referral code: $finalCode");
+      } else {
+        log("No referrer link found (This is normal for local debug builds)");
+      }
+    } catch (e) {
+      log("Error fetching referrer: $e");
+    } finally {
+      _isLoading = false;
+      update();
+    }
   }
 
   void toggleTerms() {

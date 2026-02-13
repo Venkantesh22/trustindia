@@ -22,6 +22,14 @@ class SignUPScreen extends StatefulWidget {
 }
 
 class _SignUPScreenState extends State<SignUPScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<AuthController>().checkReferral();
+    });
+  }
+
   bool showPassword = false;
   bool termsAndConditions = false;
 

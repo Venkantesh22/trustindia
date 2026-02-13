@@ -72,6 +72,7 @@ dependencies:
   contacts_service_plus: ^0.0.2
   firebase_core: ^4.3.0
   cloud_firestore: ^6.1.1
+  android_play_install_referrer: ^0.4.0
 
 dev_dependencies:
   flutter_test:
