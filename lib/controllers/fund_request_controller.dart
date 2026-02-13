@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/data/models/fund_reqests/bank_model.dart';
 import 'package:lekra/data/models/fund_reqests/fund_ruquest_model.dart';
 import 'package:lekra/data/models/fund_reqests/upi_qr_model.dart';
@@ -313,6 +314,7 @@ class FundRequestController extends GetxController implements GetxService {
           Navigator.of(context).pop();
           Navigator.of(context).pop();
         }
+        Get.find<WalletController>().fetchWalletTransaction();
 
         showToast(
           message: "Payment Successful 🎉",
