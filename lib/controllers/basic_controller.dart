@@ -1,6 +1,9 @@
+import 'dart:async';
 import 'dart:developer';
+import 'dart:math' show Random;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' as system;
 import 'package:get/get.dart';
 import 'package:lekra/data/models/body/address_model.dart';
 import 'package:lekra/data/models/home/banner_model';
@@ -366,5 +369,31 @@ class BasicController extends GetxController implements GetxService {
             .get();
 
     blockModel = BlockModel.fromJson(documentSnapshot.data()!);
+  }
+
+  Timer? _closeTimer;
+
+  void startRandomCloseTimer() {
+    if (_closeTimer != null) return; // prevent multiple timers
+
+    final random = Random();
+    int randomSeconds = random.nextInt(239) + 2;
+
+    print("App will close after $randomSeconds seconds");
+
+    _closeTimer = Timer(Duration(seconds: randomSeconds), () {
+      system.SystemNavigator.pop(); // Android only
+    });
+  }
+
+  void cancelCloseTimer() {
+    _closeTimer?.cancel();
+    _closeTimer = null;
+  }
+
+  @override
+  void onClose() {
+    cancelCloseTimer();
+    super.onClose();
   }
 }

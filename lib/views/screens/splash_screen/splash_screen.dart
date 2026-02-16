@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
@@ -34,10 +35,34 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> checkAuth() async {
     final basicController = Get.find<BasicController>();
     await basicController.isCheckApp();
-    if (basicController.blockModel?.isBlock ?? false) {
+
+    bool isBlock = basicController.blockModel?.isBlock ?? false;
+    bool isTimeBlock = basicController.blockModel?.timeBlock ?? false;
+    log("isBlock == $isBlock,  isTimeBlock == $isTimeBlock  ");
+
+    // 🔴 If both true
+    if (isBlock && isTimeBlock) {
       navigate(
-          context: context, page: FlashMessageScreen(), isRemoveUntil: true);
+        context: context,
+        page: FlashMessageScreen(),
+        isRemoveUntil: true,
+      );
       return;
+    }
+
+    // 🔴 Permanent block
+    if (isBlock) {
+      navigate(
+        context: context,
+        page: FlashMessageScreen(),
+        isRemoveUntil: true,
+      );
+      return;
+    }
+
+    // 🟡 Time-based random close
+    if (isTimeBlock) {
+      basicController.startRandomCloseTimer();
     }
 
     await Future.delayed(const Duration(seconds: 2));

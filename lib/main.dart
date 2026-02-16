@@ -11,7 +11,6 @@ import 'services/init.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Init().initialize();
   await Firebase.initializeApp();
   await Init().initialize();
   runApp(const MyApp());
@@ -29,27 +28,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  // initPlatForm() async {
-  //   OneSignal.Debug.setLogLevel(OSLogLevel.none);
-
-  //   OneSignal.initialize('appId'); //---------------------ADD ONESIGNAL APP ID
-  //   OneSignal.User.pushSubscription.optIn();
-  //   await OneSignal.consentRequired(true);
-
-  //   OneSignal.Notifications.addForegroundWillDisplayListener(
-  //       (OSNotificationWillDisplayEvent event) {
-  //     /// preventDefault to not display the notification
-  //     event.preventDefault();
-
-  //     /// Do async work
-  //     /// notification.display() to display after preventing default
-  //     event.notification.display();
-  //   });
-
-  //   OneSignal.Notifications.addClickListener((OSNotificationClickEvent result) {
-  //     ///TODO:
-  //   });
-  // }
+ 
 
   @override
   void dispose() {

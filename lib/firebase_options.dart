@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBeBj2IvMd1WhTEyb7Daf7hj7BsKID259w',
-    appId: '1:252507782720:android:9d07aecf80ccd95f2fe9a5',
+    appId: '1:252507782720:android:5db56eb266f3722e2fe9a5',
     messagingSenderId: '252507782720',
     projectId: 'chat-app-9a664',
     storageBucket: 'chat-app-9a664.firebasestorage.app',

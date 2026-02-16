@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/basic_controller.dart';
+import 'package:lekra/services/constants.dart';
 
 class FlashMessageScreen extends StatelessWidget {
   const FlashMessageScreen({super.key});
@@ -9,7 +10,7 @@ class FlashMessageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Trust India"),
+        title: Text(AppConstants.appName),
         backgroundColor: Colors.blueAccent,
       ),
       body: GetBuilder<BasicController>(builder: (basicController) {

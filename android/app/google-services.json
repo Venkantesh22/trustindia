@@ -44,7 +44,36 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:252507782720:android:9d07aecf80ccd95f2fe9a5",
+        "mobilesdk_app_id": "1:252507782720:android:b43467f9a97f40d52fe9a5",
+        "android_client_info": {
+          "package_name": "com.myfoozzybusiness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252507782720-87ui6a7ig0c3sv2btb13sqk842s3v9k8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeBj2IvMd1WhTEyb7Daf7hj7BsKID259w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252507782720-87ui6a7ig0c3sv2btb13sqk842s3v9k8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252507782720:android:5db56eb266f3722e2fe9a5",
         "android_client_info": {
           "package_name": "com.tpipay.trustindia"
         }
