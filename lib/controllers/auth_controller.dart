@@ -209,7 +209,7 @@ class AuthController extends GetxController implements GetxService {
         referralCodeController.clear();
       } else {
         responseModel = ResponseModel(
-            false, response.body['error'] ?? "Error while registering user");
+            false, response.body['message'] ?? "Error while registering user");
       }
     } catch (e) {
       log('ERROR AT registerUser(): $e');
@@ -579,7 +579,7 @@ class AuthController extends GetxController implements GetxService {
         if (referrerUrl.contains('referrer=')) {
           finalCode = referrerUrl.split('referrer=')[1].split('&')[0];
         } else {
-          log("Referrer URL does not contain 'referrer=' parameter. Using entire URL as code.");      
+          log("Referrer URL does not contain 'referrer=' parameter. Using entire URL as code.");
           // Most common case: the string IS the code (6QXXXLVJJC)
           // finalCode = referrerUrl;
         }
