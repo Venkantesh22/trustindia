@@ -234,9 +234,9 @@ class FundRequestController extends GetxController implements GetxService {
       Response response =
           await fundRequestRepo.uPIQRStatus(data: FormData(data));
 
-      if (response.statusCode == 200 && response.body['status'] == true) {
+      if (response.statusCode == 200 && response.body['status'] == "success") {
         isPaymentDone =
-            response.body['data']['status'] == "success" ? true : false;
+            response.body['data']['status'] == "credit" ? true : false;
         responseModel =
             ResponseModel(true, response.body['message'] ?? "uPIQRStatus");
       } else {
