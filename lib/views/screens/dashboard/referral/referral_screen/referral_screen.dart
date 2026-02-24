@@ -34,16 +34,18 @@ class _ReferralScreenState extends State<ReferralScreen> {
   }
 
   void shareReferralCode(String code, String? link) {
-    String message = "Use my referral code: $code";
+    // Combine both into the message body
+    String message =
+        "Use my referral code: $code\n\nDownload the app here: ${link ?? ''}";
 
-    // If there's a referral link, append it to the message
-    if (link != null && link.isNotEmpty) {
-      message += "\n$link";
-    }
-
-    SharePlus.instance.share(ShareParams(
-      text: message,
-    ));
+    // Pass the combined message to the text parameter
+    SharePlus.instance.share(
+      ShareParams(
+        text: message,
+        // You can keep subject for emails, but text is what shows on chat apps
+        subject: "Join me on Saithya Smart",
+      ),
+    );
   }
 
   @override
@@ -134,7 +136,8 @@ class _ReferralScreenState extends State<ReferralScreen> {
                         ElevatedButton.icon(
                           onPressed: () => shareReferralCode(
                               authController.userModel?.referralCode ?? "",
-                              authController.userModel?.referralLink),
+                              authController.userModel?.referralLinks?.app ??
+                                  ""),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
                             shape: RoundedRectangleBorder(
@@ -157,20 +160,6 @@ class _ReferralScreenState extends State<ReferralScreen> {
             ),
             const SizedBox(height: 16),
             Expanded(child: ReferralLevelSection())
-
-            // GetBuilder<ReferralController>(builder: (referralController) {
-            //   if (referralController.isLoading) {
-            //     return const Center(child: CircularProgressIndicator());
-            //   }
-            //   return CustomShimmer(
-            //     isLoading: referralController.isLoading,
-            //     child: Padding(
-            //       padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            //       child:
-            //           ReferralGraphTree(roots: referralController.referralList),
-            //     ),
-            //   );
-            // }),
           ],
         ),
       ),

@@ -17,6 +17,8 @@ class UserModel {
   double? currentWallet;
   final String? referralLink;
   final int? rewardPoint;
+  final ReferralLinks? referralLinks;
+
   final SubscriptionHistoryModel? subscription;
 
   UserModel({
@@ -35,6 +37,7 @@ class UserModel {
     this.currentWallet,
     this.referralLink,
     this.rewardPoint,
+    this.referralLinks,
     this.subscription,
   });
 
@@ -64,6 +67,9 @@ class UserModel {
             ? int.tryParse(json["reward_point"])
             : json["reward_point"],
         referralLink: json["referralLink"],
+        referralLinks: json["referral_links"] == null
+            ? null
+            : ReferralLinks.fromJson(json["referral_links"]),
         subscription: json["subscription"] == null
             ? null
             : SubscriptionHistoryModel.fromJson(json["subscription"]),
@@ -85,10 +91,35 @@ class UserModel {
         "current_wallet": currentWallet,
         "reward_point": rewardPoint,
         "referralLink": referralLink,
+        "referral_links": referralLinks?.toJson(),
         "subscription": subscription?.toJson(),
       };
 
   String get fullName => "$firstName $lastName";
   bool get isPhoneVerified => isVerified == 1 ? true : false;
   String get dobFormat => DateFormatters().dMyDash.format(dob ?? getDateTime());
+}
+
+class ReferralLinks {
+  final String? web;
+  final String? app;
+  final String? playstore;
+
+  ReferralLinks({
+    this.web,
+    this.app,
+    this.playstore,
+  });
+
+  factory ReferralLinks.fromJson(Map<String, dynamic> json) => ReferralLinks(
+        web: json["web"],
+        app: json["app"],
+        playstore: json["playstore"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "web": web,
+        "app": app,
+        "playstore": playstore,
+      };
 }
