@@ -29,14 +29,6 @@ class FundRequestController extends GetxController implements GetxService {
     update();
   }
 
-  @override
-  void onClose() {
-    utrNoController.dispose();
-    amountController.dispose();
-    dateController.dispose();
-    super.onClose();
-  }
-
   List<BankModel> bankList = [];
   Future<ResponseModel> getAssignBank() async {
     log('-----------  getAssignBank() -------------');
@@ -189,11 +181,6 @@ class FundRequestController extends GetxController implements GetxService {
 
   UpiQrModel? upiQRModel;
 
-  void setUpiQrModelNull() {
-    upiQRModel = null;
-    update();
-  }
-
   Future<ResponseModel> createUPIQR({required UserModel userModel}) async {
     log('-----------  createUPIQR() -------------');
     ResponseModel responseModel;
@@ -334,68 +321,14 @@ class FundRequestController extends GetxController implements GetxService {
     _statusTimer = null;
   }
 
-  // Timer? _statusTimer;
+  @override
+  void onClose() {
+    utrNoController.dispose();
+    amountController.dispose();
+    dateController.dispose();
 
-  // void startUPIQRStatusPolling(BuildContext context) {
-  //   startUpiQRTimer(context);
-
-  //   _statusTimer =
-  //       Timer.periodic(const Duration(milliseconds: 2000), (_) async {
-  //     if ((upiQRModel?.orderId != null &&
-  //         (upiQRModel?.orderId?.isNotEmpty ?? false))) {
-  //       await uPIQRStatus().then(
-  //         (value) {
-  //           if (isPaymentDone) {
-  //             _statusTimer?.cancel();
-  //             pop(context);
-  //             pop(context);
-  //             stopAlTimer();
-
-  //             showToast(
-  //                 message:
-  //                     "Congratulations! Your order has been placed successfully",
-  //                 typeCheck: value.isSuccess);
-  //             upiQRModel = null;
-  //           }
-  //         },
-  //       );
-  //     }
-  //   });
-  // }
-
-  // int totalSeconds = 5 * 60;
-  // int remainingSeconds = 0;
-  // Timer? modalUpiQrTimer;
-
-  // void startUpiQRTimer(BuildContext context) {
-  //   remainingSeconds = totalSeconds;
-  //   update();
-
-  //   modalUpiQrTimer = Timer.periodic(const Duration(seconds: 1), (t) {
-  //     if (!Get.context!.mounted) {
-  //       t.cancel();
-  //       return;
-  //     }
-  //     if (remainingSeconds <= 1) {
-  //       remainingSeconds = 0;
-  //       update();
-  //       t.cancel();
-  //       _statusTimer?.cancel();
-  //       upiQRModel = null;
-  //       if (Navigator.of(context).canPop()) {
-  //         Navigator.of(context).pop();
-  //         stopAlTimer();
-  //       }
-  //       return;
-  //     }
-  //     remainingSeconds--;
-  //     update();
-  //   });
-  // }
-
-  // void stopAlTimer() {
-  //   modalUpiQrTimer?.cancel();
-  //   _statusTimer?.cancel();
-  //   update();
-  // }
+    _statusTimer?.cancel();
+    _countdownTimer?.cancel();
+    super.onClose();
+  }
 }
