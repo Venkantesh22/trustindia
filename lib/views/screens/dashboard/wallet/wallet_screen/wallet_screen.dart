@@ -17,7 +17,6 @@ class WalletScreen extends StatefulWidget {
   const WalletScreen({super.key});
 
   @override
-  
   State<WalletScreen> createState() => _WalletScreenState();
 }
 

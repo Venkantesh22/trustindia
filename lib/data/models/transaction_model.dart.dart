@@ -9,6 +9,7 @@ class TransactionModel {
   final String? gatewayOrderId;
   final String? status;
   final String? utr;
+  final String? product; // Added to capture 'addfund'
 
   TransactionModel({
     this.id,
@@ -21,22 +22,28 @@ class TransactionModel {
     this.gatewayOrderId,
     this.status,
     this.utr,
+    this.product,
   });
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) =>
       TransactionModel(
         id: json["id"],
-        type: json["type"],
-        amount: json["amount"] == null ? null : double.parse(json["amount"]),
-        balanceAfter: json["balance_after"],
+        // If 'type' is missing but 'product' is 'addfund', treat it as a credit
+        type: json["type"] ?? (json["product"] == "addfund" ? "credit" : null),
+        // Safely parse amount whether it comes as String, Int, or Double
+        amount: json["amount"] == null
+            ? null
+            : double.tryParse(json["amount"].toString()),
+        balanceAfter: json["balance_after"]?.toString(),
         description: json["description"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]).toLocal(),
-        orderId: json["order_id"],
-        gatewayOrderId: json["gateway_order_id"],
+        orderId: json["order_id"]?.toString(),
+        gatewayOrderId: json["gateway_order_id"]?.toString(),
         status: json["status"],
-        utr: json["utr"],
+        utr: json["utr"]?.toString(),
+        product: json["product"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -50,6 +57,7 @@ class TransactionModel {
         "created_at": createdAt?.toIso8601String(),
         "status": status,
         "utr": utr,
+        "product": product,
       };
 
   bool get isDebit => (type?.toLowerCase() == "debit");

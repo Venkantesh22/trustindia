@@ -54,26 +54,74 @@ class WalletController extends GetxController implements GetxService {
 
       final Response response = await _fetchByFilter();
 
-      if (response.statusCode == 200 &&
-          (response.body['status'] == true ||
-              response.body['status'] == 'success')) {
-        final transactionsJson = response.body['data']['transactions'];
-        final upiJson = response.body['data']['upi_intents'];
+      // if (response.statusCode == 200 && (response.body['status'] == true)) {
+      //   final transactionsJson = response.body['data']['transactions']['data'];
+      //   final upiJson = response.body['data']['addfund'];
+
+      //   final transactionPagination =
+      //       PaginationModel<TransactionModel>.fromJson(
+      //     transactionsJson,
+      //     (json) => TransactionModel.fromJson(json),
+      //   );
+
+      //   final upiPagination = PaginationModel<TransactionModel>.fromJson(
+      //     upiJson,
+      //     (json) => TransactionModel.fromJson(json),
+      //   );
+
+      //   final combinedList = [
+      //     ...transactionPagination.data,
+      //     ...upiPagination.data,
+      //   ];
+
+      //   /// SORT NEW → OLD
+      //   combinedList.sort((a, b) => (b.createdAt ??
+      //           DateTime.fromMillisecondsSinceEpoch(0))
+      //       .compareTo(a.createdAt ?? DateTime.fromMillisecondsSinceEpoch(0)));
+
+      //   walletTxnState.lastPage = transactionPagination.lastPage;
+      //   walletTxnState.page = transactionPagination.currentPage;
+
+      //   if (loadMore) {
+      //     for (final item in combinedList) {
+      //       if (!walletTxnState.dedupeIds.contains(item.id)) {
+      //         walletTxnState.dedupeIds.add(item.id);
+      //         walletTxnState.items.add(item);
+      //       }
+      //     }
+      //   } else {
+      //     walletTxnState.items
+      //       ..clear()
+      //       ..addAll(combinedList);
+
+      //     walletTxnState.dedupeIds
+      //       ..clear()
+      //       ..addAll(combinedList.map((e) => e.id));
+      //   }
+
+      //   return ResponseModel(true, "Success");
+      // }
+
+      if (response.statusCode == 200 && (response.body['status'] == true)) {
+        // 1. Pass the ENTIRE 'transactions' map to the PaginationModel
+        final transactionsMap = response.body['data']['transactions'];
 
         final transactionPagination =
             PaginationModel<TransactionModel>.fromJson(
-          transactionsJson,
+          transactionsMap,
           (json) => TransactionModel.fromJson(json),
         );
 
-        final upiPagination = PaginationModel<TransactionModel>.fromJson(
-          upiJson,
-          (json) => TransactionModel.fromJson(json),
-        );
+        // 2. Parse 'addfund' as a simple List, NOT a PaginationModel
+        final List<dynamic> upiJsonList =
+            response.body['data']['addfund'] ?? [];
+        final List<TransactionModel> addFundList =
+            upiJsonList.map((json) => TransactionModel.fromJson(json)).toList();
 
+        // 3. Combine the lists
         final combinedList = [
           ...transactionPagination.data,
-          ...upiPagination.data,
+          ...addFundList,
         ];
 
         /// SORT NEW → OLD
@@ -86,8 +134,10 @@ class WalletController extends GetxController implements GetxService {
 
         if (loadMore) {
           for (final item in combinedList) {
+            // NOTE: Ensure IDs don't overlap between 'transactions' and 'addfund'
+            // Consider prefixing IDs if they do (e.g., 'txn_1', 'fund_1')
             if (!walletTxnState.dedupeIds.contains(item.id)) {
-              walletTxnState.dedupeIds.add(item.id);
+              walletTxnState.dedupeIds.add(item.id!);
               walletTxnState.items.add(item);
             }
           }
@@ -98,7 +148,7 @@ class WalletController extends GetxController implements GetxService {
 
           walletTxnState.dedupeIds
             ..clear()
-            ..addAll(combinedList.map((e) => e.id));
+            ..addAll(combinedList.map((e) => e.id!));
         }
 
         return ResponseModel(true, "Success");
