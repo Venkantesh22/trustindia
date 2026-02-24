@@ -106,3 +106,5 @@ flutter_icons:
   android: true
   ios: false
   image_path: "assets/images/app-logo.png"
+  adaptive_icon_background: "#341EB2" # Put your brand's background hex color here
+  adaptive_icon_foreground: "assets/images/app-logo.png"
