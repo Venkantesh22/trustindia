@@ -1,5 +1,4 @@
 import 'package:lekra/data/models/product_model.dart';
-import 'package:lekra/generated/assets.dart';
 
 class OrderModel {
   final int? id;
@@ -78,6 +77,4 @@ class OrderModel {
             ? []
             : List<dynamic>.from(products!.map((x) => x.toJson())),
       };
-
-
 }

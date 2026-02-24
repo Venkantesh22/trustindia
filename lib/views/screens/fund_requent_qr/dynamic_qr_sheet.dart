@@ -15,8 +15,6 @@ import 'package:lekra/views/base/common_button.dart';
 /// await DynamicQrSheet.show(context,
 ///     rechargeController: rc, basicController: bc);
 class DynamicQrSheet {
-  static const int _totalSeconds = 5 * 60;
-
   /// Shows the bottom sheet. Returns when sheet is dismissed.
   static Future<void> show(BuildContext context) async {
     // int remainingSeconds = _totalSeconds;

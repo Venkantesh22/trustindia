@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:lekra/controllers/product_controller.dart';
-import 'package:lekra/services/constants.dart';
-import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
 
 class NotIcon extends StatelessWidget {
