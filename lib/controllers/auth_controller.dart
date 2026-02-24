@@ -561,40 +561,66 @@ class AuthController extends GetxController implements GetxService {
   }
 
   Future<void> checkReferral() async {
-    log('----------- checkReferral ----------');
-    _isLoading = true;
-    update();
-
     try {
-      ReferrerDetails details =
+      print("----------- checkReferral ----------");
+
+      // 1. USE THE REAL API AGAIN
+      ReferrerDetails referrerDetails =
           await AndroidPlayInstallReferrer.installReferrer;
-      String? referrerUrl = details.installReferrer;
+      String? referrerString = referrerDetails.installReferrer;
 
-      // Check if we got anything at all
-      if (referrerUrl != null &&
-          referrerUrl.isNotEmpty &&
-          referrerUrl != "unknown") {
-        String finalCode = "";
-
-        if (referrerUrl.contains('referrer=')) {
-          finalCode = referrerUrl.split('referrer=')[1].split('&')[0];
-        } else {
-          log("Referrer URL does not contain 'referrer=' parameter. Using entire URL as code.");
-          // Most common case: the string IS the code (6QXXXLVJJC)
-          // finalCode = referrerUrl;
-        }
+      if (referrerString != null && referrerString.isNotEmpty) {
+        String finalCode = _extractCode(referrerString);
+        print("Successfully found referral code: $finalCode");
 
         referralCodeController.text = finalCode;
-        log("Successfully found referral code: $finalCode");
-      } else {
-        log("No referrer link found (This is normal for local debug builds)");
+        update();
       }
     } catch (e) {
-      log("Error fetching referrer: $e");
-    } finally {
-      _isLoading = false;
-      update();
+      debugPrint("Failed to get referrer: $e");
     }
+  }
+
+//!-- for test a vs code
+  // Future<void> checkReferral() async {
+  //   try {
+  //     print("----------- checkReferral ----------");
+
+  //     // 🛑 1. COMMENT OUT THESE TWO LINES FOR NOW 🛑
+  //     // ReferrerDetails referrerDetails = await AndroidPlayInstallReferrer.installReferrer;
+  //     // String? referrerString = referrerDetails.installReferrer;
+
+  //     // ✅ 2. ADD THIS FAKE STRING TO TEST YOUR LOGIC ✅
+  //     String? referrerString =
+  //         "https://play.google.com/store/apps/details?id=com.tpipay.trustindia&referrer=6QXXXDYWRH";
+
+  //     if (referrerString.isNotEmpty) {
+  //       String finalCode = _extractCode(referrerString);
+  //       print("Successfully found referral code: $finalCode");
+
+  //       referralCodeController.text = finalCode;
+  //       update();
+  //     }
+  //   } catch (e) {
+  //     debugPrint("Failed to get referrer: $e");
+  //   }
+  // }
+
+// Helper method to extract the code from the Play Store referrer string
+  String _extractCode(String parsedString) {
+    // If the string contains 'referrer=', we extract just the code value
+    if (parsedString.contains('referrer=')) {
+      // We append the parsedString to your actual app URL using '&'
+      // because the URL already has the '?id=' parameter.
+      Uri uri = Uri.parse(
+          'https://play.google.com/store/apps/details?id=com.tpipay.trustindia&$parsedString');
+
+      // This will safely grab the '6QXXXDYWRH' part, ignoring everything else
+      return uri.queryParameters['referrer'] ?? parsedString;
+    }
+
+    // If it doesn't contain 'referrer=', it might already be just the raw code
+    return parsedString;
   }
 
   void toggleTerms() {
