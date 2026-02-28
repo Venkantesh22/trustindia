@@ -93,16 +93,36 @@ class _ReferralScreenState extends State<ReferralScreen> {
                       children: [
                         Expanded(
                           child: Center(
-                            child: Text(
-                              capitalize(
-                                  authController.userModel?.fullName ?? ""),
-                              overflow: TextOverflow.clip,
-                              style: Helper(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
+                            child: Column(
+                              children: [
+                                Text(
+                                  capitalize(
+                                      authController.userModel?.fullName ?? ""),
+                                  overflow: TextOverflow.clip,
+                                  style: Helper(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18),
+                                ),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                Text(
+                                  capitalize(authController.userModel
+                                          ?.referredLevel?.currentRank ??
+                                      ""),
+                                  overflow: TextOverflow.clip,
+                                  style: Helper(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: secondaryColor,
+                                          fontSize: 16),
+                                ),
+                              ],
                             ),
                           ),
                         ),
