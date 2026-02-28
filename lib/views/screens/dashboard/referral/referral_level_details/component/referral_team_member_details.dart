@@ -42,14 +42,33 @@ class ReferralTeamMemberDetailContainer extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Text(
-                  capitalize(referralLevelDetailsModel?.name ?? ""),
-                  overflow: TextOverflow.clip,
-                  style: Helper(context).textTheme.bodyLarge?.copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: primaryColor,
-                      ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      capitalize(referralLevelDetailsModel?.name ?? ""),
+                      overflow: TextOverflow.clip,
+                      style: Helper(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor,
+                          ),
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Text(
+                      capitalize(referralLevelDetailsModel
+                              ?.referredLevel?.currentRank ??
+                          ""),
+                      overflow: TextOverflow.clip,
+                      style: Helper(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: secondaryColor,
+                          ),
+                    ),
+                  ],
                 ),
               ),
               RichText(
@@ -72,6 +91,17 @@ class ReferralTeamMemberDetailContainer extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 4),
+            child: Text(
+              "Total member: ${referralLevelDetailsModel?.referredLevel?.totalDownline ?? ""}",
+              overflow: TextOverflow.clip,
+              style: Helper(context).textTheme.bodyMedium?.copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                  ),
+            ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 4),

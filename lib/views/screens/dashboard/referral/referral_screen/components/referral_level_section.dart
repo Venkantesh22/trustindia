@@ -26,7 +26,7 @@ class ReferralLevelSection extends StatelessWidget {
                 child: CustomShimmer(
                   isLoading: referralController.isLoading,
                   child: Text(
-                    "Team Levels : ${referralController.referralLevelModelList.length}",
+                    "Team referral Levels : ${referralController.referralLevelModelList.length}",
                     overflow: TextOverflow.clip,
                     style: Helper(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w600,

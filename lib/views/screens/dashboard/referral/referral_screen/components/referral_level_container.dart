@@ -44,7 +44,7 @@ class ReferralLevelContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Level ${referralLevelModel.level}",
+                  "Referrel ${referralLevelModel.levelNumber}",
                   overflow: TextOverflow.clip,
                   style: Helper(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w600,
@@ -53,7 +53,7 @@ class ReferralLevelContainer extends StatelessWidget {
                 ),
                 const SizedBox(height: 9),
                 Text(
-                  "Total Member: ${referralLevelModel.count}",
+                  "Total Member: ${referralLevelModel.currentPeopleInLevel}",
                   overflow: TextOverflow.clip,
                   style: Helper(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w400,

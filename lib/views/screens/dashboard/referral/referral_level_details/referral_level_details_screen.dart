@@ -27,7 +27,7 @@ class _ReferralLevelDetailsScreenState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Get.find<ReferralController>().fetchReferralLevelDataByID(
-          levelId: widget.referralLevelModel?.level);
+          levelId: widget.referralLevelModel?.levelNumber);
     });
   }
 
@@ -35,7 +35,7 @@ class _ReferralLevelDetailsScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar2(
-        title: "Level ${widget.referralLevelModel?.level} Team",
+        title: "Level ${widget.referralLevelModel?.levelNumber} Team",
         centerTitle: false,
       ),
       body: Padding(
@@ -64,7 +64,8 @@ class _ReferralLevelDetailsScreenState
                         ),
                     children: [
                       TextSpan(
-                        text: widget.referralLevelModel?.count.toString(),
+                        text: widget.referralLevelModel?.currentPeopleInLevel
+                            .toString(),
                         style: Helper(context).textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w700,
                             fontSize: 16,

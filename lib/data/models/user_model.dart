@@ -18,6 +18,7 @@ class UserModel {
   final String? referralLink;
   final int? rewardPoint;
   final ReferralLinks? referralLinks;
+  final ReferredLevel? referredLevel;
 
   final SubscriptionHistoryModel? subscription;
 
@@ -39,6 +40,7 @@ class UserModel {
     this.rewardPoint,
     this.referralLinks,
     this.subscription,
+    this.referredLevel,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -73,6 +75,9 @@ class UserModel {
         subscription: json["subscription"] == null
             ? null
             : SubscriptionHistoryModel.fromJson(json["subscription"]),
+        referredLevel: json["referred_level"] == null
+            ? null
+            : ReferredLevel.fromJson(json["referred_level"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -93,11 +98,44 @@ class UserModel {
         "referralLink": referralLink,
         "referral_links": referralLinks?.toJson(),
         "subscription": subscription?.toJson(),
+        "referred_level": referredLevel?.toJson(),
       };
 
   String get fullName => "$firstName $lastName";
   bool get isPhoneVerified => isVerified == 1 ? true : false;
   String get dobFormat => DateFormatters().dMyDash.format(dob ?? getDateTime());
+}
+
+class ReferredLevel {
+  final int? totalDownline;
+  final int? levelsCompleted;
+  final String? currentRank;
+  final String? nextRank;
+  final int? peopleNeededForNextRank;
+
+  ReferredLevel({
+    this.totalDownline,
+    this.levelsCompleted,
+    this.currentRank,
+    this.nextRank,
+    this.peopleNeededForNextRank,
+  });
+
+  factory ReferredLevel.fromJson(Map<String, dynamic> json) => ReferredLevel(
+        totalDownline: json["total_downline"],
+        levelsCompleted: json["levels_completed"],
+        currentRank: json["current_rank"],
+        nextRank: json["next_rank"],
+        peopleNeededForNextRank: json["people_needed_for_next_rank"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "total_downline": totalDownline,
+        "levels_completed": levelsCompleted,
+        "current_rank": currentRank,
+        "next_rank": nextRank,
+        "people_needed_for_next_rank": peopleNeededForNextRank,
+      };
 }
 
 class ReferralLinks {

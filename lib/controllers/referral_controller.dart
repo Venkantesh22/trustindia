@@ -13,6 +13,7 @@ class ReferralController extends GetxController implements GetxService {
   ReferralController({required this.referralRepo});
   bool isLoading = false;
 
+//* This data for Graph view
   List<ReferralModel> referralList = [];
   Future<ResponseModel> fetchReferral() async {
     log('----------- fetchReferral Called() -------------');
@@ -51,6 +52,7 @@ class ReferralController extends GetxController implements GetxService {
     return responseModel;
   }
 
+//* This data for referral Level
   List<ReferralLevelModel> referralLevelModelList = [];
   Future<ResponseModel> fetchReferralLevel() async {
     log('----------- fetchReferralLevel Called() -------------');
@@ -98,6 +100,8 @@ class ReferralController extends GetxController implements GetxService {
     update();
 
     try {
+      referralLevelDetailsModelList.clear();
+      referralLevelDetailsModelFilterList.clear();
       Response response =
           await referralRepo.fetchReferralLevelDataByID(levelId: levelId);
 
