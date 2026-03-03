@@ -26,7 +26,14 @@ class _SignUPScreenState extends State<SignUPScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.find<AuthController>().checkReferral();
+      final authController = Get.find<AuthController>();
+      authController.checkReferral();
+      authController.firstNameController.clear();
+      authController.lastNameController.clear();
+      authController.emailController.clear();
+      authController.numberController.clear();
+      authController.passwordController.clear();
+      authController.update();
     });
   }
 

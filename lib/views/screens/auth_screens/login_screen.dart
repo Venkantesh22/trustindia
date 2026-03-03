@@ -32,6 +32,18 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isEmailLogin = false;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final authController = Get.find<AuthController>();
+      authController.emailController.clear();
+      authController.numberController.clear();
+      authController.passwordController.clear();
+      authController.update();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: loginPageBg,
@@ -199,13 +211,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                             typeCheck: value.isSuccess);
                                       } else {
                                         navigate(
-                                            context: context,
-                                            page: OTPVerification(
-                                              phone: authController
-                                                  .numberController.text,
-                                              isVerificationPhone: true,
-                                            ),
-                                            isRemoveUntil: true);
+                                          context: context,
+                                          page: OTPVerification(
+                                            phone: authController
+                                                .numberController.text,
+                                            isVerificationPhone: true,
+                                          ),
+                                        );
                                         showToast(
                                             message: value.message,
                                             typeCheck: value.isSuccess);

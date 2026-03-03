@@ -8,7 +8,6 @@ import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/controllers/basic_controller.dart';
 import 'package:lekra/firebase/block_screen.dart';
 import 'package:lekra/views/base/custom_image.dart';
-import 'package:lekra/views/screens/auth_screens/forget_password/opt_verification_screen.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/demo/screen/demo_dashboard_screen.dart';
@@ -44,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (isBlock && isTimeBlock) {
       navigate(
         context: context,
-        page: FlashMessageScreen(),
+        page: const FlashMessageScreen(),
         isRemoveUntil: true,
       );
       return;
@@ -54,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (isBlock) {
       navigate(
         context: context,
-        page: FlashMessageScreen(),
+        page: const FlashMessageScreen(),
         isRemoveUntil: true,
       );
       return;
@@ -75,12 +74,9 @@ class _SplashScreenState extends State<SplashScreen> {
     await authController.fetchUserProfile();
     if (authController.userModel?.isPhoneVerified == false) {
       navigate(
-          context: context,
-          page: OTPVerification(
-            phone: authController.userModel?.mobile ?? "",
-            isVerificationPhone: true,
-          ),
-          isRemoveUntil: true);
+        context: context,
+        page: const LoginScreen(),
+      );
       showToast(
           message: "Verified phone number to container..",
           toastType: ToastType.warning);
