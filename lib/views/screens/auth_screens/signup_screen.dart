@@ -4,13 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/services/constants.dart';
-import 'package:lekra/services/input_decoration.dart';
 import 'package:lekra/services/route_helper.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/auth_screens/forget_password/opt_verification_screen.dart';
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/screen/privacy_center_screen.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/screen/terms_conditions_screen.dart';
+import 'package:lekra/views/screens/widget/text_box/app_text_box.dart';
 
 import '../../../services/theme.dart';
 
@@ -37,8 +37,26 @@ class _SignUPScreenState extends State<SignUPScreen> {
     });
   }
 
-  bool showPassword = false;
   bool termsAndConditions = false;
+
+  Future<void> _registerFun({required AuthController authController}) async {
+    if (authController.isLoading) {
+      return;
+    }
+
+    if (!termsAndConditions) {
+      return showToast(
+          message: "Select Term & condition and Privacy Policy",
+          toastType: ToastType.error);
+    } else if (!termsAndConditions) {
+      return showToast(
+          message: "Select Term & condition", toastType: ToastType.error);
+    }
+
+    if (_formKey.currentState?.validate() ?? false) {
+      signUp(authController);
+    }
+  }
 
   final _formKey = GlobalKey<FormState>();
   signUp(AuthController authController) {
@@ -118,34 +136,19 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "First Name",
-                                      style: Theme.of(context)
+                                    AppTextFieldWithHeading(
+                                      controller:
+                                          authController.firstNameController,
+                                      hindText: "Enter your first name",
+                                      heading: "First Name",
+                                      hintStyle: Theme.of(context)
                                           .textTheme
                                           .bodyMedium
                                           ?.copyWith(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 18,
+                                            fontSize: 16,
+                                            color: grey,
                                           ),
-                                    ),
-                                    const SizedBox(
-                                      height: 6,
-                                    ),
-                                    TextFormField(
-                                      controller:
-                                          authController.firstNameController,
-                                      decoration:
-                                          CustomDecoration.inputDecoration(
-                                        hint: "Enter your first name",
-                                        hintStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium
-                                            ?.copyWith(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16,
-                                              color: grey,
-                                            ),
-                                      ),
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return "Please enter your first name";
@@ -162,34 +165,19 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "Last Name",
-                                      style: Theme.of(context)
+                                    AppTextFieldWithHeading(
+                                      controller:
+                                          authController.lastNameController,
+                                      heading: "Last Name",
+                                      hindText: "Enter your last name",
+                                      hintStyle: Theme.of(context)
                                           .textTheme
                                           .bodyMedium
                                           ?.copyWith(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 18,
+                                            fontSize: 16,
+                                            color: grey,
                                           ),
-                                    ),
-                                    const SizedBox(
-                                      height: 6,
-                                    ),
-                                    TextFormField(
-                                      controller:
-                                          authController.lastNameController,
-                                      decoration:
-                                          CustomDecoration.inputDecoration(
-                                        hint: "Enter your last name",
-                                        hintStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium
-                                            ?.copyWith(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16,
-                                              color: grey,
-                                            ),
-                                      ),
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return "Please enter your last name";
@@ -206,32 +194,18 @@ class _SignUPScreenState extends State<SignUPScreen> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Text(
-                            "Email",
-                            style: Theme.of(context)
+                          AppTextFieldWithHeading(
+                            controller: authController.emailController,
+                            heading: "Email",
+                            hindText: "Enter your Email",
+                            hintStyle: Theme.of(context)
                                 .textTheme
                                 .bodyMedium
                                 ?.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                                  fontSize: 16,
+                                  color: grey,
                                 ),
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          TextFormField(
-                            controller: authController.emailController,
-                            decoration: CustomDecoration.inputDecoration(
-                              hint: "Enter your Email",
-                              hintStyle: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: grey,
-                                  ),
-                            ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return "Please enter your email";
@@ -245,32 +219,18 @@ class _SignUPScreenState extends State<SignUPScreen> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Text(
-                            "Mobile",
-                            style: Theme.of(context)
+                          AppTextFieldWithHeading(
+                            controller: authController.numberController,
+                            heading: "Mobile",
+                            hindText: "Enter your Mobile number",
+                            hintStyle: Theme.of(context)
                                 .textTheme
                                 .bodyMedium
                                 ?.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                                  fontSize: 16,
+                                  color: grey,
                                 ),
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          TextFormField(
-                            controller: authController.numberController,
-                            decoration: CustomDecoration.inputDecoration(
-                              hint: "Enter your Mobile number",
-                              hintStyle: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: grey,
-                                  ),
-                            ),
                             keyboardType: TextInputType.number,
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(10),
@@ -289,46 +249,22 @@ class _SignUPScreenState extends State<SignUPScreen> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Text(
-                            "Password",
-                            style: Theme.of(context)
+                          AppTextFieldWithHeading(
+                            controller: authController.passwordController,
+                            obscureText: true,
+                            heading: "Password",
+                            textInputAction: TextInputAction.done,
+                            onFieldSubmitted: (_) =>
+                                _registerFun(authController: authController),
+                            hindText: "Enter your Password",
+                            hintStyle: Theme.of(context)
                                 .textTheme
                                 .bodyMedium
                                 ?.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          TextFormField(
-                            controller: authController.passwordController,
-                            obscureText: !showPassword,
-                            decoration: CustomDecoration.inputDecoration(
-                              suffix: IconButton(
-                                icon: Icon(
-                                  showPassword
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
+                                  fontSize: 16,
                                   color: grey,
                                 ),
-                                onPressed: () {
-                                  setState(() {
-                                    showPassword = !showPassword;
-                                  });
-                                },
-                              ),
-                              hint: "Enter your Password",
-                              hintStyle: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: grey,
-                                  ),
-                            ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return "Please enter your password";
@@ -340,32 +276,21 @@ class _SignUPScreenState extends State<SignUPScreen> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Text(
-                            "referral code (optional)",
-                            style: Theme.of(context)
+                          AppTextFieldWithHeading(
+                            controller: authController.referralCodeController,
+                            heading: "referral code (optional)",
+                            hindText: "Enter your referral code (if any)",
+                            textInputAction: TextInputAction.done,
+                            onFieldSubmitted: (_) =>
+                                _registerFun(authController: authController),
+                            hintStyle: Theme.of(context)
                                 .textTheme
                                 .bodyMedium
                                 ?.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                                  fontSize: 16,
+                                  color: grey,
                                 ),
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          TextFormField(
-                            controller: authController.referralCodeController,
-                            decoration: CustomDecoration.inputDecoration(
-                              hint: "Enter your referral code (if any)",
-                              hintStyle: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: grey,
-                                  ),
-                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 12),
@@ -440,27 +365,8 @@ class _SignUPScreenState extends State<SignUPScreen> {
                           ),
                           GetBuilder<AuthController>(builder: (authController) {
                             return GestureDetector(
-                              onTap: () {
-                                if (authController.isLoading) {
-                                  return;
-                                }
-
-                                if (!termsAndConditions) {
-                                  return showToast(
-                                      message:
-                                          "Select Term & condition and Privacy Policy",
-                                      toastType: ToastType.error);
-                                } else if (!termsAndConditions) {
-                                  return showToast(
-                                      message: "Select Term & condition",
-                                      toastType: ToastType.error);
-                                }
-
-                                if (_formKey.currentState?.validate() ??
-                                    false) {
-                                  signUp(authController);
-                                }
-                              },
+                              onTap: () =>
+                                  _registerFun(authController: authController),
                               child: Container(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 12),

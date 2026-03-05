@@ -27,7 +27,6 @@ class AppTextFieldWithHeading extends StatefulWidget {
   final Color? bgColor;
   final Function()? onTap;
   final double borderRadius;
-  final double hight;
   final Function(String)? onChanged;
   final TextInputAction? textInputAction;
   final Function(String)? onFieldSubmitted;
@@ -56,14 +55,13 @@ class AppTextFieldWithHeading extends StatefulWidget {
     this.onTap,
     this.onChanged,
     this.borderRadius = 12.0,
-    this.hight = 48,
     this.textInputAction,
     this.onFieldSubmitted,
     this.inputTextStyle,
   });
 
-  Color get borderColorLocal => borderColor ?? grey.withValues(alpha: 0.5);
-  Color get bgColorLocal => bgColor ?? grey.withValues(alpha: 0.1);
+  Color get borderColorLocal => borderColor ?? black;
+  Color get bgColorLocal => bgColor ?? white;
 
   @override
   State<AppTextFieldWithHeading> createState() =>
@@ -133,7 +131,6 @@ class _AppTextFieldWithHeadingState extends State<AppTextFieldWithHeading> {
           const SizedBox(height: 7),
         ],
         SizedBox(
-          height: widget.hight,
           child: TextFormField(
             textInputAction:
                 widget.textInputAction ?? TextInputAction.next, // 👈 Add this
