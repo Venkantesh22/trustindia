@@ -92,7 +92,7 @@ class DemoContainerModel {
 }
 
 DemoContainerModel demoPage1 = DemoContainerModel(
-    title: "Welcome to Trust India",
+    title: "Welcome to ${AppConstants.appName}",
     subTitle: "Trusted ecommerce & wallet platform for India",
     image: Assets.imagesDemo1,
     demoScreenList: demoScreen1);

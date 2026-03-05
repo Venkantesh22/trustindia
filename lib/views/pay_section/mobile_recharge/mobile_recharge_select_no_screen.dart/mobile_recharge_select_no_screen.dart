@@ -91,10 +91,13 @@ class _MobileRechargeSelectNoScreenState
                     hintStyle: Helper(context).textTheme.bodyLarge?.copyWith(
                         fontSize: 18, fontWeight: FontWeight.w600, color: grey),
                     heading: "Enter Mobile Recharge",
-                    style: Helper(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    inputTextStyle: Helper(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: red),
                     prefixText: "+91",
                     prefixStyle: Helper(context).textTheme.bodyLarge?.copyWith(
                           fontSize: 18,

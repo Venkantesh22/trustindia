@@ -23,12 +23,15 @@ class AppTextFieldWithHeading extends StatefulWidget {
   final bool isRequired;
   final bool readOnly;
   final Color? borderColor;
+  final double? borderWidth;
   final Color? bgColor;
   final Function()? onTap;
   final double borderRadius;
   final double hight;
   final Function(String)? onChanged;
-  final TextStyle? style;
+  final TextInputAction? textInputAction;
+  final Function(String)? onFieldSubmitted;
+  final TextStyle? inputTextStyle;
 
   AppTextFieldWithHeading({
     super.key,
@@ -48,12 +51,15 @@ class AppTextFieldWithHeading extends StatefulWidget {
     this.isRequired = false,
     this.readOnly = false,
     this.borderColor,
+    this.borderWidth,
     this.bgColor,
     this.onTap,
     this.onChanged,
     this.borderRadius = 12.0,
     this.hight = 48,
-    this.style,
+    this.textInputAction,
+    this.onFieldSubmitted,
+    this.inputTextStyle,
   });
 
   Color get borderColorLocal => borderColor ?? grey.withValues(alpha: 0.5);
@@ -129,6 +135,9 @@ class _AppTextFieldWithHeadingState extends State<AppTextFieldWithHeading> {
         SizedBox(
           height: widget.hight,
           child: TextFormField(
+            textInputAction:
+                widget.textInputAction ?? TextInputAction.next, // 👈 Add this
+            onFieldSubmitted: widget.onFieldSubmitted,
             onTap: widget.onTap,
             controller: widget.controller,
             keyboardType: widget.keyboardType,
@@ -136,7 +145,7 @@ class _AppTextFieldWithHeadingState extends State<AppTextFieldWithHeading> {
             inputFormatters: widget.inputFormatters,
             maxLines: effectiveMaxLines,
             readOnly: widget.readOnly,
-            style: widget.style,
+            style: widget.inputTextStyle,
             onChanged: widget.onChanged,
             decoration: CustomDecoration.inputDecoration(
               borderRadius: widget.borderRadius,

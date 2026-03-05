@@ -5,6 +5,7 @@ import 'package:lekra/data/models/home/category_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
+import 'package:lekra/views/pay_section/pay_home/pay_home_screen.dart';
 import 'package:lekra/views/screens/category_screen/category_details_screen.dart';
 
 class ExploreCategorySection extends StatelessWidget {
@@ -49,7 +50,7 @@ class ExploreCategorySection extends StatelessWidget {
                       InkWell(
                         borderRadius: BorderRadius.circular(50),
                         onTap: () {
-                          // navigate(context: context, page: PayHomeScreen());
+                          navigate(context: context, page: PayHomeScreen());
                         },
                         child: const CircleAvatar(
                             radius: 32,

@@ -1,12 +1,10 @@
 import 'dart:developer';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/splash_screen/splash_screen.dart';
 import 'package:toastification/toastification.dart';
-
 import 'services/init.dart';
 
 void main() async {
@@ -28,8 +26,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
- 
-
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
