@@ -101,12 +101,6 @@ class _OTPVerificationState extends State<OTPVerification> {
     setState(() => _resending = true);
 
     try {
-      // if (widget.isVerificationPhone) {
-      //   await Get.find<AuthController>()
-      //       .generateResendOtp(mobile: widget.phone);
-      // } else {
-      //   await Get.find<AuthController>().generateOtp(mobile: widget.phone);
-      // }
       if (widget.isForResetPin) {
         Get.find<AuthController>().generateOtp(mobile: widget.phone);
       } else if (widget.isUpdatePassword) {
