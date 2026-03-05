@@ -259,8 +259,6 @@ class AuthController extends GetxController implements GetxService {
 
         responseModel =
             ResponseModel(true, response.body['message'] ?? "Login successful");
-        emailController.clear();
-        passwordController.clear();
       }
 
       // ✅ 3. API returned failure (but HTTP was 200)

@@ -15,6 +15,7 @@ import 'package:lekra/views/screens/auth_screens/signup_screen.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/screen/privacy_center_screen.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/screen/terms_conditions_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
+import 'package:lekra/views/screens/widget/text_box/app_text_box.dart';
 
 import '../../../services/theme.dart';
 
@@ -41,6 +42,41 @@ class _LoginScreenState extends State<LoginScreen> {
       authController.passwordController.clear();
       authController.update();
     });
+  }
+
+  Future<void> _loginTap(AuthController authController) async {
+    if (authController.isLoading) {
+      return;
+    }
+    if (_formKey.currentState?.validate() ?? false) {
+      isEmailLogin =
+          GetUtils.isEmail(authController.emailController.text.trim());
+      authController.userLogin(isEmail: isEmailLogin).then(
+        (value) {
+          if (value.isSuccess) {
+            if (authController.isPhoneNumberVerified) {
+              Get.find<DashBoardController>().dashPage = 0;
+              navigate(
+                  context: context,
+                  page: const DashboardScreen(),
+                  isRemoveUntil: true);
+              showToast(message: value.message, typeCheck: value.isSuccess);
+            } else {
+              navigate(
+                context: context,
+                page: OTPVerification(
+                  phone: authController.numberController.text,
+                  isVerificationPhone: true,
+                ),
+              );
+              showToast(message: value.message, typeCheck: value.isSuccess);
+            }
+          } else {
+            showToast(message: value.message, typeCheck: value.isSuccess);
+          }
+        },
+      );
+    }
   }
 
   @override
@@ -102,20 +138,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(
                           height: 6,
                         ),
-                        TextFormField(
+                        AppTextFieldWithHeading(
                           controller: authController.emailController,
-                          decoration: CustomDecoration.inputDecoration(
-                            hint: "Enter your Mobile no. / Email",
-                            hintStyle: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  color: grey,
-                                ),
-                          ),
+                          hindText: "Enter your Mobile no. / Email",
+                          hintStyle:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: grey,
+                                  ),
                           keyboardType: TextInputType.emailAddress,
+                          borderWidth: 2,
+                          borderColor: black,
+                          bgColor: white,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Please enter your email or number";
@@ -173,6 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   color: grey,
                                 ),
                           ),
+                          onFieldSubmitted: (_) => _loginTap(authController),
                           validator: (value) {
                             if (value!.isEmpty) {
                               return "Please enter your Password";
@@ -186,51 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         GetBuilder<AuthController>(builder: (authController) {
                           return GestureDetector(
-                            onTap: () async {
-                              if (authController.isLoading) {
-                                return;
-                              }
-                              if (_formKey.currentState?.validate() ?? false) {
-                                isEmailLogin = GetUtils.isEmail(
-                                    authController.emailController.text.trim());
-                                authController
-                                    .userLogin(isEmail: isEmailLogin)
-                                    .then(
-                                  (value) {
-                                    if (value.isSuccess) {
-                                      if (authController
-                                          .isPhoneNumberVerified) {
-                                        Get.find<DashBoardController>()
-                                            .dashPage = 0;
-                                        navigate(
-                                            context: context,
-                                            page: const DashboardScreen(),
-                                            isRemoveUntil: true);
-                                        showToast(
-                                            message: value.message,
-                                            typeCheck: value.isSuccess);
-                                      } else {
-                                        navigate(
-                                          context: context,
-                                          page: OTPVerification(
-                                            phone: authController
-                                                .numberController.text,
-                                            isVerificationPhone: true,
-                                          ),
-                                        );
-                                        showToast(
-                                            message: value.message,
-                                            typeCheck: value.isSuccess);
-                                      }
-                                    } else {
-                                      showToast(
-                                          message: value.message,
-                                          typeCheck: value.isSuccess);
-                                    }
-                                  },
-                                );
-                              }
-                            },
+                            onTap: () => _loginTap(authController),
                             child: Container(
                               padding: const EdgeInsets.symmetric(vertical: 12),
                               width: double.infinity,
@@ -256,7 +248,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           );
                         }),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         RichText(
                           textAlign: TextAlign.center,
                           text: TextSpan(
