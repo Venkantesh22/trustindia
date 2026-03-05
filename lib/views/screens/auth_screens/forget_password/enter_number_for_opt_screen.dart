@@ -18,9 +18,34 @@ class EnterNumberForOPTScreen extends StatefulWidget {
 }
 
 class _EnterNumberForOPTScreenState extends State<EnterNumberForOPTScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final authController = Get.find<AuthController>();
+      authController.numberController.clear();
+      authController.update();
+    });
+  }
+
   final _formKey = GlobalKey<FormState>();
 
-
+  Future<void> _sendOtpFun({required AuthController authController}) async {
+    if (_formKey.currentState?.validate() != true) return;
+    authController
+        .generateOtp(mobile: authController.numberController.text.trim())
+        .then((value) {
+      if (value.isSuccess) {
+        navigate(
+            context: context,
+            page: OTPVerification(
+                phone: authController.numberController.text.trim()));
+        showToast(message: value.message, typeCheck: value.isSuccess);
+      } else {
+        showToast(message: value.message, typeCheck: value.isSuccess);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,30 +54,11 @@ class _EnterNumberForOPTScreenState extends State<EnterNumberForOPTScreen> {
       bottomNavigationBar: SafeArea(
         child: GetBuilder<AuthController>(builder: (authController) {
           return Padding(
-            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
             child: ProfileButton(
               title: "Send OTP",
               color: primaryColor,
-              onPressed: () async {
-                if (_formKey.currentState?.validate() != true) return;
-                authController
-                    .generateOtp(
-                        mobile: authController.numberController.text.trim())
-                    .then((value) {
-                  if (value.isSuccess) {
-                    navigate(
-                        context: context,
-                        page: OTPVerification(
-                            phone:
-                                authController.numberController.text.trim()));
-                    showToast(
-                        message: value.message, typeCheck: value.isSuccess);
-                  } else {
-                    showToast(
-                        message: value.message, typeCheck: value.isSuccess);
-                  }
-                });
-              },
+              onPressed: () => _sendOtpFun(authController: authController),
             ),
           );
         }),
@@ -118,6 +124,11 @@ class _EnterNumberForOPTScreenState extends State<EnterNumberForOPTScreen> {
                               .bodySmall
                               ?.copyWith(color: greyDark, fontSize: 14),
                           prefixText: "+91"),
+                      onChanged: (value) {
+                        if (value.length == 10) {
+                          _sendOtpFun(authController: authController);
+                        }
+                      },
                       validator: (value) {
                         final v = (value ?? '').trim();
                         if (v.isEmpty) {
@@ -132,6 +143,8 @@ class _EnterNumberForOPTScreenState extends State<EnterNumberForOPTScreen> {
                         }
                         return null;
                       },
+                      onFieldSubmitted: (_) =>
+                          _sendOtpFun(authController: authController),
                     ),
                   ),
 
