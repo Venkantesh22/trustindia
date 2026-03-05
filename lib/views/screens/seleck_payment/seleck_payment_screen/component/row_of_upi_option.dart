@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/screens/seleck_payment/dynamc_qr_screen/dynamic_qr_screen.dart';
@@ -38,7 +40,7 @@ class RowOfUPIOption extends StatelessWidget {
                           const SizedBox(width: 8),
                         ],
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
                 Text(
                   title,
                   style: Helper(context)
@@ -65,16 +67,24 @@ class UpiOptionModel {
 }
 
 List<UpiOptionModel> upiOptionList = [
-  // UpiOptionModel(
-  //     image: Assets.imagesGooglePay, title: "Google Pay", onTap: () {}),
-  // UpiOptionModel(image: Assets.imagesPhonePe, title: "PhonePe", onTap: () {}),
-  // UpiOptionModel(
-  //     image: Assets.imagesUpi, title: "Pay with Other UPI Apps", onTap: () {}),
-  // UpiOptionModel(title: "Pay with Credit/Debit Card", onTap: () {}),
   UpiOptionModel(
     title: "Dynamic QR",
     onTap: (context) {
       navigate(context: context, page: const QRPaymentScreen());
     },
   ),
+  UpiOptionModel(
+      image: Assets.imagesUpi,
+      title: "Pay with Other UPI Apps",
+      onTap: (context) async {
+        final orderController = Get.find<OrderController>();
+        orderController
+            .checkOrderIUPIntent(orderId: orderController.orderId)
+            .then((value) {
+          if (value.isSuccess) {
+          } else {
+            showToast(message: value.message, typeCheck: value.isSuccess);
+          }
+        });
+      }),
 ];

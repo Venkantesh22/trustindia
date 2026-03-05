@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/product_controller.dart';
 import 'package:lekra/controllers/wallet_controller.dart';
+import 'package:lekra/data/models/fund_reqests/upi_qr_model.dart';
 import 'package:lekra/data/models/order_model.dart';
 import 'package:lekra/data/models/product_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
+import 'package:lekra/data/models/upi_intent_check_model.dart';
 import 'package:lekra/data/repositories/order_repo.dart';
 
 enum OrderStatus { all, pending, processing, completed, cancelled }
@@ -185,5 +187,43 @@ class OrderController extends GetxController implements GetxService {
   void updateRewordCoinsState({required bool? value}) {
     userRewordCoinsState = value ?? false;
     update();
+  }
+
+  UpiIntentCheckModel? upiIntentCheckModel;
+
+  Future<ResponseModel> checkOrderIUPIntent({
+    required int? orderId,
+  }) async {
+    log('----------- checkOrderIUPIntent Called ----------');
+
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+
+    Map<String, dynamic> data = {};
+
+    try {
+      Response response = await orderRepo.checkOrderIUPIntent(
+          orderId: orderId, data: FormData(data));
+
+      if (response.statusCode == 200 && response.body['status'] == "success") {
+        upiIntentCheckModel =
+            UpiIntentCheckModel.fromJson(response.body["data"]);
+
+        responseModel = ResponseModel(
+            true, response.body['message'] ?? " checkOrderIUPIntent success");
+      } else {
+        responseModel = ResponseModel(false,
+            response.body['error'] ?? "Error while checkOrderIUPIntent user");
+      }
+    } catch (e) {
+      log('ERROR AT checkOrderIUPIntent(): $e');
+      responseModel =
+          ResponseModel(false, "Error while checkOrderIUPIntent user $e");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
   }
 }

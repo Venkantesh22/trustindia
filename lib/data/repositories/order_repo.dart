@@ -26,5 +26,11 @@ class OrderRepo {
         "fetchOrder",
       );
 
- 
+  Future<Response> checkOrderIUPIntent(
+          {required int? orderId, required FormData data}) async =>
+      await apiClient.postData(
+        "${AppConstants.postCheckUPiIntent}/$orderId",
+        "checkOrderIUPIntent",
+        data,
+      );
 }
