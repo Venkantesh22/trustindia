@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/data/models/fund_reqests/bank_model.dart';
 import 'package:lekra/data/models/fund_reqests/fund_ruquest_model.dart';
@@ -219,6 +220,11 @@ class FundRequestController extends GetxController implements GetxService {
     return responseModel;
   }
 
+  void updateUpiQRModel({required UpiQrModel? value}) {
+    upiQRModel = value;
+    update();
+  }
+
   bool isPaymentDone = false;
 
   Future<ResponseModel> uPIQRStatus() async {
@@ -259,14 +265,15 @@ class FundRequestController extends GetxController implements GetxService {
   int totalSeconds = 5 * 60;
   int remainingSeconds = 0;
 
-  void startPaymentFlow(BuildContext context) {
+  void startPaymentFlow(
+      {required BuildContext context, bool isCheckPayment = false}) {
     remainingSeconds = totalSeconds;
     isPaymentDone = false;
 
     update();
 
     _startCountdown(context);
-    _startPolling(context);
+    _startPolling(context: context, isCheckPayment: isCheckPayment);
   }
 
   void _startCountdown(BuildContext context) {
@@ -286,13 +293,17 @@ class FundRequestController extends GetxController implements GetxService {
     });
   }
 
-  void _startPolling(BuildContext context) {
+  void _startPolling(
+      {required BuildContext context, bool isCheckPayment = false}) {
     _statusTimer?.cancel();
 
     _statusTimer = Timer.periodic(const Duration(seconds: 2), (_) async {
       if (upiQRModel?.orderId == null) return;
 
-      await uPIQRStatus();
+      await isCheckPayment
+          ? Get.find<OrderController>().checkOrderIUPIntentStatus(
+              merchantOrderId: upiQRModel?.merchantOrderId)
+          : uPIQRStatus();
 
       if (isPaymentDone) {
         stopAllTimers();

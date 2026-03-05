@@ -17,25 +17,52 @@ class TextBoxAndOptionSection extends StatelessWidget {
     super.key,
   });
 
+  Future<void> _fetchQRFun({
+    required FundRequestController fundRequestController,
+    required BuildContext context,
+    required AuthController authController,
+  }) async {
+    await fundRequestController
+        .createUPIQR(userModel: authController.userModel ?? UserModel())
+        .then((value) async {
+      if (value.isSuccess) {
+        DynamicQrSheet.show(
+          context,
+        );
+
+        fundRequestController.startPaymentFlow(context: context);
+      } else {
+        showToast(message: value.message, typeCheck: value.isBlank);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<FundRequestController>(builder: (fundRequestController) {
       return Column(
         children: [
-          AppTextFieldWithHeading(
-            controller: fundRequestController.amountController,
-            hindText: "Add Amount",
-            borderColor: primaryColor,
-            bgColor: white,
-            keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "Amount is required";
-              }
-              return null;
-            },
-          ),
+          GetBuilder<AuthController>(builder: (authController) {
+            return AppTextFieldWithHeading(
+              controller: fundRequestController.amountController,
+              hindText: "Add Amount",
+              borderColor: primaryColor,
+              bgColor: white,
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              textInputAction: TextInputAction.done,
+              onFieldSubmitted: (_) => _fetchQRFun(
+                  authController: authController,
+                  fundRequestController: fundRequestController,
+                  context: context),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Amount is required";
+                }
+                return null;
+              },
+            );
+          }),
           const SizedBox(height: 16),
           SizedBox(
             height: 38,
@@ -68,23 +95,10 @@ class TextBoxAndOptionSection extends StatelessWidget {
           GetBuilder<AuthController>(builder: (authController) {
             return CustomButton(
               isLoading: fundRequestController.isLoading,
-              onTap: () async {
-                await fundRequestController
-                    .createUPIQR(
-                        userModel: authController.userModel ?? UserModel())
-                    .then((value) async {
-                  if (value.isSuccess) {
-                    DynamicQrSheet.show(
-                      context,
-                    );
-                    
-                      fundRequestController.startPaymentFlow(context);
-
-                  } else {
-                    showToast(message: value.message, typeCheck: value.isBlank);
-                  }
-                });
-              },
+              onTap: () => _fetchQRFun(
+                  authController: authController,
+                  fundRequestController: fundRequestController,
+                  context: context),
               height: 49,
               child: Text(
                 "Fetch QR",

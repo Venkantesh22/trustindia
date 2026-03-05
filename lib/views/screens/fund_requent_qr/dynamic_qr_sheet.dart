@@ -10,10 +10,6 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/common_button.dart';
 
-/// Reusable bottom-sheet class that shows a dynamic QR with countdown.
-/// Usage:
-/// await DynamicQrSheet.show(context,
-///     rechargeController: rc, basicController: bc);
 class DynamicQrSheet {
   /// Shows the bottom sheet. Returns when sheet is dismissed.
   static Future<void> show(BuildContext context) async {
@@ -35,31 +31,6 @@ class DynamicQrSheet {
             builder: (fundRequestController) {
           return SafeArea(
             child: StatefulBuilder(builder: (modalContext, setModalState) {
-              //   fundRequestController.startUPIQRStatusPolling(context);
-              // Start the modal timer lazily the first time builder runs
-              // modalTimer ??= Timer.periodic(const Duration(seconds: 1), (t) {
-              //   if (!modalContext.mounted) {
-              //     t.cancel();
-              //     return;
-              //   }
-
-              //   if (remainingSeconds <= 1) {
-              //     // cancel any timers and close sheet
-              //     modalTimer?.cancel();
-              //     remainingSeconds = 0;
-              //     setModalState(() {});
-              //     t.cancel();
-
-              //     if (Navigator.of(modalContext).canPop()) {
-              //       Navigator.of(modalContext).pop();
-              //     }
-              //     return;
-              //   }
-
-              //   remainingSeconds--;
-              //   setModalState(() {});
-              // });
-
               String formatMMSS(int seconds) {
                 final m = (seconds ~/ 60).toString().padLeft(2, '0');
                 final s = (seconds % 60).toString().padLeft(2, '0');
@@ -185,7 +156,6 @@ class DynamicQrSheet {
                       radius: 5,
                       height: 50,
                       onTap: () {
-                        // modalTimer?.cancel();
                         LaunchHelper.launchUpiViaSystemChooser(
                             fundRequestController.upiQRModel?.qrString ?? "");
                       },

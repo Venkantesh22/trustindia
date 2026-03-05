@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lekra/controllers/fund_request_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/custom_image.dart';
+import 'package:lekra/views/screens/fund_requent_qr/dynamic_qr_sheet.dart';
 import 'package:lekra/views/screens/seleck_payment/dynamc_qr_screen/dynamic_qr_screen.dart';
 
 class RowOfUPIOption extends StatelessWidget {
@@ -82,6 +84,12 @@ List<UpiOptionModel> upiOptionList = [
             .checkOrderIUPIntent(orderId: orderController.orderId)
             .then((value) {
           if (value.isSuccess) {
+            DynamicQrSheet.show(
+              context,
+            );
+
+            Get.find<FundRequestController>()
+                .startPaymentFlow(context: context, isCheckPayment: true);
           } else {
             showToast(message: value.message, typeCheck: value.isSuccess);
           }
