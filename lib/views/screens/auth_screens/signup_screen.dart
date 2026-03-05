@@ -231,6 +231,13 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                   fontSize: 16,
                                   color: grey,
                                 ),
+                            prefixText: "+91",
+                            prefixStyle:
+                                Helper(context).textTheme.bodyLarge?.copyWith(
+                                      fontSize: 16,
+                                      color: black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                             keyboardType: TextInputType.number,
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(10),
