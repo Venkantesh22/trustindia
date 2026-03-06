@@ -57,7 +57,7 @@ class DynamicQRController extends GetxController implements GetxService {
 
       if (response.statusCode == 200 && response.body['status'] == true) {
         isDynamicQRPaymentDone =
-            response.body['payment_status'] == "paid" ? true : false;
+            response.body['transaction_status'] == "success" ? true : false;
 
         responseModel = ResponseModel(
             true, response.body['message'] ?? " checkPaymentStatus success");

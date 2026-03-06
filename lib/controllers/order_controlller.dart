@@ -228,6 +228,7 @@ class OrderController extends GetxController implements GetxService {
     return responseModel;
   }
 
+  bool isUpiIntentPaymentDone = false;
   Future<ResponseModel> checkOrderIUPIntentStatus({
     required String? merchantOrderId,
   }) async {
@@ -243,9 +244,15 @@ class OrderController extends GetxController implements GetxService {
       );
 
       if (response.statusCode == 200 && response.body['status'] == "success") {
-        upiQrModel = UpiQrModel.fromJson(response.body["data"]);
+        isUpiIntentPaymentDone =
+            response.body["data"]['payment_status'] == "paid" ? true : false;
 
-        // Get.find<FundRequestController>().updateUpiQRModel(value: upiQrModel);
+        // log("isUpiIntentPaymentDone == $isUpiIntentPaymentDone");
+
+        if (isUpiIntentPaymentDone) {
+          Get.find<FundRequestController>()
+              .updateIsPaymentDone(value: isUpiIntentPaymentDone);
+        }
 
         responseModel = ResponseModel(
             true, response.body['message'] ?? " checkOrderIUPIntent success");

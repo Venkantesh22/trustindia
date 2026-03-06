@@ -178,7 +178,6 @@ class DynamicQrSheet {
       },
     );
 
-    // modalTimer?.cancel();
     controller.stopAllTimers();
   }
 }

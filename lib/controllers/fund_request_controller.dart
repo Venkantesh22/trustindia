@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
@@ -11,6 +13,7 @@ import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/user_model.dart';
 import 'package:lekra/data/repositories/fund_request_repo.dart';
 import 'package:lekra/services/constants.dart';
+import 'package:lekra/views/screens/order_confirmed/order_confirmed_screen.dart';
 
 class FundRequestController extends GetxController implements GetxService {
   final FundRequestRepo fundRequestRepo;
@@ -226,6 +229,12 @@ class FundRequestController extends GetxController implements GetxService {
 
   bool isPaymentDone = false;
 
+  void updateIsPaymentDone({required bool value}) {
+    isPaymentDone = value;
+    // log("Check 2 --- isPaymentDone == $isPaymentDone ");
+    update();
+  }
+
   Future<ResponseModel> uPIQRStatus() async {
     log('-----------  uPIQRStatus() -------------');
     ResponseModel responseModel;
@@ -292,33 +301,53 @@ class FundRequestController extends GetxController implements GetxService {
     });
   }
 
-  void _startPolling(
-      {required BuildContext context, bool isCheckPayment = false}) {
+  void _startPolling({
+    required BuildContext context,
+    bool isCheckPayment = false,
+  }) {
     _statusTimer?.cancel();
 
     _statusTimer = Timer.periodic(const Duration(seconds: 2), (_) async {
       if (upiQRModel?.orderId == null) return;
 
-      await isCheckPayment
-          ? Get.find<OrderController>().checkOrderIUPIntentStatus(
-              merchantOrderId: upiQRModel?.merchantOrderId)
-          : uPIQRStatus();
+      if (isCheckPayment) {
+        //* this For Order checkout payment
+        await Get.find<OrderController>().checkOrderIUPIntentStatus(
+            merchantOrderId: upiQRModel?.merchantOrderId);
 
-      if (isPaymentDone) {
-        stopAllTimers();
+        if (isPaymentDone) {
+          stopAllTimers();
 
-        if (Navigator.of(context).canPop()) {
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
+          navigate(context: context, page: const OrderConfirmedScreen());
+          showToast(
+              message:
+                  "Congratulations! Your order has been placed successfully",
+              typeCheck: true);
+
+          upiQRModel = null;
         }
-        Get.find<WalletController>().fetchWalletTransaction();
+      } else {
+        //* this For wallet recharge
 
-        showToast(
-          message: "Payment Successful 🎉",
-          typeCheck: true,
-        );
+        await uPIQRStatus();
 
-        upiQRModel = null;
+        if (isPaymentDone) {
+          stopAllTimers();
+
+          if (Navigator.of(context).canPop()) {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+          }
+
+          Get.find<WalletController>().fetchWalletTransaction();
+
+          showToast(
+            message: "Payment Successful 🎉",
+            typeCheck: true,
+          );
+
+          upiQRModel = null;
+        }
       }
     });
   }
