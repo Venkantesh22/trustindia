@@ -41,12 +41,11 @@ class DynamicQRController extends GetxController implements GetxService {
     return responseModel;
   }
 
+  bool isDynamicQRPaymentDone = false;
   Future<ResponseModel> checkPaymentStatus() async {
     log('----------- checkPaymentStatus Called ----------');
 
     ResponseModel responseModel;
-    // isLoading = true;
-    // update();
 
     try {
       Map<String, dynamic> data = {
@@ -57,10 +56,13 @@ class DynamicQRController extends GetxController implements GetxService {
           await dynamicQrRepo.checkPaymentStatus(data: FormData(data));
 
       if (response.statusCode == 200 && response.body['status'] == true) {
+        isDynamicQRPaymentDone =
+            response.body['payment_status'] == "paid" ? true : false;
+
         responseModel = ResponseModel(
             true, response.body['message'] ?? " checkPaymentStatus success");
       } else {
-       responseModel = ResponseModel(false,
+        responseModel = ResponseModel(false,
             response.body['error'] ?? "Error while checkPaymentStatus user");
       }
     } catch (e) {

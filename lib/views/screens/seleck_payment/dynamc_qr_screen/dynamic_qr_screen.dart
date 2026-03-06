@@ -37,16 +37,19 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
               Timer.periodic(const Duration(milliseconds: 2000), (_) async {
             await _controller.checkPaymentStatus().then((val) {
               if (val.isSuccess) {
-                _statusTimer?.cancel();
-                showToast(
-                    message:
-                        "Congratulations! Your order has been placed successfully",
-                    typeCheck: value.isSuccess);
+                if (_controller.isDynamicQRPaymentDone) {
+                  _statusTimer?.cancel();
+                  showToast(
+                      message:
+                          "Congratulations! Your order has been placed successfully",
+                      typeCheck: value.isSuccess);
 
-                navigate(context: context, page: const OrderConfirmedScreen());
+                  navigate(
+                      context: context, page: const OrderConfirmedScreen());
+                }
+
                 if (!mounted) return;
               }
-              
             });
           });
         } else {
