@@ -334,12 +334,12 @@ class FundRequestController extends GetxController implements GetxService {
         if (isPaymentDone) {
           stopAllTimers();
 
+          await Get.find<WalletController>().fetchWalletTransaction();
+
           if (Navigator.of(context).canPop()) {
             Navigator.of(context).pop();
             Navigator.of(context).pop();
           }
-
-          Get.find<WalletController>().fetchWalletTransaction();
 
           showToast(
             message: "Payment Successful 🎉",
