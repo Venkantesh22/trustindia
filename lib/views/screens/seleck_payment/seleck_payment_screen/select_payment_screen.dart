@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/order_controlller.dart';
@@ -28,11 +30,14 @@ class _SelectPaymentScreenState extends State<SelectPaymentScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Get.find<WalletController>().fetchWallet();
+      log("Check 1= isMemberShipPayment = ${widget.isMemberShipPayment}");
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final upiOptionList =
+        getUpiOptionList(isMemberShipPayment: widget.isMemberShipPayment);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: white,
@@ -145,6 +150,9 @@ class _SelectPaymentScreenState extends State<SelectPaymentScreen> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
+                              final upiOptionList = getUpiOptionList(
+                                  isMemberShipPayment:
+                                      widget.isMemberShipPayment);
                               final upi = upiOptionList[index];
                               return RowOfUPIOption(
                                 image: upi.image,

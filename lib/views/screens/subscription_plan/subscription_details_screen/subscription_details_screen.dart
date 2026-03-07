@@ -88,7 +88,7 @@ class _SubscriptionDetailsScreenState extends State<SubscriptionDetailsScreen> {
                                 decorationColor: grey,
                                 decorationThickness: 2,
                               ))
-                      : SizedBox(),
+                      : const SizedBox(),
                   Text(
                     subscriptionController.selectSubscription?.discountPrice !=
                                 null &&

@@ -10,7 +10,11 @@ import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QRPaymentScreen extends StatefulWidget {
-  const QRPaymentScreen({super.key});
+  final bool isMemberShipPayment;
+  const QRPaymentScreen({
+    super.key,
+    this.isMemberShipPayment = false,
+  });
 
   @override
   State<QRPaymentScreen> createState() => _QRPaymentScreenState();
@@ -29,33 +33,36 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _controller.dynamicQR().then((value) {
-        if (value.isSuccess) {
-          _startCountdown();
+      if (widget.isMemberShipPayment) {
+      } else {
+        _controller.dynamicQR().then((value) {
+          if (value.isSuccess) {
+            _startCountdown();
 
-          _statusTimer =
-              Timer.periodic(const Duration(milliseconds: 2000), (_) async {
-            await _controller.checkPaymentStatus().then((val) {
-              if (val.isSuccess) {
-                if (_controller.isDynamicQRPaymentDone) {
-                  _statusTimer?.cancel();
-                  showToast(
-                      message:
-                          "Congratulations! Your order has been placed successfully",
-                      typeCheck: value.isSuccess);
+            _statusTimer =
+                Timer.periodic(const Duration(milliseconds: 2000), (_) async {
+              await _controller.checkPaymentStatus().then((val) {
+                if (val.isSuccess) {
+                  if (_controller.isDynamicQRPaymentDone) {
+                    _statusTimer?.cancel();
+                    showToast(
+                        message:
+                            "Congratulations! Your order has been placed successfully",
+                        typeCheck: value.isSuccess);
 
-                  navigate(
-                      context: context, page: const OrderConfirmedScreen());
+                    navigate(
+                        context: context, page: const OrderConfirmedScreen());
+                  }
+
+                  if (!mounted) return;
                 }
-
-                if (!mounted) return;
-              }
+              });
             });
-          });
-        } else {
-          showToast(message: value.message, typeCheck: value.isSuccess);
-        }
-      });
+          } else {
+            showToast(message: value.message, typeCheck: value.isSuccess);
+          }
+        });
+      }
     });
   }
 

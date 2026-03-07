@@ -33,11 +33,11 @@ class OrderRepo {
         "checkOrderIUPIntentStatus",
       );
 
-  Future<Response> checkOrderIUPIntent(
+  Future<Response> checkoutOrderIUPIntent(
           {required int? orderId, required FormData data}) async =>
       await apiClient.postData(
-        "${AppConstants.postCheckUPiIntent}/$orderId",
-        "checkOrderIUPIntent",
+        "${AppConstants.postCheckoutUPiIntent}/$orderId",
+        "checkoutOrderIUPIntent",
         data,
       );
 }

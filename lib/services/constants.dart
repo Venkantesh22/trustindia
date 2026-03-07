@@ -191,7 +191,8 @@ class AppConstants {
   static const String postPayOrderWalled = "api/pay-order";
   static const String getOrder = "api/orders";
   static const String postPaymentStatus = "api/order/payment-status";
-  static const String postCheckUPiIntent = "api/tpipay/paymentOrder/upiintent";
+  static const String postCheckoutUPiIntent =
+      "api/tpipay/paymentOrder/upiintent";
   static const String getCheckUPiIntentStatus = "api/payment-status";
 
   //Dynamic QR

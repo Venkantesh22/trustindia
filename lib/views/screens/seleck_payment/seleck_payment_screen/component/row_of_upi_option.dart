@@ -2,10 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lekra/controllers/dashboard_controller.dart';
 import 'package:lekra/controllers/fund_request_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
+import 'package:lekra/controllers/subscription_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/custom_image.dart';
+import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/fund_requent_qr/dynamic_qr_sheet.dart';
 import 'package:lekra/views/screens/seleck_payment/dynamc_qr_screen/dynamic_qr_screen.dart';
 
@@ -70,31 +73,60 @@ class UpiOptionModel {
   UpiOptionModel({this.image, required this.title, required this.onTap});
 }
 
-List<UpiOptionModel> upiOptionList = [
-  UpiOptionModel(
-    title: "Dynamic QR",
-    onTap: (context) {
-      navigate(context: context, page: const QRPaymentScreen());
-    },
-  ),
-  UpiOptionModel(
+List<UpiOptionModel> getUpiOptionList({bool isMemberShipPayment = false}) {
+  return [
+    UpiOptionModel(
+      title: "Dynamic QR",
+      onTap: (context) {
+        navigate(
+            context: context,
+            page: QRPaymentScreen(
+              isMemberShipPayment: isMemberShipPayment,
+            ));
+      },
+    ),
+    UpiOptionModel(
       image: Assets.imagesUpi,
       title: "Pay with Other UPI Apps",
       onTap: (context) async {
-        final orderController = Get.find<OrderController>();
-        orderController
-            .checkOrderIUPIntent(orderId: orderController.orderId)
-            .then((value) {
+        if (isMemberShipPayment) {
+          //* Payment for subscription
+
+          final subscriptionController = Get.find<SubscriptionController>();
+
+          final value = await subscriptionController.subscriptionCheckout(
+            id: subscriptionController.selectSubscription?.id,
+          );
+
           if (value.isSuccess) {
-            DynamicQrSheet.show(
-              context,
-            );
+            showToast(message: value.message, typeCheck: true);
+
+            Get.find<DashBoardController>().dashPage = 3;
+
+            navigate(context: context, page: const DashboardScreen());
+          } else {
+            showToast(message: value.message, typeCheck: false);
+          }
+
+          return;
+        } else {
+          //* Payment for Product
+          final orderController = Get.find<OrderController>();
+
+          final value = await orderController.checkoutOrderIUPIntent(
+            orderId: orderController.orderId,
+          );
+
+          if (value.isSuccess) {
+            DynamicQrSheet.show(context);
 
             Get.find<FundRequestController>()
                 .startPaymentFlow(context: context, isCheckPayment: true);
           } else {
-            showToast(message: value.message, typeCheck: value.isSuccess);
+            showToast(message: value.message, typeCheck: false);
           }
-        });
-      }),
-];
+        }
+      },
+    ),
+  ];
+}

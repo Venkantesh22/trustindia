@@ -191,10 +191,10 @@ class OrderController extends GetxController implements GetxService {
 
   UpiQrModel? upiQrModel;
 
-  Future<ResponseModel> checkOrderIUPIntent({
+  Future<ResponseModel> checkoutOrderIUPIntent({
     required int? orderId,
   }) async {
-    log('----------- checkOrderIUPIntent Called ----------');
+    log('----------- checkoutOrderIUPIntent Called ----------');
 
     ResponseModel responseModel;
     isLoading = true;
@@ -203,7 +203,7 @@ class OrderController extends GetxController implements GetxService {
     Map<String, dynamic> data = {};
 
     try {
-      Response response = await orderRepo.checkOrderIUPIntent(
+      Response response = await orderRepo.checkoutOrderIUPIntent(
           orderId: orderId, data: FormData(data));
 
       if (response.statusCode == 200 && response.body['status'] == "success") {
@@ -211,16 +211,18 @@ class OrderController extends GetxController implements GetxService {
 
         Get.find<FundRequestController>().updateUpiQRModel(value: upiQrModel);
 
-        responseModel = ResponseModel(
-            true, response.body['message'] ?? " checkOrderIUPIntent success");
+        responseModel = ResponseModel(true,
+            response.body['message'] ?? " checkoutOrderIUPIntent success");
       } else {
-        responseModel = ResponseModel(false,
-            response.body['error'] ?? "Error while checkOrderIUPIntent user");
+        responseModel = ResponseModel(
+            false,
+            response.body['error'] ??
+                "Error while checkoutOrderIUPIntent user");
       }
     } catch (e) {
       log('ERROR AT checkOrderIUPIntent(): $e');
       responseModel =
-          ResponseModel(false, "Error while checkOrderIUPIntent user $e");
+          ResponseModel(false, "Error while checkoutOrderIUPIntent user $e");
     }
 
     isLoading = false;

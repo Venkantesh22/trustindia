@@ -101,6 +101,7 @@ class SubscriptionController extends GetxController implements GetxService {
   }
 
   SubscriptionModel? selectSubscription;
+
   Future<ResponseModel> fetchSubscriptionPlanDetails({required int? id}) async {
     log('-----------  fetchSubscriptionPlanDetails() -------------');
     ResponseModel responseModel;
