@@ -50,7 +50,7 @@ class ExploreCategorySection extends StatelessWidget {
                       InkWell(
                         borderRadius: BorderRadius.circular(50),
                         onTap: () {
-                          navigate(context: context, page: PayHomeScreen());
+                          // navigate(context: context, page: PayHomeScreen());
                         },
                         child: const CircleAvatar(
                             radius: 32,
