@@ -42,7 +42,29 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
                 subscriptionID: subscriptionID)
             .then((value) {
           if (value.isSuccess) {
-            showToast(message: value.message, typeCheck: value.isSuccess);
+            _startCountdown();
+
+            _statusTimer =
+                Timer.periodic(const Duration(milliseconds: 2000), (_) async {
+              await _controller
+                  .checkDynamicQRSubscriptionPaymentStatus()
+                  .then((val) {
+                if (val.isSuccess) {
+                  if (_controller.isDynamicQRPaymentDone) {
+                    _statusTimer?.cancel();
+                    showToast(
+                        message:
+                            "Congratulations! Your Subscription has been active successfully",
+                        typeCheck: value.isSuccess);
+
+                    navigate(
+                        context: context, page: const OrderConfirmedScreen());
+                  }
+
+                  if (!mounted) return;
+                }
+              });
+            });
           } else {
             showToast(message: value.message, typeCheck: value.isSuccess);
           }

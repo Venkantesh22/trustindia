@@ -202,9 +202,11 @@ class AppConstants {
 
   //Dynamic QR
   static const String postDynamicQR = "api/tpipay/paymentOrder";
-  static const String postCallBack = "api/tpipay/callback";
+  static const String postCallBackDynamicQR = "api/tpipay/callback";
   static const String postDynamicQRSubscriptionPayment =
       "api/membership/payment";
+  static const String getDynamicQRSubscriptionPaymentStatus =
+      "api/membership/payment/status/qr";
 
   //Product screen
   static const String getCategoryDetails = "api/category-details";

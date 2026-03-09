@@ -26,4 +26,10 @@ class DynamicQrRepo {
         "checkoutDynamicQRSubscriptionPayment",
         data,
       );
+
+  Future<Response> checkDynamicQRSubscriptionPaymentStatus(
+          {required int? orderID}) async =>
+      await apiClient.getData(
+          "${AppConstants.getDynamicQRSubscriptionPaymentStatus}/$orderID",
+          "checkDynamicQRSubscriptionPaymentStatus");
 }

@@ -71,8 +71,8 @@ class DynamicQRController extends GetxController implements GetxService {
           ResponseModel(false, "Error while checkPaymentStatus user $e");
     }
 
-    // isLoading = false;
-    // update();
+    isLoading = false;
+    update();
     return responseModel;
   }
 
@@ -113,6 +113,41 @@ class DynamicQRController extends GetxController implements GetxService {
 
     isLoading = false;
     update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> checkDynamicQRSubscriptionPaymentStatus() async {
+    log('----------- checkDynamicQRSubscriptionPaymentStatus Called ----------');
+
+    ResponseModel responseModel;
+
+    try {
+      Response response =
+          await dynamicQrRepo.checkDynamicQRSubscriptionPaymentStatus(
+              orderID: dynamicModel?.orderId);
+
+      if (response.statusCode == 200 && response.body['status'] == true) {
+        isDynamicQRPaymentDone =
+            response.body['transaction_status'] == "success" ? true : false;
+
+        responseModel = ResponseModel(
+            true,
+            response.body['message'] ??
+                " checkDynamicQRSubscriptionPaymentStatus success");
+      } else {
+        responseModel = ResponseModel(
+            false,
+            response.body['error'] ??
+                "Error while checkDynamicQRSubscriptionPaymentStatus user");
+      }
+    } catch (e) {
+      log('ERROR AT checkPaymentStatus(): $e');
+      responseModel = ResponseModel(
+          false, "Error while checkDynamicQRSubscriptionPaymentStatus user $e");
+    }
+
+    // isLoading = false;
+    // update();
     return responseModel;
   }
 }
