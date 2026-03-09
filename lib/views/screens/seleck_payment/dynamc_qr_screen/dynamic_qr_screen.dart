@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:lekra/controllers/dynamic_qr_controller.dart';
+import 'package:lekra/controllers/subscription_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/order_confirmed/order_confirmed_screen.dart';
@@ -32,8 +33,20 @@ class _QRPaymentScreenState extends State<QRPaymentScreen> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (widget.isMemberShipPayment) {
+        final subscriptionID =
+            Get.find<SubscriptionController>().selectSubscription?.id;
+        await _controller
+            .checkoutDynamicQRSubscriptionPayment(
+                subscriptionID: subscriptionID)
+            .then((value) {
+          if (value.isSuccess) {
+            showToast(message: value.message, typeCheck: value.isSuccess);
+          } else {
+            showToast(message: value.message, typeCheck: value.isSuccess);
+          }
+        });
       } else {
         _controller.dynamicQR().then((value) {
           if (value.isSuccess) {

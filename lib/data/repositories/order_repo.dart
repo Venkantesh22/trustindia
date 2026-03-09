@@ -55,12 +55,4 @@ class OrderRepo {
         "${AppConstants.getCheckUPiIntentForSubscriptionPaymentStatus}/$merchantOrderId",
         "checkOrderIUPIntentStatusForProductSubscription",
       );
-
-  Future<Response> checkoutDynamicQRSubscriptionPayment(
-          {required int? orderId, required FormData data}) async =>
-      await apiClient.postData(
-        "${AppConstants.postDynamicQRSubscriptionPayment}/$orderId",
-        "checkoutDynamicQRSubscriptionPayment",
-        data,
-      );
 }

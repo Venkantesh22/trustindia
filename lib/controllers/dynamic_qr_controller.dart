@@ -75,4 +75,44 @@ class DynamicQRController extends GetxController implements GetxService {
     // update();
     return responseModel;
   }
+
+  Future<ResponseModel> checkoutDynamicQRSubscriptionPayment({
+    required int? subscriptionID,
+  }) async {
+    log('----------- checkoutDynamicQRSubscriptionPayment Called ----------');
+
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+
+    Map<String, dynamic> data = {};
+
+    try {
+      Response response =
+          await dynamicQrRepo.checkoutDynamicQRSubscriptionPayment(
+              subscriptionID: subscriptionID, data: FormData(data));
+
+      if (response.statusCode == 200 && response.body['status'] == true) {
+        dynamicModel = DynamicModel.fromJson(response.body['data']);
+
+        responseModel = ResponseModel(
+            true,
+            response.body['message'] ??
+                " checkoutDynamicQRSubscriptionPayment success");
+      } else {
+        responseModel = ResponseModel(
+            false,
+            response.body['error'] ??
+                "Error while checkoutDynamicQRSubscriptionPayment user");
+      }
+    } catch (e) {
+      log('ERROR AT checkoutDynamicQRSubscriptionPayment(): $e');
+      responseModel = ResponseModel(
+          false, "Error while checkoutDynamicQRSubscriptionPayment user $e");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
 }
