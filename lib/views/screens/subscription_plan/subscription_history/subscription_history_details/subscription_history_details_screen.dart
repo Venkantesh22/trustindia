@@ -38,14 +38,14 @@ class _SubscriptionHistoryDetailsScreenState
               color: black,
             )),
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         padding: AppConstants.screenPadding,
         child: Column(
           children: [
-            const SubscriptionDetailsTopSection(),
-            const SizedBox(height: 33),
+            SubscriptionDetailsTopSection(),
+            SizedBox(height: 33),
             SubscriptionDetailsMedianSection(),
-            const SizedBox(height: 33),
+            SizedBox(height: 33),
             SubscriptionDetailsBottonSection(),
           ],
         ),

@@ -205,4 +205,12 @@ class SubscriptionController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
+
+  SubscriptionHistoryModel? selectSubscriptionHistoryModel;
+
+  void updateSubscriptionHistoryModel(
+      {required SubscriptionHistoryModel value}) {
+    selectSubscriptionHistoryModel = value;
+    update();
+  }
 }

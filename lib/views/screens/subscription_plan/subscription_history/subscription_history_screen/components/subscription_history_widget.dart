@@ -34,7 +34,9 @@ class SubscriptionHistoryWidget extends StatelessWidget {
                     ),
               ),
               Text(
-                subscriptionHistoryModel.discountPriceFormat,
+                subscriptionHistoryModel.discountPrice == "0"
+                    ? subscriptionHistoryModel.priceFormat
+                    : subscriptionHistoryModel.discountPriceFormat,
                 style: Helper(context).textTheme.bodyLarge?.copyWith(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,

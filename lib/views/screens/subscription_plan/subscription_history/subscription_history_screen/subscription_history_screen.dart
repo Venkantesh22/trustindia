@@ -29,7 +29,7 @@ class _SubscriptionHistoryScreenState extends State<SubscriptionHistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar2(
-        title: "Subscription Hisory",
+        title: "Subscription History",
       ),
       body:
           GetBuilder<SubscriptionController>(builder: (subscriptionController) {
