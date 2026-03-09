@@ -57,15 +57,17 @@ class ExploreCategorySection extends StatelessWidget {
                             backgroundColor: white,
                             child: CustomImage(
                               path: Assets.imagesOnlyLogo,
-                              width: 40,
-                              height: 40,
-                              fit: BoxFit.cover,
+                              width: 56,
+                              height: 56,
+                              fit: BoxFit.contain,
                             )),
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        // AppConstants.payAppName,
-                        "Coming soon",
+                        "${AppConstants.payAppName}\nComing soon",
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.clip,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                           fontSize: 12,
