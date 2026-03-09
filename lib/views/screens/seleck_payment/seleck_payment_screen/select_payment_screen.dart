@@ -30,14 +30,24 @@ class _SelectPaymentScreenState extends State<SelectPaymentScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Get.find<WalletController>().fetchWallet();
-      log("Check 1= isMemberShipPayment = ${widget.isMemberShipPayment}");
+      // log("Check 1= isMemberShipPayment = ${widget.isMemberShipPayment}");
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final upiOptionList =
-        getUpiOptionList(isMemberShipPayment: widget.isMemberShipPayment);
+    final amount = double.tryParse(
+            widget.totalAmount.replaceAll(RegExp(r'[^0-9.]'), '')) ??
+        0;
+    final isOrderValueLessThan10 = amount < 10;
+
+    // log("totalAmount == ${widget.totalAmount}");
+    // log("isOrderValueLessThan10 == $isOrderValueLessThan10");
+
+    final upiOptionList = getUpiOptionList(
+      isSubscriptionPayment: widget.isMemberShipPayment,
+      isOrderValueLessThen10: isOrderValueLessThan10,
+    );
     return Scaffold(
       appBar: AppBar(
         backgroundColor: white,
@@ -147,20 +157,19 @@ class _SelectPaymentScreenState extends State<SelectPaymentScreen> {
                           height: 12,
                         ),
                         ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              final upiOptionList = getUpiOptionList(
-                                  isMemberShipPayment:
-                                      widget.isMemberShipPayment);
-                              final upi = upiOptionList[index];
-                              return RowOfUPIOption(
-                                image: upi.image,
-                                title: upi.title,
-                                onTap: upi.onTap,
-                              );
-                            },
-                            itemCount: upiOptionList.length)
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: upiOptionList.length,
+                          itemBuilder: (context, index) {
+                            final upi = upiOptionList[index];
+
+                            return RowOfUPIOption(
+                              image: upi.image,
+                              title: upi.title,
+                              onTap: upi.onTap,
+                            );
+                          },
+                        )
                       ],
                     ),
                   ),

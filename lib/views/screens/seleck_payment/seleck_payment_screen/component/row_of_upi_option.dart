@@ -1,14 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lekra/controllers/dashboard_controller.dart';
 import 'package:lekra/controllers/fund_request_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/controllers/subscription_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/custom_image.dart';
-import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/fund_requent_qr/dynamic_qr_sheet.dart';
 import 'package:lekra/views/screens/seleck_payment/dynamc_qr_screen/dynamic_qr_screen.dart';
 
@@ -73,7 +72,10 @@ class UpiOptionModel {
   UpiOptionModel({this.image, required this.title, required this.onTap});
 }
 
-List<UpiOptionModel> getUpiOptionList({bool isMemberShipPayment = false}) {
+List<UpiOptionModel> getUpiOptionList({
+  bool isSubscriptionPayment = false,
+  bool isOrderValueLessThen10 = false,
+}) {
   return [
     UpiOptionModel(
       title: "Dynamic QR",
@@ -81,7 +83,7 @@ List<UpiOptionModel> getUpiOptionList({bool isMemberShipPayment = false}) {
         navigate(
             context: context,
             page: QRPaymentScreen(
-              isMemberShipPayment: isMemberShipPayment,
+              isMemberShipPayment: isSubscriptionPayment,
             ));
       },
     ),
@@ -89,31 +91,45 @@ List<UpiOptionModel> getUpiOptionList({bool isMemberShipPayment = false}) {
       image: Assets.imagesUpi,
       title: "Pay with Other UPI Apps",
       onTap: (context) async {
-        if (isMemberShipPayment) {
+        // log(" check 2 isOrderValueLessThan10 == $isOrderValueLessThen10");
+
+        if (isOrderValueLessThen10 == true) {
+          log("Order amount less than ₹10");
+
+          showToast(
+            message: "Order value must be ₹10 or more.",
+            toastType: ToastType.error,
+          );
+
+          return; // stop execution
+        }
+
+        final orderController = Get.find<OrderController>();
+        if (isSubscriptionPayment) {
           //* Payment for subscription
 
           final subscriptionController = Get.find<SubscriptionController>();
+          log("check ---- isSubscriptionPayment : $isSubscriptionPayment , selectSubscription : ${subscriptionController.selectSubscription?.id} ");
 
-          final value = await subscriptionController.subscriptionCheckout(
-            id: subscriptionController.selectSubscription?.id,
+          final value =
+              await orderController.checkoutOrderIUPIntentSubscriptionPayment(
+            subscriptionId: subscriptionController.selectSubscription?.id,
           );
-
           if (value.isSuccess) {
-            showToast(message: value.message, typeCheck: true);
+            DynamicQrSheet.show(context);
 
-            Get.find<DashBoardController>().dashPage = 3;
-
-            navigate(context: context, page: const DashboardScreen());
+            Get.find<FundRequestController>().startPaymentFlow(
+                context: context,
+                isCheckoutPaymentForSubscription: isSubscriptionPayment);
           } else {
             showToast(message: value.message, typeCheck: false);
           }
-
           return;
         } else {
           //* Payment for Product
-          final orderController = Get.find<OrderController>();
 
-          final value = await orderController.checkoutOrderIUPIntent(
+          final value =
+              await orderController.checkoutOrderIUPIntentProductPayment(
             orderId: orderController.orderId,
           );
 

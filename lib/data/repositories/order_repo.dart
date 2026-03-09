@@ -26,18 +26,41 @@ class OrderRepo {
         "fetchOrder",
       );
 
-  Future<Response> checkOrderIUPIntentStatus(
+  Future<Response> checkOrderIUPIntentStatusForProductPayment(
           {required String? merchantOrderId}) async =>
       await apiClient.getData(
-        "${AppConstants.getCheckUPiIntentStatus}/$merchantOrderId",
-        "checkOrderIUPIntentStatus",
+        "${AppConstants.getCheckUPiIntentStatusForProductPayment}/$merchantOrderId",
+        "checkOrderIUPIntentStatusForProductPayment",
       );
 
-  Future<Response> checkoutOrderIUPIntent(
+  Future<Response> checkoutOrderIUPIntentProductPayment(
           {required int? orderId, required FormData data}) async =>
       await apiClient.postData(
-        "${AppConstants.postCheckoutUPiIntent}/$orderId",
-        "checkoutOrderIUPIntent",
+        "${AppConstants.postCheckoutUPiIntentForProductPayment}/$orderId",
+        "checkoutOrderIUPIntentProductPayment",
+        data,
+      );
+
+  Future<Response> checkoutOrderIUPIntentSubscriptionPayment(
+          {required int? subscriptionId, required FormData data}) async =>
+      await apiClient.postData(
+        "${AppConstants.postCheckUPiIntentForSubscriptionPayment}/$subscriptionId",
+        "checkoutOrderIUPIntentSubscriptionPayment",
+        data,
+      );
+
+  Future<Response> checkOrderIUPIntentStatusForProductSubscription(
+          {required String? merchantOrderId}) async =>
+      await apiClient.getData(
+        "${AppConstants.getCheckUPiIntentForSubscriptionPaymentStatus}/$merchantOrderId",
+        "checkOrderIUPIntentStatusForProductSubscription",
+      );
+
+  Future<Response> checkoutDynamicQRSubscriptionPayment(
+          {required int? orderId, required FormData data}) async =>
+      await apiClient.postData(
+        "${AppConstants.postDynamicQRSubscriptionPayment}/$orderId",
+        "checkoutDynamicQRSubscriptionPayment",
         data,
       );
 }

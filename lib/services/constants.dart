@@ -191,13 +191,20 @@ class AppConstants {
   static const String postPayOrderWalled = "api/pay-order";
   static const String getOrder = "api/orders";
   static const String postPaymentStatus = "api/order/payment-status";
-  static const String postCheckoutUPiIntent =
+  static const String postCheckoutUPiIntentForProductPayment =
       "api/tpipay/paymentOrder/upiintent";
-  static const String getCheckUPiIntentStatus = "api/payment-status";
+  static const String getCheckUPiIntentStatusForProductPayment =
+      "api/payment-status";
+  static const String postCheckUPiIntentForSubscriptionPayment =
+      "api/membership/upi-intent";
+  static const String getCheckUPiIntentForSubscriptionPaymentStatus =
+      "api/membership/payment/status";
 
   //Dynamic QR
   static const String postDynamicQR = "api/tpipay/paymentOrder";
   static const String postCallBack = "api/tpipay/callback";
+  static const String postDynamicQRSubscriptionPayment =
+      "api/membership/payment";
 
   //Product screen
   static const String getCategoryDetails = "api/category-details";

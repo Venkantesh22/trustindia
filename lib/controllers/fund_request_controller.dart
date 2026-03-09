@@ -13,6 +13,7 @@ import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/user_model.dart';
 import 'package:lekra/data/repositories/fund_request_repo.dart';
 import 'package:lekra/services/constants.dart';
+import 'package:lekra/views/screens/dashboard/referral/referral_screen/referral_screen.dart';
 import 'package:lekra/views/screens/order_confirmed/order_confirmed_screen.dart';
 
 class FundRequestController extends GetxController implements GetxService {
@@ -273,15 +274,22 @@ class FundRequestController extends GetxController implements GetxService {
   int totalSeconds = 5 * 60;
   int remainingSeconds = 0;
 
-  void startPaymentFlow(
-      {required BuildContext context, bool isCheckPayment = false}) {
+  void startPaymentFlow({
+    required BuildContext context,
+    bool isCheckPayment = false,
+    bool isCheckoutPaymentForSubscription = false,
+  }) {
     remainingSeconds = totalSeconds;
     isPaymentDone = false;
 
     update();
 
+    log("check 2 -- isCheckoutPaymentForSubscription = $isCheckoutPaymentForSubscription ");
     _startCountdown(context);
-    _startPolling(context: context, isCheckPayment: isCheckPayment);
+    _startPolling(
+        context: context,
+        isCheckoutPaymentForProduct: isCheckPayment,
+        isCheckoutPaymentForSubscription: isCheckoutPaymentForSubscription);
   }
 
   void _startCountdown(BuildContext context) {
@@ -303,17 +311,21 @@ class FundRequestController extends GetxController implements GetxService {
 
   void _startPolling({
     required BuildContext context,
-    bool isCheckPayment = false,
+    bool isCheckoutPaymentForProduct = false,
+    bool isCheckoutPaymentForSubscription = false,
   }) {
     _statusTimer?.cancel();
-
+    log("check 3 -- isCheckoutPaymentForSubscription = $isCheckoutPaymentForSubscription ");
     _statusTimer = Timer.periodic(const Duration(seconds: 2), (_) async {
-      if (upiQRModel?.orderId == null) return;
+      log("check 4 -- isCheckoutPaymentForSubscription = $isCheckoutPaymentForSubscription ");
 
-      if (isCheckPayment) {
+      if (isCheckoutPaymentForProduct) {
+        if (upiQRModel?.orderId == null) return;
+
         //* this For Order checkout payment
-        await Get.find<OrderController>().checkOrderIUPIntentStatus(
-            merchantOrderId: upiQRModel?.merchantOrderId);
+        await Get.find<OrderController>()
+            .checkoutOrderIUPIntentStatusForProductPayment(
+                merchantOrderId: upiQRModel?.merchantOrderId);
 
         if (isPaymentDone) {
           stopAllTimers();
@@ -326,7 +338,28 @@ class FundRequestController extends GetxController implements GetxService {
 
           upiQRModel = null;
         }
+      } else if (isCheckoutPaymentForSubscription) {
+        //* this For Order checkout Membership
+        log("check 3 -- isCheckoutPaymentForSubscription = $isCheckoutPaymentForSubscription ");
+
+        await Get.find<OrderController>()
+            .checkOrderIUPIntentStatusForProductSubscription(
+                merchantOrderId: upiQRModel?.merchantOrderId);
+
+        if (isPaymentDone) {
+          stopAllTimers();
+
+          navigate(context: context, page: const ReferralScreen());
+          showToast(
+              message:
+                  "Congratulations! Your Subscription has been active successfully",
+              typeCheck: true);
+
+          upiQRModel = null;
+        }
       } else {
+        if (upiQRModel?.orderId == null) return;
+
         //* this For wallet recharge
 
         await uPIQRStatus();

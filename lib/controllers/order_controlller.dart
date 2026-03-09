@@ -191,10 +191,10 @@ class OrderController extends GetxController implements GetxService {
 
   UpiQrModel? upiQrModel;
 
-  Future<ResponseModel> checkoutOrderIUPIntent({
+  Future<ResponseModel> checkoutOrderIUPIntentProductPayment({
     required int? orderId,
   }) async {
-    log('----------- checkoutOrderIUPIntent Called ----------');
+    log('----------- checkoutOrderIUPIntentProductPayment Called ----------');
 
     ResponseModel responseModel;
     isLoading = true;
@@ -203,7 +203,7 @@ class OrderController extends GetxController implements GetxService {
     Map<String, dynamic> data = {};
 
     try {
-      Response response = await orderRepo.checkoutOrderIUPIntent(
+      Response response = await orderRepo.checkoutOrderIUPIntentProductPayment(
           orderId: orderId, data: FormData(data));
 
       if (response.statusCode == 200 && response.body['status'] == "success") {
@@ -211,18 +211,20 @@ class OrderController extends GetxController implements GetxService {
 
         Get.find<FundRequestController>().updateUpiQRModel(value: upiQrModel);
 
-        responseModel = ResponseModel(true,
-            response.body['message'] ?? " checkoutOrderIUPIntent success");
+        responseModel = ResponseModel(
+            true,
+            response.body['message'] ??
+                " checkoutOrderIUPIntentProductPayment success");
       } else {
         responseModel = ResponseModel(
             false,
             response.body['error'] ??
-                "Error while checkoutOrderIUPIntent user");
+                "Error while checkoutOrderIUPIntentProductPayment user");
       }
     } catch (e) {
-      log('ERROR AT checkOrderIUPIntent(): $e');
-      responseModel =
-          ResponseModel(false, "Error while checkoutOrderIUPIntent user $e");
+      log('ERROR AT checkoutOrderIUPIntentProductPayment(): $e');
+      responseModel = ResponseModel(
+          false, "Error while checkoutOrderIUPIntentProductPayment user $e");
     }
 
     isLoading = false;
@@ -230,42 +232,134 @@ class OrderController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  bool isUpiIntentPaymentDone = false;
-  Future<ResponseModel> checkOrderIUPIntentStatus({
+  bool isUpiIntentProductPaymentDone = false;
+  Future<ResponseModel> checkoutOrderIUPIntentStatusForProductPayment({
     required String? merchantOrderId,
   }) async {
-    log('----------- checkOrderIUPIntentStatus Called ----------');
+    log('----------- checkoutOrderIUPIntentStatusForProductPayment Called ----------');
 
     ResponseModel responseModel;
     isLoading = true;
     update();
 
     try {
-      Response response = await orderRepo.checkOrderIUPIntentStatus(
+      Response response =
+          await orderRepo.checkOrderIUPIntentStatusForProductPayment(
         merchantOrderId: merchantOrderId,
       );
 
       if (response.statusCode == 200 && response.body['status'] == "success") {
-        isUpiIntentPaymentDone =
+        isUpiIntentProductPaymentDone =
             response.body["data"]['payment_status'] == "paid" ? true : false;
 
         // log("isUpiIntentPaymentDone == $isUpiIntentPaymentDone");
 
-        if (isUpiIntentPaymentDone) {
+        if (isUpiIntentProductPaymentDone) {
           Get.find<FundRequestController>()
-              .updateIsPaymentDone(value: isUpiIntentPaymentDone);
+              .updateIsPaymentDone(value: isUpiIntentProductPaymentDone);
         }
 
         responseModel = ResponseModel(
-            true, response.body['message'] ?? " checkOrderIUPIntent success");
+            true,
+            response.body['message'] ??
+                " checkoutOrderIUPIntentStatusForProductPayment success");
       } else {
-        responseModel = ResponseModel(false,
-            response.body['error'] ?? "Error while checkOrderIUPIntent user");
+        responseModel = ResponseModel(
+            false,
+            response.body['error'] ??
+                "Error while checkoutOrderIUPIntentStatusForProductPayment user");
       }
     } catch (e) {
       log('ERROR AT checkOrderIUPIntent(): $e');
-      responseModel =
-          ResponseModel(false, "Error while checkOrderIUPIntent user $e");
+      responseModel = ResponseModel(false,
+          "Error while checkoutOrderIUPIntentStatusForProductPayment user $e");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> checkoutOrderIUPIntentSubscriptionPayment({
+    required int? subscriptionId,
+  }) async {
+    log('----------- checkoutOrderIUPIntentSubscriptionPayment Called ----------');
+
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+
+    Map<String, dynamic> data = {};
+
+    try {
+      Response response =
+          await orderRepo.checkoutOrderIUPIntentSubscriptionPayment(
+              subscriptionId: subscriptionId, data: FormData(data));
+
+      if (response.statusCode == 200 && response.body['status'] == "success") {
+        upiQrModel = UpiQrModel.fromJson(response.body["data"]);
+
+        Get.find<FundRequestController>().updateUpiQRModel(value: upiQrModel);
+
+        responseModel = ResponseModel(
+            true,
+            response.body['message'] ??
+                " checkoutOrderIUPIntentSubscriptionPayment success");
+      } else {
+        responseModel = ResponseModel(
+            false,
+            response.body['error'] ??
+                "Error while checkoutOrderIUPIntentSubscriptionPayment user");
+      }
+    } catch (e) {
+      log('ERROR AT checkoutOrderIUPIntentSubscriptionPayment(): $e');
+      responseModel = ResponseModel(false,
+          "Error while checkoutOrderIUPIntentSubscriptionPayment user $e");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> checkOrderIUPIntentStatusForProductSubscription({
+    required String? merchantOrderId,
+  }) async {
+    log('----------- checkOrderIUPIntentStatusForProductSubscription Called ----------');
+
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+
+    try {
+      Response response =
+          await orderRepo.checkOrderIUPIntentStatusForProductSubscription(
+        merchantOrderId: merchantOrderId,
+      );
+
+      if (response.statusCode == 200 && response.body['status'] == "success") {
+        isUpiIntentProductPaymentDone =
+            response.body["data"]['payment_status'] == "paid" ? true : false;
+
+        if (isUpiIntentProductPaymentDone) {
+          Get.find<FundRequestController>()
+              .updateIsPaymentDone(value: isUpiIntentProductPaymentDone);
+        }
+
+        responseModel = ResponseModel(
+            true,
+            response.body['message'] ??
+                " checkOrderIUPIntentStatusForProductSubscription success");
+      } else {
+        responseModel = ResponseModel(
+            false,
+            response.body['error'] ??
+                "Error while checkOrderIUPIntentStatusForProductSubscription user");
+      }
+    } catch (e) {
+      log('ERROR AT checkOrderIUPIntentStatusForProductSubscription(): $e');
+      responseModel = ResponseModel(false,
+          "Error while checkOrderIUPIntentStatusForProductSubscription user $e");
     }
 
     isLoading = false;
