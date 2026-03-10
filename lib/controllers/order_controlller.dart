@@ -296,7 +296,7 @@ class OrderController extends GetxController implements GetxService {
           await orderRepo.checkoutOrderIUPIntentSubscriptionPayment(
               subscriptionId: subscriptionId, data: FormData(data));
 
-      if (response.statusCode == 200 && response.body['status'] == "success") {
+      if (response.statusCode == 200 && response.body['status'] == true) {
         upiQrModel = UpiQrModel.fromJson(response.body["data"]);
 
         Get.find<FundRequestController>().updateUpiQRModel(value: upiQrModel);
@@ -304,7 +304,7 @@ class OrderController extends GetxController implements GetxService {
         responseModel = ResponseModel(
             true,
             response.body['message'] ??
-                " checkoutOrderIUPIntentSubscriptionPayment success");
+                "checkoutOrderIUPIntentSubscriptionPayment success");
       } else {
         responseModel = ResponseModel(
             false,
@@ -337,7 +337,7 @@ class OrderController extends GetxController implements GetxService {
         merchantOrderId: merchantOrderId,
       );
 
-      if (response.statusCode == 200 && response.body['status'] == "success") {
+      if (response.statusCode == 200 && response.body['status'] == true) {
         isUpiIntentProductPaymentDone =
             response.body["data"]['payment_status'] == "paid" ? true : false;
 
