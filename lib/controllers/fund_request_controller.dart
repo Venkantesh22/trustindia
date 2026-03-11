@@ -205,6 +205,7 @@ class FundRequestController extends GetxController implements GetxService {
           orderId: response.body['order_id'],
           amount: response.body['amount'],
           qrString: response.body['qrString'],
+          gatewayOrderId: response.body['gateway_order_id'],
         );
 
         responseModel =
@@ -225,6 +226,7 @@ class FundRequestController extends GetxController implements GetxService {
 
   void updateUpiQRModel({required UpiQrModel? value}) {
     upiQRModel = value;
+    // log("check 1 -- ${upiQRModel?.gatewayOrderId}");
     update();
   }
 
@@ -243,15 +245,13 @@ class FundRequestController extends GetxController implements GetxService {
     update();
 
     try {
-      Map<String, dynamic> data = {
-        "order_id": upiQRModel?.orderId ?? "",
-      };
-      Response response =
-          await fundRequestRepo.uPIQRStatus(data: FormData(data));
+      Map<String, dynamic> data = {};
+      Response response = await fundRequestRepo.uPIQRStatus(
+          data: FormData(data), gatewayOrderId: upiQRModel?.gatewayOrderId);
 
-      if (response.statusCode == 200 && response.body['status'] == "success") {
+      if (response.statusCode == 200 && response.body['status'] == true) {
         isPaymentDone =
-            response.body['data']['status'] == "credit" ? true : false;
+            response.body['payment_status'] == "success" ? true : false;
         responseModel =
             ResponseModel(true, response.body['message'] ?? "uPIQRStatus");
       } else {
@@ -367,19 +367,29 @@ class FundRequestController extends GetxController implements GetxService {
         if (isPaymentDone) {
           stopAllTimers();
 
-          await Get.find<WalletController>().fetchWalletTransaction();
+          await Get.find<WalletController>()
+              .fetchWalletTransaction(refresh: true)
+              .then((value) {
+            if (value.isSuccess) {
+              Get.find<WalletController>().fetchWallet();
 
-          if (Navigator.of(context).canPop()) {
-            Navigator.of(context).pop();
-            Navigator.of(context).pop();
-          }
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              }
 
-          showToast(
-            message: "Payment Successful 🎉",
-            typeCheck: true,
-          );
-
-          upiQRModel = null;
+              showToast(
+                message: "Payment Successful 🎉",
+                typeCheck: true,
+              );
+              upiQRModel = null;
+            } else {
+              showToast(
+                message: value.message,
+                typeCheck: value.isSuccess,
+              );
+            }
+          });
         }
       }
     });
