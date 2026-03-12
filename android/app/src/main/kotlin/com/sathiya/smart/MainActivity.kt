@@ -1,4 +1,4 @@
-package com.example.lekra
+package com.sathiya.smart
 
 import io.flutter.embedding.android.FlutterActivity
 
