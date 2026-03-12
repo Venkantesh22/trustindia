@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/data/models/fund_reqests/bank_model.dart';
 import 'package:lekra/data/models/fund_reqests/fund_ruquest_model.dart';
@@ -13,8 +12,6 @@ import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/user_model.dart';
 import 'package:lekra/data/repositories/fund_request_repo.dart';
 import 'package:lekra/services/constants.dart';
-import 'package:lekra/views/screens/dashboard/referral/referral_screen/referral_screen.dart';
-import 'package:lekra/views/screens/order_confirmed/order_confirmed_screen.dart';
 
 class FundRequestController extends GetxController implements GetxService {
   final FundRequestRepo fundRequestRepo;
@@ -277,19 +274,16 @@ class FundRequestController extends GetxController implements GetxService {
   void startPaymentFlow({
     required BuildContext context,
     bool isCheckPayment = false,
-    bool isCheckoutPaymentForSubscription = false,
   }) {
     remainingSeconds = totalSeconds;
     isPaymentDone = false;
 
     update();
 
-    log("check 2 -- isCheckoutPaymentForSubscription = $isCheckoutPaymentForSubscription ");
     _startCountdown(context);
     _startPolling(
-        context: context,
-        isCheckoutPaymentForProduct: isCheckPayment,
-        isCheckoutPaymentForSubscription: isCheckoutPaymentForSubscription);
+      context: context,
+    );
   }
 
   void _startCountdown(BuildContext context) {
@@ -311,86 +305,41 @@ class FundRequestController extends GetxController implements GetxService {
 
   void _startPolling({
     required BuildContext context,
-    bool isCheckoutPaymentForProduct = false,
-    bool isCheckoutPaymentForSubscription = false,
   }) {
     _statusTimer?.cancel();
-    log("check 3 -- isCheckoutPaymentForSubscription = $isCheckoutPaymentForSubscription ");
     _statusTimer = Timer.periodic(const Duration(seconds: 2), (_) async {
-      log("check 4 -- isCheckoutPaymentForSubscription = $isCheckoutPaymentForSubscription ");
+      if (upiQRModel?.orderId == null) return;
 
-      if (isCheckoutPaymentForProduct) {
-        if (upiQRModel?.orderId == null) return;
+      //* this For wallet recharge
 
-        //* this For Order checkout payment
-        await Get.find<OrderController>()
-            .checkoutOrderIUPIntentStatusForProductPayment(
-                merchantOrderId: upiQRModel?.merchantOrderId);
+      await uPIQRStatus();
 
-        if (isPaymentDone) {
-          stopAllTimers();
+      if (isPaymentDone) {
+        stopAllTimers();
 
-          navigate(context: context, page: const OrderConfirmedScreen());
-          showToast(
-              message:
-                  "Congratulations! Your order has been placed successfully",
-              typeCheck: true);
+        await Get.find<WalletController>()
+            .fetchWalletTransaction(refresh: true)
+            .then((value) {
+          if (value.isSuccess) {
+            Get.find<WalletController>().fetchWallet();
 
-          upiQRModel = null;
-        }
-      } else if (isCheckoutPaymentForSubscription) {
-        //* this For Order checkout Membership
-        log("check 3 -- isCheckoutPaymentForSubscription = $isCheckoutPaymentForSubscription ");
-
-        await Get.find<OrderController>()
-            .checkOrderIUPIntentStatusForProductSubscription(
-                merchantOrderId: upiQRModel?.merchantOrderId);
-
-        if (isPaymentDone) {
-          stopAllTimers();
-
-          navigate(context: context, page: const ReferralScreen());
-          showToast(
-              message:
-                  "Congratulations! Your Subscription has been active successfully",
-              typeCheck: true);
-
-          upiQRModel = null;
-        }
-      } else {
-        if (upiQRModel?.orderId == null) return;
-
-        //* this For wallet recharge
-
-        await uPIQRStatus();
-
-        if (isPaymentDone) {
-          stopAllTimers();
-
-          await Get.find<WalletController>()
-              .fetchWalletTransaction(refresh: true)
-              .then((value) {
-            if (value.isSuccess) {
-              Get.find<WalletController>().fetchWallet();
-
-              if (Navigator.of(context).canPop()) {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              }
-
-              showToast(
-                message: "Payment Successful 🎉",
-                typeCheck: true,
-              );
-              upiQRModel = null;
-            } else {
-              showToast(
-                message: value.message,
-                typeCheck: value.isSuccess,
-              );
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
             }
-          });
-        }
+
+            showToast(
+              message: "Payment Successful 🎉",
+              typeCheck: true,
+            );
+            upiQRModel = null;
+          } else {
+            showToast(
+              message: value.message,
+              typeCheck: value.isSuccess,
+            );
+          }
+        });
       }
     });
   }

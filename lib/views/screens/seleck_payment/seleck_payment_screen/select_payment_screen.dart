@@ -34,17 +34,8 @@ class _SelectPaymentScreenState extends State<SelectPaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final amount = double.tryParse(
-            widget.totalAmount.replaceAll(RegExp(r'[^0-9.]'), '')) ??
-        0;
-    final isOrderValueLessThan10 = amount < 10;
-
-    // log("totalAmount == ${widget.totalAmount}");
-    // log("isOrderValueLessThan10 == $isOrderValueLessThan10");
-
     final upiOptionList = getUpiOptionList(
       isSubscriptionPayment: widget.isMemberShipPayment,
-      isOrderValueLessThen10: isOrderValueLessThan10,
     );
     return Scaffold(
       appBar: AppBar(
