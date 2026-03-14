@@ -1,4 +1,4 @@
-package com.example.trustindia
+package com.saithiya.smart
 
 import io.flutter.embedding.android.FlutterActivity
 
