@@ -6,6 +6,7 @@ import 'package:lekra/controllers/recharge_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/common_button.dart';
+import 'package:lekra/views/base/custom_dropdown.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/pay_section/mobile_recharge/contact_list/contact_list_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
@@ -63,7 +64,7 @@ class _MobileRechargeSelectNoScreenState
               child: CustomButton(
                 onTap: () {},
                 child: Text(
-                  "Find Operator",
+                  "Find plans",
                   style: Helper(context).textTheme.bodyLarge?.copyWith(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -82,22 +83,39 @@ class _MobileRechargeSelectNoScreenState
               key: _formKey,
               child: Column(
                 children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
+                  CustomDropDownList(
+                    heading: "Select a service provider",
+                    items: rechargeController.networkServiceModelList
+                        .map((e) => e.networkName)
+                        .toList(),
+                    value: rechargeController.selectNetworkOperate?.networkName,
+                    onChanged: (value) {
+                      rechargeController.selectNetworkOperate =
+                          rechargeController.networkServiceModelList.firstWhere(
+                        (element) => element.networkName == value,
+                      );
+
+                      rechargeController.update();
+                    },
+                    validator: (value) {
+                      if (value == null) {
+                        return "Select a service provider";
+                      }
+                      return null;
+                    },
                   ),
+                  const SizedBox(height: 16),
                   AppTextFieldWithHeading(
                     controller: rechargeController.mobileController,
                     hindText: "91111 1111",
                     hintStyle: Helper(context).textTheme.bodyLarge?.copyWith(
                         fontSize: 18, fontWeight: FontWeight.w600, color: grey),
                     heading: "Enter Mobile Recharge",
-                    inputTextStyle: Helper(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: red),
+                    inputTextStyle:
+                        Helper(context).textTheme.bodyLarge?.copyWith(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
                     prefixText: "+91",
                     prefixStyle: Helper(context).textTheme.bodyLarge?.copyWith(
                           fontSize: 18,

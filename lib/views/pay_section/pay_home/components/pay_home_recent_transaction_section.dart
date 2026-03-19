@@ -20,7 +20,6 @@ class PayHomeRecentTransactionSection extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
-          SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -74,7 +73,6 @@ class PayHomeRecentTransactionSection extends StatelessWidget {
               })
             ],
           ),
-          const SizedBox(height: 8),
           GetBuilder<WalletController>(
             id: 'wallet_txn',
             builder: (walletController) {
@@ -86,6 +84,7 @@ class PayHomeRecentTransactionSection extends StatelessWidget {
                 return ListView.separated(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
                   itemCount: 4,
                   itemBuilder: (_, __) {
                     return CustomShimmer(

@@ -50,7 +50,7 @@ class ExploreCategorySection extends StatelessWidget {
                       InkWell(
                         borderRadius: BorderRadius.circular(50),
                         onTap: () {
-                          // navigate(context: context, page: PayHomeScreen());
+                          navigate(context: context, page: PayHomeScreen());
                         },
                         child: const CircleAvatar(
                             radius: 32,
@@ -64,7 +64,7 @@ class ExploreCategorySection extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        "${AppConstants.payAppName}\nComing soon",
+                        AppConstants.payAppName,
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         overflow: TextOverflow.clip,
