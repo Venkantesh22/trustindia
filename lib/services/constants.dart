@@ -245,6 +245,9 @@ class AppConstants {
   static const String getTermsConditions = "api/terms-conditions";
   static const String getSupport = "api/support";
 
+  //* Recharge
+  static const String postRecharge = "api/recharge";
+
 // Padding
   static const double horizontalPadding = 16;
   static const double verticalPadding = 20;

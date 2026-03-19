@@ -40,7 +40,7 @@ class _MobileRechargeSelectNoScreenState
         clean = clean.substring(clean.length - 10);
       }
 
-      rechargeController.mobileController.text = clean;
+      rechargeController.mobileNoController.text = clean;
 
       if (clean.length == 10) {
         // _triggerRechargeAPIs(clean, rechargeController);
@@ -61,17 +61,35 @@ class _MobileRechargeSelectNoScreenState
           children: [
             Padding(
               padding: AppConstants.screenPadding,
-              child: CustomButton(
-                onTap: () {},
-                child: Text(
-                  "Find plans",
-                  style: Helper(context).textTheme.bodyLarge?.copyWith(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: white,
-                      ),
-                ),
-              ),
+              child:
+                  GetBuilder<RechargeController>(builder: (rechargeController) {
+                return CustomButton(
+                  isLoading: rechargeController.isLoading,
+                  onTap: () {
+                    if (_formKey.currentState?.validate() ?? false) {
+                      // rechargeController.mobileRecharge().then((value) {
+                      //   if (value.isSuccess) {
+                      //     showToast(
+                      //         message: value.message,
+                      //         typeCheck: value.isSuccess);
+                      //   } else {
+                      //     showToast(
+                      //         message: value.message,
+                      //         typeCheck: value.isSuccess);
+                      //   }
+                      // });
+                    }
+                  },
+                  child: Text(
+                    "Recharge Now",
+                    style: Helper(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: white,
+                        ),
+                  ),
+                );
+              }),
             ),
           ],
         ),
@@ -106,7 +124,7 @@ class _MobileRechargeSelectNoScreenState
                   ),
                   const SizedBox(height: 16),
                   AppTextFieldWithHeading(
-                    controller: rechargeController.mobileController,
+                    controller: rechargeController.mobileNoController,
                     hindText: "91111 1111",
                     hintStyle: Helper(context).textTheme.bodyLarge?.copyWith(
                         fontSize: 18, fontWeight: FontWeight.w600, color: grey),
@@ -146,6 +164,37 @@ class _MobileRechargeSelectNoScreenState
                       if (value.length != 10) {
                         return "Enter a 10 Digit number";
                       }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  AppTextFieldWithHeading(
+                    controller: rechargeController.rechargeAmountController,
+                    hindText: "0.00",
+                    hintStyle: Helper(context).textTheme.bodyLarge?.copyWith(
+                        fontSize: 18, fontWeight: FontWeight.w600, color: grey),
+                    heading: "Enter recharge amount",
+                    inputTextStyle:
+                        Helper(context).textTheme.bodyLarge?.copyWith(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                    prefixText: "₹",
+                    textInputAction: TextInputAction.done,
+                    prefixStyle: Helper(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(10),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Enter a amount";
+                      }
+
                       return null;
                     },
                   )
