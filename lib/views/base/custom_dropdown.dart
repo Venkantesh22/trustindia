@@ -8,6 +8,7 @@ class CustomDropDownList<T> extends StatelessWidget {
   final bool isRequired;
 
   final List<T> items;
+  final List<Widget>? itemWidget;
   final T? value;
   final ValueChanged<T?>? onChanged;
   final TextStyle? hintStyle;
@@ -28,6 +29,7 @@ class CustomDropDownList<T> extends StatelessWidget {
     this.heading,
     this.isRequired = false,
     required this.items,
+    this.itemWidget,
     this.value,
     this.onChanged,
     this.hintText,
@@ -82,7 +84,7 @@ class CustomDropDownList<T> extends StatelessWidget {
         ],
         DropdownButtonFormField<T>(
           initialValue: value == "" ? null : value,
-           style: textStyle,
+          style: textStyle,
           dropdownColor: white,
           elevation: 2,
           icon: const Icon(Icons.keyboard_arrow_down),
@@ -104,15 +106,25 @@ class CustomDropDownList<T> extends StatelessWidget {
             borderRadius: borderRadius,
           ),
 
-          items: items.map((e) {
-            return DropdownMenuItem<T>(
-              value: e,
-              child: Text(
-                e is String ? e : e.toString(),
-                style: textStyle,
-              ),
-            );
-          }).toList(),
+          items: itemWidget != null
+              ? itemWidget?.asMap().entries.map((entry) {
+                  int index = entry.key;
+                  Widget w = entry.value;
+
+                  return DropdownMenuItem<T>(
+                    value: items[index], // ✅ ADD THIS LINE
+                    child: w,
+                  );
+                }).toList()
+              : items.map((e) {
+                  return DropdownMenuItem<T>(
+                    value: e,
+                    child: Text(
+                      e is String ? e : e.toString(),
+                      style: textStyle,
+                    ),
+                  );
+                }).toList(),
 
           onChanged: onChanged,
         ),

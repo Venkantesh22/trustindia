@@ -6,6 +6,7 @@ import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/service/network_service_model.dart';
 import 'package:lekra/data/repositories/recharge_repo.dart';
+import 'package:lekra/views/base/custom_image.dart';
 
 class RechargeController extends GetxController implements GetxService {
   final RechargeRepo rechargeRepo;
@@ -18,10 +19,16 @@ class RechargeController extends GetxController implements GetxService {
   NetworkServiceModel? selectNetworkOperate;
 
   List<NetworkServiceModel> networkServiceModelList = [
-    NetworkServiceModel(networkName: "AirTel", operatorId: "1"),
-    NetworkServiceModel(networkName: "BSNL", operatorId: "2"),
-    NetworkServiceModel(networkName: "Jio", operatorId: "167"),
-    NetworkServiceModel(networkName: "Vodafone", operatorId: "5"),
+    NetworkServiceModel(
+        networkName: "AirTel", operatorId: "1", logo: Assets.imagesAritelLogo),
+    NetworkServiceModel(
+        networkName: "BSNL", operatorId: "2", logo: Assets.imagesBSNLLogo),
+    NetworkServiceModel(
+        networkName: "Jio", operatorId: "167", logo: Assets.imagesJioLogo),
+    NetworkServiceModel(
+        networkName: "Vodafone",
+        operatorId: "5",
+        logo: Assets.imagesVodafoneLogo),
   ];
 
   TextEditingController rechargeAmountController = TextEditingController();

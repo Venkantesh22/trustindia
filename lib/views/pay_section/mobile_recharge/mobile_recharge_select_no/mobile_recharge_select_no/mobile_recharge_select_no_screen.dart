@@ -9,6 +9,7 @@ import 'package:lekra/views/base/common_button.dart';
 import 'package:lekra/views/base/custom_dropdown.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/pay_section/mobile_recharge/contact_list/contact_list_screen.dart';
+import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/mobile_recharge_select_option_wallet_dynamic/mobile_recharge_select_opions_wallet_dynamci_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/wallet_enter_pin_screen/wallet_enter_pin_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 import 'package:lekra/views/screens/widget/text_box/app_text_box.dart';
@@ -70,10 +71,14 @@ class _MobileRechargeSelectNoScreenState
                     if (_formKey.currentState?.validate() ?? false) {
                       navigate(
                         context: context,
-                        page: const WalletEnterPinScreen(
-                          isMobileRecharge: true,
-                        ),
+                        page: MobileRechargeSelectOptionsWalletDynamicScreen(),
                       );
+                      // navigate(
+                      //   context: context,
+                      //   page: const WalletEnterPinScreen(
+                      //     isMobileRecharge: true,
+                      //   ),
+                      // );
                     }
                   },
                   child: Text(
@@ -101,6 +106,20 @@ class _MobileRechargeSelectNoScreenState
                     heading: "Select a service provider",
                     items: rechargeController.networkServiceModelList
                         .map((e) => e.networkName)
+                        .toList(),
+                    itemWidget: rechargeController.networkServiceModelList
+                        .map((e) => Row(
+                              children: [
+                                CustomImage(
+                                  path: e.logo,
+                                  fit: BoxFit.cover,
+                                  height: 30,
+                                  width: 30,
+                                ),
+                                SizedBox(width: 12),
+                                Text(e.networkName),
+                              ],
+                            ))
                         .toList(),
                     value: rechargeController.selectNetworkOperate?.networkName,
                     onChanged: (value) {

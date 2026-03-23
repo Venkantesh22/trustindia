@@ -6,6 +6,14 @@ class Assets {
   /// assets/images/app-logo.png
   static const String imagesAppLogo = "assets/images/app-logo.png";
 
+  /// Assets for imagesAritelLogo
+  /// assets/images/aritel-logo.png
+  static const String imagesAritelLogo = "assets/images/aritel-logo.png";
+
+  /// Assets for imagesBSNLLogo
+  /// assets/images/BSNL-logo.png
+  static const String imagesBSNLLogo = "assets/images/BSNL-logo.png";
+
   /// Assets for imagesCalender
   /// assets/images/calender.png
   static const String imagesCalender = "assets/images/calender.png";
@@ -69,6 +77,10 @@ class Assets {
   /// Assets for imagesHomeDemo
   /// assets/images/home-demo.png
   static const String imagesHomeDemo = "assets/images/home-demo.png";
+
+  /// Assets for imagesJioLogo
+  /// assets/images/jio-logo.png
+  static const String imagesJioLogo = "assets/images/jio-logo.png";
 
   /// Assets for imagesLocalBgGrey
   /// assets/images/local-bg-grey.png
@@ -157,6 +169,10 @@ class Assets {
   /// Assets for imagesUpi
   /// assets/images/upi.png
   static const String imagesUpi = "assets/images/upi.png";
+
+  /// Assets for imagesVodafoneLogo
+  /// assets/images/vodafone-logo.png
+  static const String imagesVodafoneLogo = "assets/images/vodafone-logo.png";
 
   /// Assets for imagesWallet
   /// assets/images/wallet.png
