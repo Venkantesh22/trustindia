@@ -9,6 +9,7 @@ import 'package:lekra/views/base/common_button.dart';
 import 'package:lekra/views/base/custom_dropdown.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/pay_section/mobile_recharge/contact_list/contact_list_screen.dart';
+import 'package:lekra/views/screens/dashboard/wallet/wallet_enter_pin_screen/wallet_enter_pin_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 import 'package:lekra/views/screens/widget/text_box/app_text_box.dart';
 
@@ -67,17 +68,12 @@ class _MobileRechargeSelectNoScreenState
                   isLoading: rechargeController.isLoading,
                   onTap: () {
                     if (_formKey.currentState?.validate() ?? false) {
-                      // rechargeController.mobileRecharge().then((value) {
-                      //   if (value.isSuccess) {
-                      //     showToast(
-                      //         message: value.message,
-                      //         typeCheck: value.isSuccess);
-                      //   } else {
-                      //     showToast(
-                      //         message: value.message,
-                      //         typeCheck: value.isSuccess);
-                      //   }
-                      // });
+                      navigate(
+                        context: context,
+                        page: const WalletEnterPinScreen(
+                          isMobileRecharge: true,
+                        ),
+                      );
                     }
                   },
                   child: Text(

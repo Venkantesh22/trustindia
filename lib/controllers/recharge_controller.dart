@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/service/network_service_model.dart';
 import 'package:lekra/data/repositories/recharge_repo.dart';
@@ -32,10 +33,12 @@ class RechargeController extends GetxController implements GetxService {
     update();
 
     try {
+      final walletController = Get.find<WalletController>();
       Map<String, dynamic> data = {
         'mobile': mobileNoController.text.trim(),
         'amount': rechargeAmountController.text.trim(),
         'operator_id': selectNetworkOperate?.operatorId,
+        "wallet_pin": walletController.walletPin,
       };
 
       Response response =
@@ -50,7 +53,7 @@ class RechargeController extends GetxController implements GetxService {
       } else {
         responseModel = ResponseModel(
           false,
-          response.body['error'] ??
+          response.body['message'] ??
               "Something went wrong fetchReferralLevelDataByID",
         );
       }

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/controllers/dashboard_controller.dart';
 import 'package:lekra/controllers/order_controlller.dart';
+import 'package:lekra/controllers/recharge_controller.dart';
 import 'package:lekra/controllers/subscription_controller.dart';
 import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/services/constants.dart';
@@ -22,11 +23,13 @@ import 'package:page_transition/page_transition.dart';
 class WalletEnterPinScreen extends StatefulWidget {
   final bool isForResetPin;
   final bool isMemberShipPayment;
+  final bool isMobileRecharge;
 
   const WalletEnterPinScreen({
     super.key,
     this.isMemberShipPayment = false,
     this.isForResetPin = false,
+    this.isMobileRecharge = false,
   });
 
   @override
@@ -127,6 +130,20 @@ class _WalletEnterPinScreenState extends State<WalletEnterPinScreen>
           showToast(message: value.message, typeCheck: value.isSuccess);
         }
       });
+    }
+    if (widget.isMobileRecharge == true) {
+      final rechargeController = Get.find<RechargeController>();
+
+      rechargeController.mobileRecharge().then((value) {
+        if (value.isSuccess) {
+          showToast(message: value.message, typeCheck: value.isSuccess);
+        } else {
+          _triggerShake();
+
+          showToast(message: value.message, typeCheck: value.isSuccess);
+          pop(context);
+        }
+      });
     } else {
       Get.find<OrderController>()
           .postPayOrderWallet(orderId: Get.find<OrderController>().orderId)
@@ -158,7 +175,7 @@ class _WalletEnterPinScreenState extends State<WalletEnterPinScreen>
 
         return Scaffold(
           backgroundColor: Colors.white,
-          appBar:  CustomAppbarBackButton(),
+          appBar: CustomAppbarBackButton(),
           body: SafeArea(
             child: Padding(
               padding: AppConstants.screenPadding,
