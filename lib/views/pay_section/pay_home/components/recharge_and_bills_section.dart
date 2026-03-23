@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/mobile_recharge_select_no/mobile_recharge_select_no_screen.dart';
+import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/success_recharge_screen/success_recharge_screen.dart';
 
 class RechargeAndBillsSection extends StatelessWidget {
   const RechargeAndBillsSection({
@@ -23,47 +24,48 @@ class RechargeAndBillsSection extends StatelessWidget {
                 ),
           ),
           GridView.builder(
-              padding: const EdgeInsets.only(top: 20),
-              shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                mainAxisSpacing: 6,
-                crossAxisSpacing: 15,
-                childAspectRatio: 0.75,
-              ),
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    navigate(
-                        context: context,
-                        page: const MobileRechargeSelectNoScreen());
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const CustomImage(
-                        path: Assets.imagesRechargeDemo,
-                        height: 56,
-                        width: 56,
-                        radius: 100,
+            padding: const EdgeInsets.only(top: 20),
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
+              mainAxisSpacing: 6,
+              crossAxisSpacing: 15,
+              childAspectRatio: 0.75,
+            ),
+            itemCount: 1,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  navigate(
+                      context: context,
+                      page: const MobileRechargeSelectNoScreen());
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const CustomImage(
+                      path: Assets.imagesRechargeDemo,
+                      height: 56,
+                      width: 56,
+                      radius: 100,
+                    ),
+                    Expanded(
+                      child: Text(
+                        "Mobile Recharge",
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: Helper(context).textTheme.bodySmall?.copyWith(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
-                      Expanded(
-                        child: Text(
-                          "Mobile Recharge",
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          style: Helper(context).textTheme.bodySmall?.copyWith(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              })
+                    )
+                  ],
+                ),
+              );
+            },
+          )
         ],
       ),
     );

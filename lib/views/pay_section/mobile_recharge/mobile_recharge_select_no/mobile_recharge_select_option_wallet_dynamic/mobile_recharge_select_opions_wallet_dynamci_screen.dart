@@ -5,6 +5,7 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/mobile_recharge_select_option_wallet_dynamic/widget/custom_button_for_recharge.dart';
+import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/success_recharge_screen/success_recharge_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/wallet_enter_pin_screen/wallet_enter_pin_screen.dart';
 
 class MobileRechargeSelectOptionsWalletDynamicScreen extends StatelessWidget {
@@ -80,7 +81,12 @@ class MobileRechargeSelectOptionsWalletDynamicScreen extends StatelessWidget {
                   height: 26,
                 ),
                 CustomButtonForRecharge(
-                  onTap: () {},
+                  onTap: () {
+                    navigate(
+                      context: context,
+                      page: SuccessRechargeScreen(),
+                    );
+                  },
                   title: "Dynamic QR",
                   icon: Icons.qr_code_2,
                 ),
