@@ -20,7 +20,7 @@ class RechargeController extends GetxController implements GetxService {
 
   List<NetworkServiceModel> networkServiceModelList = [
     NetworkServiceModel(
-        networkName: "AirTel", operatorId: "1", logo: Assets.imagesAritelLogo),
+        networkName: "Airtel", operatorId: "1", logo: Assets.imagesAritelLogo),
     NetworkServiceModel(
         networkName: "BSNL", operatorId: "2", logo: Assets.imagesBSNLLogo),
     NetworkServiceModel(

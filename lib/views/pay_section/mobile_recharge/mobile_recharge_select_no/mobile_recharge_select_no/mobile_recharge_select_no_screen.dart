@@ -10,7 +10,6 @@ import 'package:lekra/views/base/custom_dropdown.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/pay_section/mobile_recharge/contact_list/contact_list_screen.dart';
 import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/mobile_recharge_select_option_wallet_dynamic/mobile_recharge_select_opions_wallet_dynamci_screen.dart';
-import 'package:lekra/views/screens/dashboard/wallet/wallet_enter_pin_screen/wallet_enter_pin_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 import 'package:lekra/views/screens/widget/text_box/app_text_box.dart';
 
