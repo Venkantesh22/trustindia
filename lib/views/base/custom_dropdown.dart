@@ -4,11 +4,12 @@ import 'package:lekra/services/theme.dart';
 import 'package:lekra/services/input_decoration.dart';
 
 class CustomDropDownList<T> extends StatelessWidget {
+  final Widget? headingWidget;
   final String? heading;
   final bool isRequired;
+  final List<Widget>? itemWidget;
 
   final List<T> items;
-  final List<Widget>? itemWidget;
   final T? value;
   final ValueChanged<T?>? onChanged;
   final TextStyle? hintStyle;
@@ -26,6 +27,7 @@ class CustomDropDownList<T> extends StatelessWidget {
 
   const CustomDropDownList({
     super.key,
+    this.headingWidget,
     this.heading,
     this.isRequired = false,
     required this.items,
@@ -62,15 +64,19 @@ class CustomDropDownList<T> extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (heading != null) ...[
+        if (heading != null || headingWidget != null) ...[
           Row(
             children: [
-              Text(
-                heading!,
-                style: Helper(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(fontSize: 16, fontWeight: FontWeight.w600),
+              Expanded(
+                child: headingWidget ??
+                    Text(
+                      heading!,
+                      overflow: TextOverflow.clip,
+                      style: Helper(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(fontSize: 16, fontWeight: FontWeight.w600),
+                    ),
               ),
               const SizedBox(width: 4),
               if (isRequired)
@@ -83,7 +89,8 @@ class CustomDropDownList<T> extends StatelessWidget {
           const SizedBox(height: 7),
         ],
         DropdownButtonFormField<T>(
-          initialValue: value == "" ? null : value,
+          isExpanded: true,
+          initialValue: value,
           style: textStyle,
           dropdownColor: white,
           elevation: 2,
