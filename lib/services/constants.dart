@@ -247,6 +247,7 @@ class AppConstants {
 
   //* Recharge
   static const String postRecharge = "api/recharge";
+  static const String getRechargePlane = "api/mobile-plans";
 
 // Padding
   static const double horizontalPadding = 16;

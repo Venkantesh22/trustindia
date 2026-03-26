@@ -10,7 +10,6 @@ import 'package:lekra/views/base/common_button.dart';
 import 'package:lekra/views/base/custom_dropdown.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/pay_section/mobile_recharge/contact_list/contact_list_screen.dart';
-import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/mobile_recharge_select_option_wallet_dynamic/mobile_recharge_select_opions_wallet_dynamci_screen.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 import 'package:lekra/views/screens/widget/text_box/app_text_box.dart';
 
@@ -69,10 +68,13 @@ class _MobileRechargeSelectNoScreenState
                   isLoading: rechargeController.isLoading,
                   onTap: () {
                     if (_formKey.currentState?.validate() ?? false) {
-                      navigate(
-                        context: context,
-                        page: MobileRechargeSelectOptionsWalletDynamicScreen(),
-                      );
+                      rechargeController
+                          .fetchMobileRechargePlan()
+                          .then((value) {});
+                      // navigate(
+                      //   context: context,
+                      //   page: MobileRechargeSelectOptionsWalletDynamicScreen(),
+                      // );
                       // navigate(
                       //   context: context,
                       //   page: const WalletEnterPinScreen(
@@ -82,7 +84,7 @@ class _MobileRechargeSelectNoScreenState
                     }
                   },
                   child: Text(
-                    "Recharge Now",
+                    "See Plan",
                     style: Helper(context).textTheme.bodyLarge?.copyWith(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,

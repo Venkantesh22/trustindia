@@ -14,4 +14,13 @@ class RechargeRepo {
         "mobileRecharge",
         data,
       );
+
+  Future<Response> fetchMobileRechargePlan({
+    required String? operatorCode,
+    required int? circleCode,
+  }) async =>
+      await apiClient.getData(
+        "${AppConstants.getRechargePlane}?operator_code=$operatorCode&circle_code=$circleCode",
+        "fetchMobileRechargePlan",
+      );
 }

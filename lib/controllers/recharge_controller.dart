@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/service/mobile_recharge_service_models/network_service_model.dart';
+import 'package:lekra/data/models/service/mobile_recharge_service_models/recharge_plan_model.dart';
 import 'package:lekra/data/models/service/mobile_recharge_service_models/recharge_state_area_model.dart';
 import 'package:lekra/data/repositories/recharge_repo.dart';
 import 'package:lekra/views/base/custom_image.dart';
@@ -21,15 +22,25 @@ class RechargeController extends GetxController implements GetxService {
 
   List<NetworkServiceModel> networkServiceModelList = [
     NetworkServiceModel(
-        networkName: "Airtel", operatorId: "1", logo: Assets.imagesAritelLogo),
+        networkName: "Airtel",
+        operatorRechargeCode: "1",
+        logo: Assets.imagesAritelLogo,
+        operatorId: "2"),
     NetworkServiceModel(
-        networkName: "BSNL", operatorId: "2", logo: Assets.imagesBSNLLogo),
+        networkName: "BSNL",
+        operatorRechargeCode: "2",
+        logo: Assets.imagesBSNLLogo,
+        operatorId: "4"),
     NetworkServiceModel(
-        networkName: "Jio", operatorId: "167", logo: Assets.imagesJioLogo),
+        networkName: "Jio",
+        operatorRechargeCode: "167",
+        logo: Assets.imagesJioLogo,
+        operatorId: "5"),
     NetworkServiceModel(
         networkName: "Vodafone",
-        operatorId: "5",
-        logo: Assets.imagesVodafoneLogo),
+        operatorRechargeCode: "5",
+        logo: Assets.imagesVodafoneLogo,
+        operatorId: "1"),
   ];
 
   RechargeStateAreaModel? selectRechargeStateAreaModel;
@@ -74,6 +85,55 @@ class RechargeController extends GetxController implements GetxService {
 
     isLoading = false;
     update();
+    return responseModel;
+  }
+
+  RechargePlanResponse? rechargePlanResponse;
+  List<String> rechargeCategories = [];
+
+  Future<ResponseModel> fetchMobileRechargePlan() async {
+    log('----------- fetchMobileRechargePlan Called() -------------');
+
+    ResponseModel responseModel = ResponseModel(false, "Unknown error");
+    isLoading = true;
+    update();
+
+    try {
+      Response response = await rechargeRepo.fetchMobileRechargePlan(
+        operatorCode: selectNetworkOperate?.operatorId,
+        circleCode: selectRechargeStateAreaModel?.id,
+      );
+
+      if (response.statusCode == 200 &&
+          (response.body['status'] == true ||
+              response.body['success'] == true)) {
+        /// 🔥 PARSE MODEL
+        rechargePlanResponse = RechargePlanResponse.fromJson(response.body);
+
+        /// 🔥 EXTRACT CATEGORY LIST
+        rechargeCategories = rechargePlanResponse?.plans?.keys.toList() ?? [];
+
+        log("Categories: $rechargeCategories");
+
+        responseModel = ResponseModel(
+          true,
+          response.body['message'] ?? "Success fetchMobileRechargePlan",
+        );
+      } else {
+        responseModel = ResponseModel(
+          false,
+          response.body['message'] ??
+              "Something went wrong fetchMobileRechargePlan",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch error");
+      log("****** Error ****** $e", name: "fetchMobileRechargePlan");
+    }
+
+    isLoading = false;
+    update();
+
     return responseModel;
   }
 }

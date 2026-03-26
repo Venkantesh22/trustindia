@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/custom_image.dart';
 import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/mobile_recharge_select_no/mobile_recharge_select_no_screen.dart';
-import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/success_recharge_screen/success_recharge_screen.dart';
 
 class RechargeAndBillsSection extends StatelessWidget {
   const RechargeAndBillsSection({
