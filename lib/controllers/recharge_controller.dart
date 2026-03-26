@@ -88,8 +88,8 @@ class RechargeController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  RechargePlanResponse? rechargePlanResponse;
-  List<String> rechargeCategories = [];
+  RechargePlanResponse? rechargePlanResponseList;
+  List<String> rechargeCategoriesList = [];
 
   Future<ResponseModel> fetchMobileRechargePlan() async {
     log('----------- fetchMobileRechargePlan Called() -------------');
@@ -108,12 +108,15 @@ class RechargeController extends GetxController implements GetxService {
           (response.body['status'] == true ||
               response.body['success'] == true)) {
         /// 🔥 PARSE MODEL
-        rechargePlanResponse = RechargePlanResponse.fromJson(response.body);
+        rechargePlanResponseList = RechargePlanResponse.fromJson(response.body);
 
         /// 🔥 EXTRACT CATEGORY LIST
-        rechargeCategories = rechargePlanResponse?.plans?.keys.toList() ?? [];
+        rechargeCategoriesList =
+            rechargePlanResponseList?.plans?.keys.toList() ?? [];
 
-        log("Categories: $rechargeCategories");
+        selectRechargeCategories = rechargeCategoriesList.first;
+
+        log("Categories: $rechargeCategoriesList");
 
         responseModel = ResponseModel(
           true,
@@ -135,5 +138,12 @@ class RechargeController extends GetxController implements GetxService {
     update();
 
     return responseModel;
+  }
+
+  String? selectRechargeCategories;
+
+  void updateSelectRechargeCategories(String value) {
+    selectRechargeCategories = value;
+    update();
   }
 }

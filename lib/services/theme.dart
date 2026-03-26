@@ -7,6 +7,8 @@ Color secondaryColor = const Color(0xFFf97316);
 Color backgroundDark = const Color(0xff231F20);
 Color backgroundLight = const Color(0xffffffff);
 
+const Color appbarBlueLight = Color(0xFFEFF4FF);
+
 const Color textPrimary = Color(0xff000000);
 const Color textSecondary = Color(0xff838383);
 
@@ -23,9 +25,11 @@ const Color greyNumberBg = Color(0xFF8B8A89);
 const Color greyAccountText = Color(0xFFABABAB);
 const Color greyMember = Color(0xFF787878);
 Color greyText = const Color(0xFF5C5B5B);
+Color greyText2 = const Color(0xFF414753);
 Color greyExpired = const Color(0xFF958B8B);
 const Color whiteBg2 = Color(0xFFFAFAFA);
 const Color yellow = Color(0xFFFFDB4C);
+const Color blueLight = Color(0xFF005BB1);
 
 const Color black = Colors.black;
 const Color blackBillingText = Color(0xFF0F1417);
@@ -117,7 +121,7 @@ class CustomTheme {
       ),
       headlineLarge: GoogleFonts.openSans(),
       headlineMedium: GoogleFonts.openSans(),
-      headlineSmall: GoogleFonts.openSans(),
+      headlineSmall: GoogleFonts.inter(),
       displayLarge: GoogleFonts.poppins(
         fontSize: 18,
         fontWeight: FontWeight.w500,
