@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/data/models/response/response_model.dart';
-import 'package:lekra/data/models/service/network_service_model.dart';
+import 'package:lekra/data/models/service/mobile_recharge_service_models/network_service_model.dart';
+import 'package:lekra/data/models/service/mobile_recharge_service_models/recharge_state_area_model.dart';
 import 'package:lekra/data/repositories/recharge_repo.dart';
 import 'package:lekra/views/base/custom_image.dart';
 
@@ -30,6 +31,8 @@ class RechargeController extends GetxController implements GetxService {
         operatorId: "5",
         logo: Assets.imagesVodafoneLogo),
   ];
+
+  RechargeStateAreaModel? selectRechargeStateAreaModel;
 
   TextEditingController rechargeAmountController = TextEditingController();
 

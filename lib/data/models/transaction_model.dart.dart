@@ -10,6 +10,10 @@ class TransactionModel {
   final String? status;
   final String? utr;
   final String? product; // Added to capture 'addfund'
+  final String? mobile;
+  final String? operatorId;
+  final String? operatorTxnId;
+  final String? remark;
 
   TransactionModel({
     this.id,
@@ -23,6 +27,10 @@ class TransactionModel {
     this.status,
     this.utr,
     this.product,
+    this.mobile,
+    this.operatorId,
+    this.operatorTxnId,
+    this.remark,
   });
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) =>
@@ -44,6 +52,10 @@ class TransactionModel {
         status: json["status"],
         utr: json["utr"]?.toString(),
         product: json["product"],
+        mobile: json["mobile"],
+        operatorId: json["operator_id"],
+        operatorTxnId: json["operator_txn_id"],
+        remark: json["remark"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -58,7 +70,47 @@ class TransactionModel {
         "status": status,
         "utr": utr,
         "product": product,
+        "mobile": mobile,
+        "operator_id": operatorId,
+        "operator_txn_id": operatorTxnId,
+        "remark": remark,
       };
 
   bool get isDebit => (type?.toLowerCase() == "debit");
+
+  TransactionModel copyWith({
+    int? id,
+    String? type,
+    double? amount,
+    String? balanceAfter,
+    String? description,
+    DateTime? createdAt,
+    String? orderId,
+    String? gatewayOrderId,
+    String? status,
+    String? utr,
+    String? product,
+    String? mobile,
+    String? operatorId,
+    String? operatorTxnId,
+    String? remark,
+  }) {
+    return TransactionModel(
+      id: id ?? this.id,
+      type: type ?? this.type,
+      amount: amount ?? this.amount,
+      balanceAfter: balanceAfter ?? this.balanceAfter,
+      description: description ?? this.description,
+      createdAt: createdAt ?? this.createdAt,
+      orderId: orderId ?? this.orderId,
+      gatewayOrderId: gatewayOrderId ?? this.gatewayOrderId,
+      status: status ?? this.status,
+      utr: utr ?? this.utr,
+      product: product ?? this.product,
+      mobile: mobile ?? this.mobile,
+      operatorId: operatorId ?? this.operatorId,
+      operatorTxnId: operatorTxnId ?? this.operatorTxnId,
+      remark: remark ?? this.remark,
+    );
+  }
 }

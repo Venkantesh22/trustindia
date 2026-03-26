@@ -26,6 +26,99 @@ class WalletController extends GetxController implements GetxService {
   String? _filterValue;
 
   /// MAIN FUNCTION (use everywhere)
+  // Future<ResponseModel> fetchWalletTransaction({
+  //   bool refresh = false,
+  //   bool loadMore = false,
+  //   WalletFilterType filterType = WalletFilterType.none,
+  //   String? filterValue,
+  // }) async {
+  //   try {
+  //     if (refresh) {
+  //       walletTxnState.reset();
+  //     }
+
+  //     if (loadMore) {
+  //       if (!walletTxnState.canLoadMore || walletTxnState.isMoreLoading) {
+  //         return ResponseModel(false, "No more pages");
+  //       }
+  //       walletTxnState.page++;
+  //       walletTxnState.isMoreLoading = true;
+  //     } else {
+  //       walletTxnState.isInitialLoading = true;
+  //       walletTxnState.page = 1;
+  //       _activeFilter = filterType;
+  //       _filterValue = filterValue;
+  //     }
+
+  //     update(['wallet_txn']);
+
+  //     final Response response = await _fetchByFilter();
+
+  //     if (response.statusCode == 200 && (response.body['status'] == true)) {
+  //       // 1. Pass the ENTIRE 'transactions' map to the PaginationModel
+  //     final data = response.body['data'] ?? {};
+
+  //       final transactionPagination =
+  //           PaginationModel<TransactionModel>.fromJson(
+  //         data['transactions'] ?? {},
+  //         (json) => TransactionModel.fromJson(json),
+  //       );
+
+  //       final addFundList = (data['addfund'] ?? [])
+  //           .map<TransactionModel>((e) => TransactionModel.fromJson(e))
+  //           .toList();
+
+  //       final rechargeList = (data['recharge'] ?? [])
+  //           .map<TransactionModel>((e) => TransactionModel.fromJson(e))
+  //           .toList();
+
+  //       final combinedList = [
+  //         ...transactionPagination.data,
+  //         ...addFundList,
+  //         ...rechargeList,
+  //       ];
+
+  //       combinedList.sort((a, b) => (b.createdAt ??
+  //               DateTime.fromMillisecondsSinceEpoch(0))
+  //           .compareTo(a.createdAt ?? DateTime.fromMillisecondsSinceEpoch(0)));
+  //       walletTxnState.lastPage = transactionPagination.lastPage;
+  //       walletTxnState.page = transactionPagination.currentPage;
+
+  //       if (loadMore) {
+  //         for (final item in combinedList) {
+  //           // NOTE: Ensure IDs don't overlap between 'transactions' and 'addfund'
+  //           // Consider prefixing IDs if they do (e.g., 'txn_1', 'fund_1')
+  //           if (!walletTxnState.dedupeIds.contains(item.id)) {
+  //             walletTxnState.dedupeIds.add(item.id!);
+  //             walletTxnState.items.add(item);
+  //           }
+  //         }
+  //       } else {
+  //         walletTxnState.items
+  //           ..clear()
+  //           ..addAll(combinedList);
+
+  //         walletTxnState.dedupeIds
+  //           ..clear()
+  //           ..addAll(combinedList.map((e) => e.id!));
+  //       }
+
+  //       return ResponseModel(true, "Success");
+  //     }
+
+  //     return ResponseModel(false, "Failed");
+  //   } catch (e) {
+  //     if (loadMore && walletTxnState.page > 1) {
+  //       walletTxnState.page--;
+  //     }
+  //     return ResponseModel(false, e.toString());
+  //   } finally {
+  //     walletTxnState.isInitialLoading = false;
+  //     walletTxnState.isMoreLoading = false;
+  //     update(['wallet_txn']);
+  //   }
+  // }
+
   Future<ResponseModel> fetchWalletTransaction({
     bool refresh = false,
     bool loadMore = false,
@@ -33,10 +126,12 @@ class WalletController extends GetxController implements GetxService {
     String? filterValue,
   }) async {
     try {
+      /// 🔄 RESET
       if (refresh) {
         walletTxnState.reset();
       }
 
+      /// 📄 PAGINATION CONTROL
       if (loadMore) {
         if (!walletTxnState.canLoadMore || walletTxnState.isMoreLoading) {
           return ResponseModel(false, "No more pages");
@@ -52,59 +147,14 @@ class WalletController extends GetxController implements GetxService {
 
       update(['wallet_txn']);
 
+      /// 🌐 API CALL
       final Response response = await _fetchByFilter();
 
-      // if (response.statusCode == 200 && (response.body['status'] == true)) {
-      //   final transactionsJson = response.body['data']['transactions']['data'];
-      //   final upiJson = response.body['data']['addfund'];
-
-      //   final transactionPagination =
-      //       PaginationModel<TransactionModel>.fromJson(
-      //     transactionsJson,
-      //     (json) => TransactionModel.fromJson(json),
-      //   );
-
-      //   final upiPagination = PaginationModel<TransactionModel>.fromJson(
-      //     upiJson,
-      //     (json) => TransactionModel.fromJson(json),
-      //   );
-
-      //   final combinedList = [
-      //     ...transactionPagination.data,
-      //     ...upiPagination.data,
-      //   ];
-
-      //   /// SORT NEW → OLD
-      //   combinedList.sort((a, b) => (b.createdAt ??
-      //           DateTime.fromMillisecondsSinceEpoch(0))
-      //       .compareTo(a.createdAt ?? DateTime.fromMillisecondsSinceEpoch(0)));
-
-      //   walletTxnState.lastPage = transactionPagination.lastPage;
-      //   walletTxnState.page = transactionPagination.currentPage;
-
-      //   if (loadMore) {
-      //     for (final item in combinedList) {
-      //       if (!walletTxnState.dedupeIds.contains(item.id)) {
-      //         walletTxnState.dedupeIds.add(item.id);
-      //         walletTxnState.items.add(item);
-      //       }
-      //     }
-      //   } else {
-      //     walletTxnState.items
-      //       ..clear()
-      //       ..addAll(combinedList);
-
-      //     walletTxnState.dedupeIds
-      //       ..clear()
-      //       ..addAll(combinedList.map((e) => e.id));
-      //   }
-
-      //   return ResponseModel(true, "Success");
-      // }
-
       if (response.statusCode == 200 && (response.body['status'] == true)) {
-        // 1. Pass the ENTIRE 'transactions' map to the PaginationModel
-        final transactionsMap = response.body['data']['transactions'];
+        final data = response.body['data'] ?? {};
+
+        /// 🔹 PAGINATED TRANSACTIONS
+        final transactionsMap = data['transactions'] ?? {};
 
         final transactionPagination =
             PaginationModel<TransactionModel>.fromJson(
@@ -112,30 +162,42 @@ class WalletController extends GetxController implements GetxService {
           (json) => TransactionModel.fromJson(json),
         );
 
-        // 2. Parse 'addfund' as a simple List, NOT a PaginationModel
-        final List<dynamic> upiJsonList =
-            response.body['data']['addfund'] ?? [];
-        final List<TransactionModel> addFundList =
-            upiJsonList.map((json) => TransactionModel.fromJson(json)).toList();
+        /// 🔹 ADD FUND LIST
+        final List<TransactionModel> addFundList = (data['addfund'] ?? [])
+            .map<TransactionModel>((json) => TransactionModel.fromJson(json))
+            .toList();
 
-        // 3. Combine the lists
+        /// 🔹 RECHARGE LIST
+        final List<TransactionModel> rechargeList = (data['recharge'] ?? [])
+            .map<TransactionModel>((json) => TransactionModel.fromJson(json))
+            .toList();
+
+        /// 🔥 OPTIONAL: PREVENT ID COLLISION
+        List<TransactionModel> prefixList(
+            List<TransactionModel> list, String prefix) {
+          return list.map((e) {
+            return e.copyWith(id: int.tryParse("$prefix${e.id}") ?? e.id);
+          }).toList();
+        }
+
+        /// 🔹 COMBINE ALL DATA
         final combinedList = [
-          ...transactionPagination.data,
-          ...addFundList,
+          ...prefixList(transactionPagination.data, "txn_"),
+          ...prefixList(addFundList, "fund_"),
+          ...prefixList(rechargeList, "recharge_"),
         ];
 
-        /// SORT NEW → OLD
+        /// 🔽 SORT (LATEST FIRST)
         combinedList.sort((a, b) => (b.createdAt ??
                 DateTime.fromMillisecondsSinceEpoch(0))
             .compareTo(a.createdAt ?? DateTime.fromMillisecondsSinceEpoch(0)));
 
+        /// 🔄 UPDATE PAGINATION STATE
         walletTxnState.lastPage = transactionPagination.lastPage;
         walletTxnState.page = transactionPagination.currentPage;
 
         if (loadMore) {
           for (final item in combinedList) {
-            // NOTE: Ensure IDs don't overlap between 'transactions' and 'addfund'
-            // Consider prefixing IDs if they do (e.g., 'txn_1', 'fund_1')
             if (!walletTxnState.dedupeIds.contains(item.id)) {
               walletTxnState.dedupeIds.add(item.id!);
               walletTxnState.items.add(item);
@@ -156,13 +218,17 @@ class WalletController extends GetxController implements GetxService {
 
       return ResponseModel(false, "Failed");
     } catch (e) {
+      /// ⛔ ROLLBACK PAGE IF LOAD MORE FAILS
       if (loadMore && walletTxnState.page > 1) {
         walletTxnState.page--;
       }
+
       return ResponseModel(false, e.toString());
     } finally {
+      /// 🔄 STOP LOADING STATES
       walletTxnState.isInitialLoading = false;
       walletTxnState.isMoreLoading = false;
+
       update(['wallet_txn']);
     }
   }

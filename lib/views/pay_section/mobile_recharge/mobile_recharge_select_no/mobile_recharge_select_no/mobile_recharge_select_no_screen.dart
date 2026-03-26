@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/permission_controller.dart';
 import 'package:lekra/controllers/recharge_controller.dart';
+import 'package:lekra/data/models/service/mobile_recharge_service_models/recharge_state_area_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/common_button.dart';
@@ -182,36 +183,29 @@ class _MobileRechargeSelectNoScreenState
                     },
                   ),
                   const SizedBox(height: 16),
-                  AppTextFieldWithHeading(
-                    controller: rechargeController.rechargeAmountController,
-                    hindText: "0.00",
-                    hintStyle: Helper(context).textTheme.bodyLarge?.copyWith(
-                        fontSize: 18, fontWeight: FontWeight.w600, color: grey),
-                    heading: "Enter recharge amount",
-                    inputTextStyle:
-                        Helper(context).textTheme.bodyLarge?.copyWith(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            ),
-                    prefixText: "₹",
-                    textInputAction: TextInputAction.done,
-                    prefixStyle: Helper(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(10),
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Enter a amount";
-                      }
+                  CustomDropDownList(
+                    heading: "Select a State",
+                    items: rechargeStateAreaModelList
+                        .map((e) => e.areaName)
+                        .toList(),
+                    hintText: "Orissa",
+                    value: rechargeController
+                        .selectRechargeStateAreaModel?.areaName,
+                    onChanged: (value) {
+                      rechargeController.selectRechargeStateAreaModel =
+                          rechargeStateAreaModelList.firstWhere(
+                        (element) => element.areaName == value,
+                      );
 
+                      rechargeController.update();
+                    },
+                    validator: (value) {
+                      if (value == null) {
+                        return "Please a your state";
+                      }
                       return null;
                     },
-                  )
+                  ),
                 ],
               )),
         );

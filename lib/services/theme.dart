@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// Color primaryColor = const Color(0xFF941f37);
-// Color secondaryColor = const Color(0xFF941f37).withOpacity(.47);
 Color primaryColor = const Color(0xFF0D80F2);
 Color secondaryColor = const Color(0xFFf97316);
 Color backgroundDark = const Color(0xff231F20);

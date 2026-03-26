@@ -33,9 +33,12 @@ class TransactionsContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  (transactionModel.orderId == null)
+                  (transactionModel.orderId == null ||
+                          transactionModel.remark == null)
                       ? capitalize(transactionModel.description)
-                      : "Wallet recharge",
+                      : (transactionModel.remark != null)
+                          ? capitalize(transactionModel.remark)
+                          : "Wallet recharge",
                   style: Helper(context)
                       .textTheme
                       .bodyMedium
