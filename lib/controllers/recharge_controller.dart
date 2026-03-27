@@ -152,4 +152,11 @@ class RechargeController extends GetxController implements GetxService {
 
     return rechargePlanResponseList?.plans?[selectRechargeCategories] ?? [];
   }
+
+  RechargePlan? selectRechargePlan;
+
+  void updateSelectRechargePlan(RechargePlan? value) {
+    selectRechargePlan = value;
+    update();
+  }
 }
