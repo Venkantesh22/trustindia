@@ -298,6 +298,10 @@ class Assets {
   /// assets/svgs/wallet.svg
   static const String svgsWallet = "assets/svgs/wallet.svg";
 
+  /// Assets for svgsWallet2
+  /// assets/svgs/wallet-2.svg
+  static const String svgsWallet2 = "assets/svgs/wallet-2.svg";
+
   /// Assets for svgsWalletDemo
   /// assets/svgs/wallet-demo.svg
   static const String svgsWalletDemo = "assets/svgs/wallet-demo.svg";

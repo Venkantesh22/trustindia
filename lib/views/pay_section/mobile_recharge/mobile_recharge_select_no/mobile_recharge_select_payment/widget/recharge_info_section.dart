@@ -84,8 +84,9 @@ class RechargeInfoTopSection extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(16, 22, 16, 6),
+                  margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
                   width: 1,
+                  height: 40,
                   decoration: BoxDecoration(
                     color: appbarBlueLight,
                   ),

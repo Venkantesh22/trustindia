@@ -16,7 +16,7 @@ class RechargePaymentOptionContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: rechargeOptionModel.onTap,
       child: Container(
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
@@ -67,7 +67,7 @@ class RechargePaymentOptionContainer extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: rechargeOptionModel.subTitle,
+                          text: "${rechargeOptionModel.subTitle}  ",
                           style: Helper(context)
                               .textTheme
                               .headlineSmall
@@ -134,18 +134,13 @@ List<RechargeOptionModel> rechargeOptionModelList({
 }) {
   return [
     RechargeOptionModel(
-      icon: Assets.svgsWalletDemo,
+      icon: Assets.svgsWallet2,
       title: "Pay by Wallet",
       subTitle: "Available Balance:",
-      subTitle2: walletController.walletModel?.wallet ?? "0",
+      subTitle2: walletController.walletModel?.walletBalance ?? "0",
       isSelect: rechargeController.selectedPaymentIndex == 0,
       onTap: () {
         rechargeController.selectPaymentMethod(0);
-
-        // navigate(
-        //   context: Get.context!,
-        //   page: const WalletEnterPinScreen(),
-        // );
       },
     ),
     RechargeOptionModel(
@@ -155,11 +150,6 @@ List<RechargeOptionModel> rechargeOptionModelList({
       isSelect: rechargeController.selectedPaymentIndex == 1,
       onTap: () {
         rechargeController.selectPaymentMethod(1);
-
-        //   navigate(
-        //     context: Get.context!,
-        //     page: const DynamicScreen(), // 👈 your screen
-        //   );
       },
     ),
   ];
