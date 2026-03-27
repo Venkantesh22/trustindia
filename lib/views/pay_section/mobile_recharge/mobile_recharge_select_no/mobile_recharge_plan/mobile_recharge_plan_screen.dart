@@ -32,13 +32,13 @@ class _MobileRechargePlanScreenState extends State<MobileRechargePlanScreen> {
               ),
         ),
       ),
-      body: SingleChildScrollView(
+      body: Padding(
         padding: AppConstants.screenPadding,
         child: Column(
           children: [
             RechargePlanTopSection(),
             SizedBox(height: 40),
-            MobileRechargePlanSection()
+            Expanded(child: MobileRechargePlanSection())
           ],
         ),
       ),

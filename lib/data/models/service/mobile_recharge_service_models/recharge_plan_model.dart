@@ -1,3 +1,6 @@
+import 'package:lekra/services/constants.dart';
+import 'package:lekra/services/date_formatters_and_converters.dart';
+
 class RechargePlanResponse {
   final bool? success;
   final String? operatorCode;
@@ -47,9 +50,12 @@ class RechargePlan {
   factory RechargePlan.fromJson(Map<String, dynamic> json) {
     return RechargePlan(
       rs: json['rs']?.toString(),
-      desc: json['desc'],
+      desc: json['desc'].toString().replaceAll("Benefits: ", ""),
       validity: json['validity']?.toString(),
       lastUpdate: json['last_update'],
     );
   }
+
+  String get planAmount =>
+      PriceConverter.convertToNumberFormat(double.tryParse(rs ?? "0.0") ?? 0.0);
 }

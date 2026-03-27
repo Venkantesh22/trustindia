@@ -206,6 +206,10 @@ class Assets {
   /// assets/svgs/cross-cirlce.svg
   static const String svgsCrossCirlce = "assets/svgs/cross-cirlce.svg";
 
+  /// Assets for svgsCurrentIcon
+  /// assets/svgs/current-icon.svg
+  static const String svgsCurrentIcon = "assets/svgs/current-icon.svg";
+
   /// Assets for svgsDeliver
   /// assets/svgs/Deliver.svg
   static const String svgsDeliver = "assets/svgs/Deliver.svg";

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/recharge_controller.dart';
+import 'package:lekra/data/models/service/mobile_recharge_service_models/recharge_plan_model.dart';
 import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/mobile_recharge_plan/widget/plan_title_container.dart';
+import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/mobile_recharge_plan/widget/reacharge_plan_container.dart';
 
 class MobileRechargePlanSection extends StatelessWidget {
   const MobileRechargePlanSection({
@@ -39,6 +41,27 @@ class MobileRechargePlanSection extends StatelessWidget {
                 itemCount: rechargeController.isLoading
                     ? 4
                     : rechargeController.rechargeCategoriesList.length),
+          ),
+          SizedBox(height: 24),
+          Expanded(
+            child: ListView.separated(
+              itemBuilder: (context, index) {
+                final plans = rechargeController.isLoading
+                    ? RechargePlan()
+                    : rechargeController.selectedPlans[index];
+
+                return CustomShimmer(
+                  isLoading: rechargeController.isLoading,
+                  child: RechargePlanContainer(
+                    rechargePlan: plans,
+                  ),
+                );
+              },
+              separatorBuilder: (_, __) => SizedBox(height: 24),
+              itemCount: rechargeController.isLoading
+                  ? 6
+                  : rechargeController.selectedPlans.length,
+            ),
           )
         ],
       );
