@@ -52,7 +52,7 @@ class RechargePlanContainer extends StatelessWidget {
                     ),
                     SizedBox(height: 4),
                     Text(
-                      "Validity: 7 Days",
+                      "Validity: ${rechargePlan.validity} Days",
                       style: Helper(context).textTheme.headlineSmall?.copyWith(
                             fontSize: 11,
                             fontWeight: FontWeight.w700,
