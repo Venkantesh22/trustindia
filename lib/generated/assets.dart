@@ -202,6 +202,10 @@ class Assets {
   /// assets/svgs/check-in-circle.svg
   static const String svgsCheckInCircle = "assets/svgs/check-in-circle.svg";
 
+  /// Assets for svgsCheckInZigzipCirlce
+  /// assets/svgs/check-in-zigzip-cirlce.svg
+  static const String svgsCheckInZigzipCirlce = "assets/svgs/check-in-zigzip-cirlce.svg";
+
   /// Assets for svgsCrossCirlce
   /// assets/svgs/cross-cirlce.svg
   static const String svgsCrossCirlce = "assets/svgs/cross-cirlce.svg";

@@ -10,6 +10,7 @@ import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/custom_image.dart';
+import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/success_recharge_screen/success_recharge_screen.dart';
 import 'package:lekra/views/screens/auth_screens/forget_password/opt_verification_screen.dart';
 import 'package:lekra/views/screens/dashboard/dashboard_screen.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/account_screen.dart';
@@ -136,6 +137,7 @@ class _WalletEnterPinScreenState extends State<WalletEnterPinScreen>
 
       rechargeController.mobileRecharge().then((value) {
         if (value.isSuccess) {
+          navigate(context: context, page: SuccessRechargeScreen());
           showToast(message: value.message, typeCheck: value.isSuccess);
         } else {
           _triggerShake();

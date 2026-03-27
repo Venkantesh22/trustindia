@@ -7,6 +7,7 @@ import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/service/mobile_recharge_service_models/network_service_model.dart';
 import 'package:lekra/data/models/service/mobile_recharge_service_models/recharge_plan_model.dart';
 import 'package:lekra/data/models/service/mobile_recharge_service_models/recharge_state_area_model.dart';
+import 'package:lekra/data/models/service/mobile_recharge_service_models/recharge_success_model.dart';
 import 'package:lekra/data/repositories/recharge_repo.dart';
 import 'package:lekra/views/base/custom_image.dart';
 
@@ -47,6 +48,7 @@ class RechargeController extends GetxController implements GetxService {
 
   TextEditingController rechargeAmountController = TextEditingController();
 
+  RechargeSuccessModel? rechargeSuccessModel;
   Future<ResponseModel> mobileRecharge() async {
     log('----------- mobileRecharge Called() -------------');
     ResponseModel responseModel = ResponseModel(false, "Unknown error");
@@ -67,6 +69,9 @@ class RechargeController extends GetxController implements GetxService {
 
       // ✅ Correct key is 'status'
       if (response.statusCode == 200 && response.body['status'] == true) {
+        rechargeSuccessModel =
+            RechargeSuccessModel.fromJson(response.body['data']);
+
         responseModel = ResponseModel(
             true,
             response.body['message'] ??
