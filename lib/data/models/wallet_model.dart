@@ -15,6 +15,6 @@ class WalletModel {
         "wallet": wallet,
       };
 
-  String get walletBalance =>
-      PriceConverter.convertToNumberFormat(double.parse(wallet ?? ""));
+  String get walletBalance => PriceConverter.convertToNumberFormat(
+      double.tryParse(wallet ?? "") ?? 0.0);
 }

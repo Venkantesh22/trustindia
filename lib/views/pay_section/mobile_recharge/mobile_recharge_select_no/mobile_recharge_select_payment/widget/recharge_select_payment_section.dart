@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/recharge_controller.dart';
 import 'package:lekra/controllers/wallet_controller.dart';
+import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/mobile_recharge_select_payment/widget/recharge_payment_option_container.dart';
 
 class RechargeSelectPaymentSection extends StatelessWidget {
@@ -29,8 +30,11 @@ class RechargeSelectPaymentSection extends StatelessWidget {
               itemBuilder: (context, index) {
                 final rechargeOptionModel = rechargeOptionList[index];
 
-                return RechargePaymentOptionContainer(
-                  rechargeOptionModel: rechargeOptionModel,
+                return CustomShimmer(
+                  isLoading: rechargeController.isLoading,
+                  child: RechargePaymentOptionContainer(
+                    rechargeOptionModel: rechargeOptionModel,
+                  ),
                 );
               },
               separatorBuilder: (_, __) => SizedBox(height: 16),

@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/success_recharge_screen/success_recharge_screen.dart';
 import 'package:lekra/views/screens/splash_screen/splash_screen.dart';
 import 'package:toastification/toastification.dart';
 import 'services/init.dart';
