@@ -58,7 +58,7 @@ class RechargeController extends GetxController implements GetxService {
       Map<String, dynamic> data = {
         'mobile': mobileNoController.text.trim(),
         'amount': rechargeAmountController.text.trim(),
-        'operator_id': selectNetworkOperate?.operatorId,
+        'operator_id': selectNetworkOperate?.operatorRechargeCode,
         "wallet_pin": walletController.walletPin,
       };
 
