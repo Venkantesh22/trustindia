@@ -250,6 +250,10 @@ class Assets {
   /// assets/svgs/profile.svg
   static const String svgsProfile = "assets/svgs/profile.svg";
 
+  /// Assets for svgsQr
+  /// assets/svgs/qr.svg
+  static const String svgsQr = "assets/svgs/qr.svg";
+
   /// Assets for svgsQuickMode
   /// assets/svgs/Quick-Mode.svg
   static const String svgsQuickMode = "assets/svgs/Quick-Mode.svg";

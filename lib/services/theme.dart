@@ -31,6 +31,7 @@ Color greyExpired = const Color(0xFF958B8B);
 const Color whiteBg2 = Color(0xFFFAFAFA);
 const Color yellow = Color(0xFFFFDB4C);
 const Color blueLight = Color(0xFF005BB1);
+const Color blueDark = Color(0xFF0B1C300F);
 
 const Color black = Colors.black;
 const Color blackText = Color(0xFF0B1C30);

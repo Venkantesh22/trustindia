@@ -159,4 +159,11 @@ class RechargeController extends GetxController implements GetxService {
     selectRechargePlan = value;
     update();
   }
+
+  int selectedPaymentIndex = 0;
+
+  void selectPaymentMethod(int index) {
+    selectedPaymentIndex = index;
+    update();
+  }
 }
