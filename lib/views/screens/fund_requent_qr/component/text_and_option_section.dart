@@ -9,7 +9,7 @@ import 'package:lekra/data/models/user_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/common_button.dart';
-import 'package:lekra/views/screens/fund_requent_qr/dynamic_qr_sheet.dart';
+import 'package:lekra/views/screens/fund_requent_qr/upi_dynamic_qr_sheet.dart';
 import 'package:lekra/views/screens/widget/text_box/app_text_box.dart';
 
 class TextBoxAndOptionSection extends StatelessWidget {
@@ -26,7 +26,7 @@ class TextBoxAndOptionSection extends StatelessWidget {
         .createUPIQR(userModel: authController.userModel ?? UserModel())
         .then((value) async {
       if (value.isSuccess) {
-        DynamicQrSheet.show(
+        UPIDynamicQrSheet.show(
           context,
         );
 

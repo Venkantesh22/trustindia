@@ -10,7 +10,7 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/common_button.dart';
 
-class DynamicQrSheet {
+class UPIDynamicQrSheet {
   /// Shows the bottom sheet. Returns when sheet is dismissed.
   static Future<void> show(BuildContext context) async {
     // int remainingSeconds = _totalSeconds;
