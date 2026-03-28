@@ -45,6 +45,7 @@ class MobileRechargePlanSection extends StatelessWidget {
           SizedBox(height: 24),
           Expanded(
             child: ListView.separated(
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 20),
               itemBuilder: (context, index) {
                 final plans = rechargeController.isLoading
                     ? RechargePlan()

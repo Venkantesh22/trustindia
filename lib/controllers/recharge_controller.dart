@@ -171,4 +171,7 @@ class RechargeController extends GetxController implements GetxService {
     selectedPaymentIndex = index;
     update();
   }
+
+  TextEditingController mobileRechargeSearchController =
+      TextEditingController();
 }
