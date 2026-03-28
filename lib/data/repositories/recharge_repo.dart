@@ -23,13 +23,4 @@ class RechargeRepo {
         "${AppConstants.getRechargePlane}?operator_code=$operatorCode&circle_code=$circleCode",
         "fetchMobileRechargePlan",
       );
-
-  Future<Response> fetchDynamicForMobileRecharge({
-    required FormData data,
-  }) async =>
-      await apiClient.postData(
-        AppConstants.postDynamicForMobileRecharge,
-        "fetchMobileRechargePlan",
-        data,
-      );
 }

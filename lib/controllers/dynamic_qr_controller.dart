@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/data/models/dynamic_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
+import 'package:lekra/data/models/service/mobile_recharge_service_models/dynamic_for_reacharge_moble.dart';
 import 'package:lekra/data/repositories/dynamic_qr_repo.dart';
 
 class DynamicQRController extends GetxController implements GetxService {
@@ -148,6 +149,55 @@ class DynamicQRController extends GetxController implements GetxService {
 
     // isLoading = false;
     // update();
+    return responseModel;
+  }
+
+  DynamicForRechargeMobile? dynamicForRechargeMobile;
+  Future<ResponseModel> fetchDynamicForMobileRecharge({
+    required String mobileNumber,
+    required String operatorId,
+    required String amount,
+  }) async {
+    log('----------- fetchDynamicForMobileRecharge Called() -------------');
+
+    ResponseModel responseModel = ResponseModel(false, "Unknown error");
+    isLoading = true;
+    update();
+
+    try {
+      Map<String, dynamic> data = {
+        "mobile": mobileNumber,
+        'operator_id': operatorId,
+        'amount': amount,
+      };
+
+      Response response = await dynamicQrRepo.fetchDynamicForMobileRecharge(
+        data: FormData(data),
+      );
+
+      if (response.statusCode == 200 && (response.body['status'] == true)) {
+        dynamicForRechargeMobile =
+            DynamicForRechargeMobile.fromJson(response.body['data']);
+
+        responseModel = ResponseModel(
+          true,
+          response.body['message'] ?? "Success fetchDynamicForMobileRecharge",
+        );
+      } else {
+        responseModel = ResponseModel(
+          false,
+          response.body['message'] ??
+              "Something went wrong fetchDynamicForMobileRecharge",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch error");
+      log("****** Error ****** $e", name: "fetchDynamicForMobileRecharge");
+    }
+
+    isLoading = false;
+    update();
+
     return responseModel;
   }
 }

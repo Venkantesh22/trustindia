@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lekra/controllers/dynamic_qr_controller.dart';
 import 'package:lekra/controllers/recharge_controller.dart';
 import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/services/constants.dart';
@@ -24,6 +25,8 @@ class _MobileRechargeSelectPaymentScreenState
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Get.find<WalletController>().fetchWallet();
+      final rechargeController = Get.find<RechargeController>();
+      rechargeController.selectPaymentMethod(0);
     });
     // TODO: implement initState
     super.initState();
@@ -53,7 +56,17 @@ class _MobileRechargeSelectPaymentScreenState
                     );
                   }
                   if (rechargeController.selectedPaymentIndex == 1) {
-                    rechargeController.fetchDynamicForMobileRecharge();
+                    Get.find<DynamicQRController>()
+                        .fetchDynamicForMobileRecharge(
+                            mobileNumber: rechargeController
+                                .mobileNoController.text
+                                .trim(),
+                            operatorId:
+                                rechargeController.selectNetworkOperate
+                                        ?.operatorRechargeCode ??
+                                    "",
+                            amount: rechargeController.selectRechargePlan?.rs ??
+                                "");
                   }
                 },
               ),

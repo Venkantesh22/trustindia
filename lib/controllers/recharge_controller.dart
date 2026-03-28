@@ -202,49 +202,4 @@ class RechargeController extends GetxController implements GetxService {
 
   TextEditingController mobileRechargeSearchController =
       TextEditingController();
-
-  DynamicForRechargeMobile? dynamicForRechargeMobile;
-  Future<ResponseModel> fetchDynamicForMobileRecharge() async {
-    log('----------- fetchDynamicForMobileRecharge Called() -------------');
-
-    ResponseModel responseModel = ResponseModel(false, "Unknown error");
-    isLoading = true;
-    update();
-
-    try {
-      Map<String, dynamic> data = {
-        "mobile": mobileNoController.text.trim(),
-        'operator_id': selectNetworkOperate?.operatorRechargeCode,
-        'amount': selectRechargePlan?.rs,
-      };
-
-      Response response = await rechargeRepo.fetchDynamicForMobileRecharge(
-        data: FormData(data),
-      );
-
-      if (response.statusCode == 200 && (response.body['status'] == true)) {
-        dynamicForRechargeMobile =
-            DynamicForRechargeMobile.fromJson(response.body['data']);
-
-        responseModel = ResponseModel(
-          true,
-          response.body['message'] ?? "Success fetchDynamicForMobileRecharge",
-        );
-      } else {
-        responseModel = ResponseModel(
-          false,
-          response.body['message'] ??
-              "Something went wrong fetchDynamicForMobileRecharge",
-        );
-      }
-    } catch (e) {
-      responseModel = ResponseModel(false, "Catch error");
-      log("****** Error ****** $e", name: "fetchDynamicForMobileRecharge");
-    }
-
-    isLoading = false;
-    update();
-
-    return responseModel;
-  }
 }
