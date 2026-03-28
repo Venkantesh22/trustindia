@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/data/models/response/response_model.dart';
+import 'package:lekra/data/models/service/mobile_recharge_service_models/dynamic_for_reacharge_moble.dart';
 import 'package:lekra/data/models/service/mobile_recharge_service_models/network_service_model.dart';
 import 'package:lekra/data/models/service/mobile_recharge_service_models/recharge_plan_model.dart';
 import 'package:lekra/data/models/service/mobile_recharge_service_models/recharge_state_area_model.dart';
@@ -153,9 +154,36 @@ class RechargeController extends GetxController implements GetxService {
   }
 
   List<RechargePlan> get selectedPlans {
-    if (selectRechargeCategories == null) return [];
+    final query = mobileRechargeSearchController.text.trim();
 
-    return rechargePlanResponseList?.plans?[selectRechargeCategories] ?? [];
+    /// 👉 If search is EMPTY → show selected category (normal flow)
+    if (query.isEmpty) {
+      if (selectRechargeCategories == null) return [];
+
+      return rechargePlanResponseList?.plans?[selectRechargeCategories] ?? [];
+    }
+
+    /// 🔥 NUMERIC ONLY SEARCH
+    final allPlans = rechargePlanResponseList?.plans?.values
+            .expand((list) => list)
+            .toList() ??
+        [];
+
+    return allPlans.where((plan) {
+      final amount = plan.rs ?? "";
+      final validity = plan.validity ?? "";
+
+      return amount.contains(query) || validity.contains(query);
+    }).toList();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    mobileRechargeSearchController.addListener(() {
+      update(); // 🔥 rebuild UI on search
+    });
   }
 
   RechargePlan? selectRechargePlan;
@@ -174,4 +202,49 @@ class RechargeController extends GetxController implements GetxService {
 
   TextEditingController mobileRechargeSearchController =
       TextEditingController();
+
+  DynamicForRechargeMobile? dynamicForRechargeMobile;
+  Future<ResponseModel> fetchDynamicForMobileRecharge() async {
+    log('----------- fetchDynamicForMobileRecharge Called() -------------');
+
+    ResponseModel responseModel = ResponseModel(false, "Unknown error");
+    isLoading = true;
+    update();
+
+    try {
+      Map<String, dynamic> data = {
+        "mobile": mobileNoController.text.trim(),
+        'operator_id': selectNetworkOperate?.operatorRechargeCode,
+        'amount': selectRechargePlan?.rs,
+      };
+
+      Response response = await rechargeRepo.fetchDynamicForMobileRecharge(
+        data: FormData(data),
+      );
+
+      if (response.statusCode == 200 && (response.body['status'] == true)) {
+        dynamicForRechargeMobile =
+            DynamicForRechargeMobile.fromJson(response.body['data']);
+
+        responseModel = ResponseModel(
+          true,
+          response.body['message'] ?? "Success fetchDynamicForMobileRecharge",
+        );
+      } else {
+        responseModel = ResponseModel(
+          false,
+          response.body['message'] ??
+              "Something went wrong fetchDynamicForMobileRecharge",
+        );
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch error");
+      log("****** Error ****** $e", name: "fetchDynamicForMobileRecharge");
+    }
+
+    isLoading = false;
+    update();
+
+    return responseModel;
+  }
 }

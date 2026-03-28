@@ -27,6 +27,15 @@ class RechargePlanSearchBar extends StatelessWidget {
             Icons.search,
             color: blueLight,
           ),
+          keyboardType: TextInputType.number,
+          textInputAction: TextInputAction.done,
+          suffix: IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () {
+              rechargeController.mobileRechargeSearchController.clear();
+              rechargeController.update();
+            },
+          ),
         ),
       );
     });

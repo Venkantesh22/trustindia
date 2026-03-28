@@ -52,6 +52,9 @@ class _MobileRechargeSelectPaymentScreenState
                       ),
                     );
                   }
+                  if (rechargeController.selectedPaymentIndex == 1) {
+                    rechargeController.fetchDynamicForMobileRecharge();
+                  }
                 },
               ),
               SizedBox(height: 12),
