@@ -2,13 +2,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lekra/controllers/dynamic_qr_controller.dart';
 import 'package:lekra/controllers/fund_request_controller.dart';
-import 'package:lekra/services/lanch_helper.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:lekra/generated/assets.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/base/common_button.dart';
 
 class DynamicQrSheet {
   static Future<void> show(BuildContext context) async {
@@ -19,8 +18,7 @@ class DynamicQrSheet {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (ctx) {
-        return GetBuilder<FundRequestController>(
-            builder: (fundRequestController) {
+        return GetBuilder<DynamicQRController>(builder: (dynamicQRController) {
           return SafeArea(
             child: StatefulBuilder(builder: (modalContext, setModalState) {
               String formatMMSS(int seconds) {
@@ -44,8 +42,8 @@ class DynamicQrSheet {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            fundRequestController.stopAllTimers();
-                            Navigator.of(modalContext).pop();
+                            // fundRequestController.stopAllTimers();
+                            // Navigator.of(modalContext).pop();
                           },
                           child: CircleAvatar(
                             radius: 20,
@@ -73,17 +71,17 @@ class DynamicQrSheet {
                                     ),
                               ),
                               const SizedBox(height: 2),
-                              Text(
-                                "Amount: ${fundRequestController.upiQRModel?.amount ?? "0"}",
-                                style: Helper(modalContext)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: grey,
-                                    ),
-                              ),
+                              // Text(
+                              //   "Amount: ${dynamicQRController.dy?.amount ?? "0"}",
+                              //   style: Helper(modalContext)
+                              //       .textTheme
+                              //       .bodyMedium
+                              //       ?.copyWith(
+                              //         fontSize: 12,
+                              //         fontWeight: FontWeight.w400,
+                              //         color: grey,
+                              //       ),
+                              // ),
                             ],
                           ),
                         ),
@@ -91,7 +89,7 @@ class DynamicQrSheet {
                     ),
                     const SizedBox(height: 24),
                     QrImageView(
-                      data: fundRequestController.upiQRModel?.qrString ?? "",
+                      data: dynamicQRController.dynamicModel?.qrString ?? "",
                       version: QrVersions.auto,
                       size: 300,
                       gapless: true,
@@ -101,18 +99,18 @@ class DynamicQrSheet {
                         size: Size(60, 60),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      child: Text(
-                        "QR expires in ${formatMMSS(fundRequestController.remainingSeconds)}",
-                        style:
-                            Helper(modalContext).textTheme.bodyMedium?.copyWith(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: primaryColor,
-                                ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(vertical: 15),
+                    //   child: Text(
+                    //     "QR expires in ${formatMMSS(fundRequestController.remainingSeconds)}",
+                    //     style:
+                    //         Helper(modalContext).textTheme.bodyMedium?.copyWith(
+                    //               fontSize: 12,
+                    //               fontWeight: FontWeight.w500,
+                    //               color: primaryColor,
+                    //             ),
+                    //   ),
+                    // ),
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
@@ -144,23 +142,6 @@ class DynamicQrSheet {
                       ),
                     ),
                     const SizedBox(height: 25),
-                    CustomButton(
-                      radius: 5,
-                      height: 50,
-                      onTap: () {
-                        LaunchHelper.launchUpiViaSystemChooser(
-                            fundRequestController.upiQRModel?.qrString ?? "");
-                      },
-                      child: Text(
-                        "Pay with UPI App",
-                        style:
-                            Helper(modalContext).textTheme.bodyMedium?.copyWith(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: white,
-                                ),
-                      ),
-                    )
                   ],
                 ),
               );

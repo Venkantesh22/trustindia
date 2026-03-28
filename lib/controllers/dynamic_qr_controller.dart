@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:lekra/controllers/order_controlller.dart';
-import 'package:lekra/data/models/dynamic_model.dart';
+import 'package:lekra/data/models/dynamic_qr_model/dynamic_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/service/mobile_recharge_service_models/dynamic_for_reacharge_moble.dart';
 import 'package:lekra/data/repositories/dynamic_qr_repo.dart';
@@ -152,7 +152,7 @@ class DynamicQRController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  DynamicForRechargeMobile? dynamicForRechargeMobile;
+  DynamicForRechargeMobileModel? dynamicForRechargeMobileModel;
   Future<ResponseModel> fetchDynamicForMobileRecharge({
     required String mobileNumber,
     required String operatorId,
@@ -176,8 +176,15 @@ class DynamicQRController extends GetxController implements GetxService {
       );
 
       if (response.statusCode == 200 && (response.body['status'] == true)) {
-        dynamicForRechargeMobile =
-            DynamicForRechargeMobile.fromJson(response.body['data']);
+        dynamicForRechargeMobileModel =
+            DynamicForRechargeMobileModel.fromJson(response.body['data']);
+
+        dynamicModel = DynamicModel(
+          qrString: dynamicForRechargeMobileModel?.qr ?? "",
+          amount: double.tryParse(dynamicForRechargeMobileModel?.amount ?? ""),
+          vpa: dynamicForRechargeMobileModel?.vpa ?? "",
+          orderId: dynamicForRechargeMobileModel?.orderId,
+        );
 
         responseModel = ResponseModel(
           true,

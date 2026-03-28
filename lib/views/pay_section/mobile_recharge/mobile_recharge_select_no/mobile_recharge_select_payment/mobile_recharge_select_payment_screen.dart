@@ -6,6 +6,7 @@ import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/mobile_recharge_select_payment/widget/custom_button_pay_section.dart';
+import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/mobile_recharge_select_payment/widget/dynamic_qr_botton_sheet.dart';
 import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/mobile_recharge_select_payment/widget/recharge_info_section.dart';
 import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/mobile_recharge_select_payment/widget/recharge_select_payment_section.dart';
 import 'package:lekra/views/screens/dashboard/wallet/wallet_enter_pin_screen/wallet_enter_pin_screen.dart';
@@ -61,12 +62,18 @@ class _MobileRechargeSelectPaymentScreenState
                             mobileNumber: rechargeController
                                 .mobileNoController.text
                                 .trim(),
-                            operatorId:
-                                rechargeController.selectNetworkOperate
-                                        ?.operatorRechargeCode ??
-                                    "",
-                            amount: rechargeController.selectRechargePlan?.rs ??
-                                "");
+                            operatorId: rechargeController.selectNetworkOperate
+                                    ?.operatorRechargeCode ??
+                                "",
+                            amount:
+                                rechargeController.selectRechargePlan?.rs ?? "")
+                        .then((value) {
+                      if (value.isSuccess) {
+                        DynamicQrSheet.show(
+                          context,
+                        );
+                      }
+                    });
                   }
                 },
               ),

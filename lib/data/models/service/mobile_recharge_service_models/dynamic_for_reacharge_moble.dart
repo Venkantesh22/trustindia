@@ -1,4 +1,4 @@
-class DynamicForRechargeMobile {
+class DynamicForRechargeMobileModel {
   final int? rechargeId;
   final String? mobile;
   final String? amount;
@@ -6,7 +6,7 @@ class DynamicForRechargeMobile {
   final String? vpa;
   final int? orderId;
 
-  DynamicForRechargeMobile({
+  DynamicForRechargeMobileModel({
     this.rechargeId,
     this.mobile,
     this.amount,
@@ -15,8 +15,8 @@ class DynamicForRechargeMobile {
     this.orderId,
   });
 
-  factory DynamicForRechargeMobile.fromJson(Map<String, dynamic> json) =>
-      DynamicForRechargeMobile(
+  factory DynamicForRechargeMobileModel.fromJson(Map<String, dynamic> json) =>
+      DynamicForRechargeMobileModel(
         rechargeId: json["recharge_id"],
         mobile: json["mobile"],
         amount: json["amount"],
