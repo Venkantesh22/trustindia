@@ -194,6 +194,10 @@ class Assets {
   /// assets/svgs/addresss_account.png
   static const String svgsAddresssAccount = "assets/svgs/addresss_account.png";
 
+  /// Assets for svgsArrowForward
+  /// assets/svgs/arrow-forward.svg
+  static const String svgsArrowForward = "assets/svgs/arrow-forward.svg";
+
   /// Assets for svgsBottonAccount
   /// assets/svgs/botton-account.svg
   static const String svgsBottonAccount = "assets/svgs/botton-account.svg";
