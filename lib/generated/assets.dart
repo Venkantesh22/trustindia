@@ -238,6 +238,10 @@ class Assets {
   /// assets/svgs/membership-subscription.png
   static const String svgsMembershipSubscription = "assets/svgs/membership-subscription.png";
 
+  /// Assets for svgsMobile
+  /// assets/svgs/mobile.svg
+  static const String svgsMobile = "assets/svgs/mobile.svg";
+
   /// Assets for svgsNotification
   /// assets/svgs/notification.svg
   static const String svgsNotification = "assets/svgs/notification.svg";

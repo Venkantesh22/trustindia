@@ -38,6 +38,7 @@ const Color blackText = Color(0xFF0B1C30);
 const Color blackBillingText = Color(0xFF0F1417);
 const Color red = Colors.red;
 const Color green = Colors.green;
+const Color rustyOrange = Color(0xFF9D4300);
 
 //Order Status color
 

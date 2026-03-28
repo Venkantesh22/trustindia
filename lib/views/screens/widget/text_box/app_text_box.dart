@@ -9,6 +9,7 @@ import 'package:lekra/services/theme.dart';
 class AppTextFieldWithHeading extends StatefulWidget {
   final TextEditingController controller;
   final String? heading;
+  final Widget? headingWidget;
   final String hindText;
   final TextStyle? hintStyle;
   final String? prefixText;
@@ -39,6 +40,7 @@ class AppTextFieldWithHeading extends StatefulWidget {
     this.hintStyle,
     this.validator,
     this.heading,
+    this.headingWidget,
     this.keyboardType,
     this.suffix,
     this.prefixText,
@@ -107,15 +109,18 @@ class _AppTextFieldWithHeadingState extends State<AppTextFieldWithHeading> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.heading != null) ...[
+        if (widget.heading != null || widget.headingWidget != null) ...[
           Row(
             children: [
-              Text(
-                widget.heading!,
-                style: Helper(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(fontSize: 16, fontWeight: FontWeight.w600),
+              Expanded(
+                child: widget.headingWidget ??
+                    Text(
+                      widget.heading!,
+                      style: Helper(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(fontSize: 16, fontWeight: FontWeight.w600),
+                    ),
               ),
               const SizedBox(width: 4),
               if (widget.isRequired)
