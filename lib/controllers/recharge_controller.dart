@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/wallet_controller.dart';
 import 'package:lekra/data/models/response/response_model.dart';
-import 'package:lekra/data/models/service/mobile_recharge_service_models/dynamic_for_reacharge_moble.dart';
 import 'package:lekra/data/models/service/mobile_recharge_service_models/network_service_model.dart';
 import 'package:lekra/data/models/service/mobile_recharge_service_models/recharge_plan_model.dart';
 import 'package:lekra/data/models/service/mobile_recharge_service_models/recharge_state_area_model.dart';
