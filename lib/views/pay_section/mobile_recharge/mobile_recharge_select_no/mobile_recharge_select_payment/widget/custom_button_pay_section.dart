@@ -7,9 +7,14 @@ import 'package:lekra/services/theme.dart';
 class CustomButtonForPaySection extends StatelessWidget {
   final String? title;
   final Widget? titleWidget;
+  final bool? isLoading;
   final Function() onTap;
   const CustomButtonForPaySection(
-      {super.key, this.title, required this.onTap, this.titleWidget});
+      {super.key,
+      this.title,
+      required this.onTap,
+      this.titleWidget,
+      this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +23,7 @@ class CustomButtonForPaySection extends StatelessWidget {
         child: Padding(
           padding: AppConstants.screenPadding,
           child: GestureDetector(
-            onTap: onTap,
+            onTap: isLoading == true ? () {} : onTap,
             child: Container(
               width: double.infinity,
               height: 60,
@@ -32,15 +37,20 @@ class CustomButtonForPaySection extends StatelessWidget {
                 ),
               ),
               child: Center(
-                child: titleWidget ??
-                    Text(
-                      title ?? "",
-                      style: Helper(context).textTheme.displaySmall?.copyWith(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                            color: white,
-                          ),
-                    ),
+                child: isLoading == true
+                    ? CircularProgressIndicator(
+                        color: grey,
+                      )
+                    : titleWidget ??
+                        Text(
+                          title ?? "",
+                          style:
+                              Helper(context).textTheme.displaySmall?.copyWith(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                    color: white,
+                                  ),
+                        ),
               ),
             ),
           ),

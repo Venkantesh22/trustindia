@@ -1,11 +1,14 @@
+import 'dart:async';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/data/models/dynamic_qr_model/dynamic_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/service/mobile_recharge_service_models/dynamic_for_reacharge_moble.dart';
 import 'package:lekra/data/repositories/dynamic_qr_repo.dart';
+import 'package:lekra/services/constants.dart';
 
 class DynamicQRController extends GetxController implements GetxService {
   final DynamicQrRepo dynamicQrRepo;
@@ -157,6 +160,7 @@ class DynamicQRController extends GetxController implements GetxService {
     required String mobileNumber,
     required String operatorId,
     required String amount,
+    required BuildContext context,
   }) async {
     log('----------- fetchDynamicForMobileRecharge Called() -------------');
 
@@ -206,5 +210,81 @@ class DynamicQRController extends GetxController implements GetxService {
     update();
 
     return responseModel;
+  }
+
+  Timer? _statusTimer;
+  Timer? _countdownTimer;
+
+  int totalSeconds = 5 * 60;
+  int remainingSeconds = 0;
+  bool isPaymentDone = false;
+
+  void startPaymentFlow({
+    required BuildContext context,
+  }) {
+    remainingSeconds = totalSeconds;
+    isPaymentDone = false;
+
+    update();
+
+    _startCountdown(context);
+    _startPolling(
+      context: context,
+    );
+  }
+
+  void _startCountdown(BuildContext context) {
+    _countdownTimer?.cancel();
+
+    _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (remainingSeconds <= 1) {
+        stopAllTimers();
+        if (Navigator.of(context).canPop()) {
+          Navigator.of(context).pop();
+        }
+        return;
+      }
+
+      remainingSeconds--;
+      update();
+    });
+  }
+
+  void _startPolling({
+    required BuildContext context,
+  }) {
+    _statusTimer?.cancel();
+    _statusTimer = Timer.periodic(const Duration(seconds: 2), (_) async {
+      if (dynamicModel?.orderId == null) return;
+
+      //* this For wallet recharge
+
+      // await uPIQRStatus();
+
+      if (isPaymentDone) {
+        stopAllTimers();
+
+        showToast(
+          message: "Payment Successful 🎉",
+          typeCheck: true,
+        );
+        dynamicModel = null;
+      } else {}
+    });
+  }
+
+  void stopAllTimers() {
+    _countdownTimer?.cancel();
+    _statusTimer?.cancel();
+
+    _countdownTimer = null;
+    _statusTimer = null;
+  }
+
+  @override
+  void onClose() {
+    _statusTimer?.cancel();
+    _countdownTimer?.cancel();
+    super.onClose();
   }
 }

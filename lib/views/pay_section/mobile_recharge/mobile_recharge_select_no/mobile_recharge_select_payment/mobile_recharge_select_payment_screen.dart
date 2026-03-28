@@ -45,6 +45,7 @@ class _MobileRechargeSelectPaymentScreenState
             mainAxisSize: MainAxisSize.min,
             children: [
               CustomButtonForPaySection(
+                isLoading: rechargeController.isLoading,
                 title:
                     "Pay Now ${rechargeController.selectRechargePlan?.planAmount ?? ""}",
                 onTap: () {
@@ -66,9 +67,12 @@ class _MobileRechargeSelectPaymentScreenState
                                     ?.operatorRechargeCode ??
                                 "",
                             amount:
-                                rechargeController.selectRechargePlan?.rs ?? "")
+                                rechargeController.selectRechargePlan?.rs ?? "",
+                            context: context)
                         .then((value) {
                       if (value.isSuccess) {
+                        Get.find<DynamicQRController>()
+                            .startPaymentFlow(context: context);
                         DynamicQrSheet.show(
                           context,
                         );

@@ -42,8 +42,8 @@ class DynamicQrSheet {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            // fundRequestController.stopAllTimers();
-                            // Navigator.of(modalContext).pop();
+                            dynamicQRController.stopAllTimers();
+                            Navigator.of(modalContext).pop();
                           },
                           child: CircleAvatar(
                             radius: 20,
@@ -70,18 +70,6 @@ class DynamicQrSheet {
                                       color: primaryColor,
                                     ),
                               ),
-                              const SizedBox(height: 2),
-                              // Text(
-                              //   "Amount: ${dynamicQRController.dy?.amount ?? "0"}",
-                              //   style: Helper(modalContext)
-                              //       .textTheme
-                              //       .bodyMedium
-                              //       ?.copyWith(
-                              //         fontSize: 12,
-                              //         fontWeight: FontWeight.w400,
-                              //         color: grey,
-                              //       ),
-                              // ),
                             ],
                           ),
                         ),
@@ -99,20 +87,56 @@ class DynamicQrSheet {
                         size: Size(60, 60),
                       ),
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(vertical: 15),
-                    //   child: Text(
-                    //     "QR expires in ${formatMMSS(fundRequestController.remainingSeconds)}",
-                    //     style:
-                    //         Helper(modalContext).textTheme.bodyMedium?.copyWith(
-                    //               fontSize: 12,
-                    //               fontWeight: FontWeight.w500,
-                    //               color: primaryColor,
-                    //             ),
-                    //   ),
-                    // ),
+                    Text(
+                      "Total Amount",
+                      style: Helper(context).textTheme.headlineSmall?.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: greyText2,
+                          ),
+                    ),
+                    SizedBox(height: 4),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          "₹",
+                          style:
+                              Helper(context).textTheme.displaySmall?.copyWith(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w800,
+                                    color: greyText2,
+                                  ),
+                        ),
+                        Text(
+                          dynamicQRController.dynamicModel?.formatAmount
+                                  .replaceAll("₹", "") ??
+                              "",
+                          style:
+                              Helper(context).textTheme.displaySmall?.copyWith(
+                                    fontSize: 48,
+                                    fontWeight: FontWeight.w800,
+                                    color: greyText2,
+                                  ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      child: Text(
+                        "QR expires in ${formatMMSS(dynamicQRController.remainingSeconds)}",
+                        style:
+                            Helper(modalContext).textTheme.bodyMedium?.copyWith(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: primaryColor,
+                                ),
+                      ),
+                    ),
                     Container(
                       padding: const EdgeInsets.all(16),
+                      margin: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                           color: secondaryColor,
                           borderRadius: BorderRadius.circular(16)),
@@ -141,7 +165,6 @@ class DynamicQrSheet {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 25),
                   ],
                 ),
               );

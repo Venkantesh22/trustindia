@@ -1,3 +1,5 @@
+import 'package:lekra/services/constants.dart';
+
 class DynamicModel {
   final String? vpa;
   final String? qrString;
@@ -24,4 +26,7 @@ class DynamicModel {
         "order_id": orderId,
         "amount": amount,
       };
+
+  String get formatAmount =>
+      PriceConverter.convertToNumberFormat(amount ?? 0.00);
 }
