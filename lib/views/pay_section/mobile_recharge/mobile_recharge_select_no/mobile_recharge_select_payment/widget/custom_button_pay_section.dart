@@ -3,11 +3,14 @@ import 'package:get/get.dart';
 import 'package:lekra/controllers/recharge_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
-import 'package:lekra/views/screens/dashboard/wallet/wallet_enter_pin_screen/wallet_enter_pin_screen.dart';
 
-class BottomButton extends StatelessWidget {
-  const BottomButton({
+class CustomButtonForPaySection extends StatelessWidget {
+  final String title;
+  final Function() onTap;
+  const CustomButtonForPaySection({
     super.key,
+    required this.title,
+    required this.onTap,
   });
 
   @override
@@ -20,16 +23,7 @@ class BottomButton extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               GestureDetector(
-                onTap: () {
-                  if (rechargeController.selectedPaymentIndex == 0) {
-                    navigate(
-                      context: context,
-                      page: WalletEnterPinScreen(
-                        isMobileRecharge: true,
-                      ),
-                    );
-                  }
-                },
+                onTap: onTap,
                 child: Container(
                   width: double.infinity,
                   height: 60,
@@ -44,7 +38,7 @@ class BottomButton extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      "Pay Now ${rechargeController.selectRechargePlan?.planAmount ?? ""}",
+                      title,
                       style: Helper(context).textTheme.displaySmall?.copyWith(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
