@@ -143,14 +143,14 @@ List<RechargeOptionModel> rechargeOptionModelList({
         rechargeController.selectPaymentMethod(0);
       },
     ),
-    RechargeOptionModel(
-      icon: Assets.svgsQr,
-      title: "Dynamic QR Code",
-      subTitle: "Fast & secure",
-      isSelect: rechargeController.selectedPaymentIndex == 1,
-      onTap: () {
-        rechargeController.selectPaymentMethod(1);
-      },
-    ),
+    // RechargeOptionModel(
+    //   icon: Assets.svgsQr,
+    //   title: "Dynamic QR Code",
+    //   subTitle: "Fast & secure",
+    //   isSelect: rechargeController.selectedPaymentIndex == 1,
+    //   onTap: () {
+    //     rechargeController.selectPaymentMethod(1);
+    //   },
+    // ),
   ];
 }
