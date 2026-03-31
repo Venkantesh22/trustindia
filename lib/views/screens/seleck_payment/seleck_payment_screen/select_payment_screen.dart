@@ -142,23 +142,24 @@ class _SelectPaymentScreenState extends State<SelectPaymentScreen> {
                             ),
                           );
                         }),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: upiOptionList.length,
-                          itemBuilder: (context, index) {
-                            final upi = upiOptionList[index];
+//! Dynamic QR is hide now only wallet payment alway
+                        // const SizedBox(
+                        //   height: 12,ß
+                        // ),
+                        // ListView.builder(
+                        //   shrinkWrap: true,
+                        //   physics: const NeverScrollableScrollPhysics(),
+                        //   itemCount: upiOptionList.length,
+                        //   itemBuilder: (context, index) {
+                        //     final upi = upiOptionList[index];
 
-                            return RowOfUPIOption(
-                              image: upi.image,
-                              title: upi.title,
-                              onTap: upi.onTap,
-                            );
-                          },
-                        )
+                        //     return RowOfUPIOption(
+                        //       image: upi.image,
+                        //       title: upi.title,
+                        //       onTap: upi.onTap,
+                        //     );
+                        //   },
+                        // )
                       ],
                     ),
                   ),
