@@ -1,3 +1,5 @@
+import 'package:lekra/services/constants.dart';
+
 class TransactionModel {
   int? id;
   String? type;
@@ -113,4 +115,14 @@ class TransactionModel {
       remark: remark ?? this.remark,
     );
   }
+
+  String get transactionTitle {
+  if (product == "Mobile Recharge") {
+    return "Mobile Recharge";
+  } else if (product == "addfund") {
+    return "Wallet Recharge";
+  } else {
+    return description ?? "Transaction";
+  }
+}
 }

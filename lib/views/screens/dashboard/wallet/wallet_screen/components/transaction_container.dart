@@ -33,12 +33,7 @@ class TransactionsContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  (transactionModel.orderId == null ||
-                          transactionModel.remark == null)
-                      ? capitalize(transactionModel.description)
-                      : (transactionModel.remark != null)
-                          ? capitalize(transactionModel.remark)
-                          : "Wallet recharge",
+                  transactionModel.transactionTitle,
                   style: Helper(context)
                       .textTheme
                       .bodyMedium
@@ -49,11 +44,15 @@ class TransactionsContainer extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 4),
-                          Text(
-                            "upi id : ${transactionModel.utr ?? "N/A"}",
-                            style:
-                                Helper(context).textTheme.bodySmall?.copyWith(),
-                          ),
+                          transactionModel.utr != null
+                              ? Text(
+                                  "upi id : ${transactionModel.utr ?? "N/A"}",
+                                  style: Helper(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.copyWith(),
+                                )
+                              : SizedBox(),
                           const SizedBox(height: 4),
                           Text(
                             "Order : ${transactionModel.orderId ?? "N/A"}",
