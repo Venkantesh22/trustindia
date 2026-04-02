@@ -17,7 +17,7 @@ class DynamicModel {
         vpa: json["vpa"],
         qrString: json["qrString"],
         orderId: json["order_id"],
-        amount: double.tryParse(json["amount"]),
+        amount: double.tryParse(json["amount" ] ??"") ,
       );
 
   Map<String, dynamic> toJson() => {
@@ -26,6 +26,20 @@ class DynamicModel {
         "order_id": orderId,
         "amount": amount,
       };
+
+
+      DynamicModel copyWith({
+        int? orderId,
+        String? qrString,
+        String? vpa,
+        double? amount,
+    }) => 
+        DynamicModel(
+            orderId: orderId ?? this.orderId,
+            qrString: qrString ?? this.qrString,
+            vpa: vpa ?? this.vpa,
+            amount: amount ?? this.amount,
+        );
 
   String get formatAmount =>
       PriceConverter.convertToNumberFormat(amount ?? 0.00);

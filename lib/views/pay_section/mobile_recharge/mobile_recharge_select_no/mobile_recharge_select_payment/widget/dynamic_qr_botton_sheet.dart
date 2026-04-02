@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/dynamic_qr_controller.dart';
-import 'package:lekra/controllers/fund_request_controller.dart';
+import 'package:lekra/views/base/shimmer.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:lekra/generated/assets.dart';
 import 'package:lekra/services/constants.dart';
@@ -11,7 +11,7 @@ import 'package:lekra/services/theme.dart';
 
 class DynamicQrSheet {
   static Future<void> show(BuildContext context) async {
-    final controller = Get.find<FundRequestController>();
+    final controller = Get.find<DynamicQRController>();
 
     await showModalBottomSheet<void>(
       context: context,
@@ -76,15 +76,18 @@ class DynamicQrSheet {
                       ],
                     ),
                     const SizedBox(height: 24),
-                    QrImageView(
-                      data: dynamicQRController.dynamicModel?.qrString ?? "",
-                      version: QrVersions.auto,
-                      size: 300,
-                      gapless: true,
-                      errorCorrectionLevel: QrErrorCorrectLevel.Q,
-                      embeddedImage: const AssetImage(Assets.imagesOnlyLogo),
-                      embeddedImageStyle: const QrEmbeddedImageStyle(
-                        size: Size(60, 60),
+                    CustomShimmer(
+                      isLoading: dynamicQRController.isLoading,
+                      child: QrImageView(
+                        data: dynamicQRController.dynamicModel?.qrString ?? "",
+                        version: QrVersions.auto,
+                        size: 300,
+                        gapless: true,
+                        errorCorrectionLevel: QrErrorCorrectLevel.Q,
+                        embeddedImage: const AssetImage(Assets.imagesOnlyLogo),
+                        embeddedImageStyle: const QrEmbeddedImageStyle(
+                          size: Size(60, 60),
+                        ),
                       ),
                     ),
                     Text(

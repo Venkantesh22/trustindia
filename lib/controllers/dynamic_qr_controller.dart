@@ -180,15 +180,14 @@ class DynamicQRController extends GetxController implements GetxService {
       );
 
       if (response.statusCode == 200 && (response.body['status'] == true)) {
-        dynamicForRechargeMobileModel =
-            DynamicForRechargeMobileModel.fromJson(response.body['data']);
+        dynamicModel = DynamicModel.fromJson(response.body['data']);
 
-        dynamicModel = DynamicModel(
-          qrString: dynamicForRechargeMobileModel?.qr ?? "",
-          amount: double.tryParse(dynamicForRechargeMobileModel?.amount ?? ""),
-          vpa: dynamicForRechargeMobileModel?.vpa ?? "",
-          orderId: dynamicForRechargeMobileModel?.orderId,
-        );
+        // dynamicModel = DynamicModel(
+        //   qrString: dynamicForRechargeMobileModel?.qr ?? "",
+        //   amount: double.tryParse(dynamicForRechargeMobileModel?.amount ?? ""),
+        //   vpa: dynamicForRechargeMobileModel?.vpa ?? "",
+        //   orderId: dynamicForRechargeMobileModel?.orderId,
+        // );
 
         responseModel = ResponseModel(
           true,
@@ -221,6 +220,7 @@ class DynamicQRController extends GetxController implements GetxService {
 
   void startPaymentFlow({
     required BuildContext context,
+    bool isForWalletFundAdd = false,
   }) {
     remainingSeconds = totalSeconds;
     isPaymentDone = false;
@@ -230,6 +230,7 @@ class DynamicQRController extends GetxController implements GetxService {
     _startCountdown(context);
     _startPolling(
       context: context,
+      isForWalletFundAdd: isForWalletFundAdd,
     );
   }
 
@@ -252,14 +253,16 @@ class DynamicQRController extends GetxController implements GetxService {
 
   void _startPolling({
     required BuildContext context,
+    bool isForWalletFundAdd = false,
   }) {
     _statusTimer?.cancel();
     _statusTimer = Timer.periodic(const Duration(seconds: 2), (_) async {
       if (dynamicModel?.orderId == null) return;
 
       //* this For wallet recharge
-
-      // await uPIQRStatus();
+      if (isForWalletFundAdd) {
+        fetchDynamicQRStatusForWalletAddFund();
+      }
 
       if (isPaymentDone) {
         stopAllTimers();
@@ -268,8 +271,19 @@ class DynamicQRController extends GetxController implements GetxService {
           message: "Payment Successful 🎉",
           typeCheck: true,
         );
+
         dynamicModel = null;
-      } else {}
+      }
+      if (isPaymentDone) {
+        stopAllTimers();
+
+        showToast(
+          message: "Payment Successful 🎉",
+          typeCheck: true,
+        );
+
+        dynamicModel = null;
+      }
     });
   }
 
@@ -286,5 +300,78 @@ class DynamicQRController extends GetxController implements GetxService {
     _statusTimer?.cancel();
     _countdownTimer?.cancel();
     super.onClose();
+  }
+
+  Future<ResponseModel> fetchDynamicQRForFund({required String amount}) async {
+    log('-----------  fetchDynamicQRForFund() -------------');
+    ResponseModel responseModel;
+    isLoading = true;
+    update();
+
+    try {
+      Map<String, dynamic> data = {
+        'amount': amount,
+      };
+      Response response = await dynamicQrRepo.fetchDynamicQRForFund(
+        data: FormData(data),
+      );
+
+      if (response.statusCode == 200 && response.body['status'] == "success") {
+        dynamicModel = DynamicModel.fromJson(response.body['data']);
+        log("check 1 $amount  ${dynamicModel?.amount} ");
+dynamicModel = dynamicModel?.copyWith(amount: double.tryParse(amount));        log("check 2   ${dynamicModel?.amount} ");
+
+        responseModel = ResponseModel(
+            true, response.body['message'] ?? "fetchDynamicQRForFund");
+      } else {
+        responseModel = ResponseModel(
+            false,
+            response.body['message'] ??
+                "Something Went Wrong in fetchDynamicQRForFund");
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "Catch");
+      log("****** Error ****** $e", name: "fetchDynamicQRForFund");
+    }
+
+    isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> fetchDynamicQRStatusForWalletAddFund() async {
+    log('----------- fetchDynamicQRStatusForWalletAddFund Called ----------');
+
+    ResponseModel responseModel;
+
+    try {
+      Map<String, dynamic> data = {'order_id': dynamicModel?.orderId};
+
+      Response response =
+          await dynamicQrRepo.fetchDynamicQRStatusForFund(data: FormData(data));
+
+      if (response.statusCode == 200 && response.body['status'] == true) {
+        isPaymentDone =
+            response.body['status'] == "success" ? true : false;
+
+        responseModel = ResponseModel(
+            true,
+            response.body['message'] ??
+                " fetchDynamicQRStatusForWalletAddFund success");
+      } else {
+        responseModel = ResponseModel(
+            false,
+            response.body['error'] ??
+                "Error while fetchDynamicQRStatusForWalletAddFund user");
+      }
+    } catch (e) {
+      log('ERROR AT checkPaymentStatus(): $e');
+      responseModel = ResponseModel(
+          false, "Error while fetchDynamicQRStatusForWalletAddFund user $e");
+    }
+
+    // isLoading = false;
+    // update();
+    return responseModel;
   }
 }

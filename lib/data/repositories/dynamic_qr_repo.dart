@@ -41,4 +41,22 @@ class DynamicQrRepo {
         "fetchMobileRechargePlan",
         data,
       );
+
+      Future<Response> fetchDynamicQRForFund({
+    required FormData data,
+    
+  }) async =>
+      await apiClient.postData(
+          AppConstants.postDynamicCreateQR,
+          "fetchDynamicQRForFund",
+          data);
+
+  Future<Response> fetchDynamicQRStatusForFund({
+    required FormData data,
+    
+  }) async =>
+      await apiClient.postData(
+          AppConstants.postDynamicQRStatus,
+          "fetchDynamicQRForFund",
+          data);
 }

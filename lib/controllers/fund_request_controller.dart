@@ -362,4 +362,37 @@ class FundRequestController extends GetxController implements GetxService {
     _countdownTimer?.cancel();
     super.onClose();
   }
+
+
+  // Future<ResponseModel> fetchDynamicQRForFund() async {
+  //   log('-----------  fetchDynamicQRForFund() -------------');
+  //   ResponseModel responseModel;
+  //   isLoading = true;
+  //   update();
+
+  //   try {
+  //     Map<String, dynamic> data = {
+  //       'order_id' : amountController.text.trim(),
+  //     };
+  //     Response response = await fundRequestRepo.fetchDynamicQRForFund(
+  //         data: FormData(data), );
+
+  //     if (response.statusCode == 200 && response.body['status'] == true) {
+  //       // isPaymentDone =
+  //       //     response.body['payment_status'] == "success" ? true : false;
+  //       responseModel =
+  //           ResponseModel(true, response.body['message'] ?? "uPIQRStatus");
+  //     } else {
+  //       responseModel = ResponseModel(false,
+  //           response.body['message'] ?? "Something Went Wrong in uPIQRStatus");
+  //     }
+  //   } catch (e) {
+  //     responseModel = ResponseModel(false, "Catch");
+  //     log("****** Error ****** $e", name: "uPIQRStatus");
+  //   }
+
+  //   isLoading = false;
+  //   update();
+  //   return responseModel;
+  // }
 }
