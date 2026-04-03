@@ -9,7 +9,7 @@ import 'package:lekra/services/date_formatters_and_converters.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/common_button.dart';
 import 'package:lekra/views/base/custom_image.dart';
-import 'package:lekra/views/screens/fund_requent_qr/fund_requent_qr_screen.dart';
+import 'package:lekra/views/screens/fund_requent_qr/fund_requent/fund_requent_qr_screen.dart';
 import 'package:lekra/views/screens/widget/text_box/app_text_box.dart';
 
 class RowOFSearchAndAddFundButtonSection extends StatefulWidget {
@@ -108,7 +108,6 @@ class _RowOFSearchAndAddFundButtonSectionState
             ),
             CustomButton(
               onTap: () {
-                // navigate(context: context, page: const FundRequestScreen());
                 navigate(context: context, page: const FundRequestQrScreen());
               },
               child: Row(

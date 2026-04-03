@@ -139,7 +139,7 @@ class RechargePlanContainer extends StatelessWidget {
                 style: Helper(context).textTheme.displaySmall?.copyWith(
                       fontSize: 18,
                       fontWeight: FontWeight.w800,
-                      color: blueLight,
+                      color: blueDark,
                     ),
               ),
             )

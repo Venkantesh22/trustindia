@@ -21,7 +21,7 @@ class PlanTitleContainer extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
-          color: isSelect ? blueLight : appbarBlueLight,
+          color: isSelect ? blueDark : appbarBlueLight,
         ),
         child: Text(
           title ?? "Loading..",

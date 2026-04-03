@@ -3,12 +3,15 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/data/models/dynamic_qr_model/dynamic_model.dart';
+import 'package:lekra/data/models/fund_reqests/dynamic_wallet_payment_done_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/service/mobile_recharge_service_models/dynamic_for_reacharge_moble.dart';
 import 'package:lekra/data/repositories/dynamic_qr_repo.dart';
 import 'package:lekra/services/constants.dart';
+import 'package:lekra/views/screens/fund_requent_qr/fund_add_success/fund_add_success_screen.dart';
 
 class DynamicQRController extends GetxController implements GetxService {
   final DynamicQrRepo dynamicQrRepo;
@@ -261,7 +264,7 @@ class DynamicQRController extends GetxController implements GetxService {
 
       //* this For wallet recharge
       if (isForWalletFundAdd) {
-        fetchDynamicQRStatusForWalletAddFund();
+        fetchDynamicQRStatusForWalletAddFund(context: context);
       }
 
       if (isPaymentDone) {
@@ -277,10 +280,14 @@ class DynamicQRController extends GetxController implements GetxService {
       if (isPaymentDone) {
         stopAllTimers();
 
-        showToast(
-          message: "Payment Successful 🎉",
-          typeCheck: true,
-        );
+        if (isForWalletFundAdd) {
+          navigate(context: context, page: const FundAddSuccessScreen());
+        }
+
+        // showToast(
+        //   message: "Payment Successful 🎉",
+        //   typeCheck: true,
+        // );
 
         dynamicModel = null;
       }
@@ -319,7 +326,8 @@ class DynamicQRController extends GetxController implements GetxService {
       if (response.statusCode == 200 && response.body['status'] == "success") {
         dynamicModel = DynamicModel.fromJson(response.body['data']);
         log("check 1 $amount  ${dynamicModel?.amount} ");
-dynamicModel = dynamicModel?.copyWith(amount: double.tryParse(amount));        log("check 2   ${dynamicModel?.amount} ");
+        dynamicModel = dynamicModel?.copyWith(amount: double.tryParse(amount));
+        log("check 2   ${dynamicModel?.amount} ");
 
         responseModel = ResponseModel(
             true, response.body['message'] ?? "fetchDynamicQRForFund");
@@ -339,7 +347,9 @@ dynamicModel = dynamicModel?.copyWith(amount: double.tryParse(amount));        l
     return responseModel;
   }
 
-  Future<ResponseModel> fetchDynamicQRStatusForWalletAddFund() async {
+  DynamicWalletPaymentDoneModel? dynamicWalletPaymentDoneModel;
+  Future<ResponseModel> fetchDynamicQRStatusForWalletAddFund(
+      {required BuildContext context}) async {
     log('----------- fetchDynamicQRStatusForWalletAddFund Called ----------');
 
     ResponseModel responseModel;
@@ -350,9 +360,12 @@ dynamicModel = dynamicModel?.copyWith(amount: double.tryParse(amount));        l
       Response response =
           await dynamicQrRepo.fetchDynamicQRStatusForFund(data: FormData(data));
 
-      if (response.statusCode == 200 && response.body['status'] == true) {
+      if (response.statusCode == 200 && response.body['status'] == "success") {
+        dynamicWalletPaymentDoneModel =
+            DynamicWalletPaymentDoneModel.fromJson(response.body['data']);
+
         isPaymentDone =
-            response.body['status'] == "success" ? true : false;
+            response.body['data']['status'] == "success" ? true : false;
 
         responseModel = ResponseModel(
             true,

@@ -25,7 +25,7 @@ class RechargePlanSearchBar extends StatelessWidget {
           hindText: "Search plan by amount or validity",
           preFixWidget: Icon(
             Icons.search,
-            color: blueLight,
+            color: blueDark,
           ),
           keyboardType: TextInputType.number,
           textInputAction: TextInputAction.done,

@@ -29,7 +29,7 @@ class RechargePlanTopSection extends StatelessWidget {
                     style: Helper(context).textTheme.displaySmall?.copyWith(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
-                        color: blueLight,
+                        color: blueDark,
                         letterSpacing: 0.5),
                   ),
                   SizedBox(height: 8),
@@ -60,7 +60,7 @@ class RechargePlanTopSection extends StatelessWidget {
                       Icon(
                         Icons.edit,
                         size: 16,
-                        color: blueLight,
+                        color: blueDark,
                       )
                     ],
                   ),

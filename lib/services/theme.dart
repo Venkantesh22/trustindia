@@ -27,11 +27,12 @@ const Color greyMember = Color(0xFF787878);
 Color greyText = const Color(0xFF5C5B5B);
 Color greyText2 = const Color(0xFF414753);
 Color greyText3 = const Color(0xFFC1C6D6);
+Color greyText4 = const Color(0xFF717785);
 Color greyExpired = const Color(0xFF958B8B);
 const Color whiteBg2 = Color(0xFFFAFAFA);
 const Color yellow = Color(0xFFFFDB4C);
-const Color blueLight = Color(0xFF005BB1);
-const Color blueDark = Color(0xFF0B1C300F);
+const Color blueDark = Color(0xFF005BB1);
+const Color blueLight = Color(0xFF0B1C300F);
 
 const Color black = Colors.black;
 const Color blackText = Color(0xFF0B1C30);

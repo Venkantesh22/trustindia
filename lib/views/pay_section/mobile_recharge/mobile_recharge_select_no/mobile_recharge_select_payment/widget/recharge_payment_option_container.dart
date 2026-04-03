@@ -25,7 +25,7 @@ class RechargePaymentOptionContainer extends StatelessWidget {
             border: rechargeOptionModel.isSelect
                 ? Border.all(
                     width: 2,
-                    color: blueLight,
+                    color: blueDark,
                   )
                 : null,
             boxShadow: [
@@ -33,7 +33,7 @@ class RechargePaymentOptionContainer extends StatelessWidget {
                 offset: Offset(0, 12),
                 blurRadius: 32,
                 spreadRadius: 0,
-                color: blueDark.withValues(alpha: 0.1),
+                color: blueLight.withValues(alpha: 0.1),
               ),
             ]),
         child: Row(
@@ -84,7 +84,7 @@ class RechargePaymentOptionContainer extends StatelessWidget {
                               ?.copyWith(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
-                                  color: blueLight),
+                                  color: blueDark),
                         )
                       ],
                     ),

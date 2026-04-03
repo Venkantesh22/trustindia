@@ -28,7 +28,7 @@ class ColumnOfInfo extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: blueLight.withValues(alpha: 0.1)),
+              color: blueDark.withValues(alpha: 0.1)),
           child: Row(
             children: [
               Text(

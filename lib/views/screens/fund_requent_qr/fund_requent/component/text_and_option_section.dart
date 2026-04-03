@@ -13,7 +13,8 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/common_button.dart';
 import 'package:lekra/views/pay_section/mobile_recharge/mobile_recharge_select_no/mobile_recharge_select_payment/widget/dynamic_qr_botton_sheet.dart';
-import 'package:lekra/views/screens/fund_requent_qr/upi_dynamic_qr_sheet.dart';
+import 'package:lekra/views/screens/fund_requent_qr/fund_add_success/fund_add_success_screen.dart';
+import 'package:lekra/views/screens/fund_requent_qr/fund_requent/upi_dynamic_qr_sheet.dart';
 import 'package:lekra/views/screens/widget/text_box/app_text_box.dart';
 
 class TextBoxAndOptionSection extends StatelessWidget {

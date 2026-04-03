@@ -26,6 +26,10 @@ class Assets {
   /// assets/images/check-mark-recharge.png
   static const String imagesCheckMarkRecharge = "assets/images/check-mark-recharge.png";
 
+  /// Assets for imagesCheckSuccessCircle
+  /// assets/images/check-success-circle.png
+  static const String imagesCheckSuccessCircle = "assets/images/check-success-circle.png";
+
   /// Assets for imagesCongratulationsApplyCoupon
   /// assets/images/congratulations-apply-coupon.png
   static const String imagesCongratulationsApplyCoupon = "assets/images/congratulations-apply-coupon.png";
@@ -285,6 +289,10 @@ class Assets {
   /// Assets for svgsSecurityLock
   /// assets/svgs/Security-Lock.svg
   static const String svgsSecurityLock = "assets/svgs/Security-Lock.svg";
+
+  /// Assets for svgsShare
+  /// assets/svgs/share.svg
+  static const String svgsShare = "assets/svgs/share.svg";
 
   /// Assets for svgsShopping
   /// assets/svgs/shopping.svg

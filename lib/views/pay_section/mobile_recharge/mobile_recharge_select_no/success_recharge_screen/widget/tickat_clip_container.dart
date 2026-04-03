@@ -96,7 +96,7 @@ class SuccessRechargeInfoSection extends StatelessWidget {
                     style: Helper(context).textTheme.headlineSmall?.copyWith(
                           fontSize: 11,
                           fontWeight: FontWeight.w700,
-                          color: blueLight,
+                          color: blueDark,
                         ),
                   ),
                 ],

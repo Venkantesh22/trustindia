@@ -79,7 +79,7 @@ class _MobileRechargeNoMidSectionState
             hintText: "Select Telecom Provider",
             preFixWidget: Icon(
               Icons.location_on_outlined,
-              color: blueLight,
+              color: blueDark,
             ),
             headingWidget: Text(
               "SELECT STATUS OR SERVICE TYPE",

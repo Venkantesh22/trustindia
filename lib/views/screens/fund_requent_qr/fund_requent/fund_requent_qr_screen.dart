@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/fund_request_controller.dart';
 import 'package:lekra/services/constants.dart';
-import 'package:lekra/views/screens/fund_requent_qr/component/text_and_option_section.dart';
+import 'package:lekra/views/screens/fund_requent_qr/fund_requent/component/text_and_option_section.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class FundRequestQrScreen extends StatefulWidget {

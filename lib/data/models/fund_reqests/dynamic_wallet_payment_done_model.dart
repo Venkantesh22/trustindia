@@ -1,4 +1,6 @@
 
+import 'package:lekra/services/constants.dart';
+
 class DynamicWalletPaymentDoneModel {
     final String? orderId;
     final String? merchantOrderId;
@@ -37,4 +39,6 @@ class DynamicWalletPaymentDoneModel {
         "payment_method": paymentMethod,
         "paid_at": paidAt?.toIso8601String(),
     };
+
+    String get formatAmount => PriceConverter.convertToNumberFormat(double.tryParse(amount ?? "0.0") ?? 0.0 );
 }

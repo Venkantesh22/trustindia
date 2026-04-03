@@ -33,7 +33,7 @@ class CustomButtonForPaySection extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(999),
                 gradient: LinearGradient(
-                  colors: [blueLight, Color(0xFF0073DD)],
+                  colors: [blueDark, Color(0xFF0073DD)],
                 ),
               ),
               child: Center(
