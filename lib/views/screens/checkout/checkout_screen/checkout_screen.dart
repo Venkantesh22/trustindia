@@ -6,6 +6,7 @@ import 'package:lekra/controllers/order_controlller.dart';
 import 'package:lekra/controllers/product_controller.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
+import 'package:lekra/views/base/custom_refresh_indicator.dart';
 import 'package:lekra/views/screens/checkout/checkout_screen/components/apply_coupon_container.dart';
 import 'package:lekra/views/screens/checkout/checkout_screen/components/billing_form_section.dart';
 import 'package:lekra/views/screens/checkout/checkout_screen/components/billing_summary_section.dart';
@@ -28,7 +29,7 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  final _formKey = GlobalKey<FormState>(); 
+  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
@@ -51,71 +52,77 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     return Scaffold(
       appBar: const CustomAppBar2(title: "Checkout"),
       body: GetBuilder<OrderController>(builder: (orderController) {
-        return Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                padding: AppConstants.screenPadding,
-                child: GetBuilder<OrderController>(builder: (orderController) {
-                  return Column(
-                    children: [
-                      BillingFormSection(formKey: _formKey),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const ApplyCouponContainer(),
-                      BillingSummarySection()
-                    ],
-                  );
-                }),
+        return CustomRefresh(
+          onRefresh: () async {
+            await Get.find<BasicController>().fetchAddress();
+          },
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: AppConstants.screenPadding,
+                  child:
+                      GetBuilder<OrderController>(builder: (orderController) {
+                    return Column(
+                      children: [
+                        BillingFormSection(formKey: _formKey),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const ApplyCouponContainer(),
+                        BillingSummarySection()
+                      ],
+                    );
+                  }),
+                ),
               ),
-            ),
-            GetBuilder<BasicController>(builder: (basicController) {
-              return Padding(
-                padding: AppConstants.screenPadding,
-                child: ProfileButton(
-                    title: "Proceed to pay",
-                    onPressed: () {
-                      if (basicController.selectAddress == null) {
-                        showToast(
-                            message: "Select a address",
-                            toastType: ToastType.info);
-                        return;
-                      }
-                      if (_formKey.currentState?.validate() ?? false) {
-                        Get.find<OrderController>()
-                            .postCheckout(
-                                addressId: Get.find<BasicController>()
-                                    .selectAddress
-                                    ?.id,
-                                code: Get.find<CouponController>().couponCode)
-                            .then(
-                          (value) {
-                            if (value.isSuccess) {
-                              navigate(
-                                  context: context,
-                                  page: SelectPaymentScreen(
-                                    totalAmount: Get.find<ProductController>()
-                                            .cardModel
-                                            ?.totalPriceFormat ??
-                                        "",
-                                  ));
-                            } else {
-                              showToast(
-                                  message: value.message,
-                                  typeCheck: value.isSuccess);
-                            }
-                          },
-                        );
-                      }
-                    },
-                    color: secondaryColor),
-              );
-            }),
-            const SizedBox(
-              height: 20,
-            )
-          ],
+              GetBuilder<BasicController>(builder: (basicController) {
+                return Padding(
+                  padding: AppConstants.screenPadding,
+                  child: ProfileButton(
+                      title: "Proceed to pay",
+                      onPressed: () {
+                        if (basicController.selectAddress == null) {
+                          showToast(
+                              message: "Select a address",
+                              toastType: ToastType.info);
+                          return;
+                        }
+                        if (_formKey.currentState?.validate() ?? false) {
+                          Get.find<OrderController>()
+                              .postCheckout(
+                                  addressId: Get.find<BasicController>()
+                                      .selectAddress
+                                      ?.id,
+                                  code: Get.find<CouponController>().couponCode)
+                              .then(
+                            (value) {
+                              if (value.isSuccess) {
+                                navigate(
+                                    context: context,
+                                    page: SelectPaymentScreen(
+                                      totalAmount: Get.find<ProductController>()
+                                              .cardModel
+                                              ?.totalPriceFormat ??
+                                          "",
+                                    ));
+                              } else {
+                                showToast(
+                                    message: value.message,
+                                    typeCheck: value.isSuccess);
+                              }
+                            },
+                          );
+                        }
+                      },
+                      color: secondaryColor),
+                );
+              }),
+              const SizedBox(
+                height: 20,
+              )
+            ],
+          ),
         );
       }),
     );
