@@ -5,6 +5,7 @@ import 'package:lekra/controllers/basic_controller.dart';
 import 'package:lekra/controllers/home_controller.dart';
 import 'package:lekra/controllers/product_controller.dart';
 import 'package:lekra/services/constants.dart';
+import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/dashboard/home_screen/components/explore_category_section.dart';
 import 'package:lekra/views/screens/dashboard/home_screen/components/featured_section.dart';
 import 'package:lekra/views/screens/dashboard/home_screen/components/home_appbar.dart';
@@ -58,16 +59,28 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const HomeApp(),
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        padding: AppConstants.screenPadding,
-        child: const Column(
-          children: [
-            HomeBanner(),
-            ExploreCategorySection(),
-            HotDealTodaySection(),
-            FeaturedSection(),
-          ],
+      body: RefreshIndicator(
+        color: primaryColor,
+        backgroundColor: white,
+        onRefresh: () async {
+          Get.find<BasicController>().fetchHomeBanner();
+          Get.find<HomeController>().fetchHomeCategory();
+          Get.find<HomeController>().fetchFeaturedProducts();
+          Get.find<HomeController>().fetchHotDealsTodayProducts();
+          Get.find<ProductController>().fetchCard();
+          Get.find<AuthController>().fetchUserProfile();
+        },
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          padding: AppConstants.screenPadding,
+          child: const Column(
+            children: [
+              HomeBanner(),
+              ExploreCategorySection(),
+              HotDealTodaySection(),
+              FeaturedSection(),
+            ],
+          ),
         ),
       ),
     );

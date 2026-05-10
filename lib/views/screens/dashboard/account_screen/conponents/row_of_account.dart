@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/auth_controller.dart';
 import 'package:lekra/services/constants.dart';
@@ -9,6 +10,7 @@ import 'package:lekra/views/screens/auth_screens/forget_password/opt_verificatio
 import 'package:lekra/views/screens/auth_screens/login_screen.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/screen/privacy_center_screen.dart';
 import 'package:lekra/views/screens/dashboard/account_screen/screen/terms_conditions_screen.dart';
+import 'package:lekra/views/screens/dashboard/wallet/wallet_enter_pin_screen/wallet_enter_pin_screen.dart';
 import 'package:lekra/views/screens/rewards/screen/rewards_screen/rewards_screen.dart';
 import 'package:lekra/views/screens/subscription_plan/subscription_category/subscription_category_screen.dart';
 import 'package:lekra/views/screens/support/support_screen.dart';
@@ -29,12 +31,28 @@ class RowOfAccount extends StatelessWidget {
           : null,
       child: Row(
         children: [
-          CustomImage(
-            path: rowOfAccountModel.icon,
-            height: 40,
-            width: 40,
-            fit: BoxFit.cover,
-          ),
+          rowOfAccountModel.isSvgIcon
+              ? Container(
+                  height: 40,
+                  width: 40,
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: primaryColor.withValues(
+                      alpha: 0.09,
+                    ),
+                  ),
+                  child: SvgPicture.asset(
+                    rowOfAccountModel.icon,
+                    fit: BoxFit.cover,
+                  ),
+                )
+              : CustomImage(
+                  path: rowOfAccountModel.icon,
+                  height: 40,
+                  width: 40,
+                  fit: BoxFit.cover,
+                ),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -75,11 +93,13 @@ class RowOfAccountModel {
   final String title;
   final String? subTitle;
   final String icon;
+  final bool isSvgIcon;
   final Function(BuildContext context)? onTap;
 
   RowOfAccountModel(
       {required this.title,
       this.subTitle,
+      this.isSvgIcon = false,
       required this.icon,
       required this.onTap});
 }
@@ -136,13 +156,28 @@ List<RowOfAccountModel> rowOfAccountModelList = [
   RowOfAccountModel(
     title: "Update Password",
     subTitle: "Update Password to secure your account",
-    icon: Assets.svgsHelpSupport,
+    icon: Assets.svgsUpdatePassword,
+    isSvgIcon: true,
     onTap: (context) {
       navigate(
         context: context,
         page: OTPVerification(
           phone: Get.find<AuthController>().userModel?.mobile ?? "",
           isUpdatePassword: true,
+        ),
+      );
+    },
+  ),
+  RowOfAccountModel(
+    title: "Update wallet Password",
+    subTitle: "Update wallet Password to secure your wallet",
+    icon: Assets.svgsWalletPassword,
+    isSvgIcon: true,
+    onTap: (context) {
+      navigate(
+        context: context,
+        page: WalletEnterPinScreen(
+          isForResetPin: true,
         ),
       );
     },
@@ -157,6 +192,7 @@ List<RowOfAccountModel> rowOfAccountModelList = [
   RowOfAccountModel(
     title: "Privacy Center",
     icon: Assets.svgsPrivacyCenter,
+    isSvgIcon: true,
     onTap: (context) {
       navigate(context: context, page: const PrivacyCenterScreen());
     },

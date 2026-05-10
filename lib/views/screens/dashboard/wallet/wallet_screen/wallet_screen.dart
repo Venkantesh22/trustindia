@@ -8,7 +8,6 @@ import 'package:lekra/services/constants.dart';
 import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/dashboard/wallet/create_wallet_pin_screen/wallet_create_pin_screen.dart';
-import 'package:lekra/views/screens/dashboard/wallet/wallet_enter_pin_screen/wallet_enter_pin_screen.dart';
 import 'package:lekra/views/screens/dashboard/wallet/wallet_screen/components/profile-balalnce_section.dart';
 import 'package:lekra/views/screens/dashboard/wallet/wallet_screen/components/row_of_search_add_fund_section.dart';
 import 'package:lekra/views/screens/dashboard/wallet/wallet_screen/components/transaction_container.dart';
@@ -83,28 +82,7 @@ class _WalletScreenState extends State<WalletScreen> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          actions: [
-            PopupMenuButton<String>(
-              icon: const Icon(Icons.more_vert, color: black),
-              onSelected: (value) {
-                if (value == 'change_pin') {
-                  navigate(
-                      context: context,
-                      page: const WalletEnterPinScreen(
-                        isForResetPin: true,
-                      ));
-                }
-              },
-              itemBuilder: (BuildContext context) {
-                return [
-                  const PopupMenuItem<String>(
-                    value: 'change_pin',
-                    child: Text('Change Wallet PIN'),
-                  ),
-                ];
-              },
-            ),
-          ],
+         
         ),
         body: isWallPinCreate
             ? const Center(
