@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:lekra/controllers/subscription_controller.dart';
 import 'package:lekra/data/models/subscription_model.dart';
 import 'package:lekra/services/constants.dart';
+import 'package:lekra/views/base/custom_refresh_indicator.dart';
 import 'package:lekra/views/base/shimmer.dart';
 import 'package:lekra/views/screens/subscription_plan/subscription_details_screen/subscription_details_screen.dart';
 import 'package:lekra/views/screens/subscription_plan/subscrption_screen/components/subscription_container.dart';
@@ -26,49 +27,64 @@ class _SubscriptionPlanScreenState extends State<SubscriptionPlanScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    
-      
       appBar: CustomAppBar2(title: widget.subscriptionPlanName ?? ""),
-      body: SingleChildScrollView(
-        padding: AppConstants.screenPadding,
-        child: Column(
-          children: [
-            GetBuilder<SubscriptionController>(
-                builder: (subscriptionController) {
-              return ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    final subscription = subscriptionController.isLoading
-                        ? SubscriptionModel()
-                        : subscriptionController.subscriptionList[index];
-                    return CustomShimmer(
-                      isLoading: subscriptionController.isLoading,
-                      child: SubscriptionContainer(
-                          onPressed: () {
-                            if (subscriptionController.isLoading) {
-                              return;
-                            }
-                            navigate(
+      body: CustomRefresh(
+        onRefresh: () async {
+          await Get.find<SubscriptionController>().fetchSubscriptionPlanById();
+        },
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: AppConstants.screenPadding,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                ),
+                child: GetBuilder<SubscriptionController>(
+                  builder: (subscriptionController) {
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      primary: false,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        final subscription = subscriptionController.isLoading
+                            ? SubscriptionModel()
+                            : subscriptionController.subscriptionList[index];
+
+                        return CustomShimmer(
+                          isLoading: subscriptionController.isLoading,
+                          child: SubscriptionContainer(
+                            onPressed: () {
+                              if (subscriptionController.isLoading) {
+                                return;
+                              }
+
+                              navigate(
                                 type: PageTransitionType.rightToLeft,
                                 context: context,
                                 page: SubscriptionDetailsScreen(
                                   subscriptionId: subscription.id,
-                                ));
-                          },
-                          subscription: subscription),
+                                ),
+                              );
+                            },
+                            subscription: subscription,
+                          ),
+                        );
+                      },
+                      separatorBuilder: (_, __) => const SizedBox(height: 12),
+                      itemCount: subscriptionController.isLoading
+                          ? 2
+                          : subscriptionController.subscriptionList.length,
                     );
                   },
-                  separatorBuilder: (_, __) => const SizedBox(height: 12),
-                  itemCount: subscriptionController.isLoading
-                      ? 2
-                      : subscriptionController.subscriptionList.length);
-            })
-          ],
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

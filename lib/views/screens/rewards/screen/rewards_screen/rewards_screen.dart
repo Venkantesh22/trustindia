@@ -4,6 +4,7 @@ import 'package:lekra/controllers/reward_controller.dart';
 import 'package:lekra/data/models/scratch_model.dart';
 import 'package:lekra/services/constants.dart';
 import 'package:lekra/views/base/custom_image.dart';
+import 'package:lekra/views/base/custom_refresh_indicator.dart';
 import 'package:lekra/views/screens/rewards/screen/reward_details_screen/reward_details_screen.dart';
 import 'package:lekra/views/screens/rewards/screen/rewards_screen/component/scratch_card_widget.dart';
 import 'package:lekra/views/screens/rewards/screen/rewards_screen/component/total_point_section.dart';
@@ -28,67 +29,73 @@ class _RewardsScreenState extends State<RewardsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar2(title: "Rewards"),
-      body: SingleChildScrollView(
-        padding: AppConstants.screenPadding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const TotalPointSection(),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Text(
-                "Scratch & Win",
-                style: Helper(context).textTheme.titleSmall,
+    return CustomRefresh(
+      onRefresh: () async {
+        Get.find<RewardsController>().fetchScratchCard();
+      },
+      child: Scaffold(
+        appBar: const CustomAppBar2(title: "Rewards"),
+        body: SingleChildScrollView(
+          padding: AppConstants.screenPadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const TotalPointSection(),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Text(
+                  "Scratch & Win",
+                  style: Helper(context).textTheme.titleSmall,
+                ),
               ),
-            ),
-            GetBuilder<RewardsController>(builder: (rewardController) {
-              if (rewardController.isLoading) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (rewardController.scratchCardList.isEmpty) {
-                return const Center(child: Text("No scratch cards available."));
-              }
-              return GridView.builder(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: rewardController.scratchCardList.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.9,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12),
-                itemBuilder: (context, index) {
-                  final scratchCardModel = rewardController.isLoading
-                      ? const ScratchCardModel()
-                      : rewardController.scratchCardList[index];
-                  return GestureDetector(
-                    onTap: () {
-                      if (rewardController.isLoading) {
-                        showToast(
-                            message: "Please Wait....",
-                            toastType: ToastType.info);
-                        return;
-                      } else if (scratchCardModel.isScratch == false) {
-                        scratchFun(context, scratchCardModel);
-                      } else if (scratchCardModel.isScratch == true) {
-                        navigate(
-                            context: context,
-                            page: RewardDetailsScreen(
-                                scratchCardModel: scratchCardModel));
-                      }
-                    },
-                    child: ScratchCardWidget(
-                      scratchCardModel: scratchCardModel,
-                    ),
-                  );
-                },
-              );
-            }),
-            const SizedBox(height: 20),
-          ],
+              GetBuilder<RewardsController>(builder: (rewardController) {
+                if (rewardController.isLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (rewardController.scratchCardList.isEmpty) {
+                  return const Center(
+                      child: Text("No scratch cards available."));
+                }
+                return GridView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: rewardController.scratchCardList.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.9,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12),
+                  itemBuilder: (context, index) {
+                    final scratchCardModel = rewardController.isLoading
+                        ? const ScratchCardModel()
+                        : rewardController.scratchCardList[index];
+                    return GestureDetector(
+                      onTap: () {
+                        if (rewardController.isLoading) {
+                          showToast(
+                              message: "Please Wait....",
+                              toastType: ToastType.info);
+                          return;
+                        } else if (scratchCardModel.isScratch == false) {
+                          scratchFun(context, scratchCardModel);
+                        } else if (scratchCardModel.isScratch == true) {
+                          navigate(
+                              context: context,
+                              page: RewardDetailsScreen(
+                                  scratchCardModel: scratchCardModel));
+                        }
+                      },
+                      child: ScratchCardWidget(
+                        scratchCardModel: scratchCardModel,
+                      ),
+                    );
+                  },
+                );
+              }),
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );
