@@ -21,6 +21,19 @@ class PriceConverter {
   }
 }
 
+
+Widget sizedBoxHeight({required double height}) {
+  return SizedBox(
+    height: height,
+  );
+}
+
+Widget sizedBoxWidth({required double width}) {
+  return SizedBox(
+    width: width,
+  );
+}
+
 class Helper {
   final BuildContext context;
   Helper(this.context);

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lekra/controllers/basic_controller.dart';
 import 'package:lekra/services/constants.dart';
+import 'package:lekra/views/base/custom_refresh_indicator.dart';
+import 'package:lekra/views/screens/support/widget/help_med_section.dart';
+import 'package:lekra/views/screens/support/widget/help_top_section.dart';
 import 'package:lekra/views/screens/widget/custom_appbar/custom_appbar2.dart';
 
 class HelpAndSupport extends StatefulWidget {
@@ -26,18 +29,26 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
     return Scaffold(
       appBar: CustomAppBar2(title: "Help and Support"),
       body: GetBuilder<BasicController>(builder: (basicController) {
-        return Padding(
-          padding: AppConstants.screenPadding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Mobile No : ${basicController.supportModel?.mobile ?? ""}"),
-              SizedBox(height: 6),
-              Text("Email : ${basicController.supportModel?.email ?? ""}"),
-              SizedBox(height: 6),
-              Text(
-                  "WhatApp No : ${basicController.supportModel?.whatsapp ?? ""}"),
-            ],
+        return CustomRefresh(
+          onRefresh: () async {
+            await Get.find<BasicController>().fetchSupport();
+          },
+          child: SingleChildScrollView(
+            padding: AppConstants.screenPadding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                HelpTopSection(),
+                HelpMedSection()
+                // Text(
+                //     "Mobile No : ${basicController.supportModel?.mobile ?? ""}"),
+                // SizedBox(height: 6),
+                // Text("Email : ${basicController.supportModel?.email ?? ""}"),
+                // SizedBox(height: 6),
+                // Text(
+                //     "WhatApp No : ${basicController.supportModel?.whatsapp ?? ""}"),
+              ],
+            ),
           ),
         );
       }),

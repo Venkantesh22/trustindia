@@ -82,6 +82,18 @@ class Assets {
   /// assets/images/grow-premium.png
   static const String imagesGrowPremium = "assets/images/grow-premium.png";
 
+  /// Assets for imagesHelpCall
+  /// assets/images/help-call.png
+  static const String imagesHelpCall = "assets/images/help-call.png";
+
+  /// Assets for imagesHelpEmail
+  /// assets/images/help-email.png
+  static const String imagesHelpEmail = "assets/images/help-email.png";
+
+  /// Assets for imagesHelpMessage
+  /// assets/images/help-message.png
+  static const String imagesHelpMessage = "assets/images/help-message.png";
+
   /// Assets for imagesHomeDemo
   /// assets/images/home-demo.png
   static const String imagesHomeDemo = "assets/images/home-demo.png";
