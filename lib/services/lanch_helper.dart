@@ -63,7 +63,7 @@ class LaunchHelper {
 
     // WhatsApp app deep link
     final Uri appUri = Uri.parse(
-        "whatsapp://send?phone=+91 $whatsappNumber&text=${Uri.encodeComponent(message)}");
+        "whatsapp://send?phone= $whatsappNumber&text=${Uri.encodeComponent(message)}");
 
     // WhatsApp Web fallback
     final Uri webUri = Uri.parse(

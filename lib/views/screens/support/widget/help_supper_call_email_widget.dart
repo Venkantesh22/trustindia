@@ -44,7 +44,7 @@ class HelpNumberAndEmailWidget extends StatelessWidget {
                 ),
                 sizedBoxHeight(height: 4),
                 Text(
-                  "+91 ${helpNumberAndEmailWidgetModel.subTitle}",
+                  helpNumberAndEmailWidgetModel.subTitle,
                   style: Helper(context).textTheme.displaySmall?.copyWith(
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
@@ -77,7 +77,7 @@ List<HelpNumberAndEmailWidgetModel> helpNumberAndEmailWidgetModelList(
       HelpNumberAndEmailWidgetModel(
           title: "MABILE",
           icon: Assets.imagesHelpCall,
-          subTitle: basicController.supportModel?.mobile ?? "",
+          subTitle: "+${basicController.supportModel?.mobile ?? ""}",
           ontap: () {
             LaunchHelper.callUs(
                 number: basicController.supportModel?.mobile ?? "");
@@ -85,7 +85,7 @@ List<HelpNumberAndEmailWidgetModel> helpNumberAndEmailWidgetModelList(
       HelpNumberAndEmailWidgetModel(
           title: "WHATSAPP",
           icon: Assets.imagesHelpMessage,
-          subTitle: basicController.supportModel?.whatsapp ?? "",
+          subTitle: "+${basicController.supportModel?.whatsapp ?? ""}",
           ontap: () {
             LaunchHelper.launchWhatsApp(
                 phone: basicController.supportModel?.whatsapp ?? "");
