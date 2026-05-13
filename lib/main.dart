@@ -7,13 +7,14 @@ import 'package:lekra/views/screens/splash_screen/splash_screen.dart';
 import 'package:toastification/toastification.dart';
 import 'services/init.dart';
 
+//   AppPackage Name = "com.saithiya.smart"
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Init().initialize();
   runApp(const MyApp());
 }
- 
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<ScaffoldMessengerState> snackBarKey =
     GlobalKey<ScaffoldMessengerState>();
