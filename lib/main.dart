@@ -6,11 +6,23 @@ import 'package:lekra/services/theme.dart';
 import 'package:lekra/views/screens/splash_screen/splash_screen.dart';
 import 'package:toastification/toastification.dart';
 import 'services/init.dart';
+import 'main_firebase_options.dart' as main_config;
+import 'secondary_firebase_options.dart' as second_config;
 
 //   AppPackage Name = "com.saithiya.smart"
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+
+// 2. Use the alias to call the options
+  await Firebase.initializeApp(
+    options: main_config.DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // 2. Initialize the Secondary Project (Must have a unique name)
+  await Firebase.initializeApp(
+    name: 'SecondaryApp',
+    options: second_config.DefaultFirebaseOptions.currentPlatform,
+  );
   await Init().initialize();
   runApp(const MyApp());
 }

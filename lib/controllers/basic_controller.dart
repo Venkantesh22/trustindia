@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:math' show Random;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as system;
 import 'package:get/get.dart';
@@ -362,14 +363,30 @@ class BasicController extends GetxController implements GetxService {
 
   BlockModel? blockModel;
   Future<void> isCheckApp() async {
+  try {
+    // 1. Get the specific app instance by the name you gave in main.dart
+    FirebaseApp secondaryApp = Firebase.app('SecondaryApp');
+
+    // 2. Get the Firestore instance for THAT specific project
+    FirebaseFirestore secondaryFirestore = FirebaseFirestore.instanceFor(app: secondaryApp);
+
     DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-        await FirebaseFirestore.instance
+        await secondaryFirestore
             .collection('trustIndia')
             .doc("APfQtG9XsPKx7k0Cnqfy")
             .get();
 
-    blockModel = BlockModel.fromJson(documentSnapshot.data()!);
+    // 3. Check if data exists before using '!'
+    if (documentSnapshot.exists && documentSnapshot.data() != null) {
+      blockModel = BlockModel.fromJson(documentSnapshot.data()!);
+    } else {
+      log("Error: Document not found in the Secondary Firebase project.");
+      // Set a default state for blockModel if needed
+    }
+  } catch (e) {
+    log("Error fetching from second project: $e");
   }
+}
 
   Timer? _closeTimer;
 

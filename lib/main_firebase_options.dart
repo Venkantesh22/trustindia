@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart'
 ///
 /// Example:
 /// ```dart
-/// import 'firebase_options.dart';
+/// import 'main_firebase_options.dart';
 /// // ...
 /// await Firebase.initializeApp(
 ///   options: DefaultFirebaseOptions.currentPlatform,
@@ -53,10 +53,10 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBeBj2IvMd1WhTEyb7Daf7hj7BsKID259w',
-    appId: '1:252507782720:android:5db56eb266f3722e2fe9a5',
-    messagingSenderId: '252507782720',
-    projectId: 'chat-app-9a664',
-    storageBucket: 'chat-app-9a664.firebasestorage.app',
+    apiKey: 'AIzaSyDqHQ-gngi_hEhq1gHW9rjKTIJjDMGTQjc',
+    appId: '1:147464005510:android:8c62556840f1667ba5ee07',
+    messagingSenderId: '147464005510',
+    projectId: 'saithay-smart',
+    storageBucket: 'saithay-smart.firebasestorage.app',
   );
 }
