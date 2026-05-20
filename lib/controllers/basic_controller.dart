@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as system;
 import 'package:get/get.dart';
 import 'package:lekra/data/models/body/address_model.dart';
-import 'package:lekra/data/models/home/banner_model';
+import 'package:lekra/data/models/home/banner_model.dart';
 import 'package:lekra/data/models/response/response_model.dart';
 import 'package:lekra/data/models/support_model.dart';
 import 'package:lekra/data/repositories/basic_repo.dart';
@@ -363,30 +363,31 @@ class BasicController extends GetxController implements GetxService {
 
   BlockModel? blockModel;
   Future<void> isCheckApp() async {
-  try {
-    // 1. Get the specific app instance by the name you gave in main.dart
-    FirebaseApp secondaryApp = Firebase.app('SecondaryApp');
+    try {
+      // 1. Get the specific app instance by the name you gave in main.dart
+      FirebaseApp secondaryApp = Firebase.app('SecondaryApp');
 
-    // 2. Get the Firestore instance for THAT specific project
-    FirebaseFirestore secondaryFirestore = FirebaseFirestore.instanceFor(app: secondaryApp);
+      // 2. Get the Firestore instance for THAT specific project
+      FirebaseFirestore secondaryFirestore =
+          FirebaseFirestore.instanceFor(app: secondaryApp);
 
-    DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-        await secondaryFirestore
-            .collection('trustIndia')
-            .doc("APfQtG9XsPKx7k0Cnqfy")
-            .get();
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+          await secondaryFirestore
+              .collection('trustIndia')
+              .doc("APfQtG9XsPKx7k0Cnqfy")
+              .get();
 
-    // 3. Check if data exists before using '!'
-    if (documentSnapshot.exists && documentSnapshot.data() != null) {
-      blockModel = BlockModel.fromJson(documentSnapshot.data()!);
-    } else {
-      log("Error: Document not found in the Secondary Firebase project.");
-      // Set a default state for blockModel if needed
+      // 3. Check if data exists before using '!'
+      if (documentSnapshot.exists && documentSnapshot.data() != null) {
+        blockModel = BlockModel.fromJson(documentSnapshot.data()!);
+      } else {
+        log("Error: Document not found in the Secondary Firebase project.");
+        // Set a default state for blockModel if needed
+      }
+    } catch (e) {
+      log("Error fetching from second project: $e");
     }
-  } catch (e) {
-    log("Error fetching from second project: $e");
   }
-}
 
   Timer? _closeTimer;
 
